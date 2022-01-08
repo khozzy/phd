@@ -5,5 +5,5 @@ Reproducible online book
     conda env update --file environment.yml
     conda activate real-valued-acs-system
 
-    jupyter-book --help
-    jupyter-book build book/
+# Formatting links
+- https://jupyterbook.org/interactive/hiding.html
