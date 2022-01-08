@@ -123,3 +123,13 @@ in-line with the rest of your content.
 
 For more information about executing computational content with Jupyter Book,
 see [The MyST-NB documentation](https://myst-nb.readthedocs.io/).
+
+
+```{dropdown} Here's my dropdown
+And here's my dropdown content
+
+```{math}
+:label: my-math-ref
+w_{t+1} = (1 + r_{t+1}) s(w_t) + y_{t+1}
+```
+```

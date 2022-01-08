@@ -3,7 +3,24 @@
 
 format: jb-book
 root: intro
+options:  # The options key will be applied to all chapters, but not sub-sections
+  numbered: 3
+  maxdepth: 2
+#  expand_sections: true
+
 chapters:
-- file: introduction
-- file: markdown
+- file: chapters/1_introduction/11_introduction
+  sections:
+    - file: chapters/1_introduction/12_motivation
+    - file: chapters/1_introduction/13_aims_goals
+    - file: chapters/1_introduction/14_structure
+- file: chapters/2_selected_topics/21_introduction
+  sections:
+    - file: chapters/2_selected_topics/22_alcs_history
+- file: chapters/3_internalizing/31_introduction
+  sections:
+    - file: chapters/3_internalizing/32_interval_based_representation
+#- file: markdown
 - file: notebooks
+- file: abbreviations
+- file: bibliography

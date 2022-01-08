@@ -1,16 +1,6 @@
-# Welcome to your Jupyter Book
+# Real-valued Anticipatory Classifier System
 
-This is a small sample book to give you a feel for how book content is
-structured.
+A thesis submitted in partial fulfillment for the degree of **Doctor of Philosophy**
 
-:::{note}
-Here is a note!
-:::
-
-And here is a code block:
-
+```{tableofcontents}
 ```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.
