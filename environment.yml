@@ -1,0 +1,10 @@
+name: real-valued-acs-system
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - jupyter-book=0.12.1
+  - pip
+  - pip:
+      - ghp-import
+      - gym==0.21
