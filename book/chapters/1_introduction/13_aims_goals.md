@@ -1,4 +1,6 @@
 # Research hypothesis, its aims and goals
+
+## Research hypothesis
 The research hypothesis is formulated as follows:
 
 ```{admonition} Research hypothesis
