@@ -17,6 +17,10 @@ chapters:
 - file: chapters/2_selected_topics/21_introduction
   sections:
     - file: chapters/2_selected_topics/22_alcs_history
+    - file: chapters/2_selected_topics/23_real_value_challenge
+    - file: chapters/2_selected_topics/24_kpi
+    - file: chapters/2_selected_topics/25_stats
+    - file: chapters/2_selected_topics/26_envs
 - file: chapters/3_internalizing/31_introduction
   sections:
     - file: chapters/3_internalizing/32_interval_based_representation
