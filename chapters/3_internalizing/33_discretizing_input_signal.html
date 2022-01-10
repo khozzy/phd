@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3.1. Interval-based representation &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>3.2. Discretizing input signal &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,8 +51,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.2. Discretizing input signal" href="33_discretizing_input_signal.html" />
-    <link rel="prev" title="3. Internalizing knowledge with increased input-space" href="31_introduction.html" />
+    <link rel="next" title="4. Biased exploration" href="../4_biased_exploration/41_introduction.html" />
+    <link rel="prev" title="3.1. Interval-based representation" href="32_interval_based_representation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -171,13 +171,13 @@
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="32_interval_based_representation.html">
      3.1. Interval-based representation
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="33_discretizing_input_signal.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      3.2. Discretizing input signal
     </a>
    </li>
@@ -244,7 +244,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/3_internalizing/32_interval_based_representation.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/3_internalizing/33_discretizing_input_signal.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -264,7 +264,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/3_internalizing/32_interval_based_representation.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/3_internalizing/33_discretizing_input_signal.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -285,7 +285,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/3_internalizing/32_interval_based_representation.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/3_internalizing/33_discretizing_input_signal.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -347,7 +347,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Interval-based representation</h1>
+                <h1>Discretizing input signal</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -396,29 +396,37 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="interval-based-representation">
-<h1><span class="section-number">3.1. </span>Interval-based representation<a class="headerlink" href="#interval-based-representation" title="Permalink to this headline">¶</a></h1>
-<p>Describe rACS modification with real-valued alphabet encoding (UBR).</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="discretizing-input-signal">
+<h1><span class="section-number">3.2. </span>Discretizing input signal<a class="headerlink" href="#discretizing-input-signal" title="Permalink to this headline">¶</a></h1>
+<p>Describe discretization workflow chosen (bucketing/hashing). Discretization can be done by dividing each attribute into fixed sized bucket or by providing custom configuration. maybe also add something about the hashing?</p>
 <div class="section" id="experimental-evaluation">
 <h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
 <p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
 </div>
 <div class="section" id="research-questions">
 <h2>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h2>
-<p>The conducted research aims to answers the following question regarding rACS algorithm and the interval based representation</p>
+<p>The conducted research aims to answers three main questions about bucketing discretization:</p>
 <ol class="simple">
-<li><p>Can the rACS algorithm build the correct internal model of the environment and exploit it successfully?</p></li>
+<li><p>Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?</p></li>
+<li><p>Which system creates the most compact and general population of classifiers?</p></li>
+<li><p>What is the relative trial execution time for each evaluated system?</p></li>
+<li><p>How selected  systems relates to the benchmark Dyna-Q algorithm?</p></li>
+</ol>
+<p>And for the hashing discretization methods:</p>
+<ol class="simple">
+<li><p>Does the selection of hashing algorithm significantly affects the metrics.</p></li>
+<li><p>What is the impact of the modulo parameter during the learning process?</p></li>
 </ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
 <h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-experiment-1-rmpx-environment admonition">
-<p class="admonition-title"><em>Experiment 1 - rMPX environment</em></p>
-<p>rMPX size: 3 (encoder bits: 1, 2, 3, 4). Impact of increasing bits.</p>
+<div class="admonition-experiment-1-performance-comparison-of-acs-acs2-yacs-dynaq-algorithms-discretized-into-fixed-width-buckets admonition">
+<p class="admonition-title"><em>Experiment 1 - Performance comparison of ACS, ACS2, YACS, DynaQ algorithms discretized into fixed-width buckets</em></p>
+<p>The aim of this experiments is to determine the behaviour using the rMPX (single-step), Corridor and Grid (multi-steps) environments.</p>
 </div>
-<div class="admonition-experiment-2-checkerboard-environment admonition">
-<p class="admonition-title"><em>Experiment 2 - Checkerboard environment</em></p>
-<p>Average reward, classifeir numerosity, condition interval regions for 3x3 checkerboard, encoded with 4 bits.</p>
+<div class="admonition-experiment-2-discretization-using-hashing-functions admonition">
+<p class="admonition-title"><em>Experiment 2 - Discretization using hashing functions</em></p>
+<p>The aim of this experiments is to determine if there is a difference when using the SHA256 or MD5 hashing functions with differing modulo values for building the internal representation of the environment.</p>
 </div>
 </div>
 <div class="section" id="experimental-setup">
@@ -460,17 +468,17 @@
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="31_introduction.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="32_interval_based_representation.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3. </span>Internalizing knowledge with increased input-space</p>
+            <p class="prev-next-title"><span class="section-number">3.1. </span>Interval-based representation</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="33_discretizing_input_signal.html" title="next page">
+    <a class='right-next' id="next-link" href="../4_biased_exploration/41_introduction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3.2. </span>Discretizing input signal</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Biased exploration</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
