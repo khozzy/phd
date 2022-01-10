@@ -24,6 +24,7 @@ chapters:
 - file: chapters/3_internalizing/31_introduction
   sections:
     - file: chapters/3_internalizing/32_interval_based_representation
+    - file: chapters/3_internalizing/33_discretizing_input_signal
 - file: chapters/4_biased_exploration/41_introduction
 - file: chapters/5_diminishing_reward/51_introduction
 - file: abbreviations
