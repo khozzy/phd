@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import functools
 import logging
 import os
@@ -14,13 +15,11 @@ def repeat(num_times):
     def decorator_repeat(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            logging.debug(f'Running function {num_times} times')
+            logging.debug(f'Running function in parallel {num_times} times')
 
-            results = []
-            for i in range(num_times):
-                logging.debug(f'Executing {i+1} run')
-                results.append(func(*args, **kwargs))
-            return results
+            with ThreadPoolExecutor() as executor:
+                futures = [executor.submit(func, *args, **kwargs) for _ in range(num_times)]
+                return [future.result() for future in as_completed(futures)]
 
         return wrapper
 
