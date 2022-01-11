@@ -1,9 +1,10 @@
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import functools
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import dill
+from tqdm import tqdm
 
 
 def repeat(num_times):
@@ -16,10 +17,16 @@ def repeat(num_times):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             logging.debug(f'Running function in parallel {num_times} times')
+            results = []
 
-            with ThreadPoolExecutor() as executor:
-                futures = [executor.submit(func, *args, **kwargs) for _ in range(num_times)]
-                return [future.result() for future in as_completed(futures)]
+            with tqdm(total=num_times) as pbar:
+                with ThreadPoolExecutor() as executor:
+                    futures = [executor.submit(func, *args, **kwargs) for _ in range(num_times)]
+                    for future in as_completed(futures):
+                        results.append(future.result())
+                        pbar.update(1)
+
+                    return results
 
         return wrapper
 

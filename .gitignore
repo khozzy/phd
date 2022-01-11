@@ -131,3 +131,5 @@ dmypy.json
 # Custom
 .idea
 book/_build
+src/pyalcs
+src/parrotprediction-openai-envs

@@ -5,9 +5,14 @@ dependencies:
   - python=3.9
   - jupyter=1.0.0
   - jupyter-book=0.12.1
+  - pandas
   - matplotlib>=3.1.1
   - dill>=0.3
+  - tqdm
+  - mlflow
   - pip
   - pip:
       - ghp-import
       - gym==0.21
+#      - "-e git+https://github.com/ParrotPrediction/pyalcs.git@3.0.0#egg=pyalcs"
+#      - "-e git+https://github.com/ParrotPrediction/openai-envs.git@3.0.0#egg=parrotprediction-openai-envs"
