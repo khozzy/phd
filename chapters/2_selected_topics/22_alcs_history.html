@@ -244,9 +244,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/2_selected_topics/22_alcs_history.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/2_selected_topics/22_alcs_history.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -280,6 +280,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/2_selected_topics/22_alcs_history.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -306,6 +323,259 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="road-towards-anticipatory-learning-classifier-systems">
 <h1><span class="section-number">2.1. </span>Road towards Anticipatory Learning Classifier Systems<a class="headerlink" href="#road-towards-anticipatory-learning-classifier-systems" title="Permalink to this headline">¶</a></h1>
 <p>History of LCS, XCS, ACS, ACS2, YACS, others</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># put custom scripts to module path</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">gym_maze</span>  <span class="c1"># noqa: F401</span>
+
+<span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
+<span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">ACS2</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ClassifiersList</span><span class="p">,</span> <span class="n">Classifier</span>
+<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">get_from_cache_or_run</span>
+
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
+<span class="n">PLOT_DPI</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="k">def</span> <span class="nf">maze_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">metrics</span>
+
+<span class="n">acs2_base_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier_length&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s1">&#39;number_of_possible_actions&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s1">&#39;biased_exploration&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_trial_frequency&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;user_metrics_collector_fcn&#39;</span><span class="p">:</span> <span class="n">maze_metrics</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">run_acs2_explore_exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="c1"># explore phase</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">metrics_explore</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">)</span>
+
+    <span class="c1"># exploit phase</span>
+    <span class="n">agent_exploit</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">copy</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
+    <span class="n">metrics_exploit</span> <span class="o">=</span> <span class="n">agent_exploit</span><span class="o">.</span><span class="n">exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">metrics_explore</span><span class="p">),</span> <span class="p">(</span><span class="n">agent_exploit</span><span class="p">,</span> <span class="n">metrics_exploit</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">find_best_classifier</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="n">ClassifiersList</span><span class="p">,</span> <span class="n">situation</span><span class="p">:</span> <span class="n">Perception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Classifier</span><span class="p">]:</span>
+    <span class="n">match_set</span> <span class="o">=</span> <span class="n">population</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">situation</span><span class="p">)</span>
+    <span class="n">anticipated_change_cls</span> <span class="o">=</span> <span class="p">[</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">match_set</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">does_anticipate_change</span><span class="p">()]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anticipated_change_cls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">anticipated_change_cls</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">build_fitness_and_action_matrices</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">population</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
+    <span class="n">original</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">maze</span><span class="o">.</span><span class="n">matrix</span>
+
+    <span class="n">fitness</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="n">action_lookup</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">0</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↑&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↗&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;→&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↘&#39;</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↓&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↙&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;←&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;↖&#39;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">original</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># path</span>
+            <span class="n">perception</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">maze</span><span class="o">.</span><span class="n">perception</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">best_cl</span> <span class="o">=</span> <span class="n">find_best_classifier</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">perception</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">best_cl</span><span class="p">:</span>
+                <span class="n">fitness</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_cl</span><span class="o">.</span><span class="n">fitness</span>
+                <span class="n">action</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">action_lookup</span><span class="p">[</span><span class="n">best_cl</span><span class="o">.</span><span class="n">action</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fitness</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="n">action</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># wall</span>
+            <span class="n">fitness</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">action</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;\#&#39;</span>
+
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># reward</span>
+            <span class="c1"># add 500 to make it more distinguishable</span>
+            <span class="n">fitness</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">500</span>
+            <span class="n">action</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
+
+    <span class="k">return</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">action</span>
+
+<span class="k">def</span> <span class="nf">plot_policy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+    <span class="n">max_x</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">maze</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Render maze as image</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_x</span><span class="p">,</span> <span class="n">max_y</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Add labels to each cell</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">action_matrix</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Policy in Maze5 environment&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_x</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">max_y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_x</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_y</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/acs2-maze5.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/acs2_maze5.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_acs2_in_maze5</span><span class="p">():</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;Maze5-v0&#39;</span><span class="p">)</span>
+    <span class="n">explore_phase</span><span class="p">,</span> <span class="n">exploit_phase</span> <span class="o">=</span> <span class="n">run_acs2_explore_exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">acs2_base_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">env</span><span class="p">,</span> <span class="n">explore_phase</span><span class="p">,</span> <span class="n">exploit_phase</span>
+
+<span class="c1"># Run computation</span>
+<span class="n">env_</span><span class="p">,</span> <span class="n">explore_</span><span class="p">,</span> <span class="n">exploit_</span> <span class="o">=</span> <span class="n">run_acs2_in_maze5</span><span class="p">()</span>
+
+<span class="c1"># Plot the policy</span>
+<span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span> <span class="o">=</span> <span class="n">build_fitness_and_action_matrices</span><span class="p">(</span><span class="n">env_</span><span class="p">,</span> <span class="n">explore_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+<span class="n">plot_policy</span><span class="p">(</span><span class="n">env_</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="full-width figure align-default" id="maze5-fig">
+<img alt="../../_images/acs2-maze5.png" src="../../_images/acs2-maze5.png" />
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
+</div>
+<hr class="docutils" />
+<p><strong>Software packages used</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">session_info</span>
+<span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><details>
+<summary>Click to view session information</summary>
+<pre>
+-----
+gym                 0.21.0
+gym_maze            NA
+lcs                 NA
+matplotlib          3.5.0
+numpy               1.21.2
+session_info        1.0.0
+src                 (embedded book's utils module)
+-----
+</pre>
+<details>
+<summary>Click to view modules imported as dependencies</summary>
+<pre>
+PIL                         8.4.0
+backcall                    0.2.0
+brotli                      NA
+certifi                     2021.10.08
+cffi                        1.14.6
+charset_normalizer          2.0.4
+click                       7.1.2
+cloudpickle                 2.0.0
+colorama                    0.4.4
+cycler                      0.10.0
+cython_runtime              NA
+databricks_cli              NA
+dateutil                    2.8.2
+debugpy                     1.5.1
+decorator                   5.1.0
+defusedxml                  0.7.1
+dill                        0.3.4
+entrypoints                 0.3
+google                      NA
+idna                        3.3
+importlib_metadata          NA
+ipykernel                   6.4.1
+ipython_genutils            0.2.0
+jedi                        0.18.0
+kiwisolver                  1.3.1
+matplotlib_inline           NA
+mkl                         2.4.0
+mlflow                      1.22.0
+mpl_toolkits                NA
+networkx                    2.5
+packaging                   21.3
+pandas                      1.3.1
+parso                       0.8.3
+pexpect                     4.8.0
+pickleshare                 0.7.5
+pkg_resources               NA
+prompt_toolkit              3.0.20
+ptyprocess                  0.7.0
+pydev_ipython               NA
+pydevconsole                NA
+pydevd                      2.6.0
+pydevd_concurrency_analyser NA
+pydevd_file_utils           NA
+pydevd_plugins              NA
+pydevd_tracing              NA
+pyexpat                     NA
+pygments                    2.10.0
+pyparsing                   3.0.4
+pytz                        2021.3
+requests                    2.27.1
+scipy                       1.7.3
+six                         1.16.0
+socks                       1.7.1
+sphinxcontrib               NA
+storemagic                  NA
+tornado                     6.1
+tqdm                        4.62.3
+traitlets                   5.1.1
+typing_extensions           NA
+urllib3                     1.26.7
+wcwidth                     0.2.5
+yaml                        6.0
+zipp                        NA
+zmq                         22.3.0
+</pre>
+</details> <!-- seems like this ends pre, so might as well be explicit -->
+<pre>
+-----
+IPython             7.29.0
+jupyter_client      7.1.0
+jupyter_core        4.9.1
+notebook            6.4.6
+-----
+Python 3.9.6 (default, Aug 18 2021, 19:38:01) [GCC 7.5.0]
+Linux-5.11.0-44-generic-x86_64-with-glibc2.31
+-----
+Session information updated at 2022-01-12 19:28
+</pre>
+</details></div></div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
