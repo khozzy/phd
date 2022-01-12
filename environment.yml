@@ -12,6 +12,7 @@ dependencies:
   - mlflow
   - pip
   - pip:
+      - session-info
       - ghp-import
       - gym==0.21
 #      - "-e git+https://github.com/ParrotPrediction/pyalcs.git@3.0.0#egg=pyalcs"
