@@ -1,1 +1,1 @@
-__version__ = '(utils module)'
+__version__ = '(embedded book\'s utils module)'
