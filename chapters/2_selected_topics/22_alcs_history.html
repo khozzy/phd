@@ -302,6 +302,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#acs2">
+   ACS2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#macs">
+   MACS
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -314,6 +332,24 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#acs2">
+   ACS2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#macs">
+   MACS
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -339,25 +375,34 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_maze</span>  <span class="c1"># noqa: F401</span>
-
-<span class="kn">import</span> <span class="nn">pathlib</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
-<span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">ACS2</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ClassifiersList</span><span class="p">,</span> <span class="n">Classifier</span>
-<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
 
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
 
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
 
+
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 <span class="n">PLOT_DPI</span> <span class="o">=</span> <span class="mi">200</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="acs2">
+<h2>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lcs.agents.acs2</span> <span class="k">as</span> <span class="nn">acs2</span>
+<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="k">def</span> <span class="nf">maze_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
     <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
@@ -373,19 +418,19 @@
 <span class="p">}</span>
 
 <span class="k">def</span> <span class="nf">run_acs2_explore_exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
-    <span class="n">cfg</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">acs2</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
 
     <span class="c1"># explore phase</span>
-    <span class="n">agent</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">acs2</span><span class="o">.</span><span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
     <span class="n">metrics_explore</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">)</span>
 
     <span class="c1"># exploit phase</span>
-    <span class="n">agent_exploit</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">copy</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
+    <span class="n">agent_exploit</span> <span class="o">=</span> <span class="n">acs2</span><span class="o">.</span><span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">copy</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
     <span class="n">metrics_exploit</span> <span class="o">=</span> <span class="n">agent_exploit</span><span class="o">.</span><span class="n">exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">metrics_explore</span><span class="p">),</span> <span class="p">(</span><span class="n">agent_exploit</span><span class="p">,</span> <span class="n">metrics_exploit</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">find_best_classifier</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="n">ClassifiersList</span><span class="p">,</span> <span class="n">situation</span><span class="p">:</span> <span class="n">Perception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Classifier</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">find_best_classifier</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="n">acs2</span><span class="o">.</span><span class="n">ClassifiersList</span><span class="p">,</span> <span class="n">situation</span><span class="p">:</span> <span class="n">Perception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">acs2</span><span class="o">.</span><span class="n">Classifier</span><span class="p">]:</span>
     <span class="n">match_set</span> <span class="o">=</span> <span class="n">population</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">situation</span><span class="p">)</span>
     <span class="n">anticipated_change_cls</span> <span class="o">=</span> <span class="p">[</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">match_set</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">does_anticipate_change</span><span class="p">()]</span>
 
@@ -469,6 +514,186 @@
 <div class="full-width figure align-default" id="maze5-fig">
 <img alt="../../_images/acs2-maze5.png" src="../../_images/acs2-maze5.png" />
 <p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="macs">
+<h2>MACS<a class="headerlink" href="#macs" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lcs.agents.macs.macs</span> <span class="k">as</span> <span class="nn">macs</span>
+
+<span class="n">maze228_env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;Maze228-v0&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_calculate_rotating_maze_knowledge</span><span class="p">(</span><span class="n">agent</span><span class="p">:</span> <span class="n">macs</span><span class="o">.</span><span class="n">MACS</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">transitions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">transitions</span>
+    <span class="n">covered_transitions</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">p0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="n">p0p</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">p0</span><span class="p">)))</span>
+        <span class="n">p1p</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">p1</span><span class="p">)))</span>
+        <span class="n">anticipations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">get_anticipations</span><span class="p">(</span><span class="n">p0p</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+
+        <span class="c1"># accurate classifiers</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anticipations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">anticipations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">p1p</span><span class="p">:</span>
+            <span class="n">covered_transitions</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">covered_transitions</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_macs_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">:</span> <span class="n">macs</span><span class="o">.</span><span class="n">MACS</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">),</span>
+        <span class="s1">&#39;situations&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">desirability_values</span><span class="p">),</span>
+        <span class="s1">&#39;0_cls&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">([</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_accurate</span><span class="p">]),</span>
+        <span class="s1">&#39;1_cls&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">([</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_accurate</span><span class="p">]),</span>
+        <span class="s1">&#39;2_cls&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">([</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_accurate</span><span class="p">]),</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">_calculate_rotating_maze_knowledge</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/macs_maze228.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_macs_in_maze228</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">macs</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span><span class="n">classifier_length</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+                        <span class="n">number_of_possible_actions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                        <span class="n">feature_possible_values</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">}]</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="p">[{</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">}],</span>
+                        <span class="n">estimate_expected_improvements</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">metrics_trial_frequency</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="n">user_metrics_collector_fcn</span><span class="o">=</span><span class="n">_macs_metrics</span><span class="p">)</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">macs</span><span class="o">.</span><span class="n">MACS</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">agent</span><span class="p">,</span> <span class="n">metrics</span>
+
+<span class="c1"># run computations</span>
+<span class="n">macs_agent</span><span class="p">,</span> <span class="n">macs_metrics</span> <span class="o">=</span> <span class="n">run_macs_in_maze228</span><span class="p">(</span><span class="n">maze228_env</span><span class="p">)</span>
+
+<span class="c1"># visualization</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">129</span><span class="p">)</span>  <span class="c1"># found experimentally</span>
+<span class="n">maze228_env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">maze228_env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+
+<span class="n">left_from_reward</span> <span class="o">=</span> <span class="n">maze228_env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">maze</span><span class="o">.</span><span class="n">perception</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Perception: </span><span class="si">{</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">left_from_reward</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-White">□</span> <span class=" -Color -Color-Red">A</span> <span class=" -Color -Color-Yellow">$</span> <span class=" -Color -Color-Black">■</span>
+<span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span> <span class=" -Color -Color-Black">■</span>
+Perception: 009111000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total MACS population size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">macs_agent</span><span class="o">.</span><span class="n">population</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">macs_agent</span><span class="o">.</span><span class="n">population</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">left_from_reward</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+<span class="n">action_mapping</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;STEP_AHEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;ROTATE_LEFT&#39;</span><span class="p">,</span> <span class="s1">&#39;ROTATE_RIGHT&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">group_cl</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Action: </span><span class="si">{</span><span class="n">action_mapping</span><span class="p">[</span><span class="n">action</span><span class="p">]</span><span class="si">}</span><span class="s1">, anticipation: </span><span class="si">{</span><span class="nb">list</span><span class="p">((</span><span class="n">macs_agent</span><span class="o">.</span><span class="n">get_anticipations</span><span class="p">(</span><span class="n">left_from_reward</span><span class="p">,</span> <span class="n">action</span><span class="p">)))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">group_cl</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total MACS population size: 211
+
+Action: STEP_AHEAD, anticipation: [0 0 0 9 0 0 0 1 0]
+	0#9###### 0 0????????
+	#0###10## 0 ?0???????
+	0#9##1### 0 ?0???????
+	#0####### 0 ??0??????
+	0#9###### 0 ???9?????
+	0######## 0 ????0????
+	0#####0## 0 ?????0???
+	#######0# 0 ??????0??
+	##9###### 0 ??????0??
+	##91#10## 0 ???????1?
+	0######## 0 ????????0
+
+Action: ROTATE_LEFT, anticipation: [0 0 0 0 9 1 1 1 0]
+	######0## 1 0????????
+	#######0# 1 ?0???????
+	0######## 1 ??0??????
+	#0####### 1 ???0?????
+	##9###### 1 ????9????
+	###1##### 1 ?????1???
+	####1#### 1 ??????1??
+	#####1### 1 ???????1?
+	######### 1 ????????0
+
+Action: ROTATE_RIGHT, anticipation: [9 1 1 1 0 0 0 0 0]
+	##9###### 2 9????????
+	###1##### 2 ?1???????
+	####1#### 2 ??1??????
+	#####1### 2 ???1?????
+	######0## 2 ????0????
+	#######0# 2 ?????0???
+	0######## 2 ??????0??
+	#0####### 2 ???????0?
+	######### 2 ????????0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Comparing the ACS2 agent in the same environment</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_acs2_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">:</span> <span class="n">acs2</span><span class="o">.</span><span class="n">ACS2</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="n">reliable</span> <span class="o">=</span> <span class="p">[</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">),</span>
+        <span class="s1">&#39;rel&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">reliable</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/acs2_maze228.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_acs2_in_maze228</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">acs2</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span><span class="n">classifier_length</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+                        <span class="n">number_of_possible_actions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                        <span class="n">metrics_trial_frequency</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">user_metrics_collector_fcn</span><span class="o">=</span><span class="n">_acs2_metrics</span><span class="p">,</span>
+                        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">acs2</span><span class="o">.</span><span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">agent</span><span class="p">,</span> <span class="n">metrics</span>
+
+<span class="n">acs2_agent</span><span class="p">,</span> <span class="n">acs2_metrics</span> <span class="o">=</span> <span class="n">run_acs2_in_maze228</span><span class="p">(</span><span class="n">maze228_env</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reliable_classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">acs2_agent</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total reliable population for ACS2: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">reliable_classifiers</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">acs2_agent</span><span class="o">.</span><span class="n">population</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">left_from_reward</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total reliable population for ACS2: 402
+##911#00# 1 ##009#11#
+##9111#0# 0 ##0900#1#
+009#11### 2 911#00###
+</pre></div>
+</div>
+</div>
 </div>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
@@ -570,11 +795,12 @@ jupyter_core        4.9.1
 notebook            6.4.6
 -----
 Python 3.9.6 (default, Aug 18 2021, 19:38:01) [GCC 7.5.0]
-Linux-5.11.0-44-generic-x86_64-with-glibc2.31
+Linux-5.11.0-46-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-12 19:28
+Session information updated at 2022-01-17 14:20
 </pre>
 </details></div></div>
+</div>
 </div>
 </div>
 
