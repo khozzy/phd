@@ -3,14 +3,15 @@ import logging
 import os
 
 import dill
-from dask.distributed import Client, LocalCluster
+import ray
 from tqdm import tqdm
 
 
-def repeat(num_times, use_dask=False):
+def repeat(num_times, use_ray=False):
     """
     Decorator for calling a function multiple times.
     :param num_times: number of repeated calls
+    :param use_ray: use Ray framework for multiprocessing
     :return: array of results
     """
 
@@ -20,14 +21,17 @@ def repeat(num_times, use_dask=False):
             logging.debug(f'Running function in parallel {num_times} times')
             results = []
 
-            if not use_dask:
+            if use_ray:
+                ray.init()
+
+                remote_func = ray.remote(func)
+                feed = [remote_func.remote(*args, **kwargs) for _ in range(num_times)]
+                results = ray.get(feed)
+
+                ray.shutdown()
+            else:
                 for _ in tqdm(range(num_times)):
                     results.append(func(*args, **kwargs))
-            else:
-                # TODO: run dask scheduler
-                dask_client = Client(scheduler_port=0)
-                futures = [dask_client.submit(func, *args, pure=False, **kwargs) for _ in range(num_times)]
-                results = dask_client.gather(futures)
 
             return results
 
