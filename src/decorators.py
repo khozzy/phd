@@ -1,32 +1,35 @@
 import functools
 import logging
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import dill
+from dask.distributed import Client, LocalCluster
 from tqdm import tqdm
 
 
-def repeat(num_times):
+def repeat(num_times, use_dask=False):
     """
     Decorator for calling a function multiple times.
     :param num_times: number of repeated calls
     :return: array of results
     """
+
     def decorator_repeat(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             logging.debug(f'Running function in parallel {num_times} times')
             results = []
 
-            with tqdm(total=num_times) as pbar:
-                with ThreadPoolExecutor() as executor:
-                    futures = [executor.submit(func, *args, **kwargs) for _ in range(num_times)]
-                    for future in as_completed(futures):
-                        results.append(future.result())
-                        pbar.update(1)
+            if not use_dask:
+                for _ in tqdm(range(num_times)):
+                    results.append(func(*args, **kwargs))
+            else:
+                # TODO: run dask scheduler
+                dask_client = Client(scheduler_port=0)
+                futures = [dask_client.submit(func, *args, pure=False, **kwargs) for _ in range(num_times)]
+                results = dask_client.gather(futures)
 
-                    return results
+            return results
 
         return wrapper
 
