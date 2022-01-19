@@ -1,4 +1,4 @@
-# Internalizing knowledge with increased input-space
+# Optimizing formation of internal model
 This will be some introduction.
 
 ```{tableofcontents}

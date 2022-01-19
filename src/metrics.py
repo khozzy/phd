@@ -16,6 +16,7 @@ def parse_experiments_results(explore_metrics, exploit_metrics, frequency):
     return df
 
 
+# TODO: if will be used only in one place (move to notebook)
 def corridor_transition_knowledge(population, environment):
     transitions = environment.env.get_transitions()
 
@@ -33,6 +34,7 @@ def corridor_transition_knowledge(population, environment):
     return nr_correct / len(transitions) * 100.0
 
 
+# TODO: if will be used only in one place (move to notebook)
 def grid_transition_knowledge(population, environment):
     transitions = environment.env.get_transitions()
 

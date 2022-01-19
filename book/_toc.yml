@@ -29,6 +29,12 @@ chapters:
         - file: chapters/3_internalizing/32_experiment_2
     - file: chapters/3_internalizing/33_discretizing_input_signal
 - file: chapters/4_biased_exploration/41_introduction
+  sections:
+    - file: chapters/4_biased_exploration/41_biased_exploration
+      sections:
+        - file: chapters/4_biased_exploration/41_experiment_1
+        - file: chapters/4_biased_exploration/41_experiment_2
+        - file: chapters/4_biased_exploration/41_experiment_3
 - file: chapters/5_diminishing_reward/51_introduction
 - file: abbreviations
 - file: bibliography
