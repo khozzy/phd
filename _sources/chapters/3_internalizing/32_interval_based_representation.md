@@ -5,26 +5,24 @@ Describe rACS modification with real-valued alphabet encoding (UBR).
 This section presents the motivation, goals and set-up of the performed experiments, as well as their results.
 
 ## Research questions
-The conducted research aims to answers the following question regarding rACS algorithm and the interval based representation
+The conducted research aims to answer the following question regarding rACS algorithm and the interval based representation
 
 1. Can the rACS algorithm build the correct internal model of the environment and exploit it successfully?
 
 ## Goals of the experiments
 
-```{admonition} _Experiment 1 - rMPX environment_
-rMPX size: 3 (encoder bits: 1, 2, 3, 4). Impact of increasing bits.
+```{admonition} _Experiment 1 - Encoding precision_
+The impact of using different values of bits for creating UBR ranges will be contrasted with the ability of exploiting the single-step [](section-topics-environments-rmpx) environment. Due to the environment's increasing complexity a simple 3-bit variant is sufficient to demonstrate the potential pitfalls of using interval based representation
 ```
 
-```{admonition} _Experiment 2 - Checkerboard environment_
-Average reward, classifeir numerosity, condition interval regions for 3x3 checkerboard, encoded with 4 bits.
+```{admonition} _Experiment 2 - Nature of the intervals_
+The main goal of the experiment is to investigate the nature and the evolution of condition intervals. An experiment using the [](section-topics-environments-checkerboard) environment will highlight mainly the difference between conditional attributes but also the overall performance in this environment.
 ```
 
+## Experiments
 
-## Experimental setup
-Info about algorithms, environments used, metrics collected, methods, reproducibility, statistical verification
-
-## Observations
-What conclusions can be drawn?
+```{tableofcontents}
+```
 
 ## Answers to research questions
-...
+Check if figure from other document can be referenced, like Fig {numref}`{number} <rmpx3bit-enc2bit-fig>`.

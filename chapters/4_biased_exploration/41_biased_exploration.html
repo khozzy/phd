@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview of the selected environments &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>4.1. Biased exploration &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,6 +51,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Experiment 1 - Multi-steps problems performance" href="41_experiment_1.html" />
+    <link rel="prev" title="4. Optimizing formation of internal model" href="41_introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -94,7 +96,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../1_introduction/11_introduction.html">
    1. Introduction
@@ -123,7 +125,7 @@
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="21_introduction.html">
+  <a class="reference internal" href="../2_selected_topics/21_introduction.html">
    2. Selected topics of Learning Classifier Systems
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
@@ -133,18 +135,28 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="22_alcs_history.html">
+    <a class="reference internal" href="../2_selected_topics/22_alcs_history.html">
      2.1. Road towards Anticipatory Learning Classifier Systems
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="23_real_value_challenge.html">
+    <a class="reference internal" href="../2_selected_topics/23_real_value_challenge.html">
      2.2. Real-valued signal challenge
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="24_kpi.html">
+    <a class="reference internal" href="../2_selected_topics/24_kpi.html">
      2.3. Key performance indicators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/25_stats.html">
+     2.4. Statistical verification of results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/26_envs.html">
+     2.5. Overview of the selected environments
     </a>
    </li>
   </ul>
@@ -159,17 +171,73 @@
    </i>
   </label>
   <ul>
-   <li class="toctree-l2">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
      3.1. Interval-based representation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+       Experiment 1 - Encoding precision
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+       Experiment 2 - Nature of the intervals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+     3.2. Discretizing input signal
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../4_biased_exploration/41_introduction.html">
-   4. Biased exploration
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="41_introduction.html">
+   4. Optimizing formation of internal model
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="current reference internal" href="#">
+     4.1. Biased exploration
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="41_experiment_1.html">
+       Experiment 1 - Multi-steps problems performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="41_experiment_2.html">
+       Experiment 2 - Single-step problem performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="41_experiment_3.html">
+       Experiment 3 - Balacing the pole
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
@@ -227,7 +295,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/2_selected_topics/25_envs.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/4_biased_exploration/41_biased_exploration.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -247,7 +315,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/2_selected_topics/25_envs.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/4_biased_exploration/41_biased_exploration.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -268,6 +336,39 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experimental-evaluation">
+   Experimental evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#research-questions">
+   Research questions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goals-of-the-experiments">
+   Goals of the experiments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#answers-to-research-questions">
+   Answers to research questions
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -275,20 +376,95 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Overview of the selected environments</h1>
+                <h1>Biased exploration</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experimental-evaluation">
+   Experimental evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#research-questions">
+   Research questions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goals-of-the-experiments">
+   Goals of the experiments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#answers-to-research-questions">
+   Answers to research questions
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="overview-of-the-selected-environments">
-<h1>Overview of the selected environments<a class="headerlink" href="#overview-of-the-selected-environments" title="Permalink to this headline">¶</a></h1>
-<p>Corridor, Grid, RMPX, Checkerboard, CartPole, FSW, WoodsX</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="biased-exploration">
+<h1><span class="section-number">4.1. </span>Biased exploration<a class="headerlink" href="#biased-exploration" title="Permalink to this headline">¶</a></h1>
+<p>Increase the speed of gaining knowledge by determining the most valuable regions of the input-space. Tell why it is important for the real-valued case. Describe the action selection, methods (epsilon-greedy, action delay, knowledge-array and OIQ - novel).</p>
+<div class="section" id="experimental-evaluation">
+<h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
+<p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
+</div>
+<div class="section" id="research-questions">
+<h2>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h2>
+<p>The conducted research aims to answer the following question regarding rACS algorithm and the interval based representation</p>
+<ol class="simple">
+<li><p>Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?</p></li>
+<li><p>Can the OIQ method improve the performance in terms of ingesting knowledge or reducing classifier population size?</p></li>
+</ol>
+</div>
+<div class="section" id="goals-of-the-experiments">
+<h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
+<p>In all the experiments the difference between four exploration methods will be compared using the ACS2 agent.</p>
+<div class="admonition-experiment-1-multi-steps-problems-performance admonition">
+<p class="admonition-title"><em>Experiment 1 - Multi-steps problems performance</em></p>
+<p>Use two basic multistep environments (<a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>) to determine the differences between the rate of gaining knowledge, ability of building internal pool of classifiers and operating in the environments.</p>
+</div>
+<div class="admonition-experiment-2-single-step-problem-performance admonition">
+<p class="admonition-title"><em>Experiment 2 - Single-step problem performance</em></p>
+<p>Similarly, as above but in this case a single step 6-bit <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">rMPX</span></a> environment is used introducing much larger possible states space. Since calculating precise model knowledge is time-consuming, the key indicators chosen are the average obtained reward and model size.</p>
+</div>
+<div class="admonition-experiment-3-balacing-the-pole admonition">
+<p class="admonition-title"><em>Experiment 3 - Balacing the pole</em></p>
+<p>The methods will be evaluated on the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-cartpole"><span class="std std-ref">CartPole</span></a> problem of balacing a pole on a cart. This is a novel problem for the LCS due to specific observation space (where two attributes span to infinity) and specific reward scheme based on how long the pole is kept upright.</p>
+</div>
+</div>
+<div class="section" id="experiments">
+<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="41_experiment_1.html">Experiment 1 - Multi-steps problems performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="41_experiment_2.html">Experiment 2 - Single-step problem performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="41_experiment_3.html">Experiment 3 - Balacing the pole</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="answers-to-research-questions">
+<h2>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h2>
+<p>…</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -304,7 +480,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters/2_selected_topics"
+            path: "./chapters/4_biased_exploration"
         },
         predefinedOutput: true
     }
@@ -315,7 +491,21 @@
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="41_introduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">4. </span>Optimizing formation of internal model</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="41_experiment_1.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Experiment 1 - Multi-steps problems performance</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             
         </div>

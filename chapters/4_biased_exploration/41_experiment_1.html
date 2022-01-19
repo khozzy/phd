@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiment 1 - Multi-steps problems performance &#8212; Real-valued Anticipatory Classifier System</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Experiment 2 - Single-step problem performance" href="41_experiment_2.html" />
+    <link rel="prev" title="4.1. Biased exploration" href="41_biased_exploration.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/pwr_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Real-valued Anticipatory Classifier System</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Real-valued Anticipatory Classifier System
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_introduction/11_introduction.html">
+   1. Introduction
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/12_motivation.html">
+     1.1. Motivation and challenges
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/13_aims_goals.html">
+     1.2. Research hypothesis, its aims and goals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/14_structure.html">
+     1.3. Thesis structure
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_selected_topics/21_introduction.html">
+   2. Selected topics of Learning Classifier Systems
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/22_alcs_history.html">
+     2.1. Road towards Anticipatory Learning Classifier Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/23_real_value_challenge.html">
+     2.2. Real-valued signal challenge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/24_kpi.html">
+     2.3. Key performance indicators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/25_stats.html">
+     2.4. Statistical verification of results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/26_envs.html">
+     2.5. Overview of the selected environments
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_internalizing/31_introduction.html">
+   3. Internalizing knowledge with increased input-space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
+     3.1. Interval-based representation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+       Experiment 1 - Encoding precision
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+       Experiment 2 - Nature of the intervals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+     3.2. Discretizing input signal
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="41_introduction.html">
+   4. Optimizing formation of internal model
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="41_biased_exploration.html">
+     4.1. Biased exploration
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Experiment 1 - Multi-steps problems performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="41_experiment_2.html">
+       Experiment 2 - Single-step problem performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="41_experiment_3.html">
+       Experiment 3 - Balacing the pole
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
+   5. Diminishing reward
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../abbreviations.html">
+   6. Abbreviations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../bibliography.html">
+   7. Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/4_biased_exploration/41_experiment_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/khozzy/phd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/4_biased_exploration/41_experiment_1.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/4_biased_exploration/41_experiment_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#corridor">
+     Corridor
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grid">
+     Grid
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Experiment 1 - Multi-steps problems performance</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#corridor">
+     Corridor
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grid">
+     Grid
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># put custom scripts to module path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.metrics</span> <span class="kn">import</span> <span class="n">parse_experiments_results</span><span class="p">,</span> <span class="n">corridor_transition_knowledge</span><span class="p">,</span> <span class="n">grid_transition_knowledge</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">biased_exploration_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
+<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+<span class="kn">from</span> <span class="nn">lcs.strategies.action_selection</span> <span class="kn">import</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="n">KnowledgeArray</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">COLORS</span> <span class="o">=</span> <span class="n">biased_exploration_colors</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
+
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">):</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">env_provider</span><span class="p">()</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+
+    <span class="n">explorer</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">metrics_explore</span> <span class="o">=</span> <span class="n">explorer</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">)</span>
+
+    <span class="n">exploiter</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">explorer</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+    <span class="n">metrics_exploit</span> <span class="o">=</span> <span class="n">explorer</span><span class="o">.</span><span class="n">exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">)</span>
+
+    <span class="c1"># Parse results into DataFrame</span>
+    <span class="n">metrics_df</span> <span class="o">=</span> <span class="n">parse_experiments_results</span><span class="p">(</span><span class="n">metrics_explore</span><span class="p">,</span> <span class="n">metrics_exploit</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">metrics_trial_frequency</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">metrics_df</span>
+
+
+<span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">epsilon_greedy_df</span><span class="p">,</span> <span class="n">action_delay_df</span><span class="p">,</span> <span class="n">knowledge_array_df</span><span class="p">,</span> <span class="n">op_initial_df</span><span class="p">,</span>
+         <span class="n">env_name</span><span class="p">,</span>
+         <span class="n">num_explore_trials</span><span class="p">,</span>
+         <span class="n">first_knowledge_trials</span><span class="p">,</span>
+         <span class="n">first_population_trials</span><span class="p">,</span>
+         <span class="n">population_ylim</span><span class="p">,</span>
+         <span class="n">text_box_loc</span><span class="p">,</span>
+         <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+    <span class="c1"># Layout</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">.25</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">.4</span><span class="p">)</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+
+    <span class="c1"># Global title</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Performance of [</span><span class="si">{</span><span class="n">env_name</span><span class="si">}</span><span class="s1">] environment&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+
+    <span class="c1"># Knowledge</span>
+    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;knowledge&#39;</span><span class="p">][:</span><span class="n">first_knowledge_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;knowledge&#39;</span><span class="p">][:</span><span class="n">first_knowledge_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;knowledge&#39;</span><span class="p">][:</span><span class="n">first_knowledge_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;knowledge&#39;</span><span class="p">][:</span><span class="n">first_knowledge_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span>
+                                                             <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Knowledge&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Trial&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Knowledge&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mtick</span><span class="o">.</span><span class="n">PercentFormatter</span><span class="p">())</span>
+
+    <span class="c1"># Population</span>
+    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">][:</span><span class="n">first_population_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">][:</span><span class="n">first_population_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">][:</span><span class="n">first_population_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">][:</span><span class="n">first_population_trials</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span>
+                                                               <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+
+    <span class="n">ax2</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Trial&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Classifiers&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Classifiers Population&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">population_ylim</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mtick</span><span class="o">.</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.0f</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mtick</span><span class="o">.</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.0f</span><span class="s1">&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Steps in trial</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># window for moving average</span>
+    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span>
+                                                                           <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span>
+                                                                            <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span>
+                                                                       <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+
+    <span class="n">ax3</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Trial&#39;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Steps&#39;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Steps in trial&#39;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">num_explore_trials</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">**</span><span class="n">text_box_loc</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Moving average of </span><span class="si">{</span><span class="n">window</span><span class="si">}</span><span class="s1"> samples&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;italic&#39;</span><span class="p">,</span>
+             <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;facecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;pad&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+    <span class="c1"># Create legend</span>
+    <span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-multi-steps-problems-performance">
+<h1>Experiment 1 - Multi-steps problems performance<a class="headerlink" href="#experiment-1-multi-steps-problems-performance" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="corridor">
+<h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">CorridorObservationWrapper</span>
+
+<span class="c1"># Function for calculating relevant metrics</span>
+<span class="k">def</span> <span class="nf">corridor_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">corridor_transition_knowledge</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">metrics</span>
+
+
+<span class="k">def</span> <span class="nf">corridor_env_provider</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">))</span>
+
+
+<span class="n">corridor_base_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;classifier_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;number_of_possible_actions&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="s2">&quot;initial_q&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;theta_exp&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;theta_ga&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;do_ga&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;mu&quot;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span>
+    <span class="s2">&quot;u_max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;metrics_trial_frequency&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;user_metrics_collector_fcn&quot;</span><span class="p">:</span> <span class="n">corridor_metrics</span>
+<span class="p">}</span>
+
+<span class="c1"># Start experiments</span>
+<span class="n">corridor_explore_trials</span><span class="p">,</span> <span class="n">corridor_exploit_trials</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/epsilon_greedy.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corridor_epsilon_greedy</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">corridor_env_provider</span><span class="p">,</span>
+                          <span class="n">corridor_explore_trials</span><span class="p">,</span>
+                          <span class="n">corridor_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">corridor_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/action_delay.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corridor_action_delay</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">corridor_env_provider</span><span class="p">,</span>
+                          <span class="n">corridor_explore_trials</span><span class="p">,</span>
+                          <span class="n">corridor_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">corridor_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">ActionDelay</span><span class="p">,</span>
+                                                     <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/knowledge_array.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corridor_knowledge_array</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">corridor_env_provider</span><span class="p">,</span>
+                          <span class="n">corridor_explore_trials</span><span class="p">,</span>
+                          <span class="n">corridor_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">corridor_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">KnowledgeArray</span><span class="p">,</span>
+                                                     <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corridor_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">corridor_env_provider</span><span class="p">,</span>
+                          <span class="n">corridor_explore_trials</span><span class="p">,</span>
+                          <span class="n">corridor_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">corridor_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">,</span>
+                                                     <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="grid">
+<h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym_grid</span>  <span class="c1"># noqa: F401</span>
+
+<span class="c1"># Function for calculating relevant metrics</span>
+<span class="k">def</span> <span class="nf">grid_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">grid_transition_knowledge</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">metrics</span>
+
+
+<span class="k">def</span> <span class="nf">grid_env_provider</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;grid-20-v0&#39;</span><span class="p">)</span>
+
+
+<span class="n">grid_base_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;classifier_length&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;number_of_possible_actions&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="s2">&quot;initial_q&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;theta_exp&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;theta_ga&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;do_ga&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;mu&quot;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span>
+    <span class="s2">&quot;u_max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;metrics_trial_frequency&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;user_metrics_collector_fcn&quot;</span><span class="p">:</span> <span class="n">grid_metrics</span>
+<span class="p">}</span>
+
+<span class="c1"># Start experiments</span>
+<span class="n">grid_explore_trials</span><span class="p">,</span> <span class="n">grid_exploit_trials</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/epsilon_greedy.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">grid_epsilon_greedy</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">grid_env_provider</span><span class="p">,</span>
+                          <span class="n">grid_explore_trials</span><span class="p">,</span>
+                          <span class="n">grid_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">grid_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/action_delay.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">grid_action_delay</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">grid_env_provider</span><span class="p">,</span>
+                          <span class="n">grid_explore_trials</span><span class="p">,</span>
+                          <span class="n">grid_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">grid_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/knowledge_array.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">grid_knowledge_array</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">grid_env_provider</span><span class="p">,</span>
+                          <span class="n">grid_explore_trials</span><span class="p">,</span>
+                          <span class="n">grid_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">grid_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">KnowledgeArray</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">grid_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">grid_env_provider</span><span class="p">,</span>
+                          <span class="n">grid_explore_trials</span><span class="p">,</span>
+                          <span class="n">grid_exploit_trials</span><span class="p">,</span>
+                          <span class="o">**</span><span class="p">(</span><span class="n">grid_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execute calculations</span>
+<span class="n">corridor_epsilon_greedy_dfs</span> <span class="o">=</span> <span class="n">corridor_epsilon_greedy</span><span class="p">()</span>
+<span class="n">corridor_action_delay_dfs</span> <span class="o">=</span> <span class="n">corridor_action_delay</span><span class="p">()</span>
+<span class="n">corridor_knowledge_array_dfs</span> <span class="o">=</span> <span class="n">corridor_knowledge_array</span><span class="p">()</span>
+<span class="n">corridor_oiq_dfs</span> <span class="o">=</span> <span class="n">corridor_oiq</span><span class="p">()</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plot</span><span class="p">(</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor_epsilon_greedy_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor_action_delay_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor_knowledge_array_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor_oiq_dfs</span><span class="p">),</span>
+    <span class="n">env_name</span><span class="o">=</span><span class="s1">&#39;Corridor-20&#39;</span><span class="p">,</span>
+    <span class="n">num_explore_trials</span><span class="o">=</span><span class="n">corridor_explore_trials</span><span class="p">,</span>
+    <span class="n">first_knowledge_trials</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">first_population_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">population_ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+    <span class="n">text_box_loc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">},</span>
+    <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-performance.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="full-width figure align-default" id="corridor-fig">
+<img alt="../../_images/corridor-performance.png" src="../../_images/corridor-performance.png" />
+<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Performance in Corridor environment</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execute calculations</span>
+<span class="n">grid_epsilon_greedy_dfs</span> <span class="o">=</span> <span class="n">grid_epsilon_greedy</span><span class="p">()</span>
+<span class="n">grid_action_delay_dfs</span> <span class="o">=</span> <span class="n">grid_action_delay</span><span class="p">()</span>
+<span class="n">grid_knowledge_array_dfs</span> <span class="o">=</span> <span class="n">grid_knowledge_array</span><span class="p">()</span>
+<span class="n">grid_oiq_dfs</span> <span class="o">=</span> <span class="n">grid_oiq</span><span class="p">()</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plot</span><span class="p">(</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid_epsilon_greedy_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid_action_delay_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid_knowledge_array_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid_oiq_dfs</span><span class="p">),</span>
+    <span class="n">env_name</span><span class="o">=</span><span class="s1">&#39;Grid-20&#39;</span><span class="p">,</span>
+    <span class="n">num_explore_trials</span><span class="o">=</span><span class="n">grid_explore_trials</span><span class="p">,</span>
+    <span class="n">first_knowledge_trials</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">first_population_trials</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">population_ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span>
+    <span class="n">text_box_loc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">},</span>
+    <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/grid-performance.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="full-width figure align-default" id="grid-fig">
+<img alt="../../_images/grid-performance.png" src="../../_images/grid-performance.png" />
+<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Performance in Grid environment</span><a class="headerlink" href="#grid-fig" title="Permalink to this image">¶</a></p>
+</div>
+<hr class="docutils" />
+<p><strong>Software packages used</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">session_info</span>
+<span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><details>
+<summary>Click to view session information</summary>
+<pre>
+-----
+gym                 0.21.0
+gym_corridor        NA
+gym_grid            NA
+lcs                 NA
+matplotlib          3.5.0
+pandas              1.3.1
+session_info        1.0.0
+src                 (embedded book's utils module)
+-----
+</pre>
+<details>
+<summary>Click to view modules imported as dependencies</summary>
+<pre>
+PIL                         8.4.0
+backcall                    0.2.0
+brotli                      NA
+certifi                     2021.10.08
+cffi                        1.14.6
+charset_normalizer          2.0.4
+click                       7.1.2
+cloudpickle                 2.0.0
+colorama                    0.4.4
+colorful                    0.5.4
+colorful_orig               0.5.4
+cryptography                36.0.0
+cycler                      0.10.0
+cython_runtime              NA
+databricks_cli              NA
+dateutil                    2.8.2
+debugpy                     1.5.1
+decorator                   5.1.0
+defusedxml                  0.7.1
+dill                        0.3.4
+entrypoints                 0.3
+filelock                    3.4.2
+google                      NA
+grpc                        1.43.0
+hiredis                     2.0.0
+idna                        3.3
+importlib_metadata          NA
+ipykernel                   6.4.1
+ipython_genutils            0.2.0
+jedi                        0.18.0
+kiwisolver                  1.3.1
+matplotlib_inline           NA
+mkl                         2.4.0
+mlflow                      1.22.0
+mpl_toolkits                NA
+msgpack                     1.0.2
+numpy                       1.21.2
+packaging                   21.3
+parso                       0.8.3
+pexpect                     4.8.0
+pickleshare                 0.7.5
+pkg_resources               NA
+prompt_toolkit              3.0.20
+psutil                      5.8.0
+ptyprocess                  0.7.0
+pydev_ipython               NA
+pydevconsole                NA
+pydevd                      2.6.0
+pydevd_concurrency_analyser NA
+pydevd_file_utils           NA
+pydevd_plugins              NA
+pydevd_tracing              NA
+pyexpat                     NA
+pygments                    2.10.0
+pyparsing                   3.0.4
+pytz                        2021.3
+ray                         1.9.2
+redis                       4.1.1
+requests                    2.27.1
+setproctitle                1.2.2
+six                         1.16.0
+socks                       1.7.1
+sphinxcontrib               NA
+storemagic                  NA
+tornado                     6.1
+tqdm                        4.62.3
+traitlets                   5.1.1
+typing_extensions           NA
+urllib3                     1.26.7
+wcwidth                     0.2.5
+yaml                        6.0
+zipp                        NA
+zmq                         22.3.0
+</pre>
+</details> <!-- seems like this ends pre, so might as well be explicit -->
+<pre>
+-----
+IPython             7.29.0
+jupyter_client      7.1.0
+jupyter_core        4.9.1
+notebook            6.4.6
+-----
+Python 3.9.6 (default, Aug 18 2021, 19:38:01) [GCC 7.5.0]
+Linux-5.13.0-25-generic-x86_64-with-glibc2.31
+-----
+Session information updated at 2022-01-19 19:36
+</pre>
+</details></div></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/4_biased_exploration"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="41_biased_exploration.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">4.1. </span>Biased exploration</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="41_experiment_2.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Experiment 2 - Single-step problem performance</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Norbert Kozłowski<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div><a href="https://wit.pwr.edu.pl/en/">Faculty of Computer Science and Telecommunications</a> - <a href="https://dce.pwr.edu.pl/">Department of Computer Engineering</a></div> 
+
+      </div>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
