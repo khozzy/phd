@@ -7,6 +7,11 @@ class CorridorObservationWrapper(gym.ObservationWrapper):
         return obs,
 
 
+class FSWObservationWrapper(gym.ObservationWrapper):
+    def observation(self, observation):
+        return observation,
+
+
 class BinnedObservationWrapper(gym.ObservationWrapper):
     """
     Divide observation using environment's observation space into `num_bins` equal bins.
