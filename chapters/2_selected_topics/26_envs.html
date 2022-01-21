@@ -51,7 +51,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Internalizing knowledge with increased input-space" href="../3_internalizing/31_introduction.html" />
+    <link rel="next" title="3. Ways of handling real-valued input signal" href="../3_internalizing/31_introduction.html" />
     <link rel="prev" title="2.4. Statistical verification of results" href="25_stats.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -163,7 +163,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../3_internalizing/31_introduction.html">
-   3. Internalizing knowledge with increased input-space
+   3. Ways of handling real-valued input signal
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -239,10 +239,39 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
-   5. Diminishing reward
+   5. Optimizing distributing reward through long action chains
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../5_diminishing_reward/51_diminishing_reward.html">
+     5.1. Diminishing reward
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_diminishing_reward/51_experiment_1.html">
+       Experiment 1 - Corridor environment
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_diminishing_reward/51_experiment_2.html">
+       Experiment 2 - Finite-State-World Environment
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -384,13 +413,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-state-worlds">
-   Finite State Worlds
+  <a class="reference internal nav-link" href="#finite-state-worlds-fsw">
+   Finite State Worlds (FSW)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#woods">
-   Woods
+  <a class="reference internal nav-link" href="#woods1">
+   Woods1
   </a>
  </li>
 </ul>
@@ -439,13 +468,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-state-worlds">
-   Finite State Worlds
+  <a class="reference internal nav-link" href="#finite-state-worlds-fsw">
+   Finite State Worlds (FSW)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#woods">
-   Woods
+  <a class="reference internal nav-link" href="#woods1">
+   Woods1
   </a>
  </li>
 </ul>
@@ -499,7 +528,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.78, 0.37, 1.0, 0.96, 0.77, 0.68, 0.0]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.7, 0.24, 0.14, 0.87, 0.38, 0.28, 0.0]
 </pre></div>
 </div>
 </div>
@@ -515,7 +544,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 0, 1, 1, 1, 1, 0]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 0, 0, 1, 0, 0, 0]
 </pre></div>
 </div>
 </div>
@@ -569,12 +598,16 @@
 <p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">The cartpole environment</span><a class="headerlink" href="#cartpole-env" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<div class="section" id="finite-state-worlds">
-<h2>Finite State Worlds<a class="headerlink" href="#finite-state-worlds" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="finite-state-worlds-fsw">
+<span id="section-topics-environments-fsw"></span><h2>Finite State Worlds (FSW)<a class="headerlink" href="#finite-state-worlds-fsw" title="Permalink to this headline">¶</a></h2>
 <p>…</p>
+<div class="figure align-default" id="fsw-env">
+<img alt="../../_images/fsw.png" src="../../_images/fsw.png" />
+<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">A Finite State World of length 5 (FSW-5). Environment is especially suited for measuring a reward propagation for long action chains.</span><a class="headerlink" href="#fsw-env" title="Permalink to this image">¶</a></p>
 </div>
-<div class="section" id="woods">
-<h2>Woods<a class="headerlink" href="#woods" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="woods1">
+<span id="section-topics-environments-woods1"></span><h2>Woods1<a class="headerlink" href="#woods1" title="Permalink to this headline">¶</a></h2>
 <p>…</p>
 </div>
 </div>
@@ -614,7 +647,7 @@
     <a class='right-next' id="next-link" href="../3_internalizing/31_introduction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Internalizing knowledge with increased input-space</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Ways of handling real-valued input signal</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

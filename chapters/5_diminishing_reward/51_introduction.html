@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. Diminishing reward &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>5. Optimizing distributing reward through long action chains &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -42,8 +42,6 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -53,7 +51,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="6. Abbreviations" href="../../abbreviations.html" />
+    <link rel="next" title="5.1. Diminishing reward" href="51_diminishing_reward.html" />
     <link rel="prev" title="Experiment 3 - Balacing the pole" href="../4_biased_exploration/41_experiment_3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -165,7 +163,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../3_internalizing/31_introduction.html">
-   3. Internalizing knowledge with increased input-space
+   3. Ways of handling real-valued input signal
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -241,10 +239,39 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 current active">
+ <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
-   5. Diminishing reward
+   5. Optimizing distributing reward through long action chains
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="51_diminishing_reward.html">
+     5.1. Diminishing reward
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="51_experiment_1.html">
+       Experiment 1 - Corridor environment
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="51_experiment_2.html">
+       Experiment 2 - Finite-State-World Environment
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -297,9 +324,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/5_diminishing_reward/51_introduction.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/5_diminishing_reward/51_introduction.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -333,23 +360,6 @@
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/5_diminishing_reward/51_introduction.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
@@ -362,7 +372,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Diminishing reward</h1>
+                <h1>Optimizing distributing reward through long action chains</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -373,52 +383,17 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="diminishing-reward">
-<h1><span class="section-number">5. </span>Diminishing reward<a class="headerlink" href="#diminishing-reward" title="Permalink to this headline">¶</a></h1>
-<p>Chapter goes here. This one is the interactive notebook see the Figure <a class="reference internal" href="#markdown-fig"><span class="std std-numref">5.1</span></a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span><span class="p">,</span> <span class="n">cycler</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span> <span class="c1"># turn off interactive plotting</span>
-
-<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fixing random state for reproducibility</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">19680801</span><span class="p">)</span>
-
-<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span>
-<span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cycler</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)))</span>
-
-
-<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
-<span class="n">custom_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-                <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="mf">.5</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-                <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="mf">1.</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)]</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">custom_lines</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Colder&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span> <span class="s1">&#39;Hotter&#39;</span><span class="p">])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/plot.png&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="figure align-default" id="markdown-fig">
-<img alt="../../_images/plot.png" src="../../_images/plot.png" />
-<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">This is a caption in <strong>Markdown</strong> Is latex also supported? <span class="math notranslate nohighlight">\(1 = \frac{1}{n+2}\)</span>!</span><a class="headerlink" href="#markdown-fig" title="Permalink to this image">¶</a></p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="optimizing-distributing-reward-through-long-action-chains">
+<h1><span class="section-number">5. </span>Optimizing distributing reward through long action chains<a class="headerlink" href="#optimizing-distributing-reward-through-long-action-chains" title="Permalink to this headline">¶</a></h1>
+<p>Explain the problem of reward distribution in long action chains. Describe Q- nad R-Learning.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="51_diminishing_reward.html">5.1. Diminishing reward</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="51_experiment_1.html">Experiment 1 - Corridor environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="51_experiment_2.html">Experiment 2 - Finite-State-World Environment</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
@@ -454,10 +429,10 @@
             <p class="prev-next-title">Experiment 3 - Balacing the pole</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../../abbreviations.html" title="next page">
+    <a class='right-next' id="next-link" href="51_diminishing_reward.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">6. </span>Abbreviations</p>
+        <p class="prev-next-title"><span class="section-number">5.1. </span>Diminishing reward</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

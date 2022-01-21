@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiment 1 - Corridor environment &#8212; Real-valued Anticipatory Classifier System</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Experiment 2 - Finite-State-World Environment" href="51_experiment_2.html" />
+    <link rel="prev" title="5.1. Diminishing reward" href="51_diminishing_reward.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/pwr_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Real-valued Anticipatory Classifier System</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Real-valued Anticipatory Classifier System
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_introduction/11_introduction.html">
+   1. Introduction
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/12_motivation.html">
+     1.1. Motivation and challenges
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/13_aims_goals.html">
+     1.2. Research hypothesis, its aims and goals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_introduction/14_structure.html">
+     1.3. Thesis structure
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_selected_topics/21_introduction.html">
+   2. Selected topics of Learning Classifier Systems
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/22_alcs_history.html">
+     2.1. Road towards Anticipatory Learning Classifier Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/23_real_value_challenge.html">
+     2.2. Real-valued signal challenge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/24_kpi.html">
+     2.3. Key performance indicators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/25_stats.html">
+     2.4. Statistical verification of results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_selected_topics/26_envs.html">
+     2.5. Overview of the selected environments
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_internalizing/31_introduction.html">
+   3. Ways of handling real-valued input signal
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
+     3.1. Interval-based representation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+       Experiment 1 - Encoding precision
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+       Experiment 2 - Nature of the intervals
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+     3.2. Discretizing input signal
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_biased_exploration/41_introduction.html">
+   4. Optimizing formation of internal model
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../4_biased_exploration/41_biased_exploration.html">
+     4.1. Biased exploration
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_biased_exploration/41_experiment_1.html">
+       Experiment 1 - Multi-steps problems performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_biased_exploration/41_experiment_2.html">
+       Experiment 2 - Single-step problem performance
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_biased_exploration/41_experiment_3.html">
+       Experiment 3 - Balacing the pole
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="51_introduction.html">
+   5. Optimizing distributing reward through long action chains
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="51_diminishing_reward.html">
+     5.1. Diminishing reward
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Experiment 1 - Corridor environment
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="51_experiment_2.html">
+       Experiment 2 - Finite-State-World Environment
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../abbreviations.html">
+   6. Abbreviations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../bibliography.html">
+   7. Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/5_diminishing_reward/51_experiment_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/khozzy/phd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/khozzy/phd/issues/new?title=Issue%20on%20page%20%2Fchapters/5_diminishing_reward/51_experiment_1.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/5_diminishing_reward/51_experiment_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#payoff-landscape">
+   Payoff landscape
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Experiment 1 - Corridor environment</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#payoff-landscape">
+   Payoff landscape
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># put custom scripts to module path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span><span class="p">,</span> <span class="n">FormatStrFormatter</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
+
+<span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
+<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+
+<span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">CorridorObservationWrapper</span>
+<span class="kn">from</span> <span class="nn">src.runner</span> <span class="kn">import</span> <span class="n">run_experiments_alternating</span>
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.basic_rl</span> <span class="kn">import</span> <span class="n">run_q_learning_alternating</span><span class="p">,</span> <span class="n">run_r_learning_alternating</span><span class="p">,</span> <span class="n">qlearning</span><span class="p">,</span> <span class="n">rlearning</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">diminishing_reward_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
+<span class="kn">from</span> <span class="nn">src.payoff_landscape</span> <span class="kn">import</span> <span class="n">get_all_state_action</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;../../../src/phd.mplstyle&#39;</span><span class="p">)</span>
+
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">10</span>
+
+
+<span class="k">def</span> <span class="nf">common_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_population</span><span class="p">()</span>
+    <span class="n">agent_name</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">):</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">rho</span>
+        <span class="n">agent_name</span> <span class="o">+=</span> <span class="s2">&quot;_v&quot;</span> <span class="o">+</span> <span class="n">agent</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">rho_update_version</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;agent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agent_name</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()])</span>
+
+    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">metrics</span>
+
+
+<span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">run_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-corridor-environment">
+<h1>Experiment 1 - Corridor environment<a class="headerlink" href="#experiment-1-corridor-environment" title="Permalink to this headline">¶</a></h1>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Params</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">discount_factor</span> <span class="o">=</span> <span class="mf">0.95</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.0001</span>
+
+
+<span class="k">def</span> <span class="nf">corridor_env_provider</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">))</span>
+
+
+<span class="c1"># Set ACS2/AACS2 configuration parameter dictionary</span>
+<span class="n">basic_cfg</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;perception_bits&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;possible_actions&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;do_ga&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">,</span>
+    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="n">epsilon</span><span class="p">,</span>
+    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">discount_factor</span><span class="p">,</span>
+    <span class="s1">&#39;zeta&#39;</span><span class="p">:</span> <span class="n">zeta</span><span class="p">,</span>
+    <span class="s1">&#39;user_metrics_collector_fcn&#39;</span><span class="p">:</span> <span class="n">common_metrics</span><span class="p">,</span>
+    <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/acs2.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_acs2_in_corridor</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_experiments_alternating</span><span class="p">(</span><span class="n">corridor_env_provider</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">basic_cfg</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/qlearning.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_qlearning_in_corridor</span><span class="p">():</span>
+    <span class="n">corridor_env</span> <span class="o">=</span> <span class="n">corridor_env_provider</span><span class="p">()</span>
+    <span class="n">init_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">corridor_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">corridor_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">run_q_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">corridor_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span>
+                                      <span class="n">init_Q</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/rlearning.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_rlearning_in_corridor</span><span class="p">():</span>
+    <span class="n">corridor_env</span> <span class="o">=</span> <span class="n">corridor_env_provider</span><span class="p">()</span>
+    <span class="n">init_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">corridor_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">corridor_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">run_r_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">corridor_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">init_R</span><span class="p">,</span>
+                                      <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+
+<span class="c1"># run computations</span>
+<span class="n">acs2_runs_details</span> <span class="o">=</span> <span class="n">run_acs2_in_corridor</span><span class="p">()</span>
+<span class="n">q_learning_metrics</span> <span class="o">=</span> <span class="n">run_qlearning_in_corridor</span><span class="p">()</span>
+<span class="n">r_learning_metrics</span> <span class="o">=</span> <span class="n">run_rlearning_in_corridor</span><span class="p">()</span>
+
+<span class="c1"># average runs and create aggregated metrics data frame</span>
+<span class="n">acs2_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">acs2_runs_details</span><span class="p">]</span>
+
+<span class="n">agg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">acs2_metrics</span><span class="p">)),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_metrics</span><span class="p">)),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_metrics</span><span class="p">))]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_pop_and_rho</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">diminishing_reward_colors</span><span class="p">()</span>
+
+    <span class="n">expl_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exploit&#39;</span><span class="p">]</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="n">trials</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="c1"># Steps in trial plot</span>
+    <span class="k">for</span> <span class="n">alg</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ACS2&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v1&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v2&#39;</span><span class="p">,</span> <span class="s1">&#39;Q-Learning&#39;</span><span class="p">,</span> <span class="s1">&#39;R-Learning&#39;</span><span class="p">]:</span>
+        <span class="n">alg_df</span> <span class="o">=</span> <span class="n">expl_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">alg</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;exploit trial&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alg_df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">alg_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">alg_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">alg</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">alg</span><span class="p">])</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Exploit trial&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%1.0f</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of steps&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Steps in trial&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Rho plot</span>
+    <span class="k">for</span> <span class="n">alg</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;AACS2_v1&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v2&#39;</span><span class="p">,</span> <span class="s1">&#39;R-Learning&#39;</span><span class="p">]:</span>
+        <span class="n">alg_df</span> <span class="o">=</span> <span class="n">expl_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">alg</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;exploit trial&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alg_df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">alg_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">alg_df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">alg</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">alg</span><span class="p">])</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Exploit trial&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%1.0f</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\mathregular{\rho}$&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Estimated average $\mathregular{\rho}$&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plot_pop_and_rho</span><span class="p">(</span><span class="n">agg_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-performance.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="full-width figure align-default" id="corridor-fig">
+<img alt="../../_images/corridor-performance1.png" src="../../_images/corridor-performance1.png" />
+<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor environment</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="payoff-landscape">
+<h2>Payoff landscape<a class="headerlink" href="#payoff-landscape" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor_env</span> <span class="o">=</span> <span class="n">corridor_env_provider</span><span class="p">()</span>
+<span class="n">state_action</span> <span class="o">=</span> <span class="n">get_all_state_action</span><span class="p">(</span><span class="n">corridor_env</span><span class="o">.</span><span class="n">unwrapped</span><span class="o">.</span><span class="n">_state_action</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_actions</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="n">payoffs</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">sa</span> <span class="ow">in</span> <span class="n">state_actions</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">((</span><span class="n">sa</span><span class="o">.</span><span class="n">state</span><span class="p">,))</span>
+
+        <span class="c1"># ACS2</span>
+        <span class="n">acs2_match_set</span> <span class="o">=</span> <span class="n">pop_acs2</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">acs2_action_set</span> <span class="o">=</span> <span class="n">acs2_match_set</span><span class="o">.</span><span class="n">form_action_set</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># AACS2_v1</span>
+        <span class="n">aacs2v1_match_set</span> <span class="o">=</span> <span class="n">pop_aacs2v1</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">aacs2v1_action_set</span> <span class="o">=</span> <span class="n">aacs2v1_match_set</span><span class="o">.</span><span class="n">form_action_set</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># AACS2_v2</span>
+        <span class="n">aacs2v2_match_set</span> <span class="o">=</span> <span class="n">pop_aacs2v2</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">aacs2v2_action_set</span> <span class="o">=</span> <span class="n">aacs2v2_match_set</span><span class="o">.</span><span class="n">form_action_set</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># Check if all states are covered</span>
+        <span class="k">for</span> <span class="n">alg</span><span class="p">,</span> <span class="n">action_set</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;ACS2&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v1&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v2&#39;</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="n">acs2_action_set</span><span class="p">,</span> <span class="n">aacs2v1_action_set</span><span class="p">,</span>
+                                    <span class="n">aacs2v2_action_set</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">action_set</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARN: No </span><span class="si">{</span><span class="n">alg</span><span class="si">}</span><span class="s2"> classifiers for perception: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, action: </span><span class="si">{</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">payoffs</span><span class="p">[</span><span class="n">sa</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;ACS2&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">acs2_action_set</span><span class="p">))),</span>
+            <span class="s1">&#39;AACS2_v1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">aacs2v1_action_set</span><span class="p">))),</span>
+            <span class="s1">&#39;AACS2_v2&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">aacs2v2_action_set</span><span class="p">))),</span>
+            <span class="s1">&#39;Q-Learning&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">state</span><span class="p">),</span> <span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="p">],</span>
+            <span class="s1">&#39;R-Learning&#39;</span><span class="p">:</span> <span class="n">R</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">state</span><span class="p">),</span> <span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="p">]</span>
+        <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">payoffs</span>
+
+<span class="c1"># Take first of each algorithm population pass for presenting payoff landscape</span>
+<span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">acs2_runs_details</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/qlearning-single.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_single_qlearning</span><span class="p">():</span>
+    <span class="n">Q_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">corridor_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">corridor_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">Q</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">qlearning</span><span class="p">(</span><span class="n">corridor_env</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">Q_init</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">Q</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/rlearning-single.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_single_rlearning</span><span class="p">():</span>
+    <span class="n">R_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">corridor_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">corridor_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rlearning</span><span class="p">(</span><span class="n">corridor_env</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">R_init</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">R</span><span class="p">,</span> <span class="n">rho</span>
+
+<span class="n">Q</span> <span class="o">=</span> <span class="n">run_single_qlearning</span><span class="p">()</span>
+<span class="n">R</span><span class="p">,</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">run_single_rlearning</span><span class="p">()</span>
+
+<span class="n">payoffs</span> <span class="o">=</span> <span class="n">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_action</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARN: No ACS2 classifiers for perception: 0, action: 0
+WARN: No AACS2_v1 classifiers for perception: 0, action: 0
+WARN: No AACS2_v2 classifiers for perception: 0, action: 0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3440: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_payoff_landscape</span><span class="p">(</span><span class="n">payoffs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">diminishing_reward_colors</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payoffs</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">alg</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ACS2&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v1&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2_v2&#39;</span><span class="p">,</span> <span class="s1">&#39;Q-Learning&#39;</span><span class="p">,</span> <span class="s1">&#39;R-Learning&#39;</span><span class="p">]:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="n">alg</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">payoffs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">alg</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">alg</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">alg</span><span class="p">])</span>
+
+    <span class="c1"># x-axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%1.0f</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;State-action pairs&quot;</span><span class="p">)</span>
+
+    <span class="c1"># y-axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">250</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Payoff value&quot;</span><span class="p">)</span>
+
+    <span class="c1"># others</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Payoff Landscape&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="sa">fr</span><span class="s1">&#39;$\rho=</span><span class="si">{</span><span class="n">rho</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;R-Learning&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+<span class="n">plot_payoff_landscape</span><span class="p">(</span><span class="n">payoffs</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-payoff-landscape.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="full-width figure align-default" id="corridor-payoff-landscape-fig">
+<img alt="../../_images/corridor-payoff-landscape.png" src="../../_images/corridor-payoff-landscape.png" />
+<p class="caption"><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Corridor payoff landscape</span><a class="headerlink" href="#corridor-payoff-landscape-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/5_diminishing_reward"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="51_diminishing_reward.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">5.1. </span>Diminishing reward</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="51_experiment_2.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Experiment 2 - Finite-State-World Environment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Norbert Kozłowski<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div><a href="https://wit.pwr.edu.pl/en/">Faculty of Computer Science and Telecommunications</a> - <a href="https://dce.pwr.edu.pl/">Department of Computer Engineering</a></div> 
+
+      </div>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

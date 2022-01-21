@@ -163,7 +163,7 @@
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="31_introduction.html">
-   3. Internalizing knowledge with increased input-space
+   3. Ways of handling real-valued input signal
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
@@ -239,10 +239,39 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
-   5. Diminishing reward
+   5. Optimizing distributing reward through long action chains
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../5_diminishing_reward/51_diminishing_reward.html">
+     5.1. Diminishing reward
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_diminishing_reward/51_experiment_1.html">
+       Experiment 1 - Corridor environment
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5_diminishing_reward/51_experiment_2.html">
+       Experiment 2 - Finite-State-World Environment
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -441,6 +470,7 @@
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.agents.racs.metrics</span> <span class="kn">import</span> <span class="n">count_averaged_regions</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
@@ -448,8 +478,6 @@
 
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
-<span class="n">PLOT_DPI</span> <span class="o">=</span> <span class="mi">200</span>
-
 
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">RealValueEncoder</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
@@ -790,7 +818,7 @@
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">8</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
