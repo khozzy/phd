@@ -36,5 +36,10 @@ chapters:
         - file: chapters/4_biased_exploration/41_experiment_2
         - file: chapters/4_biased_exploration/41_experiment_3
 - file: chapters/5_diminishing_reward/51_introduction
+  sections:
+    - file: chapters/5_diminishing_reward/51_diminishing_reward
+      sections:
+        - file: chapters/5_diminishing_reward/51_experiment_1
+        - file: chapters/5_diminishing_reward/51_experiment_2
 - file: abbreviations
 - file: bibliography

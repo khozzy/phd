@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from pylab import cm
 
 # GLOBAL SETTINGS
 PLOT_DPI = 200
@@ -13,4 +14,15 @@ def biased_exploration_colors():
         "ad": cmap(norm(1)),
         "ka": cmap(norm(2)),
         "oiq": cmap(norm(3))
+    }
+
+
+def diminishing_reward_colors():
+    palette = cm.get_cmap('Paired', 5)
+    return {
+        'ACS2': palette(0),
+        'AACS2_v1': palette(1),
+        'AACS2_v2': palette(2),
+        'Q-Learning': palette(3),
+        'R-Learning': palette(4)
     }
