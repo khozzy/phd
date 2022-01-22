@@ -41,5 +41,6 @@ chapters:
       sections:
         - file: chapters/5_diminishing_reward/51_experiment_1
         - file: chapters/5_diminishing_reward/51_experiment_2
+        - file: chapters/5_diminishing_reward/51_experiment_3
 - file: abbreviations
 - file: bibliography
