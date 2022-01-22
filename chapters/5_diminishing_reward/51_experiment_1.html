@@ -51,7 +51,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Experiment 2 - Finite-State-World Environment" href="51_experiment_2.html" />
+    <link rel="next" title="Experiment 2 - Finite-State-World environment" href="51_experiment_2.html" />
     <link rel="prev" title="5.1. Diminishing reward" href="51_diminishing_reward.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -266,7 +266,12 @@
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="51_experiment_2.html">
-       Experiment 2 - Finite-State-World Environment
+       Experiment 2 - Finite-State-World environment
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="51_experiment_3.html">
+       Experiment 3 - Woods1 environment
       </a>
      </li>
     </ul>
@@ -465,8 +470,6 @@
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
 
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">10</span>
-
 
 <span class="k">def</span> <span class="nf">common_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
     <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
@@ -523,6 +526,7 @@
     <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="p">}</span>
 
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
 
 
@@ -761,7 +765,7 @@ WARN: No AACS2_v2 classifiers for perception: 0, action: 0
     <a class='right-next' id="next-link" href="51_experiment_2.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Experiment 2 - Finite-State-World Environment</p>
+        <p class="prev-next-title">Experiment 2 - Finite-State-World environment</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
