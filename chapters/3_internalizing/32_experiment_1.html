@@ -193,10 +193,27 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="33_discretizing_input_signal.html">
      3.2. Discretizing input signal
     </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_3.html">
+       Experiment 3 - Single step
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_4.html">
+       Experiment 3 - Multistep environments
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -204,8 +221,8 @@
   <a class="reference internal" href="../4_biased_exploration/41_introduction.html">
    4. Optimizing formation of internal model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -214,8 +231,8 @@
     <a class="reference internal" href="../4_biased_exploration/41_biased_exploration.html">
      4.1. Biased exploration
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -243,8 +260,8 @@
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
    5. Optimizing distributing reward through long action chains
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -253,8 +270,8 @@
     <a class="reference internal" href="../5_diminishing_reward/51_diminishing_reward.html">
      5.1. Diminishing reward
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-    <label for="toctree-checkbox-8">
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -443,17 +460,8 @@
                 
   <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="c1"># put custom scripts to module path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_multiplexer</span>  <span class="c1"># noqa: F401</span>
@@ -462,9 +470,8 @@
 <span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">ticker</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
-<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
@@ -476,6 +483,7 @@
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">RealValueEncoder</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
 
+
 <span class="k">def</span> <span class="nf">metrics_to_df</span><span class="p">(</span><span class="n">metrics</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="n">lst</span> <span class="o">=</span> <span class="p">[[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;trial&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
 
@@ -485,8 +493,10 @@
 
     <span class="k">return</span> <span class="n">df</span>
 
+
 <span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">single_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="p">,</span> <span class="n">trials</span><span class="p">):</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">env_provider</span><span class="p">()</span>
@@ -523,6 +533,7 @@
     <span class="n">metrics</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">explore_exploit</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">trials</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">metrics_to_df</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">fig_title</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">major_ticker_freq</span> <span class="o">=</span> <span class="mi">4000</span>
@@ -576,29 +587,35 @@
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">20_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
+
 <span class="k">def</span> <span class="nf">rmpx3bit_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_multiplexer</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;real-multiplexer-3bit-v0&#39;</span><span class="p">)</span>
+
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/encoding_1bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_3bit_rmpx_1bit_encoding</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">rmpx3bit_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
 
+
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/encoding_2bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_3bit_rmpx_2bit_encoding</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">rmpx3bit_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
+
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/encoding_3bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_3bit_rmpx_3bit_encoding</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">rmpx3bit_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
 
+
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/encoding_4bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_3bit_rmpx_4bit_encoding</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">rmpx3bit_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
+
 
 <span class="c1"># run computations</span>
 <span class="n">rmpx3bit_encoding_1bit_results</span> <span class="o">=</span> <span class="n">run_3bit_rmpx_1bit_encoding</span><span class="p">()</span>
@@ -613,10 +630,14 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
 
-<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_1bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 1bit UBR encoding&#39;</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_1bit.png&#39;</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_2bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 2bit UBR encoding&#39;</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_2bit.png&#39;</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_3bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 3bit UBR encoding&#39;</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_3bit.png&#39;</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_4bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 4bit UBR encoding&#39;</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_4bit.png&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_1bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 1bit UBR encoding&#39;</span><span class="p">,</span>
+     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_1bit.png&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_2bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 2bit UBR encoding&#39;</span><span class="p">,</span>
+     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_2bit.png&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_3bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 3bit UBR encoding&#39;</span><span class="p">,</span>
+     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_3bit.png&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">rmpx3bit_encoding_4bit_results</span><span class="p">),</span> <span class="s1">&#39;3bit rMPX with 4bit UBR encoding&#39;</span><span class="p">,</span>
+     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_encoding_4bit.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

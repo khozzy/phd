@@ -51,7 +51,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. Optimizing formation of internal model" href="../4_biased_exploration/41_introduction.html" />
+    <link rel="next" title="Experiment 3 - Single step" href="33_experiment_3.html" />
     <link rel="prev" title="Experiment 2 - Nature of the intervals" href="32_experiment_2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -193,10 +193,27 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active">
+   <li class="toctree-l2 current active has-children">
     <a class="current reference internal" href="#">
      3.2. Discretizing input signal
     </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_3.html">
+       Experiment 3 - Single step
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_4.html">
+       Experiment 3 - Multistep environments
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -204,8 +221,8 @@
   <a class="reference internal" href="../4_biased_exploration/41_introduction.html">
    4. Optimizing formation of internal model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -214,8 +231,8 @@
     <a class="reference internal" href="../4_biased_exploration/41_biased_exploration.html">
      4.1. Biased exploration
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -243,8 +260,8 @@
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
    5. Optimizing distributing reward through long action chains
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -253,8 +270,8 @@
     <a class="reference internal" href="../5_diminishing_reward/51_diminishing_reward.html">
      5.1. Diminishing reward
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-    <label for="toctree-checkbox-8">
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -329,9 +346,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/3_internalizing/33_discretizing_input_signal.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/3_internalizing/33_discretizing_input_signal.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -365,23 +382,6 @@
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/3_internalizing/33_discretizing_input_signal.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
@@ -408,13 +408,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experimental-setup">
-   Experimental setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#observations">
-   Observations
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -458,13 +453,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experimental-setup">
-   Experimental setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#observations">
-   Observations
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -497,30 +487,27 @@
 <li><p>What is the relative trial execution time for each evaluated system?</p></li>
 <li><p>How selected  systems relates to the benchmark Dyna-Q algorithm?</p></li>
 </ol>
-<p>And for the hashing discretization methods:</p>
-<ol class="simple">
-<li><p>Does the selection of hashing algorithm significantly affects the metrics.</p></li>
-<li><p>What is the impact of the modulo parameter during the learning process?</p></li>
-</ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
 <h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-experiment-1-performance-comparison-of-acs-acs2-yacs-dynaq-algorithms-discretized-into-fixed-width-buckets admonition">
-<p class="admonition-title"><em>Experiment 1 - Performance comparison of ACS, ACS2, YACS, DynaQ algorithms discretized into fixed-width buckets</em></p>
-<p>The aim of this experiments is to determine the behaviour using the rMPX (single-step), Corridor and Grid (multi-steps) environments.</p>
+<p>The goal of the experiment is to evaluate the performance of selected ALCS agents (ACS, ACS2, YACS) discretized into fixed-width buckets</p>
+<div class="admonition-experiment-3-single-step admonition">
+<p class="admonition-title"><em>Experiment 3 - Single step</em></p>
+<p>The aim of this experiments is to determine the behaviour using the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">rMPX</span></a>.</p>
 </div>
-<div class="admonition-experiment-2-discretization-using-hashing-functions admonition">
-<p class="admonition-title"><em>Experiment 2 - Discretization using hashing functions</em></p>
-<p>The aim of this experiments is to determine if there is a difference when using the SHA256 or MD5 hashing functions with differing modulo values for building the internal representation of the environment.</p>
+<div class="admonition-experiment-4-multistep-environments admonition">
+<p class="admonition-title"><em>Experiment 4 - Multistep environments</em></p>
+<p><a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a> environments.</p>
 </div>
 </div>
-<div class="section" id="experimental-setup">
-<h2>Experimental setup<a class="headerlink" href="#experimental-setup" title="Permalink to this headline">¶</a></h2>
-<p>Info about algorithms, environments used, metrics collected, methods, reproducibility, statistical verification</p>
+<div class="section" id="experiments">
+<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_3.html">Experiment 3 - Single step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_4.html">Experiment 3 - Multistep environments</a></li>
+</ul>
 </div>
-<div class="section" id="observations">
-<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>What conclusions can be drawn?</p>
 </div>
 <div class="section" id="answers-to-research-questions">
 <h2>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h2>
@@ -560,10 +547,10 @@
             <p class="prev-next-title">Experiment 2 - Nature of the intervals</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../4_biased_exploration/41_introduction.html" title="next page">
+    <a class='right-next' id="next-link" href="33_experiment_3.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Optimizing formation of internal model</p>
+        <p class="prev-next-title">Experiment 3 - Single step</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

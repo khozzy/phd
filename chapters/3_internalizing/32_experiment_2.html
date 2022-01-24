@@ -193,10 +193,27 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="33_discretizing_input_signal.html">
      3.2. Discretizing input signal
     </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_3.html">
+       Experiment 3 - Single step
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="33_experiment_4.html">
+       Experiment 3 - Multistep environments
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -204,8 +221,8 @@
   <a class="reference internal" href="../4_biased_exploration/41_introduction.html">
    4. Optimizing formation of internal model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -214,8 +231,8 @@
     <a class="reference internal" href="../4_biased_exploration/41_biased_exploration.html">
      4.1. Biased exploration
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -243,8 +260,8 @@
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
    5. Optimizing distributing reward through long action chains
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -253,8 +270,8 @@
     <a class="reference internal" href="../5_diminishing_reward/51_diminishing_reward.html">
      5.1. Diminishing reward
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-    <label for="toctree-checkbox-8">
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -453,17 +470,8 @@
                 
   <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="c1"># put custom scripts to module path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_checkerboard</span>  <span class="c1"># noqa: F401</span>
@@ -471,21 +479,22 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
-<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.agents.racs.metrics</span> <span class="kn">import</span> <span class="n">count_averaged_regions</span>
+<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+<span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
+
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
 
+
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">RealValueEncoder</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+
 
 <span class="k">def</span> <span class="nf">metrics_to_df</span><span class="p">(</span><span class="n">metrics</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="n">lst</span> <span class="o">=</span> <span class="p">[[</span>
@@ -499,14 +508,17 @@
         <span class="n">d</span><span class="p">[</span><span class="s1">&#39;regions&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">],</span>
     <span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
 
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">,</span> <span class="s1">&#39;reliable&#39;</span><span class="p">,</span> <span class="s1">&#39;reward&#39;</span><span class="p">,</span> <span class="s1">&#39;region_1&#39;</span><span class="p">,</span> <span class="s1">&#39;region_2&#39;</span><span class="p">,</span> <span class="s1">&#39;region_3&#39;</span><span class="p">,</span> <span class="s1">&#39;region_4&#39;</span><span class="p">])</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">,</span> <span class="s1">&#39;reliable&#39;</span><span class="p">,</span> <span class="s1">&#39;reward&#39;</span><span class="p">,</span> <span class="s1">&#39;region_1&#39;</span><span class="p">,</span> <span class="s1">&#39;region_2&#39;</span><span class="p">,</span> <span class="s1">&#39;region_3&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;region_4&#39;</span><span class="p">])</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;trial&#39;</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="s2">&quot;explore&quot;</span> <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;exploit&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span>
 
+
 <span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">single_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="p">,</span> <span class="n">trials</span><span class="p">):</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">env_provider</span><span class="p">()</span>
@@ -521,7 +533,6 @@
         <span class="c1"># Add basic population metrics</span>
         <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">environment</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">metrics</span>
-
 
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">racs</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
         <span class="n">classifier_length</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -546,6 +557,7 @@
 
     <span class="k">return</span> <span class="n">metrics_to_df</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
 
+
 <span class="k">def</span> <span class="nf">plot_condition_interval_regions</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
@@ -562,6 +574,7 @@
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
+
 <span class="k">def</span> <span class="nf">plot_population</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
@@ -576,6 +589,7 @@
 
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">plot_performance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -827,14 +841,17 @@
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
+
 <span class="k">def</span> <span class="nf">checkboard_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_checkerboard</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;checkerboard-2D-3div-v0&#39;</span><span class="p">)</span>
+
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/encoding_4bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_checkerboard_4bit_encoding</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">checkboard_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
+
 
 <span class="c1"># run computations</span>
 <span class="n">checkerboard_encoding_4bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_4bit_encoding</span><span class="p">()</span>
@@ -850,7 +867,8 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
 
 <span class="c1"># generate plots</span>
-<span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">)</span>
+<span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span>
+                                <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">)</span>
 <span class="n">plot_performance</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_performance.png&#39;</span><span class="p">)</span>
 <span class="n">plot_population</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_population.png&#39;</span><span class="p">)</span>
 </pre></div>

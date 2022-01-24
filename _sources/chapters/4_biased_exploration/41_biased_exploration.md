@@ -19,12 +19,13 @@ Use two basic multistep environments ([](section-topics-environments-corridor) a
 ```
 
 ```{admonition} _Experiment 2 - Single-step problem performance_
-Similarly, as above but in this case a single step 6-bit [](section-topics-environments-rmpx) environment is used introducing much larger possible states space. Since calculating precise model knowledge is time-consuming, the key indicators chosen are the average obtained reward and model size.
+Similarly, as above but in this case a single step 6-bit [](section-topics-environments-rmpx) environment is used introducing much larger possible states space. Since calculating precise model knowledge is infeasible, the key indicators chosen are the average obtained reward and model size.
 ```
 
 ```{admonition} _Experiment 3 - Balacing the pole_
 The methods will be evaluated on the [](section-topics-environments-cartpole) problem of balacing a pole on a cart. This is a novel problem for the LCS due to specific observation space (where two attributes span to infinity) and specific reward scheme based on how long the pole is kept upright.
 ```
+
 
 ## Experiments
 
