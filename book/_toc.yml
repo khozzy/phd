@@ -28,6 +28,9 @@ chapters:
         - file: chapters/3_internalizing/32_experiment_1
         - file: chapters/3_internalizing/32_experiment_2
     - file: chapters/3_internalizing/33_discretizing_input_signal
+      sections:
+        - file: chapters/3_internalizing/33_experiment_3
+        - file: chapters/3_internalizing/33_experiment_4
 - file: chapters/4_biased_exploration/41_introduction
   sections:
     - file: chapters/4_biased_exploration/41_biased_exploration

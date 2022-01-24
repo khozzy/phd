@@ -26,3 +26,16 @@ def diminishing_reward_colors():
         'Q-Learning': palette(3),
         'R-Learning': palette(4)
     }
+
+
+def discretized_algorithms_colors():
+    palette = cm.get_cmap('tab10', 7)
+    return {
+        'acs': palette(0),
+        'acs2': palette(1),
+        'acs2_oiq': palette(2),
+        'acs2_ga': palette(3),
+        'acs2_ga_oiq': palette(4),
+        'yacs': palette(5),
+        'dynaq': palette(6),
+    }
