@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experiment 3 - Multistep environments &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>Experiment 4 - Multistep environments &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -210,7 +210,7 @@
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Experiment 3 - Multistep environments
+       Experiment 4 - Multistep environments
       </a>
      </li>
     </ul>
@@ -404,6 +404,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#corridor">
+   Corridor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grid">
+   Grid
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -411,19 +429,545 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Experiment 3 - Multistep environments</h1>
+                <h1>Experiment 4 - Multistep environments</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#corridor">
+   Corridor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grid">
+   Grid
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-multistep-environments">
-<h1>Experiment 3 - Multistep environments<a class="headerlink" href="#experiment-3-multistep-environments" title="Permalink to this headline">¶</a></h1>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">import</span> <span class="nn">gym_grid</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
+
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.discretized_experiments</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">CorridorObservationWrapper</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;../../../src/phd.mplstyle&#39;</span><span class="p">)</span>
+
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">generalization_score</span><span class="p">(</span><span class="n">pop</span><span class="p">):</span>
+    <span class="c1"># Compute proportion of wildcards in classifier condition across all classifiers</span>
+    <span class="n">wildcards</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">condition</span> <span class="k">if</span>
+                    <span class="n">cond</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cond</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">))</span>
+    <span class="n">all_symbols</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="p">)</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wildcards</span> <span class="o">/</span> <span class="n">all_symbols</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multistep-environments">
+<h1>Experiment 4 - Multistep environments<a class="headerlink" href="#experiment-4-multistep-environments" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="corridor">
+<h2>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">corridor_knowledge</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">transitions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get_transitions</span><span class="p">()</span>
+    <span class="n">reliable</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()]</span>
+    <span class="n">nr_correct</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="p">),))</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="p">),))</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="p">[</span><span class="kc">True</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">reliable</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">predicts_successfully</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">p1</span><span class="p">)]):</span>
+            <span class="n">nr_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">nr_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">corridor_metrics_collect</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">),</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">corridor_knowledge</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">env</span><span class="p">),</span>
+        <span class="s1">&#39;generalization&#39;</span><span class="p">:</span> <span class="n">generalization_score</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="p">}</span>
+
+
+<span class="c1"># DynaQ helpers</span>
+<span class="k">def</span> <span class="nf">dynaq_corridor_knowledge_calculator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">transitions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get_transitions</span><span class="p">()</span>
+    <span class="n">nr_correct</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s0</span> <span class="ow">in</span> <span class="n">model</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">model</span><span class="p">[</span><span class="n">s0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">model</span><span class="p">[</span><span class="n">s0</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">s1</span><span class="p">:</span>
+            <span class="n">nr_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">nr_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+
+
+<span class="n">common_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier_length&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;possible_actions&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_fcn&#39;</span><span class="p">:</span> <span class="n">corridor_metrics_collect</span><span class="p">,</span>
+    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="mi">300</span>
+<span class="p">}</span>
+
+<span class="n">yacs_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;trace_length&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;estimate_expected_improvements&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;feature_possible_values&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">19</span><span class="p">)),</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">dynaq_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;q_init&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">corridor</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="s1">&#39;model_init&#39;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s1">&#39;perception_to_state_mapper&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
+    <span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">:</span> <span class="n">dynaq_corridor_knowledge_calculator</span><span class="p">,</span>
+    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
+<span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">CorridorStateWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">obs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_acs</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">])</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs2.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_acs2</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs2_oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_acs2_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs2_ga.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_acs2_ga</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs2_ga_oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_acs2_ga_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/yacs.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_yacs</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_yacs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">trace_length</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;trace_length&#39;</span><span class="p">],</span>
+        <span class="n">estimate_expected_improvements</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;estimate_expected_improvements&#39;</span><span class="p">],</span>
+        <span class="n">feature_possible_values</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;feature_possible_values&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/dynaq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_corridor_with_dynaq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_dynaq_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">CorridorStateWrapper</span><span class="p">(</span><span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">corridor</span><span class="p">)),</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">q_init</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;q_init&#39;</span><span class="p">],</span>
+        <span class="n">model_init</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;model_init&#39;</span><span class="p">],</span>
+        <span class="n">epsilon</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">knowledge_fcn</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="c1"># Run computations</span>
+<span class="n">corridor_acs_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_acs</span><span class="p">()</span>
+<span class="n">corridor_acs2_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_acs2</span><span class="p">()</span>
+<span class="n">corridor_acs2_oiq_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_acs2_oiq</span><span class="p">()</span>
+<span class="n">corridor_acs2_ga_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_acs2_ga</span><span class="p">()</span>
+<span class="n">corridor_acs2_ga_oiq_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_acs2_ga_oiq</span><span class="p">()</span>
+<span class="n">corridor_yacs_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_yacs</span><span class="p">()</span>
+<span class="n">corridor_dynaq_runs</span> <span class="o">=</span> <span class="n">run_corridor_with_dynaq</span><span class="p">()</span>
+
+<span class="c1"># Collect metrics to single dataframe</span>
+<span class="n">corridor_metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_acs_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_acs2_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_oiq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_acs2_oiq_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_ga&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_acs2_ga_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_ga_oiq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_acs2_ga_oiq_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;yacs&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_yacs_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_dyna_metrics</span><span class="p">(</span><span class="s1">&#39;dynaq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">corridor_dynaq_runs</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">corridor_metrics_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Average them by agent and trial</span>
+<span class="n">corridor_metrics_averaged_df</span> <span class="o">=</span> <span class="n">corridor_metrics_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plot_comparison</span><span class="p">(</span><span class="n">corridor_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor_discretized_performance.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/arc/Projects/pwr/phd/src/discretized_experiments.py:221: UserWarning: FixedFormatter should only be used together with FixedLocator
+  axs[1, 1].set_xticklabels(labels, rotation=60)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="figure align-default" id="corridor-discretized-performance-fig">
+<img alt="../../_images/corridor_discretized_performance.png" src="../../_images/corridor_discretized_performance.png" />
+<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Performance of discretized Corridor</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="grid">
+<h2>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">grid_env_provider</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">gym_grid</span>  <span class="c1"># noqa: F401</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;grid-20-v0&#39;</span><span class="p">)</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">_max_episode_steps</span> <span class="o">=</span> <span class="mi">250</span>
+    <span class="k">return</span> <span class="n">grid</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">grid_env_provider</span><span class="p">()</span>
+
+<span class="n">grid_transitions</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">_transitions</span>
+
+<span class="n">unique_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">grid_transitions</span><span class="p">:</span>
+    <span class="n">unique_states</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+    <span class="n">unique_states</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+
+<span class="n">grid_state_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="n">s</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_states</span><span class="p">)}</span>
+
+
+<span class="c1"># LCS helpers</span>
+<span class="k">def</span> <span class="nf">grid_knowledge</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">transitions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get_transitions</span><span class="p">()</span>
+    <span class="n">reliable</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">population</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()]</span>
+    <span class="n">nr_correct</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">start</span><span class="p">])</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">end</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="kc">True</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">reliable</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">predicts_successfully</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">p1</span><span class="p">)]):</span>
+            <span class="n">nr_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">nr_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">grid_metrics_collector</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">),</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">grid_knowledge</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">env</span><span class="p">),</span>
+        <span class="s1">&#39;generalization&#39;</span><span class="p">:</span> <span class="n">generalization_score</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="p">}</span>
+
+
+<span class="c1"># DynaQ helpers</span>
+<span class="k">def</span> <span class="nf">grid_perception_to_int</span><span class="p">(</span><span class="n">p0</span><span class="p">):</span>
+    <span class="n">p0m</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">p0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid_state_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="nb">list</span><span class="p">(</span><span class="n">grid_state_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">p0m</span><span class="p">)]</span>
+
+<span class="k">class</span> <span class="nc">GridStateWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">grid_perception_to_int</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">grid_dynaq_env_provider</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">GridStateWrapper</span><span class="p">(</span><span class="n">grid_env_provider</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">dynaq_grid_knowledge_calculator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">all_transitions</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nr_correct</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">p0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">grid_transitions</span><span class="p">:</span>
+        <span class="n">s0</span> <span class="o">=</span> <span class="n">grid_perception_to_int</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">grid_perception_to_int</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+
+        <span class="n">all_transitions</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">s0</span> <span class="ow">in</span> <span class="n">model</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">model</span><span class="p">[</span><span class="n">s0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">model</span><span class="p">[</span><span class="n">s0</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">s1</span><span class="p">:</span>
+            <span class="n">nr_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">nr_correct</span> <span class="o">/</span> <span class="n">all_transitions</span>
+
+<span class="n">common_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier_length&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;possible_actions&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_fcn&#39;</span><span class="p">:</span> <span class="n">grid_metrics_collector</span><span class="p">,</span>
+    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="mi">250</span>
+<span class="p">}</span>
+
+<span class="n">yacs_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;trace_length&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;estimate_expected_improvements&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;feature_possible_values&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)),</span>
+        <span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">dynaq_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;q_init&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">grid_state_mapping</span><span class="p">),</span> <span class="mi">4</span><span class="p">)),</span>
+    <span class="s1">&#39;model_init&#39;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s1">&#39;perception_to_state_mapper&#39;</span><span class="p">:</span> <span class="n">grid_perception_to_int</span><span class="p">,</span>
+    <span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">:</span> <span class="n">dynaq_grid_knowledge_calculator</span><span class="p">,</span>
+    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/acs.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_acs</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">])</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/acs2.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_acs2</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/acs2_oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_acs2_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/acs2_ga.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_acs2_ga</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/acs2_ga_oiq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_acs2_ga_oiq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/yacs.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_yacs</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_yacs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">trace_length</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;trace_length&#39;</span><span class="p">],</span>
+        <span class="n">estimate_expected_improvements</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;estimate_expected_improvements&#39;</span><span class="p">],</span>
+        <span class="n">feature_possible_values</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;feature_possible_values&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/grid/dynaq.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_grid_with_dynaq</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_dynaq_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_dynaq_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">],</span>
+        <span class="n">q_init</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;q_init&#39;</span><span class="p">],</span>
+        <span class="n">model_init</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;model_init&#39;</span><span class="p">],</span>
+        <span class="n">epsilon</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">knowledge_fcn</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="c1"># Run computations</span>
+<span class="n">grid_acs_runs</span> <span class="o">=</span> <span class="n">run_grid_with_acs</span><span class="p">()</span>
+<span class="n">grid_acs2_runs</span> <span class="o">=</span> <span class="n">run_grid_with_acs2</span><span class="p">()</span>
+<span class="n">grid_acs2_oiq_runs</span> <span class="o">=</span> <span class="n">run_grid_with_acs2_oiq</span><span class="p">()</span>
+<span class="n">grid_acs2_ga_runs</span> <span class="o">=</span> <span class="n">run_grid_with_acs2_ga</span><span class="p">()</span>
+<span class="n">grid_acs2_ga_oiq_runs</span> <span class="o">=</span> <span class="n">run_grid_with_acs2_ga_oiq</span><span class="p">()</span>
+<span class="n">grid_yacs_runs</span> <span class="o">=</span> <span class="n">run_grid_with_yacs</span><span class="p">()</span>
+<span class="n">grid_dynaq_runs</span> <span class="o">=</span> <span class="n">run_grid_with_dynaq</span><span class="p">()</span>
+
+<span class="c1"># Collect metrics to single dataframe</span>
+<span class="n">grid_metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_acs_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_acs2_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_oiq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_acs2_oiq_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_ga&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_acs2_ga_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;acs2_ga_oiq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_acs2_ga_oiq_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_lcs_metrics</span><span class="p">(</span><span class="s1">&#39;yacs&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_yacs_runs</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">parse_dyna_metrics</span><span class="p">(</span><span class="s1">&#39;dynaq&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">grid_dynaq_runs</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">grid_metrics_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Average them by agent and trial</span>
+<span class="n">grid_metrics_averaged_df</span> <span class="o">=</span> <span class="n">grid_metrics_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">plot_comparison</span><span class="p">(</span><span class="n">grid_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/grid_discretized_performance.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/arc/Projects/pwr/phd/src/discretized_experiments.py:221: UserWarning: FixedFormatter should only be used together with FixedLocator
+  axs[1, 1].set_xticklabels(labels, rotation=60)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="figure align-default" id="grid-discretized-performance-fig">
+<img alt="../../_images/grid_discretized_performance.png" src="../../_images/grid_discretized_performance.png" />
+<p class="caption"><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Performance of discretized Grid</span><a class="headerlink" href="#grid-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
