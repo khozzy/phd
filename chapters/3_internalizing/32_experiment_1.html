@@ -681,7 +681,7 @@
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
 <div class="tip admonition">
 <p class="admonition-title">Hypothesis testing</p>
-<p>Table below presents posterior data generated from Bayesian model regarding population sizes in the last trial when using different encoding values. Since the reward obtained by the agent can be either 0 or 1000, it’s average value obtained is visualized on the plots above.</p>
+<p>Table below presents posterior data generated from Bayesian model regarding population sizes in the last trial when using different encoding values. Since the reward obtained by the agent can be either 0 or 1000, it’s average value over last 100 exploit trials is also presented.</p>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -708,6 +708,12 @@
 
     <span class="k">return</span> <span class="n">results</span>
 
+<span class="k">def</span> <span class="nf">get_average_reward</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">last_n_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+        <span class="n">avg_reward</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;phase == &quot;exploit&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;trial&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">last_n_runs</span><span class="p">:][</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_reward</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
 
 <span class="n">bayes_results_dfs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rmpx3bit_encoding_1bit_results</span><span class="p">),</span>
@@ -718,10 +724,12 @@
 
 <span class="n">population_models</span> <span class="o">=</span> <span class="n">build_population_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
 <span class="n">reliable_models</span> <span class="o">=</span> <span class="n">build_reliable_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">avg_rewards</span> <span class="o">=</span> <span class="n">get_average_reward</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
 
 <span class="n">bayes_table_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="s1">&#39;population of classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">population_models</span><span class="p">],</span>
     <span class="p">[</span><span class="s1">&#39;reliable classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reliable_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;reward from last 100 exploit runs&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">avg_rewards</span><span class="p">],</span>
 <span class="p">]</span>
 
 <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">bayes_table_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;2 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;3 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;4 bit&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
@@ -732,11 +740,12 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><table>
 <thead>
-<tr><th style="text-align: right;">                         </th><th style="text-align: right;">      1 bit</th><th style="text-align: right;">       2 bit</th><th style="text-align: right;">          3 bit</th><th style="text-align: right;">         4 bit</th></tr>
+<tr><th style="text-align: right;">                                 </th><th style="text-align: right;">      1 bit</th><th style="text-align: right;">       2 bit</th><th style="text-align: right;">          3 bit</th><th style="text-align: right;">         4 bit</th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align: right;">population of classifiers</td><td style="text-align: right;"> 8.8 ± 0.13</td><td style="text-align: right;">29.58 ± 0.71</td><td style="text-align: right;">1392.25 ± 25.68</td><td style="text-align: right;">5892.82 ± 86.8</td></tr>
-<tr><td style="text-align: right;">     reliable classifiers</td><td style="text-align: right;">8.75 ± 0.12</td><td style="text-align: right;">28.47 ± 0.54</td><td style="text-align: right;">  127.08 ± 2.33</td><td style="text-align: right;">   44.35 ± 1.6</td></tr>
+<tr><td style="text-align: right;">        population of classifiers</td><td style="text-align: right;"> 8.8 ± 0.13</td><td style="text-align: right;">29.58 ± 0.71</td><td style="text-align: right;">1392.25 ± 25.68</td><td style="text-align: right;">5892.82 ± 86.8</td></tr>
+<tr><td style="text-align: right;">             reliable classifiers</td><td style="text-align: right;">8.75 ± 0.12</td><td style="text-align: right;">28.47 ± 0.54</td><td style="text-align: right;">  127.08 ± 2.33</td><td style="text-align: right;">   44.35 ± 1.6</td></tr>
+<tr><td style="text-align: right;">reward from last 100 exploit runs</td><td style="text-align: right;">     1000.0</td><td style="text-align: right;">       998.6</td><td style="text-align: right;">          974.6</td><td style="text-align: right;">         927.6</td></tr>
 </tbody>
 </table></div></div>
 </div>
