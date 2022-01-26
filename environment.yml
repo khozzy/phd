@@ -7,6 +7,7 @@ dependencies:
   - jupyter-book=0.12.1
   - pandas
   - matplotlib>=3.1.1
+  - pymc3
   - dill>=0.3
   - tqdm
   - mlflow
