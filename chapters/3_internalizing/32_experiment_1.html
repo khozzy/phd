@@ -479,15 +479,18 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">ticker</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
+<span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
-<span class="n">PLOT_DPI</span> <span class="o">=</span> <span class="mi">200</span>
 
 
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
@@ -583,6 +586,11 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
+</div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-encoding-precision">
 <h1>Experiment 1 - Encoding precision<a class="headerlink" href="#experiment-1-encoding-precision" title="Permalink to this headline">¶</a></h1>
@@ -673,11 +681,64 @@
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
 <div class="tip admonition">
 <p class="admonition-title">Hypothesis testing</p>
-<p>Idea is to create a 2 distribution plots + tables with data</p>
-<ol class="simple">
-<li><p>average reward vs encoding bits</p></li>
-<li><p>reliable classifiers vs encoding bits</p></li>
-</ol>
+<p>Table below presents posterior data generated from Bayesian model regarding population sizes in the last trial when using different encoding values. Since the reward obtained by the agent can be either 0 or 1000, it’s average value obtained is visualized on the plots above.</p>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes_population.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_population_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="n">query_condition</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">TRIALS</span><span class="si">}</span><span class="s1">&#39;</span>  <span class="c1"># last phase</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+        <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="s1">&#39;population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes_reliable.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_reliable_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="n">query_condition</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">TRIALS</span><span class="si">}</span><span class="s1">&#39;</span>  <span class="c1"># last phase</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+        <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="n">bayes_results_dfs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rmpx3bit_encoding_1bit_results</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rmpx3bit_encoding_2bit_results</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rmpx3bit_encoding_3bit_results</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rmpx3bit_encoding_4bit_results</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">population_models</span> <span class="o">=</span> <span class="n">build_population_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">reliable_models</span> <span class="o">=</span> <span class="n">build_reliable_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+
+<span class="n">bayes_table_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s1">&#39;population of classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">population_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;reliable classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reliable_models</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">bayes_table_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;2 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;3 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;4 bit&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">                         </th><th style="text-align: right;">      1 bit</th><th style="text-align: right;">       2 bit</th><th style="text-align: right;">          3 bit</th><th style="text-align: right;">         4 bit</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">population of classifiers</td><td style="text-align: right;"> 8.8 ± 0.13</td><td style="text-align: right;">29.58 ± 0.71</td><td style="text-align: right;">1392.25 ± 25.68</td><td style="text-align: right;">5892.82 ± 86.8</td></tr>
+<tr><td style="text-align: right;">     reliable classifiers</td><td style="text-align: right;">8.75 ± 0.12</td><td style="text-align: right;">28.47 ± 0.54</td><td style="text-align: right;">  127.08 ± 2.33</td><td style="text-align: right;">   44.35 ± 1.6</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </div>
 <div class="section" id="observations">
