@@ -493,6 +493,10 @@
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
 
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
 
@@ -618,6 +622,11 @@
 
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
@@ -844,17 +853,25 @@
 </div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
-
 <span class="k">def</span> <span class="nf">checkboard_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_checkerboard</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;checkerboard-2D-3div-v0&#39;</span><span class="p">)</span>
 
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/encoding_2bit.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_checkerboard_2bit_encoding</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">checkboard_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/encoding_3bit.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_checkerboard_3bit_encoding</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">single_experiment</span><span class="p">(</span><span class="n">checkboard_env_provider</span><span class="p">,</span> <span class="n">encoder_bits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">TRIALS</span><span class="p">)</span>
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/encoding_4bit.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
@@ -863,10 +880,9 @@
 
 
 <span class="c1"># run computations</span>
+<span class="n">checkerboard_encoding_2bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_2bit_encoding</span><span class="p">()</span>
+<span class="n">checkerboard_encoding_3bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_3bit_encoding</span><span class="p">()</span>
 <span class="n">checkerboard_encoding_4bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_4bit_encoding</span><span class="p">()</span>
-
-<span class="c1"># average runs</span>
-<span class="n">checkerboard_encoding_4bit_avg</span> <span class="o">=</span> <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_runs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -875,9 +891,11 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
 
+<span class="c1"># average runs</span>
+<span class="n">checkerboard_encoding_4bit_avg</span> <span class="o">=</span> <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_runs</span><span class="p">)</span>
+
 <span class="c1"># generate plots</span>
-<span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span>
-                                <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">)</span>
+<span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">)</span>
 <span class="n">plot_performance</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_performance.png&#39;</span><span class="p">)</span>
 <span class="n">plot_population</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_population.png&#39;</span><span class="p">)</span>
 </pre></div>
@@ -902,6 +920,94 @@
 <div class="tip admonition">
 <p class="admonition-title">Hypothesis testing</p>
 <p>I don’t know if any hypothesis tests are needed here. The main value in my opinion is in Figure <a class="reference internal" href="#checkerboard4bit-enc4bit-regions-fig"><span class="std std-numref">3.6</span></a>. What might be beneficial is to plot what are the interval propotions wrt to the encoding bits used. But that would require some clever visualization (or a table).</p>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">query_condition</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">TRIALS</span><span class="si">}</span><span class="s1">&#39;</span>  <span class="c1"># last trial</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+        <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="k">def</span> <span class="nf">get_average_reward</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">last_n_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+        <span class="n">avg_reward</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;phase == &quot;exploit&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;trial&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">last_n_runs</span><span class="p">:][</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_reward</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_region_1.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_region_1_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;region_1&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_region_2.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_region_2_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;region_2&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_region_3.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_region_3_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;region_3&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_region_4.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_region_4_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;region_4&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_population.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_population_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/checkerboard_3x3/bayes_reliable.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_reliable_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="s1">&#39;reliable&#39;</span><span class="p">)</span>
+
+<span class="n">bayes_results_dfs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">checkerboard_encoding_2bit_runs</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">checkerboard_encoding_3bit_runs</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_runs</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">region_1_models</span> <span class="o">=</span> <span class="n">build_region_1_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">region_2_models</span> <span class="o">=</span> <span class="n">build_region_2_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">region_3_models</span> <span class="o">=</span> <span class="n">build_region_3_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">region_4_models</span> <span class="o">=</span> <span class="n">build_region_4_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">population_models</span> <span class="o">=</span> <span class="n">build_population_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">reliable_models</span> <span class="o">=</span> <span class="n">build_reliable_models</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+<span class="n">avg_rewards</span> <span class="o">=</span> <span class="n">get_average_reward</span><span class="p">(</span><span class="n">bayes_results_dfs</span><span class="p">)</span>
+
+<span class="n">bayes_table_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s1">&#39;region_1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">region_1_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;region_2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">region_2_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;region_3&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">region_3_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;region_4&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">region_4_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;population of classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">population_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;reliable classifiers&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reliable_models</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;reward from last 100 exploit runs&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">avg_rewards</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">bayes_table_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;2bit&#39;</span><span class="p">,</span> <span class="s1">&#39;3 bit&#39;</span><span class="p">,</span> <span class="s1">&#39;4 bit&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">                                 </th><th style="text-align: right;">        2bit</th><th style="text-align: right;">        3 bit</th><th style="text-align: right;">          4 bit</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                         region_1</td><td style="text-align: right;">  0.32 ± 0.0</td><td style="text-align: right;">   0.69 ± 0.0</td><td style="text-align: right;">     0.75 ± 0.0</td></tr>
+<tr><td style="text-align: right;">                         region_2</td><td style="text-align: right;">  0.35 ± 0.0</td><td style="text-align: right;">   0.18 ± 0.0</td><td style="text-align: right;">     0.15 ± 0.0</td></tr>
+<tr><td style="text-align: right;">                         region_3</td><td style="text-align: right;">  0.14 ± 0.0</td><td style="text-align: right;">   0.08 ± 0.0</td><td style="text-align: right;">     0.04 ± 0.0</td></tr>
+<tr><td style="text-align: right;">                         region_4</td><td style="text-align: right;">  0.19 ± 0.0</td><td style="text-align: right;">   0.05 ± 0.0</td><td style="text-align: right;">     0.06 ± 0.0</td></tr>
+<tr><td style="text-align: right;">        population of classifiers</td><td style="text-align: right;">52.63 ± 0.57</td><td style="text-align: right;">735.86 ± 8.85</td><td style="text-align: right;">4244.15 ± 35.31</td></tr>
+<tr><td style="text-align: right;">             reliable classifiers</td><td style="text-align: right;">   8.0 ± 0.0</td><td style="text-align: right;"> 89.51 ± 1.19</td><td style="text-align: right;">    14.42 ± 0.6</td></tr>
+<tr><td style="text-align: right;">reward from last 100 exploit runs</td><td style="text-align: right;">        0.71</td><td style="text-align: right;">         0.81</td><td style="text-align: right;">           0.89</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </div>
 <div class="section" id="observations">
