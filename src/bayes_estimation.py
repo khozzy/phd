@@ -6,8 +6,8 @@ def bayes_estimate(data: np.ndarray, draws=3000):
     # If all values are the same there is no point in calculating statistical model
     if np.all(data == data[0]):
         return {
-            'mu': data[0],
-            'std': 0
+            'mu': np.array([data[0]]),
+            'std': np.array([0])
         }
 
     mean = data.mean()
