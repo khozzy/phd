@@ -22,13 +22,14 @@ def repeat(num_times, use_ray=False):
             results = []
 
             if use_ray:
-                ray.init()
+                try:
+                    ray.init()
 
-                remote_func = ray.remote(func)
-                feed = [remote_func.remote(*args, **kwargs) for _ in range(num_times)]
-                results = ray.get(feed)
-
-                ray.shutdown()
+                    remote_func = ray.remote(func)
+                    feed = [remote_func.remote(*args, **kwargs) for _ in range(num_times)]
+                    results = ray.get(feed)
+                finally:
+                    ray.shutdown()
             else:
                 for _ in tqdm(range(num_times)):
                     results.append(func(*args, **kwargs))
