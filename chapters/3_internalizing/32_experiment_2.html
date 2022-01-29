@@ -493,6 +493,8 @@
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.representations.RealValueEncoder</span> <span class="kn">import</span> <span class="n">RealValueEncoder</span>
 
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
@@ -572,7 +574,7 @@
 
 
 <span class="k">def</span> <span class="nf">plot_condition_interval_regions</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;region_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Region 1 [pi, qi)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;region_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Region 2 [pmin, qi)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -587,9 +589,11 @@
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
+    <span class="k">return</span> <span class="n">fig</span>
+
 
 <span class="k">def</span> <span class="nf">plot_population</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;macroclassifiers&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;reliable&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -603,9 +607,11 @@
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
+    <span class="k">return</span> <span class="n">fig</span>
+
 
 <span class="k">def</span> <span class="nf">plot_performance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
     <span class="n">explore_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;explore&#39;</span><span class="p">]</span>
     <span class="n">exploit_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exploit&#39;</span><span class="p">]</span>
@@ -622,11 +628,8 @@
 
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+
+    <span class="k">return</span> <span class="n">fig</span>
 </pre></div>
 </div>
 </div>
@@ -900,30 +903,50 @@
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-
-<span class="c1"># average runs</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># average runs</span>
 <span class="n">checkerboard_encoding_4bit_avg</span> <span class="o">=</span> <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_runs</span><span class="p">)</span>
 
 <span class="c1"># generate plots</span>
-<span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">)</span>
-<span class="n">plot_performance</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_performance.png&#39;</span><span class="p">)</span>
-<span class="n">plot_population</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_population.png&#39;</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;checkerboard4bit-enc4bit-regions-fig&#39;</span><span class="p">,</span> <span class="n">plot_condition_interval_regions</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_regions.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;checkerboard4bit-enc4bit-performance-fig&#39;</span><span class="p">,</span> <span class="n">plot_performance</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_performance.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;checkerboard4bit-enc4bit-population-fig&#39;</span><span class="p">,</span> <span class="n">plot_population</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_avg</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_4bit_population.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="1425ad37-2b99-40fa-a3fc-f914a1e6e9c8" name="308ebad7-77e1-430c-80e8-133b8a66bc04" type="radio">
+</input><label class="tabbed-label" for="1425ad37-2b99-40fa-a3fc-f914a1e6e9c8">
+Condition Interval regions</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-regions-fig">
-<img alt="../../_images/checkerboard_4bit_regions.png" src="../../_images/checkerboard_4bit_regions.png" />
+<div class="cell_output docutils container">
+<img alt="../../_images/32_experiment_2_8_0.png" src="../../_images/32_experiment_2_8_0.png" />
+</div>
 <p class="caption"><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Condition interval regions in 3x3 Checkerboard environment.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
 </div>
-<div class="figure align-default" id="checkerboard4bit-enc4bit-performance-fig">
-<img alt="../../_images/checkerboard_4bit_performance.png" src="../../_images/checkerboard_4bit_performance.png" />
-<p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Performance of 3x3 Checkerboard environment.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
-<div class="figure align-default" id="checkerboard4bit-enc4bit-population-fig">
-<img alt="../../_images/checkerboard_4bit_population.png" src="../../_images/checkerboard_4bit_population.png" />
-<p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Population of 3x3 Checkerboard environment.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-population-fig" title="Permalink to this image">¶</a></p>
+<input id="ddbbfc9d-26be-480c-b6be-9c59afb7f65b" name="308ebad7-77e1-430c-80e8-133b8a66bc04" type="radio">
+</input><label class="tabbed-label" for="ddbbfc9d-26be-480c-b6be-9c59afb7f65b">
+Average reward</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="g2">
+<div class="cell_output docutils container">
+<img alt="../../_images/32_experiment_2_8_1.png" src="../../_images/32_experiment_2_8_1.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Performance of 3x3 Checkerboard environment.</span><a class="headerlink" href="#g2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input id="6d9f215c-49b7-4af3-a59b-f450f9600dfc" name="308ebad7-77e1-430c-80e8-133b8a66bc04" type="radio">
+</input><label class="tabbed-label" for="6d9f215c-49b7-4af3-a59b-f450f9600dfc">
+Classifier numerosity</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="g3">
+<div class="cell_output docutils container">
+<img alt="../../_images/32_experiment_2_8_2.png" src="../../_images/32_experiment_2_8_2.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Population of 3x3 Checkerboard environment.</span><a class="headerlink" href="#g3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="statistical-verification">

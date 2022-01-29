@@ -430,18 +430,6 @@
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#average-steps-in-exploit-phase">
-     Average Steps in exploit phase
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#reliable-classifiers">
-     Reliable classifiers
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#observations">
@@ -489,18 +477,6 @@
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#average-steps-in-exploit-phase">
-     Average Steps in exploit phase
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#reliable-classifiers">
-     Reliable classifiers
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#observations">
@@ -524,10 +500,11 @@
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.strategies.action_selection</span> <span class="kn">import</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="n">KnowledgeArray</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
@@ -837,52 +814,7 @@
     <span class="n">buckets_v5</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv5_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv5_oiq_dfs</span><span class="p">]</span>
 <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">print_bayes_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">table_data</span> <span class="o">=</span> <span class="p">[[</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">bucket</span><span class="p">)]</span> <span class="o">+</span> <span class="n">rewards</span> <span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">rewards</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-
-    <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">table_data</span><span class="p">,</span>
-                     <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">],</span>
-                     <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">)</span>
-
-    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="average-steps-in-exploit-phase">
-<h3>Average Steps in exploit phase<a class="headerlink" href="#average-steps-in-exploit-phase" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_reward</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dfs</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;phase == &quot;exploit&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="n">average_rewards_data</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">dfs</span> <span class="ow">in</span> <span class="n">experiments_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">average_rewards_data</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">avg_reward</span><span class="p">,</span> <span class="n">dfs</span><span class="p">))</span>
-
-<span class="n">print_bayes_table</span><span class="p">(</span><span class="n">average_rewards_data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">       </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">1_1_6_6</td><td style="text-align: right;">          178.40</td><td style="text-align: right;">        138.69</td><td style="text-align: right;">           175.72</td><td style="text-align: right;">                      171.20</td></tr>
-<tr><td style="text-align: right;">4_4_4_4</td><td style="text-align: right;">           18.85</td><td style="text-align: right;">         19.14</td><td style="text-align: right;">            20.34</td><td style="text-align: right;">                       18.56</td></tr>
-<tr><td style="text-align: right;">2_2_6_6</td><td style="text-align: right;">           59.73</td><td style="text-align: right;">         44.58</td><td style="text-align: right;">            95.68</td><td style="text-align: right;">                       60.72</td></tr>
-<tr><td style="text-align: right;">1_2_4_4</td><td style="text-align: right;">          133.93</td><td style="text-align: right;">        150.62</td><td style="text-align: right;">           128.70</td><td style="text-align: right;">                      132.36</td></tr>
-<tr><td style="text-align: right;">1_1_8_8</td><td style="text-align: right;">          181.61</td><td style="text-align: right;">        154.09</td><td style="text-align: right;">           172.75</td><td style="text-align: right;">                      176.42</td></tr>
-</tbody>
-</table></div></div>
-</div>
-</div>
-<div class="section" id="reliable-classifiers">
-<h3>Reliable classifiers<a class="headerlink" href="#reliable-classifiers" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_bayes_model</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">train_bayes_model</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
     <span class="n">data_arr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span>
@@ -896,6 +828,25 @@
 
     <span class="k">return</span> <span class="n">results</span>
 
+<span class="k">def</span> <span class="nf">print_bayes_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">table_data</span> <span class="o">=</span> <span class="p">[[</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">bucket</span><span class="p">)]</span> <span class="o">+</span> <span class="n">rewards</span> <span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">rewards</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">table_data</span><span class="p">,</span>
+                     <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">],</span>
+                     <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+<span class="n">print_row</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="c1"># Average Steps in exploit phase</span>
+<span class="n">avg_reward</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dfs</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;phase == &quot;exploit&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">average_rewards_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">dfs</span> <span class="ow">in</span> <span class="n">experiments_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">average_rewards_data</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">avg_reward</span><span class="p">,</span> <span class="n">dfs</span><span class="p">))</span>
+
+<span class="c1"># reliable classifiers</span>
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/bayes/reliable.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_reliable_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;reliable&#39;</span><span class="p">,</span> <span class="n">query_condition</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">explore_trials</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -903,18 +854,40 @@
 <span class="c1"># run computations</span>
 <span class="n">reliable_data</span> <span class="o">=</span> <span class="n">build_reliable_models</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
 
-<span class="n">print_row</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
-
 <span class="n">reliable_table_data</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">models</span> <span class="ow">in</span> <span class="n">reliable_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">reliable_table_data</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">print_row</span><span class="p">,</span> <span class="n">models</span><span class="p">))</span>
 
-<span class="n">print_bayes_table</span><span class="p">(</span><span class="n">reliable_table_data</span><span class="p">)</span>
+<span class="c1"># Add glue objects</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;average_steps&#39;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="n">average_rewards_data</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;bayes_reliable_classifies&#39;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="n">reliable_table_data</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table>
+</div>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="1429ede6-9412-4674-a603-50e683115a4a" name="9633ef9c-1e82-498c-a2bf-9596879d4f55" type="radio">
+</input><label class="tabbed-label" for="1429ede6-9412-4674-a603-50e683115a4a">
+Average Number of Steps</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">       </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">1_1_6_6</td><td style="text-align: right;">          178.40</td><td style="text-align: right;">        138.69</td><td style="text-align: right;">           175.72</td><td style="text-align: right;">                      171.20</td></tr>
+<tr><td style="text-align: right;">4_4_4_4</td><td style="text-align: right;">           18.85</td><td style="text-align: right;">         19.14</td><td style="text-align: right;">            20.34</td><td style="text-align: right;">                       18.56</td></tr>
+<tr><td style="text-align: right;">2_2_6_6</td><td style="text-align: right;">           59.73</td><td style="text-align: right;">         44.58</td><td style="text-align: right;">            95.68</td><td style="text-align: right;">                       60.72</td></tr>
+<tr><td style="text-align: right;">1_2_4_4</td><td style="text-align: right;">          133.93</td><td style="text-align: right;">        150.62</td><td style="text-align: right;">           128.70</td><td style="text-align: right;">                      132.36</td></tr>
+<tr><td style="text-align: right;">1_1_8_8</td><td style="text-align: right;">          181.61</td><td style="text-align: right;">        154.09</td><td style="text-align: right;">           172.75</td><td style="text-align: right;">                      176.42</td></tr>
+</tbody>
+</table></span></span></p>
+</div>
+<input id="708515b7-c1c9-42a0-8c0e-f8ec188cb492" name="9633ef9c-1e82-498c-a2bf-9596879d4f55" type="radio">
+</input><label class="tabbed-label" for="708515b7-c1c9-42a0-8c0e-f8ec188cb492">
+Reliable classifiers</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">       </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -925,7 +898,7 @@
 <tr><td style="text-align: right;">1_2_4_4</td><td style="text-align: right;">    11.23 ± 0.18</td><td style="text-align: right;">   9.83 ± 0.18</td><td style="text-align: right;">     10.01 ± 0.18</td><td style="text-align: right;">                10.86 ± 0.22</td></tr>
 <tr><td style="text-align: right;">1_1_8_8</td><td style="text-align: right;">     9.14 ± 0.12</td><td style="text-align: right;">   8.92 ± 0.12</td><td style="text-align: right;">     10.42 ± 0.21</td><td style="text-align: right;">                 9.18 ± 0.14</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
 </div>
 </div>
@@ -950,6 +923,7 @@
 gym                 0.21.0
 lcs                 NA
 matplotlib          3.5.1
+myst_nb             0.13.1
 pandas              1.4.0
 session_info        1.0.0
 src                 (embedded book's utils module)
@@ -962,6 +936,8 @@ tabulate            0.8.9
 PIL                         8.4.0
 arviz                       0.11.2
 asttokens                   NA
+attr                        21.4.0
+babel                       2.9.1
 backcall                    0.2.0
 beta_ufunc                  NA
 binom_ufunc                 NA
@@ -985,27 +961,46 @@ debugpy                     1.5.1
 decorator                   5.1.1
 defusedxml                  0.7.1
 dill                        0.3.4
+docutils                    0.16
 entrypoints                 0.3
 executing                   0.8.2
 fastprogress                0.2.7
 filelock                    3.4.2
 google                      NA
+greenlet                    1.1.2
 grpc                        1.43.0
 hiredis                     2.0.0
 idna                        3.3
+imagesize                   NA
 importlib_metadata          NA
 ipykernel                   6.7.0
 ipython_genutils            0.2.0
+ipywidgets                  7.6.5
 jedi                        0.18.1
+jinja2                      3.0.3
+jsonschema                  3.2.0
+jupyter_cache               0.4.3
+jupyter_sphinx              0.3.2
+jupyterlab_pygments         0.1.2
 kiwisolver                  1.3.2
+linkify_it                  1.0.3
+markdown_it                 1.1.0
+markupsafe                  2.0.1
 matplotlib_inline           NA
+mdit_py_plugins             0.2.8
+mistune                     0.8.4
 mlflow                      1.23.1
 mpl_toolkits                NA
 msgpack                     1.0.3
+myst_parser                 0.15.2
+nbclient                    0.5.10
+nbconvert                   6.4.1
+nbformat                    5.1.3
 nbinom_ufunc                NA
 netCDF4                     1.5.8
 numpy                       1.22.1
 packaging                   21.3
+pandocfilters               NA
 parso                       0.8.3
 pexpect                     4.8.0
 pickleshare                 0.7.5
@@ -1014,6 +1009,7 @@ prompt_toolkit              3.0.26
 psutil                      5.9.0
 ptyprocess                  0.7.0
 pure_eval                   0.2.2
+pvectorc                    NA
 pydev_ipython               NA
 pydevconsole                NA
 pydevd                      2.6.0
@@ -1025,6 +1021,7 @@ pygments                    2.11.2
 pylab                       NA
 pymc3                       3.11.4
 pyparsing                   3.0.7
+pyrsistent                  NA
 pytz                        2021.3
 ray                         1.9.2
 redis                       4.1.2
@@ -1035,13 +1032,17 @@ setproctitle                1.2.2
 setuptools                  60.5.0
 six                         1.16.0
 socks                       1.7.1
+sphinx                      4.4.0
 sphinxcontrib               NA
+sqlalchemy                  1.4.31
 stack_data                  0.1.4
+testpath                    0.5.0
 theano                      1.1.2
 tornado                     6.1
 tqdm                        4.62.3
 traitlets                   5.1.1
 typing_extensions           NA
+uc_micro                    1.0.1
 unicodedata2                NA
 urllib3                     1.26.8
 wcwidth                     0.2.5
@@ -1061,7 +1062,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-29 13:45
+Session information updated at 2022-01-29 19:07
 </pre>
 </details></div></div>
 </div>

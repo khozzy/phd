@@ -410,13 +410,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#corridor">
-   Corridor
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grid">
-   Grid
+  <a class="reference internal nav-link" href="#setup">
+   Setup
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -450,13 +445,8 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#corridor">
-   Corridor
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grid">
-   Grid
+  <a class="reference internal nav-link" href="#setup">
+   Setup
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -492,6 +482,8 @@
 <span class="kn">from</span> <span class="nn">src.discretized_experiments</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">CorridorObservationWrapper</span>
 
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;../../../src/phd.mplstyle&#39;</span><span class="p">)</span>
 
@@ -505,22 +497,22 @@
                     <span class="n">cond</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cond</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">))</span>
     <span class="n">all_symbols</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="p">)</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wildcards</span> <span class="o">/</span> <span class="n">all_symbols</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;num_experiments&#39;</span><span class="p">,</span> <span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multistep-environments">
 <h1>Experiment 4 - Multistep environments<a class="headerlink" href="#experiment-4-multistep-environments" title="Permalink to this headline">¶</a></h1>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="corridor">
-<h2>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h2>
+<p>All experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</p>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">)</span>
@@ -586,12 +578,10 @@
     <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
 <span class="p">}</span>
 
-
 <span class="k">class</span> <span class="nc">CorridorStateWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">obs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
 
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/discretized/corridor/acs.dill&#39;</span><span class="p">)</span>
@@ -729,18 +719,13 @@
 <span class="c1"># Plot results</span>
 <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-    <span class="n">plot_comparison</span><span class="p">(</span><span class="n">corridor_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor_discretized_performance.png&#39;</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;corridor-discretized-performance-fig&#39;</span><span class="p">,</span> <span class="n">plot_comparison</span><span class="p">(</span><span class="n">corridor_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor_discretized_performance.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="figure align-default" id="corridor-discretized-performance-fig">
-<img alt="../../_images/corridor_discretized_performance.png" src="../../_images/corridor_discretized_performance.png" />
-<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Performance of discretized Corridor</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+<div class="cell_output docutils container">
 </div>
 </div>
-<div class="section" id="grid">
-<h2>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">grid_env_provider</span><span class="p">():</span>
@@ -969,20 +954,36 @@
 <span class="n">grid_metrics_averaged_df</span> <span class="o">=</span> <span class="n">grid_metrics_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
 <span class="c1"># Plot results</span>
-<span class="n">plot_comparison</span><span class="p">(</span><span class="n">grid_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/grid_discretized_performance.png&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;grid-discretized-performance-fig&#39;</span><span class="p">,</span> <span class="n">plot_comparison</span><span class="p">(</span><span class="n">grid_metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/grid_discretized_performance.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/arc/Projects/pwr/phd/src/discretized_experiments.py:221: UserWarning: FixedFormatter should only be used together with FixedLocator
-  axs[1, 1].set_xticklabels(labels, rotation=60)
-</pre></div>
 </div>
 </div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="3c937c59-a7cf-42f6-997f-ea95ea7f0569" name="8d3cfa4d-e87d-4bee-a048-cb7832d78b77" type="radio">
+</input><label class="tabbed-label" for="3c937c59-a7cf-42f6-997f-ea95ea7f0569">
+Corridor</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="corridor-discretized-performance-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/33_experiment_4_3_0.png" src="../../_images/33_experiment_4_3_0.png" />
 </div>
+<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Performance of discretized Corridor. Experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input id="674d4469-49d1-4dc8-bc39-eb3a32b495ed" name="8d3cfa4d-e87d-4bee-a048-cb7832d78b77" type="radio">
+</input><label class="tabbed-label" for="674d4469-49d1-4dc8-bc39-eb3a32b495ed">
+Grid</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="grid-discretized-performance-fig">
-<img alt="../../_images/grid_discretized_performance.png" src="../../_images/grid_discretized_performance.png" />
+<div class="cell_output docutils container">
+<img alt="../../_images/33_experiment_4_4_0.png" src="../../_images/33_experiment_4_4_0.png" />
+</div>
 <p class="caption"><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Performance of discretized Grid</span><a class="headerlink" href="#grid-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="statistical-verification">

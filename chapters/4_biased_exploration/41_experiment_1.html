@@ -413,18 +413,6 @@
   <a class="reference internal nav-link" href="#setup">
    Setup
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor">
-     Corridor
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid">
-     Grid
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
@@ -437,12 +425,12 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
+    <a class="reference internal nav-link" href="#corridor">
      Corridor
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
+    <a class="reference internal nav-link" href="#grid">
      Grid
     </a>
    </li>
@@ -477,18 +465,6 @@
   <a class="reference internal nav-link" href="#setup">
    Setup
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor">
-     Corridor
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid">
-     Grid
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
@@ -501,12 +477,12 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
+    <a class="reference internal nav-link" href="#corridor">
      Corridor
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
+    <a class="reference internal nav-link" href="#grid">
      Grid
     </a>
    </li>
@@ -535,12 +511,12 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">DisplayObject</span><span class="p">,</span> <span class="n">Pretty</span><span class="p">,</span> <span class="n">TextDisplayObject</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.strategies.action_selection</span> <span class="kn">import</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="n">KnowledgeArray</span>
-<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
@@ -660,6 +636,8 @@
 
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span>
 </pre></div>
 </div>
 </div>
@@ -668,8 +646,6 @@
 <h1>Experiment 1 - Multi-steps problems performance<a class="headerlink" href="#experiment-1-multi-steps-problems-performance" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="corridor">
-<h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
@@ -817,9 +793,6 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="grid">
-<h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function for calculating relevant metrics</span>
@@ -954,7 +927,6 @@
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
@@ -965,8 +937,13 @@
 <span class="n">corridor20_ka_dfs</span><span class="p">,</span> <span class="n">corridor40_ka_dfs</span><span class="p">,</span> <span class="n">corridor100_ka_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">corridor_knowledge_array</span><span class="p">())</span>
 <span class="n">corridor20_oiq_dfs</span><span class="p">,</span> <span class="n">corridor40_oiq_dfs</span><span class="p">,</span> <span class="n">corridor100_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">corridor_oiq</span><span class="p">())</span>
 
+<span class="n">grid20_eg_dfs</span><span class="p">,</span> <span class="n">grid40_eg_dfs</span><span class="p">,</span> <span class="n">grid100_eg_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_epsilon_greedy</span><span class="p">())</span>
+<span class="n">grid20_ad_dfs</span><span class="p">,</span> <span class="n">grid40_ad_dfs</span><span class="p">,</span> <span class="n">grid100_ad_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_action_delay</span><span class="p">())</span>
+<span class="n">grid20_ka_dfs</span><span class="p">,</span> <span class="n">grid40_ka_dfs</span><span class="p">,</span> <span class="n">grid100_ka_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_knowledge_array</span><span class="p">())</span>
+<span class="n">grid20_oiq_dfs</span><span class="p">,</span> <span class="n">grid40_oiq_dfs</span><span class="p">,</span> <span class="n">grid100_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_oiq</span><span class="p">())</span>
+
 <span class="c1"># Plot results</span>
-<span class="n">plot</span><span class="p">(</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;corridor-fig&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="p">(</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor20_eg_dfs</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor20_ad_dfs</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">corridor20_ka_dfs</span><span class="p">),</span>
@@ -978,25 +955,9 @@
     <span class="n">population_ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
     <span class="n">text_box_loc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">},</span>
     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-performance.png&#39;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="full-width figure align-default" id="corridor-fig">
-<img alt="../../_images/corridor-performance.png" src="../../_images/corridor-performance.png" />
-<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Performance in Corridor environment</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execute calculations</span>
-<span class="n">grid20_eg_dfs</span><span class="p">,</span> <span class="n">grid40_eg_dfs</span><span class="p">,</span> <span class="n">grid100_eg_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_epsilon_greedy</span><span class="p">())</span>
-<span class="n">grid20_ad_dfs</span><span class="p">,</span> <span class="n">grid40_ad_dfs</span><span class="p">,</span> <span class="n">grid100_ad_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_action_delay</span><span class="p">())</span>
-<span class="n">grid20_ka_dfs</span><span class="p">,</span> <span class="n">grid40_ka_dfs</span><span class="p">,</span> <span class="n">grid100_ka_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_knowledge_array</span><span class="p">())</span>
-<span class="n">grid20_oiq_dfs</span><span class="p">,</span> <span class="n">grid40_oiq_dfs</span><span class="p">,</span> <span class="n">grid100_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">grid_oiq</span><span class="p">())</span>
+<span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># Plot results</span>
-<span class="n">plot</span><span class="p">(</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;grid-fig&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="p">(</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid20_eg_dfs</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid20_ad_dfs</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">grid20_ka_dfs</span><span class="p">),</span>
@@ -1008,14 +969,34 @@
     <span class="n">population_ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span>
     <span class="n">text_box_loc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">63</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">},</span>
     <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/grid-performance.png&#39;</span>
-<span class="p">)</span>
+<span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
-<div class="full-width figure align-default" id="grid-fig">
-<img alt="../../_images/grid-performance.png" src="../../_images/grid-performance.png" />
-<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Performance in Grid environment</span><a class="headerlink" href="#grid-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="aadfb0a6-5251-42a8-b62d-7d2dacda1336" name="290e8cf3-c5c4-4d01-a341-dcf17d321620" type="radio">
+</input><label class="tabbed-label" for="aadfb0a6-5251-42a8-b62d-7d2dacda1336">
+Corridor</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="corridor-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/41_experiment_1_6_0.png" src="../../_images/41_experiment_1_6_0.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Performance of Corridor-20 environment</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input id="057e7798-bd8c-423c-92ad-0db55253cc72" name="290e8cf3-c5c4-4d01-a341-dcf17d321620" type="radio">
+</input><label class="tabbed-label" for="057e7798-bd8c-423c-92ad-0db55253cc72">
+Grid</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="grid-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/41_experiment_1_6_1.png" src="../../_images/41_experiment_1_6_1.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Performance of Grid-20 environment</span><a class="headerlink" href="#grid-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
@@ -1128,21 +1109,21 @@
     <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 
 <span class="c1"># Add glue for rendering output in tabs</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Corridor<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="corridor">
+<h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="a86a1232-d663-4eaa-8c71-4caaf5e068c4" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
-</input><label class="tabbed-label" for="a86a1232-d663-4eaa-8c71-4caaf5e068c4">
+<input checked="checked" id="76d70807-3f03-4804-95bc-cf7d80fa29ec" name="f05e0040-fa59-42fd-b48a-16b168ba5929" type="radio">
+</input><label class="tabbed-label" for="76d70807-3f03-4804-95bc-cf7d80fa29ec">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1157,8 +1138,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="ec0f23b5-c05e-46fa-89b0-ad48ebce44c5" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
-</input><label class="tabbed-label" for="ec0f23b5-c05e-46fa-89b0-ad48ebce44c5">
+<input id="ccab6d18-be44-42f5-a739-a6f7dad31e76" name="f05e0040-fa59-42fd-b48a-16b168ba5929" type="radio">
+</input><label class="tabbed-label" for="ccab6d18-be44-42f5-a739-a6f7dad31e76">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1173,8 +1154,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="66b58ddf-fc65-4716-b165-9b73a5f86429" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
-</input><label class="tabbed-label" for="66b58ddf-fc65-4716-b165-9b73a5f86429">
+<input id="ee91b50e-720c-4570-8d75-45459e5cceed" name="f05e0040-fa59-42fd-b48a-16b168ba5929" type="radio">
+</input><label class="tabbed-label" for="ee91b50e-720c-4570-8d75-45459e5cceed">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1191,11 +1172,11 @@ Corridor 100</label><div class="tabbed-content docutils">
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h3>Grid<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="grid">
+<h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="0a6636a2-8fa1-4a82-a651-6a47005b3e44" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
-</input><label class="tabbed-label" for="0a6636a2-8fa1-4a82-a651-6a47005b3e44">
+<input checked="checked" id="4ee935fc-4c5b-4411-8a2b-79e9745c2703" name="635be362-3120-49c6-9f9a-6f6b16149afe" type="radio">
+</input><label class="tabbed-label" for="4ee935fc-4c5b-4411-8a2b-79e9745c2703">
 Grid 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1210,8 +1191,8 @@ Grid 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="f9b048f9-8a4a-45e6-baf4-19fee011569c" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
-</input><label class="tabbed-label" for="f9b048f9-8a4a-45e6-baf4-19fee011569c">
+<input id="ca024150-565d-4a41-ab92-cebafece1649" name="635be362-3120-49c6-9f9a-6f6b16149afe" type="radio">
+</input><label class="tabbed-label" for="ca024150-565d-4a41-ab92-cebafece1649">
 Grid 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1226,8 +1207,8 @@ Grid 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="a2a4cd37-baab-4286-bb4e-0048827f2ad2" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
-</input><label class="tabbed-label" for="a2a4cd37-baab-4286-bb4e-0048827f2ad2">
+<input id="b13550c0-7467-4749-978d-264e11923c2b" name="635be362-3120-49c6-9f9a-6f6b16149afe" type="radio">
+</input><label class="tabbed-label" for="b13550c0-7467-4749-978d-264e11923c2b">
 Grid 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1406,7 +1387,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-29 14:48
+Session information updated at 2022-01-29 19:34
 </pre>
 </details></div></div>
 </div>
