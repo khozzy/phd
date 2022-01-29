@@ -231,3 +231,5 @@ def plot_comparison(df, plot_filename=None):
 
     if plot_filename:
         fig.savefig(plot_filename, dpi=PLOT_DPI, bbox_inches='tight')
+
+    return fig
