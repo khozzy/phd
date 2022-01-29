@@ -1,0 +1,93 @@
+Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
+    await self.async_execute_cell(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+def extract(experiment_runs):
+    eg_dfs, ad_dfs, ka_dfs, oiq_dfs = [], [], [], []
+
+    for eg_df, ad_df, ka_df, oiq_df in experiment_runs:
+        eg_dfs.append(eg_df)
+        ad_dfs.append(ad_df)
+        ka_dfs.append(ka_df)
+        oiq_dfs.append(oiq_df)
+
+    return eg_dfs, ad_dfs, ka_dfs, oiq_dfs
+
+
+# Run calculations
+rmpx_v1_eg_dfs, rmpx_v1_ad_dfs, rmpx_v1_ka_dfs, rmpx_v1_oiq_dfs = extract(rmpx_bins_v1())
+rmpx_v2_eg_dfs, rmpx_v2_ad_dfs, rmpx_v2_ka_dfs, rmpx_v2_oiq_dfs = extract(rmpx_bins_v2())
+rmpx_v3_eg_dfs, rmpx_v3_ad_dfs, rmpx_v3_ka_dfs, rmpx_v3_oiq_dfs = extract(rmpx_bins_v3())
+
+# Plot results
+plot_rmpx(
+    average_experiment_runs(rmpx_v1_eg_dfs),
+    average_experiment_runs(rmpx_v1_ad_dfs),
+    average_experiment_runs(rmpx_v1_ka_dfs),
+    average_experiment_runs(rmpx_v1_oiq_dfs),
+    env_name=rmpx_env_provider(bins_v1).unwrapped.spec.id,
+    bins=bins_v1
+)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mRayTaskError(RuntimeError)[0m                Traceback (most recent call last)
+Input [0;32mIn [3][0m, in [0;36m<module>[0;34m[0m
+[1;32m     10[0m     [38;5;28;01mreturn[39;00m eg_dfs, ad_dfs, ka_dfs, oiq_dfs
+[1;32m     13[0m [38;5;66;03m# Run calculations[39;00m
+[0;32m---> 14[0m rmpx_v1_eg_dfs, rmpx_v1_ad_dfs, rmpx_v1_ka_dfs, rmpx_v1_oiq_dfs [38;5;241m=[39m extract([43mrmpx_bins_v1[49m[43m([49m[43m)[49m)
+[1;32m     15[0m rmpx_v2_eg_dfs, rmpx_v2_ad_dfs, rmpx_v2_ka_dfs, rmpx_v2_oiq_dfs [38;5;241m=[39m extract(rmpx_bins_v2())
+[1;32m     16[0m rmpx_v3_eg_dfs, rmpx_v3_ad_dfs, rmpx_v3_ka_dfs, rmpx_v3_oiq_dfs [38;5;241m=[39m extract(rmpx_bins_v3())
+
+File [0;32m~/Projects/pwr/phd/src/decorators.py:64[0m, in [0;36mget_from_cache_or_run.<locals>.decorator_cache.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m     62[0m [38;5;28;01melse[39;00m:
+[1;32m     63[0m     logging[38;5;241m.[39mdebug([38;5;124mf[39m[38;5;124m'[39m[38;5;124mRecomputing function and saving the output to [39m[38;5;132;01m{[39;00mcache_path[38;5;132;01m}[39;00m[38;5;124m'[39m)
+[0;32m---> 64[0m     res [38;5;241m=[39m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     65[0m     [38;5;28;01mwith[39;00m [38;5;28mopen[39m(cache_path, [38;5;124m'[39m[38;5;124mwb[39m[38;5;124m'[39m) [38;5;28;01mas[39;00m f:
+[1;32m     66[0m         dill[38;5;241m.[39mdump(res, f)
+
+File [0;32m~/Projects/pwr/phd/src/decorators.py:32[0m, in [0;36mrepeat.<locals>.decorator_repeat.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m     30[0m     remote_func [38;5;241m=[39m ray[38;5;241m.[39mremote(func)
+[1;32m     31[0m     feed [38;5;241m=[39m [remote_func[38;5;241m.[39mremote([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs) [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m(num_times)]
+[0;32m---> 32[0m     results [38;5;241m=[39m [43mray[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[43mfeed[49m[43m)[49m
+[1;32m     33[0m [38;5;28;01mfinally[39;00m:
+[1;32m     34[0m     ray[38;5;241m.[39mshutdown()
+
+File [0;32m~/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/ray/_private/client_mode_hook.py:105[0m, in [0;36mclient_mode_hook.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m    103[0m     [38;5;28;01mif[39;00m func[38;5;241m.[39m[38;5;18m__name__[39m [38;5;241m!=[39m [38;5;124m"[39m[38;5;124minit[39m[38;5;124m"[39m [38;5;129;01mor[39;00m is_client_mode_enabled_by_default:
+[1;32m    104[0m         [38;5;28;01mreturn[39;00m [38;5;28mgetattr[39m(ray, func[38;5;241m.[39m[38;5;18m__name__[39m)([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m--> 105[0m [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m~/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/ray/worker.py:1713[0m, in [0;36mget[0;34m(object_refs, timeout)[0m
+[1;32m   1711[0m     worker[38;5;241m.[39mcore_worker[38;5;241m.[39mdump_object_store_memory_usage()
+[1;32m   1712[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(value, RayTaskError):
+[0;32m-> 1713[0m     [38;5;28;01mraise[39;00m value[38;5;241m.[39mas_instanceof_cause()
+[1;32m   1714[0m [38;5;28;01melse[39;00m:
+[1;32m   1715[0m     [38;5;28;01mraise[39;00m value
+
+[0;31mRayTaskError(RuntimeError)[0m: [36mray::rmpx_bins_v1()[39m (pid=64541, ip=192.168.68.108)
+RuntimeError: The remote function failed to import on the worker. This may be because needed library dependencies are not installed in the worker environment:
+
+[36mray::rmpx_bins_v1()[39m (pid=64541, ip=192.168.68.108)
+ModuleNotFoundError: No module named 'src'
+RayTaskError(RuntimeError): [36mray::rmpx_bins_v1()[39m (pid=64541, ip=192.168.68.108)
+RuntimeError: The remote function failed to import on the worker. This may be because needed library dependencies are not installed in the worker environment:
+
+[36mray::rmpx_bins_v1()[39m (pid=64541, ip=192.168.68.108)
+ModuleNotFoundError: No module named 'src'
+

@@ -430,6 +430,18 @@
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-steps-in-exploit-phase">
+     Average Steps in exploit phase
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reliable-classifiers">
+     Reliable classifiers
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#observations">
@@ -477,6 +489,18 @@
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-steps-in-exploit-phase">
+     Average Steps in exploit phase
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reliable-classifiers">
+     Reliable classifiers
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#observations">
@@ -494,32 +518,23 @@
                 
   <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="c1"># put custom scripts to module path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../..&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
-<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
-<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">biased_exploration_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
-<span class="kn">from</span> <span class="nn">src.metrics</span> <span class="kn">import</span> <span class="n">parse_experiments_results</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.strategies.action_selection</span> <span class="kn">import</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="n">KnowledgeArray</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.metrics</span> <span class="kn">import</span> <span class="n">parse_experiments_results</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">biased_exploration_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">gym</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">COLORS</span> <span class="o">=</span> <span class="n">biased_exploration_colors</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
@@ -545,106 +560,16 @@
 
     <span class="k">return</span> <span class="n">metrics_df</span>
 
+
 <span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">runs_dfs</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-balacing-the-pole">
-<h1>Experiment 3 - Balacing the pole<a class="headerlink" href="#experiment-3-balacing-the-pole" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp_buckets</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">CartPoleObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
-    <span class="c1"># https://medium.com/@tuzzer/cart-pole-balancing-with-q-learning-b54c6068d947</span>
-    <span class="c1"># _high = [env.observation_space.high[0], 0.5, env.observation_space.high[2], math.radians(50)]</span>
-    <span class="c1"># _low = [env.observation_space.low[0], -0.5, env.observation_space.low[2], -math.radians(50)]</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">buckets</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">3500</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">3500</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span> <span class="o">=</span> <span class="n">buckets</span>
-
-    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
-        <span class="n">ratios</span> <span class="o">=</span> <span class="p">[(</span><span class="n">obs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_low</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_low</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
-        <span class="n">new_obs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratios</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
-        <span class="n">new_obs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_obs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">new_obs</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">cp_env_provider</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">CartPoleObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v0&#39;</span><span class="p">),</span> <span class="n">cp_buckets</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">cp_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
-    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
-    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">metrics</span>
-
-<span class="n">cp_base_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;classifier_length&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s2">&quot;number_of_possible_actions&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
-    <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
-    <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.995</span><span class="p">,</span>
-    <span class="s2">&quot;initial_q&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="s2">&quot;theta_exp&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="s2">&quot;theta_ga&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="s2">&quot;do_ga&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s2">&quot;chi&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="s2">&quot;mu&quot;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span>
-    <span class="s2">&quot;metrics_trial_frequency&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="c1"># TODO note this</span>
-    <span class="s2">&quot;user_metrics_collector_fcn&quot;</span><span class="p">:</span> <span class="n">cp_metrics</span>
-<span class="p">}</span>
-
-
-<span class="n">cp_explore_trials</span><span class="p">,</span> <span class="n">cp_exploit_trials</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span>
-
-<span class="n">CP_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">2</span>
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/epsilon_greedy.dill&#39;</span><span class="p">)</span>
-<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">CP_EXPERIMENTS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">cp_epsilon_greedy</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">,</span>
-                          <span class="n">cp_explore_trials</span><span class="p">,</span>
-                          <span class="n">cp_exploit_trials</span><span class="p">,</span>
-                          <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">}))</span>
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/action_delay.dill&#39;</span><span class="p">)</span>
-<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">CP_EXPERIMENTS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">cp_action_delay</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">,</span>
-                          <span class="n">cp_explore_trials</span><span class="p">,</span>
-                          <span class="n">cp_exploit_trials</span><span class="p">,</span>
-                          <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
-
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/knowledge_array.dill&#39;</span><span class="p">)</span>
-<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">CP_EXPERIMENTS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">cp_knowledge_array</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">,</span>
-                          <span class="n">cp_explore_trials</span><span class="p">,</span>
-                          <span class="n">cp_exploit_trials</span><span class="p">,</span>
-                          <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">KnowledgeArray</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
-
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/oiq.dill&#39;</span><span class="p">)</span>
-<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">CP_EXPERIMENTS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">cp_oiq</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">,</span>
-                          <span class="n">cp_explore_trials</span><span class="p">,</span>
-                          <span class="n">cp_exploit_trials</span><span class="p">,</span>
-                          <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}))</span>
 
 <span class="k">def</span> <span class="nf">plot_cp</span><span class="p">(</span><span class="n">epsilon_greedy_df</span><span class="p">,</span> <span class="n">action_delay_df</span><span class="p">,</span> <span class="n">knowledge_array_df</span><span class="p">,</span> <span class="n">op_initial_df</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">buckets</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
     <span class="c1"># Plots layout</span>
-    <span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">.4</span><span class="p">)</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">.4</span><span class="p">)</span>
     <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
@@ -655,10 +580,14 @@
     <span class="n">ma_window</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># moving average window</span>
 
     <span class="c1"># Steps in trial</span>
-    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span>
+                                                                              <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span>
+                                                                            <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span>
+                                                                               <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span>
+                                                                          <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
 
     <span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">explore_trials</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
     <span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">195</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
@@ -671,8 +600,10 @@
     <span class="c1"># Population</span>
     <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
     <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span>
+                                                                         <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span>
+                                                                    <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
 
     <span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">explore_trials</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
@@ -690,25 +621,161 @@
 </div>
 </div>
 </div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-balacing-the-pole">
+<h1>Experiment 3 - Balacing the pole<a class="headerlink" href="#experiment-3-balacing-the-pole" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CartPoleObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
+    <span class="c1"># https://medium.com/@tuzzer/cart-pole-balancing-with-q-learning-b54c6068d947</span>
+    <span class="c1"># _high = [env.observation_space.high[0], 0.5, env.observation_space.high[2], math.radians(50)]</span>
+    <span class="c1"># _low = [env.observation_space.low[0], -0.5, env.observation_space.low[2], -math.radians(50)]</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">buckets</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">3500</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="p">[</span><span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">3500</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span> <span class="o">=</span> <span class="n">buckets</span>
+
+    <span class="k">def</span> <span class="nf">observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="n">ratios</span> <span class="o">=</span> <span class="p">[(</span><span class="n">obs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_low</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_low</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
+        <span class="n">new_obs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratios</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
+        <span class="n">new_obs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_buckets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_obs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="p">))]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">new_obs</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">cp_env_provider</span><span class="p">(</span><span class="n">buckets</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">CartPoleObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v0&#39;</span><span class="p">),</span> <span class="n">buckets</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">cp_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">population</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">metrics</span>
+
+
+<span class="n">cp_base_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;classifier_length&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;number_of_possible_actions&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.995</span><span class="p">,</span>
+    <span class="s2">&quot;initial_q&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;theta_exp&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;theta_ga&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;do_ga&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;chi&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;mu&quot;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span>
+    <span class="s2">&quot;metrics_trial_frequency&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;user_metrics_collector_fcn&quot;</span><span class="p">:</span> <span class="n">cp_metrics</span>
+<span class="p">}</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span>
+
+<span class="c1"># Bucket configurations</span>
+<span class="n">buckets_v1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">buckets_v2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">buckets_v3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">buckets_v4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">buckets_v5</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="n">buckets_to_str</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">buckets</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">buckets</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets</span><span class="p">):</span>
+    <span class="n">env_provider</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">cp_env_provider</span><span class="p">(</span><span class="n">buckets</span><span class="p">)</span>
+
+    <span class="n">eg</span> <span class="o">=</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span>
+                        <span class="n">explore_trials</span><span class="p">,</span>
+                        <span class="n">exploit_trials</span><span class="p">,</span>
+                        <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">}))</span>
+
+    <span class="n">ad</span> <span class="o">=</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span>
+                        <span class="n">explore_trials</span><span class="p">,</span>
+                        <span class="n">exploit_trials</span><span class="p">,</span>
+                        <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+    <span class="n">ka</span> <span class="o">=</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span>
+                        <span class="n">explore_trials</span><span class="p">,</span>
+                        <span class="n">exploit_trials</span><span class="p">,</span>
+                        <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">KnowledgeArray</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+
+    <span class="n">oiq</span> <span class="o">=</span> <span class="n">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span>
+                         <span class="n">explore_trials</span><span class="p">,</span>
+                         <span class="n">exploit_trials</span><span class="p">,</span>
+                         <span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}))</span>
+
+    <span class="k">return</span> <span class="n">eg</span><span class="p">,</span> <span class="n">ad</span><span class="p">,</span> <span class="n">ka</span><span class="p">,</span> <span class="n">oiq</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/</span><span class="si">{</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">buckets_v1</span><span class="p">)</span><span class="si">}</span><span class="s1">.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cp_buckets_v1</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets_v1</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/</span><span class="si">{</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">buckets_v2</span><span class="p">)</span><span class="si">}</span><span class="s1">.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cp_buckets_v2</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets_v2</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/</span><span class="si">{</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">buckets_v3</span><span class="p">)</span><span class="si">}</span><span class="s1">.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cp_buckets_v3</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets_v3</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/</span><span class="si">{</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">buckets_v4</span><span class="p">)</span><span class="si">}</span><span class="s1">.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cp_buckets_v4</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets_v4</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/</span><span class="si">{</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">buckets_v5</span><span class="p">)</span><span class="si">}</span><span class="s1">.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cp_buckets_v5</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">run_cart_pole_biased_exploration</span><span class="p">(</span><span class="n">buckets_v5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the calculations</span>
-<span class="n">cp_epsilon_greedy_dfs</span> <span class="o">=</span> <span class="n">cp_epsilon_greedy</span><span class="p">()</span>
-<span class="n">cp_action_delay_dfs</span> <span class="o">=</span> <span class="n">cp_action_delay</span><span class="p">()</span>
-<span class="n">cp_knowledge_array_dfs</span> <span class="o">=</span> <span class="n">cp_knowledge_array</span><span class="p">()</span>
-<span class="n">cp_oiq_dfs</span> <span class="o">=</span> <span class="n">cp_oiq</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">experiment_runs</span><span class="p">):</span>
+    <span class="n">eg_dfs</span><span class="p">,</span> <span class="n">ad_dfs</span><span class="p">,</span> <span class="n">ka_dfs</span><span class="p">,</span> <span class="n">oiq_dfs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">eg_df</span><span class="p">,</span> <span class="n">ad_df</span><span class="p">,</span> <span class="n">ka_df</span><span class="p">,</span> <span class="n">oiq_df</span> <span class="ow">in</span> <span class="n">experiment_runs</span><span class="p">:</span>
+        <span class="n">eg_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eg_df</span><span class="p">)</span>
+        <span class="n">ad_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ad_df</span><span class="p">)</span>
+        <span class="n">ka_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ka_df</span><span class="p">)</span>
+        <span class="n">oiq_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oiq_df</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">eg_dfs</span><span class="p">,</span> <span class="n">ad_dfs</span><span class="p">,</span> <span class="n">ka_dfs</span><span class="p">,</span> <span class="n">oiq_dfs</span>
+
+
+<span class="c1"># Run the calculations</span>
+<span class="n">cp_bv1_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv1_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv1_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv1_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">cp_buckets_v1</span><span class="p">())</span>
+<span class="n">cp_bv2_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv2_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv2_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv2_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">cp_buckets_v2</span><span class="p">())</span>
+<span class="n">cp_bv3_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv3_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv3_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv3_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">cp_buckets_v3</span><span class="p">())</span>
+<span class="n">cp_bv4_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv4_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv4_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv4_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">cp_buckets_v4</span><span class="p">())</span>
+<span class="n">cp_bv5_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv5_oiq_dfs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">cp_buckets_v5</span><span class="p">())</span>
 
 <span class="c1"># Plot visualization</span>
 <span class="n">plot_cp</span><span class="p">(</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_epsilon_greedy_dfs</span><span class="p">),</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_action_delay_dfs</span><span class="p">),</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_knowledge_array_dfs</span><span class="p">),</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_oiq_dfs</span><span class="p">),</span>
-    <span class="n">explore_trials</span><span class="o">=</span><span class="n">cp_explore_trials</span><span class="p">,</span>
-    <span class="n">buckets</span><span class="o">=</span><span class="n">cp_buckets</span><span class="p">)</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_bv1_eg_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_bv1_ad_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_bv1_ka_dfs</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">cp_bv1_oiq_dfs</span><span class="p">),</span>
+    <span class="n">explore_trials</span><span class="o">=</span><span class="n">explore_trials</span><span class="p">,</span>
+    <span class="n">buckets</span><span class="o">=</span><span class="n">buckets_v1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -725,27 +792,29 @@
 <span class="k">def</span> <span class="nf">cp_single_run</span><span class="p">():</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="n">cp_base_params</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;action_selector&#39;</span><span class="p">:</span> <span class="n">EpsilonGreedy</span><span class="p">}))</span>
     <span class="n">agent</span> <span class="o">=</span> <span class="n">ACS2</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-    <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">(),</span> <span class="n">cp_explore_trials</span><span class="p">)</span>
+    <span class="n">agent</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">cp_env_provider</span><span class="p">(</span><span class="n">buckets_v1</span><span class="p">),</span> <span class="n">explore_trials</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">agent</span>  <span class="c1"># only interested in resulting population</span>
+
 
 <span class="c1"># execute run</span>
 <span class="n">cp_agent</span> <span class="o">=</span> <span class="n">cp_single_run</span><span class="p">()</span>
 
 <span class="n">reliable</span> <span class="o">=</span> <span class="p">[</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">cp_agent</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()]</span>
 <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">reliable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="o">-</span><span class="n">cl</span><span class="o">.</span><span class="n">fitness</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="si">}</span><span class="s1">]</span><span class="se">\t\t</span><span class="s1">mark: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">mark</span><span class="si">}</span><span class="se">\t</span><span class="s1">quality: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">q</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\t</span><span class="s1">reward: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\t</span><span class="s1">numerosity: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="si">}</span><span class="s1">]</span><span class="se">\t\t</span><span class="s1">mark: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">mark</span><span class="si">}</span><span class="se">\t</span><span class="s1">quality: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">q</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\t</span><span class="s1">reward: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\t</span><span class="s1">numerosity: </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##23 0 ####]		mark: 00##	quality: 0.92	reward: 3.26	numerosity: 1
-[##32 1 ####]		mark: 00##	quality: 0.91	reward: 3.20	numerosity: 1
-[##22 1 ####]		mark: 00##	quality: 0.97	reward: 2.64	numerosity: 2
-[##33 0 ####]		mark: 00##	quality: 0.96	reward: 2.36	numerosity: 1
-[##12 0 ####]		mark: 00##	quality: 0.96	reward: 1.35	numerosity: 2
-[##43 1 ####]		mark: 00##	quality: 0.98	reward: 1.31	numerosity: 1
-[##12 1 ####]		mark: empty	quality: 1.00	reward: 1.27	numerosity: 18
-[##43 0 ####]		mark: empty	quality: 0.99	reward: 1.26	numerosity: 20
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##23 0 ####]		mark: 00##	quality: 0.96	reward: 3.34	numerosity: 1
+[##32 1 ####]		mark: 00##	quality: 0.96	reward: 3.24	numerosity: 1
+[##22 1 ####]		mark: 00##	quality: 0.98	reward: 2.78	numerosity: 1
+[##33 0 ####]		mark: 00##	quality: 0.95	reward: 2.23	numerosity: 3
+[##12 0 ####]		mark: 00##	quality: 0.98	reward: 1.44	numerosity: 1
+[##12 1 ####]		mark: empty	quality: 1.00	reward: 1.36	numerosity: 20
+[##43 1 ####]		mark: 00##	quality: 0.97	reward: 1.32	numerosity: 6
+[##43 0 ####]		mark: empty	quality: 1.00	reward: 1.22	numerosity: 20
 </pre></div>
 </div>
 </div>
@@ -758,15 +827,117 @@
 <p class="admonition-title">Hypothesis testing</p>
 <p>Here the best idea in my opinion would be to evaluate different discretization buckets combinations. But this requires a research and experiments on it own. Suggestion is to propose 4-5 reasonable configurations and distributions for the number of steps and classifiers count in each situation.</p>
 </div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiments_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">buckets_v1</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv1_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv1_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv1_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv1_oiq_dfs</span><span class="p">],</span>
+    <span class="n">buckets_v2</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv2_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv2_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv2_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv2_oiq_dfs</span><span class="p">],</span>
+    <span class="n">buckets_v3</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv3_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv3_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv3_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv3_oiq_dfs</span><span class="p">],</span>
+    <span class="n">buckets_v4</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv4_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv4_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv4_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv4_oiq_dfs</span><span class="p">],</span>
+    <span class="n">buckets_v5</span><span class="p">:</span> <span class="p">[</span><span class="n">cp_bv5_eg_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ad_dfs</span><span class="p">,</span> <span class="n">cp_bv5_ka_dfs</span><span class="p">,</span> <span class="n">cp_bv5_oiq_dfs</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">print_bayes_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">table_data</span> <span class="o">=</span> <span class="p">[[</span><span class="n">buckets_to_str</span><span class="p">(</span><span class="n">bucket</span><span class="p">)]</span> <span class="o">+</span> <span class="n">rewards</span> <span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">rewards</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">table_data</span><span class="p">,</span>
+                     <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">],</span>
+                     <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">)</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="average-steps-in-exploit-phase">
+<h3>Average Steps in exploit phase<a class="headerlink" href="#average-steps-in-exploit-phase" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_reward</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dfs</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;phase == &quot;exploit&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">average_rewards_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">dfs</span> <span class="ow">in</span> <span class="n">experiments_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">average_rewards_data</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">avg_reward</span><span class="p">,</span> <span class="n">dfs</span><span class="p">))</span>
+
+<span class="n">print_bayes_table</span><span class="p">(</span><span class="n">average_rewards_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">       </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">1_1_6_6</td><td style="text-align: right;">          178.40</td><td style="text-align: right;">        138.69</td><td style="text-align: right;">           175.72</td><td style="text-align: right;">                      171.20</td></tr>
+<tr><td style="text-align: right;">4_4_4_4</td><td style="text-align: right;">           18.85</td><td style="text-align: right;">         19.14</td><td style="text-align: right;">            20.34</td><td style="text-align: right;">                       18.56</td></tr>
+<tr><td style="text-align: right;">2_2_6_6</td><td style="text-align: right;">           59.73</td><td style="text-align: right;">         44.58</td><td style="text-align: right;">            95.68</td><td style="text-align: right;">                       60.72</td></tr>
+<tr><td style="text-align: right;">1_2_4_4</td><td style="text-align: right;">          133.93</td><td style="text-align: right;">        150.62</td><td style="text-align: right;">           128.70</td><td style="text-align: right;">                      132.36</td></tr>
+<tr><td style="text-align: right;">1_1_8_8</td><td style="text-align: right;">          181.61</td><td style="text-align: right;">        154.09</td><td style="text-align: right;">           172.75</td><td style="text-align: right;">                      176.42</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</div>
+<div class="section" id="reliable-classifiers">
+<h3>Reliable classifiers<a class="headerlink" href="#reliable-classifiers" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_bayes_model</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+    <span class="n">data_arr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">dfs</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">posteriors</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_bayes_model</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">]</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="n">posteriors</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/bayes/reliable.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_reliable_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;reliable&#39;</span><span class="p">,</span> <span class="n">query_condition</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">explore_trials</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># run computations</span>
+<span class="n">reliable_data</span> <span class="o">=</span> <span class="n">build_reliable_models</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
+
+<span class="n">print_row</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="n">reliable_table_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">models</span> <span class="ow">in</span> <span class="n">reliable_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">reliable_table_data</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">print_row</span><span class="p">,</span> <span class="n">models</span><span class="p">))</span>
+
+<span class="n">print_bayes_table</span><span class="p">(</span><span class="n">reliable_table_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">       </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">1_1_6_6</td><td style="text-align: right;">       8.0 ± 0.0</td><td style="text-align: right;">   9.39 ± 0.18</td><td style="text-align: right;">      9.01 ± 0.23</td><td style="text-align: right;">                   8.0 ± 0.0</td></tr>
+<tr><td style="text-align: right;">4_4_4_4</td><td style="text-align: right;">     6.33 ± 0.26</td><td style="text-align: right;">   4.38 ± 0.19</td><td style="text-align: right;">      5.65 ± 0.23</td><td style="text-align: right;">                 6.06 ± 0.23</td></tr>
+<tr><td style="text-align: right;">2_2_6_6</td><td style="text-align: right;">     6.99 ± 0.25</td><td style="text-align: right;">   7.29 ± 0.25</td><td style="text-align: right;">      8.27 ± 0.33</td><td style="text-align: right;">                 7.48 ± 0.31</td></tr>
+<tr><td style="text-align: right;">1_2_4_4</td><td style="text-align: right;">    11.23 ± 0.18</td><td style="text-align: right;">   9.83 ± 0.18</td><td style="text-align: right;">     10.01 ± 0.18</td><td style="text-align: right;">                10.86 ± 0.22</td></tr>
+<tr><td style="text-align: right;">1_1_8_8</td><td style="text-align: right;">     9.14 ± 0.12</td><td style="text-align: right;">   8.92 ± 0.12</td><td style="text-align: right;">     10.42 ± 0.21</td><td style="text-align: right;">                 9.18 ± 0.14</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</div>
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Why bucketing was chosen by hand (problem with hyperparameter tuning)</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">session_info</span>
+
 <span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -778,60 +949,71 @@
 -----
 gym                 0.21.0
 lcs                 NA
-matplotlib          3.5.0
-pandas              1.3.1
+matplotlib          3.5.1
+pandas              1.4.0
 session_info        1.0.0
 src                 (embedded book's utils module)
+tabulate            0.8.9
 -----
 </pre>
 <details>
 <summary>Click to view modules imported as dependencies</summary>
 <pre>
 PIL                         8.4.0
+arviz                       0.11.2
+asttokens                   NA
 backcall                    0.2.0
+beta_ufunc                  NA
+binom_ufunc                 NA
 brotli                      NA
+cachetools                  5.0.0
 certifi                     2021.10.08
-cffi                        1.14.6
-charset_normalizer          2.0.4
+cffi                        1.15.0
+cftime                      1.5.2
+charset_normalizer          2.0.10
 click                       7.1.2
 cloudpickle                 2.0.0
 colorama                    0.4.4
 colorful                    0.5.4
 colorful_orig               0.5.4
-cryptography                36.0.0
+cryptography                36.0.1
 cycler                      0.10.0
 cython_runtime              NA
 databricks_cli              NA
 dateutil                    2.8.2
 debugpy                     1.5.1
-decorator                   5.1.0
+decorator                   5.1.1
 defusedxml                  0.7.1
 dill                        0.3.4
 entrypoints                 0.3
+executing                   0.8.2
+fastprogress                0.2.7
 filelock                    3.4.2
 google                      NA
 grpc                        1.43.0
 hiredis                     2.0.0
 idna                        3.3
 importlib_metadata          NA
-ipykernel                   6.4.1
+ipykernel                   6.7.0
 ipython_genutils            0.2.0
-jedi                        0.18.0
-kiwisolver                  1.3.1
+jedi                        0.18.1
+kiwisolver                  1.3.2
 matplotlib_inline           NA
-mkl                         2.4.0
-mlflow                      1.22.0
+mlflow                      1.23.1
 mpl_toolkits                NA
-msgpack                     1.0.2
-numpy                       1.21.2
+msgpack                     1.0.3
+nbinom_ufunc                NA
+netCDF4                     1.5.8
+numpy                       1.22.1
 packaging                   21.3
 parso                       0.8.3
 pexpect                     4.8.0
 pickleshare                 0.7.5
 pkg_resources               NA
-prompt_toolkit              3.0.20
-psutil                      5.8.0
+prompt_toolkit              3.0.26
+psutil                      5.9.0
 ptyprocess                  0.7.0
+pure_eval                   0.2.2
 pydev_ipython               NA
 pydevconsole                NA
 pydevd                      2.6.0
@@ -839,25 +1021,31 @@ pydevd_concurrency_analyser NA
 pydevd_file_utils           NA
 pydevd_plugins              NA
 pydevd_tracing              NA
-pyexpat                     NA
-pygments                    2.10.0
+pygments                    2.11.2
 pylab                       NA
-pyparsing                   3.0.4
+pymc3                       3.11.4
+pyparsing                   3.0.7
 pytz                        2021.3
 ray                         1.9.2
-redis                       4.1.1
+redis                       4.1.2
 requests                    2.27.1
+scipy                       1.7.3
+semver                      2.13.0
 setproctitle                1.2.2
+setuptools                  60.5.0
 six                         1.16.0
 socks                       1.7.1
 sphinxcontrib               NA
-storemagic                  NA
+stack_data                  0.1.4
+theano                      1.1.2
 tornado                     6.1
 tqdm                        4.62.3
 traitlets                   5.1.1
 typing_extensions           NA
-urllib3                     1.26.7
+unicodedata2                NA
+urllib3                     1.26.8
 wcwidth                     0.2.5
+xarray                      0.21.0
 yaml                        6.0
 zipp                        NA
 zmq                         22.3.0
@@ -865,15 +1053,15 @@ zmq                         22.3.0
 </details> <!-- seems like this ends pre, so might as well be explicit -->
 <pre>
 -----
-IPython             7.29.0
-jupyter_client      7.1.0
+IPython             8.0.1
+jupyter_client      7.1.2
 jupyter_core        4.9.1
-notebook            6.4.6
+notebook            6.4.8
 -----
-Python 3.9.6 (default, Aug 18 2021, 19:38:01) [GCC 7.5.0]
+Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-23 09:46
+Session information updated at 2022-01-29 13:45
 </pre>
 </details></div></div>
 </div>
