@@ -437,33 +437,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-20">
-     Corridor 20
+    <a class="reference internal nav-link" href="#id1">
+     Corridor
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-40">
-     Corridor 40
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-100">
-     Corridor 100
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-20">
-     Grid 20
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-40">
-     Grid 40
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-100">
-     Grid 100
+    <a class="reference internal nav-link" href="#id2">
+     Grid
     </a>
    </li>
   </ul>
@@ -521,33 +501,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-20">
-     Corridor 20
+    <a class="reference internal nav-link" href="#id1">
+     Corridor
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-40">
-     Corridor 40
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#corridor-100">
-     Corridor 100
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-20">
-     Grid 20
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-40">
-     Grid 40
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#grid-100">
-     Grid 100
+    <a class="reference internal nav-link" href="#id2">
+     Grid
     </a>
    </li>
   </ul>
@@ -575,11 +535,12 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">DisplayObject</span><span class="p">,</span> <span class="n">Pretty</span><span class="p">,</span> <span class="n">TextDisplayObject</span>
 <span class="kn">from</span> <span class="nn">lcs.agents.acs2</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ACS2</span>
 <span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
 <span class="kn">from</span> <span class="nn">lcs.strategies.action_selection</span> <span class="kn">import</span> <span class="n">EpsilonGreedy</span><span class="p">,</span> <span class="n">ActionDelay</span><span class="p">,</span> <span class="n">KnowledgeArray</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
@@ -1063,7 +1024,7 @@
 <p class="admonition-title">Hypothesis testing</p>
 <p>In almost every plots the lines clearly converge (knowledge, population, steps in trial). Maybe what would be beneficial would be to futher investigate larger environment problems (sizes 20/40/100) with fixed number of trials and show the differences (probably in the table like exploration method vs environment).</p>
 </div>
-<div class="cell tag_hide-input docutils container">
+<div class="cell tag_hide-input tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1164,22 +1125,26 @@
                      <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">],</span>
                      <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span>
                      <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+<span class="c1"># Add glue for rendering output in tabs</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;corridor100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid20&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid40&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;grid100&quot;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="corridor-20">
-<h3>Corridor 20<a class="headerlink" href="#corridor-20" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<div class="section" id="id1">
+<h3>Corridor<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="tabbed-set docutils">
+<input checked="checked" id="a86a1232-d663-4eaa-8c71-4caaf5e068c4" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
+</input><label class="tabbed-label" for="a86a1232-d663-4eaa-8c71-4caaf5e068c4">
+Corridor 20</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1190,20 +1155,12 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">      0.02 ± 0.0</td><td style="text-align: right;">    0.03 ± 0.0</td><td style="text-align: right;">       0.05 ± 0.0</td><td style="text-align: right;">                  0.02 ± 0.0</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">          1000.0</td><td style="text-align: right;">        1000.0</td><td style="text-align: right;">           1000.0</td><td style="text-align: right;">                      1000.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
-</div>
-<div class="section" id="corridor-40">
-<h3>Corridor 40<a class="headerlink" href="#corridor-40" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<input id="ec0f23b5-c05e-46fa-89b0-ad48ebce44c5" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
+</input><label class="tabbed-label" for="ec0f23b5-c05e-46fa-89b0-ad48ebce44c5">
+Corridor 40</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1214,20 +1171,12 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">      0.06 ± 0.0</td><td style="text-align: right;">    0.07 ± 0.0</td><td style="text-align: right;">       0.09 ± 0.0</td><td style="text-align: right;">                  0.06 ± 0.0</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">           949.0</td><td style="text-align: right;">         998.0</td><td style="text-align: right;">           1000.0</td><td style="text-align: right;">                       962.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
-</div>
-<div class="section" id="corridor-100">
-<h3>Corridor 100<a class="headerlink" href="#corridor-100" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;corridor100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<input id="66b58ddf-fc65-4716-b165-9b73a5f86429" name="b38e7120-29a0-4845-8baf-41c42bd4dd72" type="radio">
+</input><label class="tabbed-label" for="66b58ddf-fc65-4716-b165-9b73a5f86429">
+Corridor 100</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1238,20 +1187,17 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">      0.15 ± 0.0</td><td style="text-align: right;">    0.16 ± 0.0</td><td style="text-align: right;">       0.17 ± 0.0</td><td style="text-align: right;">                  0.16 ± 0.0</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">           228.0</td><td style="text-align: right;">         222.0</td><td style="text-align: right;">            329.0</td><td style="text-align: right;">                       217.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
 </div>
-<div class="section" id="grid-20">
-<h3>Grid 20<a class="headerlink" href="#grid-20" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid20&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<div class="section" id="id2">
+<h3>Grid<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="tabbed-set docutils">
+<input checked="checked" id="0a6636a2-8fa1-4a82-a651-6a47005b3e44" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
+</input><label class="tabbed-label" for="0a6636a2-8fa1-4a82-a651-6a47005b3e44">
+Grid 20</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1262,20 +1208,12 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">     0.73 ± 0.01</td><td style="text-align: right;">   0.69 ± 0.01</td><td style="text-align: right;">       1.32 ± 0.0</td><td style="text-align: right;">                 0.72 ± 0.01</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">           459.0</td><td style="text-align: right;">         440.0</td><td style="text-align: right;">            377.0</td><td style="text-align: right;">                       448.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
-</div>
-<div class="section" id="grid-40">
-<h3>Grid 40<a class="headerlink" href="#grid-40" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid40&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<input id="f9b048f9-8a4a-45e6-baf4-19fee011569c" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
+</input><label class="tabbed-label" for="f9b048f9-8a4a-45e6-baf4-19fee011569c">
+Grid 40</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1286,20 +1224,12 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">     1.65 ± 0.02</td><td style="text-align: right;">   1.63 ± 0.01</td><td style="text-align: right;">      1.74 ± 0.01</td><td style="text-align: right;">                 1.67 ± 0.02</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">           197.0</td><td style="text-align: right;">         191.0</td><td style="text-align: right;">            141.0</td><td style="text-align: right;">                       216.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
 </div>
-</div>
-<div class="section" id="grid-100">
-<h3>Grid 100<a class="headerlink" href="#grid-100" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;grid100&#39;</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">reliable_models</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span>
-                  <span class="n">perf_time_models</span><span class="p">,</span> <span class="n">avg_rewards</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
+<input id="a2a4cd37-baab-4286-bb4e-0048827f2ad2" name="764ba212-8f58-49e6-8641-01f516c28bf2" type="radio">
+</input><label class="tabbed-label" for="a2a4cd37-baab-4286-bb4e-0048827f2ad2">
+Grid 100</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
 <tr><th style="text-align: right;">                         </th><th style="text-align: right;">  Epsilon Greedy</th><th style="text-align: right;">  Action Delay</th><th style="text-align: right;">  Knowledge Array</th><th style="text-align: right;">  Optimistic Initial Quality</th></tr>
 </thead>
@@ -1310,7 +1240,8 @@
 <tr><td style="text-align: right;">     trial execution time</td><td style="text-align: right;">     3.24 ± 0.02</td><td style="text-align: right;">   3.33 ± 0.02</td><td style="text-align: right;">      3.35 ± 0.02</td><td style="text-align: right;">                 3.23 ± 0.02</td></tr>
 <tr><td style="text-align: right;">   average exploit reward</td><td style="text-align: right;">            47.0</td><td style="text-align: right;">          45.0</td><td style="text-align: right;">             24.0</td><td style="text-align: right;">                        17.0</td></tr>
 </tbody>
-</table></div></div>
+</table></span></span></p>
+</div>
 </div>
 </div>
 </div>
@@ -1336,6 +1267,7 @@ gym                 0.21.0
 gym_corridor        NA
 lcs                 NA
 matplotlib          3.5.1
+myst_nb             0.13.1
 pandas              1.4.0
 session_info        1.0.0
 src                 (embedded book's utils module)
@@ -1348,6 +1280,8 @@ tabulate            0.8.9
 PIL                         8.4.0
 arviz                       0.11.2
 asttokens                   NA
+attr                        21.4.0
+babel                       2.9.1
 backcall                    0.2.0
 beta_ufunc                  NA
 binom_ufunc                 NA
@@ -1371,27 +1305,46 @@ debugpy                     1.5.1
 decorator                   5.1.1
 defusedxml                  0.7.1
 dill                        0.3.4
+docutils                    0.16
 entrypoints                 0.3
 executing                   0.8.2
 fastprogress                0.2.7
 filelock                    3.4.2
 google                      NA
+greenlet                    1.1.2
 grpc                        1.43.0
 hiredis                     2.0.0
 idna                        3.3
+imagesize                   NA
 importlib_metadata          NA
 ipykernel                   6.7.0
 ipython_genutils            0.2.0
+ipywidgets                  7.6.5
 jedi                        0.18.1
+jinja2                      3.0.3
+jsonschema                  3.2.0
+jupyter_cache               0.4.3
+jupyter_sphinx              0.3.2
+jupyterlab_pygments         0.1.2
 kiwisolver                  1.3.2
+linkify_it                  1.0.3
+markdown_it                 1.1.0
+markupsafe                  2.0.1
 matplotlib_inline           NA
+mdit_py_plugins             0.2.8
+mistune                     0.8.4
 mlflow                      1.23.1
 mpl_toolkits                NA
 msgpack                     1.0.3
+myst_parser                 0.15.2
+nbclient                    0.5.10
+nbconvert                   6.4.1
+nbformat                    5.1.3
 nbinom_ufunc                NA
 netCDF4                     1.5.8
 numpy                       1.22.1
 packaging                   21.3
+pandocfilters               NA
 parso                       0.8.3
 pexpect                     4.8.0
 pickleshare                 0.7.5
@@ -1400,6 +1353,7 @@ prompt_toolkit              3.0.26
 psutil                      5.9.0
 ptyprocess                  0.7.0
 pure_eval                   0.2.2
+pvectorc                    NA
 pydev_ipython               NA
 pydevconsole                NA
 pydevd                      2.6.0
@@ -1411,6 +1365,7 @@ pygments                    2.11.2
 pylab                       NA
 pymc3                       3.11.4
 pyparsing                   3.0.7
+pyrsistent                  NA
 pytz                        2021.3
 ray                         1.9.2
 redis                       4.1.2
@@ -1421,13 +1376,17 @@ setproctitle                1.2.2
 setuptools                  60.5.0
 six                         1.16.0
 socks                       1.7.1
+sphinx                      4.4.0
 sphinxcontrib               NA
+sqlalchemy                  1.4.31
 stack_data                  0.1.4
+testpath                    0.5.0
 theano                      1.1.2
 tornado                     6.1
 tqdm                        4.62.3
 traitlets                   5.1.1
 typing_extensions           NA
+uc_micro                    1.0.1
 unicodedata2                NA
 urllib3                     1.26.8
 wcwidth                     0.2.5
@@ -1447,7 +1406,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-29 13:50
+Session information updated at 2022-01-29 14:48
 </pre>
 </details></div></div>
 </div>
