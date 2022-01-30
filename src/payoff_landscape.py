@@ -57,3 +57,5 @@ def plot_payoff_landscape(payoffs: Dict, rho: float, rho_text_location, plot_fil
 
     if plot_filename:
         plt.savefig(plot_filename, transparent=False, bbox_inches='tight', dpi=PLOT_DPI)
+
+    return fig
