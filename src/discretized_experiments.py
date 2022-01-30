@@ -115,8 +115,7 @@ def single_dynaq_experiment(
 
 
 def parse_lcs_metrics(agent_name, metrics):
-    data = [[agent_name, d['perf_time'], d['trial'], d['knowledge'], d['pop'],
-             d['generalization'], d['steps_in_trial']] for d in metrics]
+    data = [[agent_name, d['perf_time'], d['trial'], d['knowledge'], d['pop'], d['generalization'], d['steps_in_trial']] for d in metrics]
 
     df = pd.DataFrame(
         data,
@@ -156,18 +155,10 @@ def plot_comparison(df, plot_filename=None):
     }
 
     acs_line_props = {'label': 'ACS', 'color': COLORS['acs'], 'marker': 'x', 'markevery': mark_every[0], **line_props}
-    acs2_line_props = {'label': 'ACS2', 'color': COLORS['acs2'], 'marker': 'v', 'markevery': mark_every[1],
-                       **line_props}
-    acs2_oiq_line_props = {'label': 'ACS2_OIQ', 'color': COLORS['acs2_oiq'], 'marker': 'v', 'markevery': mark_every[2],
-                           **line_props}
-    acs2_ga_line_props = {'label': 'ACS2_GA', 'color': COLORS['acs2_ga'], 'marker': 's', 'markevery': mark_every[3],
-                          **line_props}
-    acs2_ga_oiq_line_props = {'label': 'ACS2_GA_OIQ', 'color': COLORS['acs2_ga_oiq'], 'marker': 's',
-                              'markevery': mark_every[4], **line_props}
-    yacs_line_props = {'label': 'YACS', 'color': COLORS['yacs'], 'marker': 'o', 'markevery': mark_every[5],
-                       **line_props}
-    dynaq_line_props = {'label': 'DynaQ', 'color': COLORS['dynaq'], 'marker': 'D', 'markevery': mark_every[6],
-                        **line_props}
+    acs2_line_props = {'label': 'ACS2', 'color': COLORS['acs2'], 'marker': 'v', 'markevery': mark_every[1], **line_props}
+    acs2_ga_line_props = {'label': 'ACS2_GA', 'color': COLORS['acs2_ga'], 'marker': 's', 'markevery': mark_every[2], **line_props}
+    yacs_line_props = {'label': 'YACS', 'color': COLORS['yacs'], 'marker': 'o', 'markevery': mark_every[3], **line_props}
+    dynaq_line_props = {'label': 'DynaQ', 'color': COLORS['dynaq'], 'marker': 'D', 'markevery': mark_every[4], **line_props}
 
     df['knowledge_100'] = df['knowledge'] * 100
     df['generalization_100'] = df['generalization'] * 100
@@ -175,9 +166,7 @@ def plot_comparison(df, plot_filename=None):
     # Population
     df.loc['acs']['population'].plot(ax=axs[0, 0], **acs_line_props)
     df.loc['acs2']['population'].plot(ax=axs[0, 0], **acs2_line_props)
-    df.loc['acs2_oiq']['population'].plot(ax=axs[0, 0], **acs2_oiq_line_props)
     df.loc['acs2_ga']['population'].plot(ax=axs[0, 0], **acs2_ga_line_props)
-    df.loc['acs2_ga_oiq']['population'].plot(ax=axs[0, 0], **acs2_ga_oiq_line_props)
     df.loc['yacs']['population'].plot(ax=axs[0, 0], **yacs_line_props)
     df.loc['dynaq']['population'].plot(ax=axs[0, 0], **dynaq_line_props)
     axs[0, 0].set_title('Population size')
@@ -188,9 +177,7 @@ def plot_comparison(df, plot_filename=None):
     axs[0, 1].set_title('Knowledge')
     df.loc['acs']['knowledge_100'].plot(ax=axs[0, 1], **acs_line_props)
     df.loc['acs2']['knowledge_100'].plot(ax=axs[0, 1], **acs2_line_props)
-    df.loc['acs2_oiq']['knowledge_100'].plot(ax=axs[0, 1], **acs2_oiq_line_props)
     df.loc['acs2_ga']['knowledge_100'].plot(ax=axs[0, 1], **acs2_ga_line_props)
-    df.loc['acs2_ga_oiq']['knowledge_100'].plot(ax=axs[0, 1], **acs2_ga_oiq_line_props)
     df.loc['yacs']['knowledge_100'].plot(ax=axs[0, 1], **yacs_line_props)
     df.loc['dynaq']['knowledge_100'].plot(ax=axs[0, 1], **dynaq_line_props)
     #     axs[0, 1].legend(loc='lower right', frameon=False)
@@ -200,9 +187,7 @@ def plot_comparison(df, plot_filename=None):
     axs[1, 0].set_title('Generalization')
     df.loc['acs']['generalization_100'].plot(ax=axs[1, 0], **acs_line_props)
     df.loc['acs2']['generalization_100'].plot(ax=axs[1, 0], **acs2_line_props)
-    df.loc['acs2_oiq']['generalization_100'].plot(ax=axs[1, 0], **acs2_oiq_line_props)
     df.loc['acs2_ga']['generalization_100'].plot(ax=axs[1, 0], **acs2_ga_line_props)
-    df.loc['acs2_ga_oiq']['generalization_100'].plot(ax=axs[1, 0], **acs2_ga_oiq_line_props)
     df.loc['yacs']['generalization_100'].plot(ax=axs[1, 0], **yacs_line_props)
     df.loc['dynaq']['generalization_100'].plot(ax=axs[1, 0], **dynaq_line_props)
     #     axs[1, 0].legend(loc='best', frameon=False)
@@ -211,11 +196,9 @@ def plot_comparison(df, plot_filename=None):
     # Trial time
     times = df.groupby('agent')['time'].mean().to_dict()
 
-    labels = ['ACS', 'ACS2', 'ACS2_OIQ', 'ACS2_GA', 'ACS2_GA_OIQ', 'YACS', 'DynaQ']
-    values = [times['acs'], times['acs2'], times['acs2_oiq'], times['acs2_ga'], times['acs2_ga_oiq'], times['yacs'],
-              times['dynaq']]
-    colors = [COLORS['acs'], COLORS['acs2'], COLORS['acs2_oiq'], COLORS['acs2_ga'], COLORS['acs2_ga_oiq'],
-              COLORS['yacs'], COLORS['dynaq']]
+    labels = ['ACS', 'ACS2', 'ACS2_GA', 'YACS', 'DynaQ']
+    values = [times['acs'], times['acs2'], times['acs2_ga'], times['yacs'], times['dynaq']]
+    colors = [COLORS['acs'], COLORS['acs2'], COLORS['acs2_ga'], COLORS['yacs'], COLORS['dynaq']]
 
     axs[1, 1].bar(labels, values, color=colors)
     axs[1, 1].set_xticklabels(labels, rotation=60)
