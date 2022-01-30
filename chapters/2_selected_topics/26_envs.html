@@ -172,7 +172,7 @@
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
+    <a class="reference internal" href="../3_internalizing/interval/32_interval_based_representation.html">
      3.1. Interval-based representation
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -182,19 +182,19 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_1.html">
        Experiment 1 - Encoding precision
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_2.html">
        Experiment 2 - Nature of the intervals
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+    <a class="reference internal" href="../3_internalizing/discretization/33_discretizing_input_signal.html">
      3.2. Discretizing input signal
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
@@ -204,12 +204,12 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_3.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_3.html">
        Experiment 3 - Single step
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_4.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_4.html">
        Experiment 4 - Multistep environments
       </a>
      </li>
@@ -515,16 +515,21 @@
                 
   <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pylab</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
 <span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pylab</span>
+
+<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
-<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+<span class="n">root_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">cwd_dir_name</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
 
-<span class="n">PLOT_DPI</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir_name</span>
 </pre></div>
 </div>
 </div>
@@ -556,7 +561,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.7, 0.78, 0.16, 0.74, 0.16, 0.45, 0.0]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.83, 1.0, 0.74, 0.34, 0.56, 0.21, 0.0]
 </pre></div>
 </div>
 </div>
@@ -572,7 +577,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 1, 0, 1, 0, 0, 0]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 1, 1, 0, 1, 0, 0]
 </pre></div>
 </div>
 </div>
@@ -607,7 +612,7 @@
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard-env.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard-env-visualization.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
 
 <span class="n">pylab</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 </pre></div>
@@ -615,7 +620,7 @@
 </div>
 </div>
 <div class="figure align-default" id="checkerboard-env">
-<img alt="../../_images/checkerboard-env.png" src="../../_images/checkerboard-env.png" />
+<img alt="../../_images/checkerboard-env-visualization.png" src="../../_images/checkerboard-env-visualization.png" />
 <p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The checkerboard environment</span><a class="headerlink" href="#checkerboard-env" title="Permalink to this image">¶</a></p>
 </div>
 </div>

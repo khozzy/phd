@@ -172,7 +172,7 @@
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
+    <a class="reference internal" href="../3_internalizing/interval/32_interval_based_representation.html">
      3.1. Interval-based representation
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -182,19 +182,19 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_1.html">
        Experiment 1 - Encoding precision
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_2.html">
        Experiment 2 - Nature of the intervals
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+    <a class="reference internal" href="../3_internalizing/discretization/33_discretizing_input_signal.html">
      3.2. Discretizing input signal
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
@@ -204,12 +204,12 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_3.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_3.html">
        Experiment 3 - Single step
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_4.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_4.html">
        Experiment 4 - Multistep environments
       </a>
      </li>
@@ -515,14 +515,18 @@
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.metrics</span> <span class="kn">import</span> <span class="n">parse_experiments_results</span>
+<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">biased_exploration_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
 
 <span class="n">COLORS</span> <span class="o">=</span> <span class="n">biased_exploration_colors</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
-<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
-<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+<span class="n">root_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">cwd_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span>  <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span>  <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
 
 <span class="k">def</span> <span class="nf">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">):</span>
@@ -562,14 +566,10 @@
     <span class="n">ma_window</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># moving average window</span>
 
     <span class="c1"># Steps in trial</span>
-    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span>
-                                                                              <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span>
-                                                                            <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span>
-                                                                               <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span>
-                                                                          <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
 
     <span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">explore_trials</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
     <span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">195</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
@@ -582,10 +582,8 @@
     <span class="c1"># Population</span>
     <span class="n">epsilon_greedy_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon Greedy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;eg&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
     <span class="n">action_delay_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Action Delay&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ad&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span>
-                                                                         <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span>
-                                                                    <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">knowledge_array_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Knowledge Array&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;ka&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">op_initial_df</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">ma_window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimistic Initial Quality&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s1">&#39;oiq&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
 
     <span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">explore_trials</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
@@ -765,7 +763,7 @@
 </div>
 <div class="full-width figure align-default" id="cp-fig">
 <img alt="../../_images/cartpole-performance.png" src="../../_images/cartpole-performance.png" />
-<p class="caption"><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Performance in CartPole environment</span><a class="headerlink" href="#cp-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.6 </span><span class="caption-text">Performance in CartPole environment</span><a class="headerlink" href="#cp-fig" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="classifiers-lookup">
 <h3>Classifiers lookup<a class="headerlink" href="#classifiers-lookup" title="Permalink to this headline">¶</a></h3>
@@ -874,8 +872,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="b9e88dfd-8bb8-4f71-9230-26a17d377764" name="77fcc412-2785-4699-8751-abcd4f4399bd" type="radio">
-</input><label class="tabbed-label" for="b9e88dfd-8bb8-4f71-9230-26a17d377764">
+<input checked="checked" id="394533ec-1fb3-4608-a8ce-1a28fbacf943" name="ae0ba3c8-9855-46dc-80ec-00df80ffca31" type="radio">
+</input><label class="tabbed-label" for="394533ec-1fb3-4608-a8ce-1a28fbacf943">
 Average Number of Steps</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -890,8 +888,8 @@ Average Number of Steps</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="ee159c06-5ede-4b6f-bce3-28ffa5baa039" name="77fcc412-2785-4699-8751-abcd4f4399bd" type="radio">
-</input><label class="tabbed-label" for="ee159c06-5ede-4b6f-bce3-28ffa5baa039">
+<input id="9fc2f359-6796-4667-a868-6b0fc741efcd" name="ae0ba3c8-9855-46dc-80ec-00df80ffca31" type="radio">
+</input><label class="tabbed-label" for="9fc2f359-6796-4667-a868-6b0fc741efcd">
 Reliable classifiers</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1068,7 +1066,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-29 19:44
+Session information updated at 2022-01-30 15:25
 </pre>
 </details></div></div>
 </div>

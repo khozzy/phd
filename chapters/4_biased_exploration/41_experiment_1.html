@@ -172,7 +172,7 @@
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/32_interval_based_representation.html">
+    <a class="reference internal" href="../3_internalizing/interval/32_interval_based_representation.html">
      3.1. Interval-based representation
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
@@ -182,19 +182,19 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_1.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_1.html">
        Experiment 1 - Encoding precision
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/32_experiment_2.html">
+      <a class="reference internal" href="../3_internalizing/interval/32_experiment_2.html">
        Experiment 2 - Nature of the intervals
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../3_internalizing/33_discretizing_input_signal.html">
+    <a class="reference internal" href="../3_internalizing/discretization/33_discretizing_input_signal.html">
      3.2. Discretizing input signal
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
@@ -204,12 +204,12 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_3.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_3.html">
        Experiment 3 - Single step
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../3_internalizing/33_experiment_4.html">
+      <a class="reference internal" href="../3_internalizing/discretization/33_experiment_4.html">
        Experiment 4 - Multistep environments
       </a>
      </li>
@@ -526,6 +526,7 @@
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.metrics</span> <span class="kn">import</span> <span class="n">parse_experiments_results</span><span class="p">,</span> <span class="n">corridor_transition_knowledge</span><span class="p">,</span> <span class="n">grid_transition_knowledge</span>
+<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">biased_exploration_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
 
 <span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
@@ -533,8 +534,11 @@
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 
-<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
-<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+<span class="n">root_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">cwd_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span>  <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span>  <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
 
 <span class="k">def</span> <span class="nf">run_experiment</span><span class="p">(</span><span class="n">env_provider</span><span class="p">,</span> <span class="n">explore_trials</span><span class="p">,</span> <span class="n">exploit_trials</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">):</span>
@@ -982,8 +986,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="c133dd2d-d7d9-4967-9f42-46451605ae93" name="ff83b04b-259d-44f9-b724-e213e0b29802" type="radio">
-</input><label class="tabbed-label" for="c133dd2d-d7d9-4967-9f42-46451605ae93">
+<input checked="checked" id="61c5ddf0-9a60-43c4-9de0-18a8e066b89b" name="11b519e2-bc96-4931-9f54-d9093951392b" type="radio">
+</input><label class="tabbed-label" for="61c5ddf0-9a60-43c4-9de0-18a8e066b89b">
 Corridor</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-fig">
 <div class="cell_output docutils container">
@@ -992,8 +996,8 @@ Corridor</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Performance of Corridor-20 environment</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="a8b3a9e0-4689-4a19-b949-f2c0e13699e3" name="ff83b04b-259d-44f9-b724-e213e0b29802" type="radio">
-</input><label class="tabbed-label" for="a8b3a9e0-4689-4a19-b949-f2c0e13699e3">
+<input id="8edf9ce6-b059-421b-b8e0-98ab4cf04b1c" name="11b519e2-bc96-4931-9f54-d9093951392b" type="radio">
+</input><label class="tabbed-label" for="8edf9ce6-b059-421b-b8e0-98ab4cf04b1c">
 Grid</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="grid-fig">
 <div class="cell_output docutils container">
@@ -1127,8 +1131,8 @@ Grid</label><div class="tabbed-content docutils">
 <div class="section" id="corridor">
 <h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="eabe781c-73e2-4846-9e7d-6771b9e67bd2" name="d8008dca-4e7a-4e89-9797-13cb0d2182df" type="radio">
-</input><label class="tabbed-label" for="eabe781c-73e2-4846-9e7d-6771b9e67bd2">
+<input checked="checked" id="dc20fa5d-bdd6-4d91-bc3a-1bb57c70c46b" name="0a9d6f89-bb06-4874-86ac-353fd2db5342" type="radio">
+</input><label class="tabbed-label" for="dc20fa5d-bdd6-4d91-bc3a-1bb57c70c46b">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1143,8 +1147,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="9fa66d8b-8ee0-4f33-907e-382867668cf2" name="d8008dca-4e7a-4e89-9797-13cb0d2182df" type="radio">
-</input><label class="tabbed-label" for="9fa66d8b-8ee0-4f33-907e-382867668cf2">
+<input id="86c67187-5a97-4880-b4f2-a6f7dc97b77d" name="0a9d6f89-bb06-4874-86ac-353fd2db5342" type="radio">
+</input><label class="tabbed-label" for="86c67187-5a97-4880-b4f2-a6f7dc97b77d">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1159,8 +1163,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="27f6ebe8-c5e7-47fd-801e-0f4e9f2f6770" name="d8008dca-4e7a-4e89-9797-13cb0d2182df" type="radio">
-</input><label class="tabbed-label" for="27f6ebe8-c5e7-47fd-801e-0f4e9f2f6770">
+<input id="e5b21981-bd75-4772-b14e-cd257208f16f" name="0a9d6f89-bb06-4874-86ac-353fd2db5342" type="radio">
+</input><label class="tabbed-label" for="e5b21981-bd75-4772-b14e-cd257208f16f">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1180,8 +1184,8 @@ Corridor 100</label><div class="tabbed-content docutils">
 <div class="section" id="grid">
 <h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="2481ea91-c9d0-4ac6-b78e-bb857f324757" name="eb6aef53-28a2-4b47-80a0-c2c599b75ac1" type="radio">
-</input><label class="tabbed-label" for="2481ea91-c9d0-4ac6-b78e-bb857f324757">
+<input checked="checked" id="3866331d-27f9-4db0-8541-e0fa86ecdba2" name="9015700d-c924-4d6e-8ab9-155fcdcb0da4" type="radio">
+</input><label class="tabbed-label" for="3866331d-27f9-4db0-8541-e0fa86ecdba2">
 Grid 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1196,8 +1200,8 @@ Grid 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="0db3ea80-ef18-41be-aff8-cc76eb6da0bf" name="eb6aef53-28a2-4b47-80a0-c2c599b75ac1" type="radio">
-</input><label class="tabbed-label" for="0db3ea80-ef18-41be-aff8-cc76eb6da0bf">
+<input id="f9b0a685-f9f8-43a9-939f-084ecee2f001" name="9015700d-c924-4d6e-8ab9-155fcdcb0da4" type="radio">
+</input><label class="tabbed-label" for="f9b0a685-f9f8-43a9-939f-084ecee2f001">
 Grid 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1212,8 +1216,8 @@ Grid 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="03d2ef87-e2ad-4dc9-9d81-464d8ef1c7e3" name="eb6aef53-28a2-4b47-80a0-c2c599b75ac1" type="radio">
-</input><label class="tabbed-label" for="03d2ef87-e2ad-4dc9-9d81-464d8ef1c7e3">
+<input id="fb05f5b9-1d96-4daf-b6b5-2fbb38cb5bd0" name="9015700d-c924-4d6e-8ab9-155fcdcb0da4" type="radio">
+</input><label class="tabbed-label" for="fb05f5b9-1d96-4daf-b6b5-2fbb38cb5bd0">
 Grid 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1392,7 +1396,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
 Linux-5.13.0-27-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-29 19:34
+Session information updated at 2022-01-30 14:41
 </pre>
 </details></div></div>
 </div>
