@@ -23,10 +23,9 @@ def repeat(num_times, use_ray=False):
 
             if use_ray:
                 try:
-                    # ray.init()
-                    ray.init(dashboard_host='0.0.0.0', runtime_env={"working_dir": "/home/nkozlowski/phd",
-                                                                    "excludes": ["*.dill",
-                                                                                 "/home/nkozlowski/phd/.git/*"]})
+                    ray.init()
+                    # ray.init(dashboard_host='0.0.0.0', runtime_env={"working_dir": "/home/nkozlowski/phd",
+                    #                                                 "excludes": ["*.dill", "*.pack"]})
 
                     remote_func = ray.remote(func)
                     feed = [remote_func.remote(*args, **kwargs) for _ in range(num_times)]
