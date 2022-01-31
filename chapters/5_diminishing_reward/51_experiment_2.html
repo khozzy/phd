@@ -415,11 +415,6 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#payoff-landscape">
-   Payoff landscape
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
@@ -450,11 +445,6 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#payoff-landscape">
-   Payoff landscape
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
@@ -475,132 +465,45 @@
                 
   <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span><span class="p">,</span> <span class="n">FormatStrFormatter</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_fsw</span>  <span class="c1"># noqa: F401</span>
-
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
-<span class="kn">from</span> <span class="nn">lcs.metrics</span> <span class="kn">import</span> <span class="n">population_metrics</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span><span class="p">,</span> <span class="n">FormatStrFormatter</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
-<span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">FSWObservationWrapper</span>
-<span class="kn">from</span> <span class="nn">src.runner</span> <span class="kn">import</span> <span class="n">run_experiments_alternating</span>
-<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.basic_rl</span> <span class="kn">import</span> <span class="n">run_q_learning_alternating</span><span class="p">,</span> <span class="n">run_r_learning_alternating</span><span class="p">,</span> <span class="n">qlearning</span><span class="p">,</span> <span class="n">rlearning</span>
-<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">diminishing_reward_colors</span><span class="p">,</span> <span class="n">PLOT_DPI</span>
+<span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
+<span class="kn">from</span> <span class="nn">src.diminishing_reward</span> <span class="kn">import</span> <span class="n">common_metrics</span>
+<span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">FSWObservationWrapper</span>
 <span class="kn">from</span> <span class="nn">src.payoff_landscape</span> <span class="kn">import</span> <span class="n">get_all_state_action</span><span class="p">,</span> <span class="n">plot_payoff_landscape</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">src.runner</span> <span class="kn">import</span> <span class="n">run_experiments_alternating</span>
+<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
+<span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">diminishing_reward_colors</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;../../../src/phd.mplstyle&#39;</span><span class="p">)</span>
 
-<span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/cache&#39;</span>
-<span class="n">plot_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s1">/plots&#39;</span>
+<span class="n">root_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">cwd_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
 
+<span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
-<span class="k">def</span> <span class="nf">common_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
-    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="n">pop</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_population</span><span class="p">()</span>
-    <span class="n">agent_name</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">):</span>
-        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">rho</span>
-        <span class="n">agent_name</span> <span class="o">+=</span> <span class="s2">&quot;_v&quot;</span> <span class="o">+</span> <span class="n">agent</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">rho_update_version</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;agent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agent_name</span>
-    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;reliable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">cl</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">is_reliable</span><span class="p">()])</span>
-
-    <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">population_metrics</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">metrics</span>
-
+<span class="k">def</span> <span class="nf">extract_specific_index</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">env_idx</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Selects run metrics for certain environment, ie FSW 40&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">run</span><span class="p">[</span><span class="n">env_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">average_experiment_runs</span><span class="p">(</span><span class="n">run_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">run_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;phase&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-finite-state-world-environment">
-<h1>Experiment 2 - Finite-State-World environment<a class="headerlink" href="#experiment-2-finite-state-world-environment" title="Permalink to this headline">¶</a></h1>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">discount_factor</span> <span class="o">=</span> <span class="mf">0.95</span>
-<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.0001</span>
 
-<span class="k">def</span> <span class="nf">fsw_env_provider</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">FSWObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;fsw-10-v0&#39;</span><span class="p">))</span>
-
-<span class="c1"># Set ACS2/AACS2 configuration parameter dictionary</span>
-<span class="n">basic_cfg</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;perception_bits&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;possible_actions&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s1">&#39;do_ga&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">,</span>
-    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="n">epsilon</span><span class="p">,</span>
-    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">discount_factor</span><span class="p">,</span>
-    <span class="s1">&#39;zeta&#39;</span><span class="p">:</span> <span class="n">zeta</span><span class="p">,</span>
-    <span class="s1">&#39;user_metrics_collector_fcn&#39;</span><span class="p">:</span> <span class="n">common_metrics</span><span class="p">,</span>
-    <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span>
-<span class="p">}</span>
-
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
-
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/acs2.dill&#39;</span><span class="p">)</span>
-<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">run_acs2_in_fsw</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">run_experiments_alternating</span><span class="p">(</span><span class="n">fsw_env_provider</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">basic_cfg</span><span class="p">)</span>
-
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/qlearning.dill&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">run_qlearning_in_fsw</span><span class="p">():</span>
-    <span class="n">fsw_env</span> <span class="o">=</span> <span class="n">fsw_env_provider</span><span class="p">()</span>
-    <span class="n">init_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">fsw_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">run_q_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">fsw_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span>
-                                      <span class="n">init_Q</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-
-
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/rlearning.dill&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">run_rlearning_in_fsw</span><span class="p">():</span>
-    <span class="n">fsw_env</span> <span class="o">=</span> <span class="n">fsw_env_provider</span><span class="p">()</span>
-    <span class="n">init_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">fsw_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">run_r_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">fsw_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">init_R</span><span class="p">,</span>
-                                      <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-
-
-<span class="c1"># run computations</span>
-<span class="n">acs2_runs_details</span> <span class="o">=</span> <span class="n">run_acs2_in_fsw</span><span class="p">()</span>
-<span class="n">q_learning_metrics</span> <span class="o">=</span> <span class="n">run_qlearning_in_fsw</span><span class="p">()</span>
-<span class="n">r_learning_metrics</span> <span class="o">=</span> <span class="n">run_rlearning_in_fsw</span><span class="p">()</span>
-
-<span class="c1"># average runs and create aggregated metrics data frame</span>
-<span class="n">acs2_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">acs2_runs_details</span><span class="p">]</span>
-
-<span class="n">agg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">acs2_metrics</span><span class="p">)),</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_metrics</span><span class="p">)),</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_metrics</span><span class="p">))]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_pop_and_rho</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_pop_and_rho</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">colors</span> <span class="o">=</span> <span class="n">diminishing_reward_colors</span><span class="p">()</span>
 
     <span class="n">expl_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;exploit&#39;</span><span class="p">]</span>
@@ -661,24 +564,108 @@
     <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
-<span class="n">plot_pop_and_rho</span><span class="p">(</span><span class="n">agg_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/fsw-performance.png&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="full-width figure align-default" id="fsw-fig">
-<img alt="../../_images/fsw-performance.png" src="../../_images/fsw-performance.png" />
-<p class="caption"><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Performance in FSW environment</span><a class="headerlink" href="#fsw-fig" title="Permalink to this image">¶</a></p>
-</div>
-<div class="section" id="payoff-landscape">
-<h2>Payoff landscape<a class="headerlink" href="#payoff-landscape" title="Permalink to this headline">¶</a></h2>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-finite-state-world-environment">
+<h1>Experiment 2 - Finite-State-World environment<a class="headerlink" href="#experiment-2-finite-state-world-environment" title="Permalink to this headline">¶</a></h1>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fsw_env</span> <span class="o">=</span> <span class="n">fsw_env_provider</span><span class="p">()</span>
-<span class="n">state_action</span> <span class="o">=</span> <span class="n">get_all_state_action</span><span class="p">(</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">state_action</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">discount_factor</span> <span class="o">=</span> <span class="mf">0.95</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.0001</span>
+
+<span class="k">def</span> <span class="nf">fsw10_env_provider</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">gym_fsw</span>  <span class="c1"># noqa: F401</span>
+    <span class="k">return</span> <span class="n">FSWObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;fsw-10-v0&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">fsw20_env_provider</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">gym_fsw</span>  <span class="c1"># noqa: F401</span>
+    <span class="k">return</span> <span class="n">FSWObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;fsw-20-v0&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">fsw40_env_provider</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">gym_fsw</span>  <span class="c1"># noqa: F401</span>
+    <span class="k">return</span> <span class="n">FSWObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;fsw-40-v0&#39;</span><span class="p">))</span>
+
+<span class="c1"># Set ACS2/AACS2 configuration parameter dictionary</span>
+<span class="n">basic_cfg</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;perception_bits&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;possible_actions&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;do_ga&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">,</span>
+    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="n">epsilon</span><span class="p">,</span>
+    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">discount_factor</span><span class="p">,</span>
+    <span class="s1">&#39;zeta&#39;</span><span class="p">:</span> <span class="n">zeta</span><span class="p">,</span>
+    <span class="s1">&#39;user_metrics_collector_fcn&#39;</span><span class="p">:</span> <span class="n">common_metrics</span><span class="p">,</span>
+    <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
+<span class="n">USE_RAY</span><span class="o">=</span> <span class="kc">True</span>
 
 
-<span class="k">def</span> <span class="nf">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_actions</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">run_multiple_qlearning</span><span class="p">(</span><span class="n">env_provider</span><span class="p">):</span>
+    <span class="n">fsw_env</span> <span class="o">=</span> <span class="n">env_provider</span><span class="p">()</span>
+    <span class="n">init_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">fsw_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">run_q_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">fsw_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span>
+                                      <span class="n">init_Q</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">run_multiple_rlearning</span><span class="p">(</span><span class="n">env_provider</span><span class="p">):</span>
+    <span class="n">fsw_env</span> <span class="o">=</span> <span class="n">env_provider</span><span class="p">()</span>
+    <span class="n">init_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">fsw_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">run_r_learning_alternating</span><span class="p">(</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">fsw_env</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">init_R</span><span class="p">,</span>
+                                      <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/acs2.dill&#39;</span><span class="p">)</span>
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_acs2</span><span class="p">():</span>
+    <span class="n">fsw10</span> <span class="o">=</span> <span class="n">run_experiments_alternating</span><span class="p">(</span><span class="n">fsw10_env_provider</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">basic_cfg</span><span class="p">)</span>
+    <span class="n">fsw20</span> <span class="o">=</span> <span class="n">run_experiments_alternating</span><span class="p">(</span><span class="n">fsw20_env_provider</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">basic_cfg</span><span class="p">)</span>
+    <span class="n">fsw40</span> <span class="o">=</span> <span class="n">run_experiments_alternating</span><span class="p">(</span><span class="n">fsw40_env_provider</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">basic_cfg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fsw10</span><span class="p">,</span> <span class="n">fsw20</span><span class="p">,</span> <span class="n">fsw40</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/qlearning.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_qlearning</span><span class="p">():</span>
+    <span class="n">fsw10</span> <span class="o">=</span> <span class="n">run_multiple_qlearning</span><span class="p">(</span><span class="n">fsw10_env_provider</span><span class="p">)</span>
+    <span class="n">fsw20</span> <span class="o">=</span> <span class="n">run_multiple_qlearning</span><span class="p">(</span><span class="n">fsw20_env_provider</span><span class="p">)</span>
+    <span class="n">fsw40</span> <span class="o">=</span> <span class="n">run_multiple_qlearning</span><span class="p">(</span><span class="n">fsw40_env_provider</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fsw10</span><span class="p">,</span> <span class="n">fsw20</span><span class="p">,</span> <span class="n">fsw40</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/rlearning.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_rlearning</span><span class="p">():</span>
+    <span class="n">fsw10</span> <span class="o">=</span> <span class="n">run_multiple_rlearning</span><span class="p">(</span><span class="n">fsw10_env_provider</span><span class="p">)</span>
+    <span class="n">fsw20</span> <span class="o">=</span> <span class="n">run_multiple_rlearning</span><span class="p">(</span><span class="n">fsw20_env_provider</span><span class="p">)</span>
+    <span class="n">fsw40</span> <span class="o">=</span> <span class="n">run_multiple_rlearning</span><span class="p">(</span><span class="n">fsw40_env_provider</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fsw10</span><span class="p">,</span> <span class="n">fsw20</span><span class="p">,</span> <span class="n">fsw40</span>
+
+<span class="c1"># run computations</span>
+<span class="n">acs2_runs_details</span> <span class="o">=</span> <span class="n">run_acs2</span><span class="p">()</span>
+<span class="n">q_learning_runs</span> <span class="o">=</span> <span class="n">run_qlearning</span><span class="p">()</span>
+<span class="n">r_learning_runs</span> <span class="o">=</span> <span class="n">run_rlearning</span><span class="p">()</span>
+
+<span class="c1"># average runs and create aggregated metrics data frame</span>
+<span class="n">fsw10_acs2_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">fsw10_qlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">fsw10_rlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">agg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">fsw10_acs2_metrics</span><span class="p">)),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">fsw10_qlearning_metrics</span><span class="p">),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">fsw10_rlearning_metrics</span><span class="p">)]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_actions</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="n">payoffs</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">for</span> <span class="n">sa</span> <span class="ow">in</span> <span class="n">state_actions</span><span class="p">:</span>
@@ -701,7 +688,7 @@
                                    <span class="p">[</span><span class="n">acs2_action_set</span><span class="p">,</span> <span class="n">aacs2v1_action_set</span><span class="p">,</span>
                                     <span class="n">aacs2v2_action_set</span><span class="p">]):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">action_set</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARN: No </span><span class="si">{</span><span class="n">alg</span><span class="si">}</span><span class="s2"> classifiers for perception: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, action: </span><span class="si">{</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">alg</span><span class="si">}</span><span class="s2"> classifiers for perception: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, action: </span><span class="si">{</span><span class="n">sa</span><span class="o">.</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">payoffs</span><span class="p">[</span><span class="n">sa</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;ACS2&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">acs2_action_set</span><span class="p">))),</span>
@@ -713,8 +700,12 @@
 
     <span class="k">return</span> <span class="n">payoffs</span>
 
+
 <span class="c1"># Take first of each algorithm population pass for presenting payoff landscape</span>
-<span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">acs2_runs_details</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fsw_env</span> <span class="o">=</span> <span class="n">fsw10_env_provider</span><span class="p">()</span>
+<span class="n">state_action</span> <span class="o">=</span> <span class="n">get_all_state_action</span><span class="p">(</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">state_action</span><span class="p">())</span>
+<span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/qlearning-single.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_single_qlearning</span><span class="p">():</span>
@@ -722,30 +713,56 @@
     <span class="n">Q</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">qlearning</span><span class="p">(</span><span class="n">fsw_env</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">Q_init</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">discount_factor</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
     <span class="k">return</span> <span class="n">Q</span>
 
+
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/rlearning-single.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_single_rlearning</span><span class="p">():</span>
     <span class="n">R_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">fsw_env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">fsw_env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
     <span class="n">R</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rlearning</span><span class="p">(</span><span class="n">fsw_env</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">R_init</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">perception_to_state_mapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
     <span class="k">return</span> <span class="n">R</span><span class="p">,</span> <span class="n">rho</span>
 
+
 <span class="n">Q</span> <span class="o">=</span> <span class="n">run_single_qlearning</span><span class="p">()</span>
 <span class="n">R</span><span class="p">,</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">run_single_rlearning</span><span class="p">()</span>
-
-<span class="n">payoffs</span> <span class="o">=</span> <span class="n">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_action</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+    <span class="n">payoffs</span> <span class="o">=</span> <span class="n">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_action</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_payoff_landscape</span><span class="p">(</span><span class="n">payoffs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span> <span class="n">rho_text_location</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/fsw-payoff-landscape.png&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fsw_performance_fig</span> <span class="o">=</span> <span class="n">plot_pop_and_rho</span><span class="p">(</span><span class="n">agg_df</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/fsw-performance.png&#39;</span><span class="p">)</span>
+<span class="n">fsw_payoff_fig</span> <span class="o">=</span> <span class="n">plot_payoff_landscape</span><span class="p">(</span><span class="n">payoffs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span> <span class="n">rho_text_location</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/fsw-payoff-landscape.png&#39;</span><span class="p">)</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-fsw-fig&#39;</span><span class="p">,</span> <span class="n">fsw_performance_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-fsw-payoff-fig&#39;</span><span class="p">,</span> <span class="n">fsw_payoff_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
-<div class="full-width figure align-default" id="fsw-payoff-landscape-fig">
-<img alt="../../_images/fsw-payoff-landscape.png" src="../../_images/fsw-payoff-landscape.png" />
-<p class="caption"><span class="caption-number">Fig. 5.4 </span><span class="caption-text">FSW payoff landscape</span><a class="headerlink" href="#fsw-payoff-landscape-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="9331b3d1-1574-40de-967c-aa91190e40aa" name="588eee65-c756-4229-a951-cd1ab58b7036" type="radio">
+</input><label class="tabbed-label" for="9331b3d1-1574-40de-967c-aa91190e40aa">
+Performance</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="fsw-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/51_experiment_2_4_0.png" src="../../_images/51_experiment_2_4_0.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Performance in FSW-10 environment</span><a class="headerlink" href="#fsw-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input id="7c052d23-4ee6-4b1c-a7a9-cb3892ec7a70" name="588eee65-c756-4229-a951-cd1ab58b7036" type="radio">
+</input><label class="tabbed-label" for="7c052d23-4ee6-4b1c-a7a9-cb3892ec7a70">
+Payoff Landscape</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="fsw-payoff-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/51_experiment_2_4_1.png" src="../../_images/51_experiment_2_4_1.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 5.4 </span><span class="caption-text">FSW-10 payoff landscape</span><a class="headerlink" href="#fsw-payoff-fig" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
@@ -757,7 +774,7 @@
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Much more stable than Corridor (smaller MA)</p>
 </div>
 </div>
 

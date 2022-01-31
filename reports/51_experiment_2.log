@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
+    await self.async_execute_cell(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import pathlib
+from typing import List, Dict
+
+import gym
+import gym_fsw  # noqa: F401
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from lcs import Perception
+from myst_nb import glue
+
+from src.basic_rl import run_q_learning_alternating, run_r_learning_alternating, qlearning, rlearning
+from src.decorators import repeat, get_from_cache_or_run
+from src.diminishing_reward import common_metrics, plot_pop_and_rho, plot__corridor_pop_and_rho, plot_fsw_pop_and_rho
+from src.observation_wrappers import FSWObservationWrapper
+from src.payoff_landscape import get_all_state_action, plot_payoff_landscape
+from src.runner import run_experiments_alternating
+from src.utils import build_plots_dir_path, build_cache_dir_path
+
+plt.ioff()  # turn off interactive plotting
+plt.style.use('../../../src/phd.mplstyle')
+
+root_dir = pathlib.Path().cwd().parent.parent.parent
+cwd_dir = pathlib.Path().cwd()
+
+plot_dir = build_plots_dir_path(root_dir) / cwd_dir.name
+cache_dir = build_cache_dir_path(root_dir) / cwd_dir.name
+
+
+def average_experiment_runs(run_df: pd.DataFrame) -> pd.DataFrame:
+    return run_df.groupby(['agent', 'trial', 'phase']).mean().reset_index(level='phase')
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mImportError[0m                               Traceback (most recent call last)
+Input [0;32mIn [1][0m, in [0;36m<module>[0;34m[0m
+[1;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbasic_rl[39;00m [38;5;28;01mimport[39;00m run_q_learning_alternating, run_r_learning_alternating, qlearning, rlearning
+[1;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdecorators[39;00m [38;5;28;01mimport[39;00m repeat, get_from_cache_or_run
+[0;32m---> 14[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdiminishing_reward[39;00m [38;5;28;01mimport[39;00m common_metrics, plot_pop_and_rho, plot__corridor_pop_and_rho, plot_fsw_pop_and_rho
+[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mobservation_wrappers[39;00m [38;5;28;01mimport[39;00m FSWObservationWrapper
+[1;32m     16[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpayoff_landscape[39;00m [38;5;28;01mimport[39;00m get_all_state_action, plot_payoff_landscape
+
+[0;31mImportError[0m: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
+ImportError: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
+
