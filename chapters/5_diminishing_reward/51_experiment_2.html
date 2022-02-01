@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -477,6 +478,9 @@
 <span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
 <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span><span class="p">,</span> <span class="n">FormatStrFormatter</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 
 <span class="kn">from</span> <span class="nn">src.basic_rl</span> <span class="kn">import</span> <span class="n">run_q_learning_alternating</span><span class="p">,</span> <span class="n">run_r_learning_alternating</span><span class="p">,</span> <span class="n">qlearning</span><span class="p">,</span> <span class="n">rlearning</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
@@ -650,12 +654,20 @@
 <span class="n">r_learning_runs</span> <span class="o">=</span> <span class="n">run_rlearning</span><span class="p">()</span>
 
 <span class="c1"># average runs and create aggregated metrics data frame</span>
-<span class="n">fsw10_acs2_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">fsw10_acs2_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
 <span class="n">fsw10_qlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">fsw10_rlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
+<span class="n">fsw20_acs2_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="n">fsw20_qlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fsw20_rlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">fsw40_acs2_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">m_df</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">m_df</span> <span class="ow">in</span> <span class="n">extract_specific_index</span><span class="p">(</span><span class="n">acs2_runs_details</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="n">fsw40_qlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">fsw40_rlearning_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
 <span class="n">agg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
-    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">fsw10_acs2_metrics</span><span class="p">)),</span>
+    <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">fsw10_acs2_metrics</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">fsw10_qlearning_metrics</span><span class="p">),</span>
     <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">fsw10_rlearning_metrics</span><span class="p">)]</span>
 <span class="p">)</span>
@@ -744,8 +756,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="9331b3d1-1574-40de-967c-aa91190e40aa" name="588eee65-c756-4229-a951-cd1ab58b7036" type="radio">
-</input><label class="tabbed-label" for="9331b3d1-1574-40de-967c-aa91190e40aa">
+<input checked="checked" id="048ce5ac-736f-426e-9505-93925978fd07" name="f36d557a-7f18-4c09-b706-c92c4d90a5e1" type="radio">
+</input><label class="tabbed-label" for="048ce5ac-736f-426e-9505-93925978fd07">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-fig">
 <div class="cell_output docutils container">
@@ -754,8 +766,8 @@ Performance</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Performance in FSW-10 environment</span><a class="headerlink" href="#fsw-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="7c052d23-4ee6-4b1c-a7a9-cb3892ec7a70" name="588eee65-c756-4229-a951-cd1ab58b7036" type="radio">
-</input><label class="tabbed-label" for="7c052d23-4ee6-4b1c-a7a9-cb3892ec7a70">
+<input id="06c93871-48d9-4f41-b6b2-b38ef4c24680" name="f36d557a-7f18-4c09-b706-c92c4d90a5e1" type="radio">
+</input><label class="tabbed-label" for="06c93871-48d9-4f41-b6b2-b38ef4c24680">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-payoff-fig">
 <div class="cell_output docutils container">
@@ -771,10 +783,124 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 <p class="admonition-title">Hypothesis testing</p>
 <p>3 subplots (AACSv1, AACSv2, R-learning) for the distribution of of estimated average for 3 FSW sizes.</p>
 </div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_condition</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">],</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="n">experiments_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fsw10_acs2&#39;</span><span class="p">:</span> <span class="n">fsw10_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;ACS2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw10_aacs2v1&#39;</span><span class="p">:</span> <span class="n">fsw10_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v1&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw10_aacs2v2&#39;</span><span class="p">:</span> <span class="n">fsw10_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw10_qlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s1">&#39;fsw10_rlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    
+    <span class="s1">&#39;fsw20_acs2&#39;</span><span class="p">:</span> <span class="n">fsw20_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;ACS2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw20_aacs2v1&#39;</span><span class="p">:</span> <span class="n">fsw20_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v1&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw20_aacs2v2&#39;</span><span class="p">:</span> <span class="n">fsw20_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw20_qlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="s1">&#39;fsw20_rlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+    
+    <span class="s1">&#39;fsw40_acs2&#39;</span><span class="p">:</span> <span class="n">fsw40_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;ACS2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw40_aacs2v1&#39;</span><span class="p">:</span> <span class="n">fsw40_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v1&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw40_aacs2v2&#39;</span><span class="p">:</span> <span class="n">fsw40_acs2_metrics</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;agent == &quot;AACS2_v2&quot;&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;fsw40_qlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q_learning_runs</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+    <span class="s1">&#39;fsw40_rlearning&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r_learning_runs</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+<span class="p">}</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/bayes/steps.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_steps_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;steps_in_trial&#39;</span><span class="p">,</span> <span class="n">query_condition</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">trials</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/fsw/bayes/rho.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_rho_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]):</span>
+    <span class="n">filtered_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">r_model</span> <span class="k">for</span> <span class="n">r_model</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;aacs2v1&#39;</span><span class="p">,</span> <span class="s1">&#39;aacs2v2&#39;</span><span class="p">,</span> <span class="s1">&#39;rlearning&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">r_model</span><span class="p">)):</span>
+            <span class="n">filtered_dfs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">filtered_dfs</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="n">query_condition</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;trial == </span><span class="si">{</span><span class="n">trials</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">steps_models</span> <span class="o">=</span> <span class="n">build_steps_models</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
+<span class="n">rho_models</span> <span class="o">=</span> <span class="n">build_rho_models</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_bayes_table</span><span class="p">(</span><span class="n">name_prefix</span><span class="p">,</span> <span class="n">steps_models</span><span class="p">,</span> <span class="n">rho_models</span><span class="p">):</span>
+    <span class="n">print_row</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">rho_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">print_row</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rho_models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">name_prefix</span><span class="p">)]</span>
+
+    <span class="n">bayes_table_data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;steps in last trial&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">print_row</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">steps_models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">name_prefix</span><span class="p">)],</span>
+        <span class="p">[</span><span class="s1">&#39;average reward&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="p">]</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">bayes_table_data</span><span class="p">,</span>
+                     <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;ACS2&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2v1&#39;</span><span class="p">,</span> <span class="s1">&#39;AACS2v2&#39;</span><span class="p">,</span> <span class="s1">&#39;Q-Learning&#39;</span><span class="p">,</span> <span class="s1">&#39;R-Learning&#39;</span><span class="p">],</span>
+                     <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+<span class="c1"># add glue outputs</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-fsw10-bayes&#39;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;fsw10&#39;</span><span class="p">,</span> <span class="n">steps_models</span><span class="p">,</span> <span class="n">rho_models</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-fsw20-bayes&#39;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;fsw20&#39;</span><span class="p">,</span> <span class="n">steps_models</span><span class="p">,</span> <span class="n">rho_models</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-fsw40-bayes&#39;</span><span class="p">,</span> <span class="n">print_bayes_table</span><span class="p">(</span><span class="s1">&#39;fsw40&#39;</span><span class="p">,</span> <span class="n">steps_models</span><span class="p">,</span> <span class="n">rho_models</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="db5adc89-a179-4b24-9f1c-822779436cea" name="63f00d10-9da0-4bac-9e68-e1842ff44b12" type="radio">
+</input><label class="tabbed-label" for="db5adc89-a179-4b24-9f1c-822779436cea">
+FSW 10</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
+<thead>
+<tr><th style="text-align: center;">                   </th><th style="text-align: center;">   ACS2   </th><th style="text-align: center;">  AACS2v1  </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">10.0 ± 0.0</td><td style="text-align: center;">10.0 ± 0.0 </td><td style="text-align: center;"> 10.0 ± 0.0 </td><td style="text-align: center;"> 10.0 ± 0.0 </td><td style="text-align: center;"> 10.0 ± 0.0 </td></tr>
+<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">    -     </td><td style="text-align: center;">9.93 ± 0.01</td><td style="text-align: center;">10.01 ± 0.01</td><td style="text-align: center;">     -      </td><td style="text-align: center;"> 9.81 ± 0.0 </td></tr>
+</tbody>
+</table></span></span></p>
+</div>
+<input id="d9addbf4-e712-44cd-a2be-b6516e678e09" name="63f00d10-9da0-4bac-9e68-e1842ff44b12" type="radio">
+</input><label class="tabbed-label" for="d9addbf4-e712-44cd-a2be-b6516e678e09">
+FSW 20</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
+<thead>
+<tr><th style="text-align: center;">                   </th><th style="text-align: center;">   ACS2   </th><th style="text-align: center;">  AACS2v1  </th><th style="text-align: center;"> AACS2v2  </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">20.0 ± 0.0</td><td style="text-align: center;">20.0 ± 0.0 </td><td style="text-align: center;">20.0 ± 0.0</td><td style="text-align: center;"> 20.0 ± 0.0 </td><td style="text-align: center;"> 20.0 ± 0.0 </td></tr>
+<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">    -     </td><td style="text-align: center;">4.99 ± 0.01</td><td style="text-align: center;">5.0 ± 0.01</td><td style="text-align: center;">     -      </td><td style="text-align: center;"> 4.9 ± 0.0  </td></tr>
+</tbody>
+</table></span></span></p>
+</div>
+<input id="73b31e54-9449-4e1a-8e11-8f4e0c9954e2" name="63f00d10-9da0-4bac-9e68-e1842ff44b12" type="radio">
+</input><label class="tabbed-label" for="73b31e54-9449-4e1a-8e11-8f4e0c9954e2">
+FSW 40</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
+<thead>
+<tr><th style="text-align: center;">                   </th><th style="text-align: center;">   ACS2   </th><th style="text-align: center;"> AACS2v1  </th><th style="text-align: center;">  AACS2v2  </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">40.0 ± 0.0</td><td style="text-align: center;">40.0 ± 0.0</td><td style="text-align: center;">40.0 ± 0.0 </td><td style="text-align: center;"> 40.0 ± 0.0 </td><td style="text-align: center;"> 40.0 ± 0.0 </td></tr>
+<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">    -     </td><td style="text-align: center;">2.51 ± 0.0</td><td style="text-align: center;">2.51 ± 0.01</td><td style="text-align: center;">     -      </td><td style="text-align: center;"> 2.45 ± 0.0 </td></tr>
+</tbody>
+</table></span></span></p>
+</div>
+</div>
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>Much more stable than Corridor (smaller MA)</p>
+<p>Much more stable than Corridor (smaller MA). Learning rho slower in more difficutl envs.</p>
 </div>
 </div>
 

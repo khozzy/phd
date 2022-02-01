@@ -17,50 +17,78 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pathlib
-import warnings
-from typing import List, Dict
+def build_models(dfs: Dict[str, pd.DataFrame], field: str, query_condition: str):
+    results = {}
 
-import gym
-import gym_corridor  # noqa: F401
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from lcs import Perception
-from myst_nb import glue
+    for name, df in dfs.items():
+        data_arr = df.query(query_condition)[field].to_numpy()
+        bayes_model = bayes_estimate(data_arr)
+        results[name] = (bayes_model['mu'], bayes_model['std'])
 
-from src.basic_rl import run_q_learning_alternating, run_r_learning_alternating, qlearning, rlearning
-from src.decorators import repeat, get_from_cache_or_run
-from src.diminishing_reward import common_metrics, plot_corridor_pop_and_rho
-from src.diminishing_reward import plot_pop_and_rho
-from src.observation_wrappers import CorridorObservationWrapper
-from src.payoff_landscape import get_all_state_action, plot_payoff_landscape
-from src.runner import run_experiments_alternating
-from src.utils import build_cache_dir_path, build_plots_dir_path
-
-# plt.ioff()  # turn off interactive plotting
-plt.style.use('../../../src/phd.mplstyle')
-
-root_dir = pathlib.Path().cwd().parent.parent.parent
-cwd_dir = pathlib.Path().cwd()
-
-plot_dir = build_plots_dir_path(root_dir) / cwd_dir.name
-cache_dir = build_cache_dir_path(root_dir) / cwd_dir.name
+    return results
 
 
-def average_experiment_runs(run_df: pd.DataFrame) -> pd.DataFrame:
-    return run_df.groupby(['agent', 'trial', 'phase']).mean().reset_index(level='phase')
+experiments_data = {
+    'corridor20_acs2': corridor20_acs2_metrics.query('agent == "ACS2"'),
+    'corridor20_aacs2v1': corridor20_acs2_metrics.query('agent == "AACS2_v1"'),
+    'corridor20_aacs2v2': corridor20_acs2_metrics.query('agent == "AACS2_v2"'),
+    'corridor20_qlearning': pd.DataFrame(q_learning_runs[0]),
+    'corridor20_rlearning': pd.DataFrame(r_learning_runs[0]),
+}
+
+@get_from_cache_or_run(cache_path=f'{cache_dir}/corridor/bayes/steps.dill')
+def build_steps_models(dfs: Dict[str, pd.DataFrame]):
+    return build_models(dfs, field='steps_in_trial', query_condition=f'trial == {trials - 1}')
+
+@get_from_cache_or_run(cache_path=f'{cache_dir}/corridor/bayes/rho.dill')
+def build_rho_models(dfs: Dict[str, pd.DataFrame]):
+    filtered_dfs = {}
+    for k, v in dfs.items():
+        if any(r_model for r_model in ['aacs2v1', 'aacs2v2', 'rlearning'] if k.endswith(r_model)):
+            filtered_dfs[k] = v
+
+    return build_models(filtered_dfs, field='rho', query_condition=f'trial == {trials - 1}')
+
+steps_models = build_steps_models(experiments_data)
+rho_models = build_rho_models(experiments_data)
+
+def print_bayes_table(name_prefix, steps_models, rho_models):
+    print_row = lambda r: f'{round(r[0].mean(), 2)} ± {round(r[0].std(), 2)}'
+    rho_data = [print_row(v) for name, v in rho_models.items() if name.startswith(name_prefix)]
+
+    bayes_table_data = [
+        ['steps in last trial'.ljust(15, '')] + [print_row(v) for name, v in steps_models.items() if name.startswith(name_prefix)],
+        ['average reward'.ljust(15, ''), '-', rho_data[0], rho_data[1], '-', rho_data[2]]
+    ]
+
+    table = tabulate(bayes_table_data,
+                     headers=['', ' ACS2 ', ' AACS2v1 ', ' AACS2v2 ', ' Q-Learning ', ' R-Learning '],
+                     tablefmt="html", stralign='center')
+    return HTML(table)
+
+# add glue outputs
+glue('51-corridor20-bayes', print_bayes_table('corridor20', steps_models, rho_models), display=False)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mImportError[0m                               Traceback (most recent call last)
-Input [0;32mIn [1][0m, in [0;36m<module>[0;34m[0m
-[1;32m     14[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdecorators[39;00m [38;5;28;01mimport[39;00m repeat, get_from_cache_or_run
-[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdiminishing_reward[39;00m [38;5;28;01mimport[39;00m common_metrics, plot_corridor_pop_and_rho
-[0;32m---> 16[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdiminishing_reward[39;00m [38;5;28;01mimport[39;00m plot_pop_and_rho
-[1;32m     17[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mobservation_wrappers[39;00m [38;5;28;01mimport[39;00m CorridorObservationWrapper
-[1;32m     18[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpayoff_landscape[39;00m [38;5;28;01mimport[39;00m get_all_state_action, plot_payoff_landscape
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [5][0m, in [0;36m<module>[0;34m[0m
+[1;32m     48[0m     [38;5;28;01mreturn[39;00m HTML(table)
+[1;32m     50[0m [38;5;66;03m# add glue outputs[39;00m
+[0;32m---> 51[0m glue([38;5;124m'[39m[38;5;124m51-corridor20-bayes[39m[38;5;124m'[39m, [43mprint_bayes_table[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mcorridor20[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43msteps_models[49m[43m,[49m[43m [49m[43mrho_models[49m[43m)[49m, display[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
 
-[0;31mImportError[0m: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
-ImportError: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
+Input [0;32mIn [5][0m, in [0;36mprint_bayes_table[0;34m(name_prefix, steps_models, rho_models)[0m
+[1;32m     37[0m print_row [38;5;241m=[39m [38;5;28;01mlambda[39;00m r: [38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00m[38;5;28mround[39m(r[[38;5;241m0[39m][38;5;241m.[39mmean(), [38;5;241m2[39m)[38;5;132;01m}[39;00m[38;5;124m ± [39m[38;5;132;01m{[39;00m[38;5;28mround[39m(r[[38;5;241m0[39m][38;5;241m.[39mstd(), [38;5;241m2[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m
+[1;32m     38[0m rho_data [38;5;241m=[39m [print_row(v) [38;5;28;01mfor[39;00m name, v [38;5;129;01min[39;00m rho_models[38;5;241m.[39mitems() [38;5;28;01mif[39;00m name[38;5;241m.[39mstartswith(name_prefix)]
+[1;32m     40[0m bayes_table_data [38;5;241m=[39m [
+[0;32m---> 41[0m     [[38;5;124;43m'[39;49m[38;5;124;43msteps in last trial[39;49m[38;5;124;43m'[39;49m[38;5;241;43m.[39;49m[43mljust[49m[43m([49m[38;5;241;43m15[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43m'[39;49m[43m)[49m] [38;5;241m+[39m [print_row(v) [38;5;28;01mfor[39;00m name, v [38;5;129;01min[39;00m steps_models[38;5;241m.[39mitems() [38;5;28;01mif[39;00m name[38;5;241m.[39mstartswith(name_prefix)],
+[1;32m     42[0m     [[38;5;124m'[39m[38;5;124maverage reward[39m[38;5;124m'[39m[38;5;241m.[39mljust([38;5;241m15[39m, [38;5;124m'[39m[38;5;124m'[39m), [38;5;124m'[39m[38;5;124m-[39m[38;5;124m'[39m, rho_data[[38;5;241m0[39m], rho_data[[38;5;241m1[39m], [38;5;124m'[39m[38;5;124m-[39m[38;5;124m'[39m, rho_data[[38;5;241m2[39m]]
+[1;32m     43[0m ]
+[1;32m     45[0m table [38;5;241m=[39m tabulate(bayes_table_data,
+[1;32m     46[0m                  headers[38;5;241m=[39m[[38;5;124m'[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m ACS2 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m AACS2v1 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m AACS2v2 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m Q-Learning [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m R-Learning [39m[38;5;124m'[39m],
+[1;32m     47[0m                  tablefmt[38;5;241m=[39m[38;5;124m"[39m[38;5;124mhtml[39m[38;5;124m"[39m, stralign[38;5;241m=[39m[38;5;124m'[39m[38;5;124mcenter[39m[38;5;124m'[39m)
+[1;32m     48[0m [38;5;28;01mreturn[39;00m HTML(table)
+
+[0;31mTypeError[0m: The fill character must be exactly one character long
+TypeError: The fill character must be exactly one character long
 

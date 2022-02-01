@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -482,9 +483,12 @@
 <span class="kn">import</span> <span class="nn">bitstring</span>
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_multiplexer</span>  <span class="c1"># noqa: F401</span>
-
 <span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
+<span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
+<span class="kn">from</span> <span class="nn">src.bayes_plotting</span> <span class="kn">import</span> <span class="n">plot_bayes_comparison</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.discretized_experiments</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
@@ -695,7 +699,6 @@
     <span class="p">)</span>
 
 
-
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_</span><span class="si">{</span><span class="n">RMPX_SIZE</span><span class="si">}</span><span class="s1">bit/acs2_ga.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_rmpx_with_acs2_ga</span><span class="p">():</span>
@@ -743,6 +746,7 @@
         <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">]</span>
     <span class="p">)</span>
 
+
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/dynaq.dill&#39;</span><span class="p">)</span>
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_corridor_with_dynaq</span><span class="p">():</span>
@@ -756,6 +760,7 @@
         <span class="n">knowledge_fcn</span><span class="o">=</span><span class="n">dynaq_params</span><span class="p">[</span><span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">],</span>
         <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">]</span>
     <span class="p">)</span>
+
 
 <span class="c1"># Run computations</span>
 <span class="n">rmpx_acs_runs</span> <span class="o">=</span> <span class="n">run_rmpx_with_acs</span><span class="p">()</span>
@@ -793,7 +798,7 @@
 </div>
 <div class="figure align-default" id="rmpx3bit-discretized-performance-fig">
 <img alt="../../../_images/rmpx_3bit_performance.png" src="../../../_images/rmpx_3bit_performance.png" />
-<p class="caption"><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Performance of 3bit discretized rMPX</span><a class="headerlink" href="#rmpx3bit-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Performance of 3bit discretized rMPX with 10 bins.</span><a class="headerlink" href="#rmpx3bit-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="statistical-verification">
@@ -801,6 +806,113 @@
 <div class="tip admonition">
 <p class="admonition-title">Hypothesis testing</p>
 <p>The same plot as in the latest IEEE submission</p>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acs&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2_ga&#39;</span><span class="p">,</span> <span class="s1">&#39;yacs&#39;</span><span class="p">,</span> <span class="s1">&#39;dynaq&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+        <span class="n">last_trial</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;agent == &quot;</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;agent == &quot;</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s1">&quot; and trial == </span><span class="si">{</span><span class="n">last_trial</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/population.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_population_model</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/knowledge.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_knowledge_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;knowledge&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/generalization.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_generalization_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;generalization&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/timing.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">build_timing_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
+
+
+<span class="n">population_models</span> <span class="o">=</span> <span class="n">build_population_model</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">)</span>
+<span class="n">knowledge_models</span> <span class="o">=</span> <span class="n">build_knowledge_models</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">)</span>
+<span class="n">generalization_models</span> <span class="o">=</span> <span class="n">build_generalization_models</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">)</span>
+<span class="n">timing_models</span> <span class="o">=</span> <span class="n">build_timing_models</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">)</span>
+
+<span class="c1"># prepare table</span>
+<span class="n">print_row</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="n">payload_df</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">table_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+    <span class="c1"># prepare data frame for visualization</span>
+    <span class="n">payload_df</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;agent&#39;</span><span class="p">:</span> <span class="n">agent</span><span class="p">,</span>
+        <span class="s1">&#39;knowledge&#39;</span><span class="p">:</span> <span class="n">knowledge_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s1">&#39;generalization&#39;</span><span class="p">:</span> <span class="n">generalization_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s1">&#39;population&#39;</span><span class="p">:</span> <span class="n">population_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">timing_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="p">})</span>
+
+    <span class="c1"># add data to table</span>
+    <span class="n">table_data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">agent</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+                       <span class="n">print_row</span><span class="p">(</span><span class="n">knowledge_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]),</span>
+                       <span class="n">print_row</span><span class="p">(</span><span class="n">generalization_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]),</span>
+                       <span class="n">print_row</span><span class="p">(</span><span class="n">population_models</span><span class="p">[</span><span class="n">agent</span><span class="p">]),</span>
+                       <span class="n">print_row</span><span class="p">(</span><span class="n">timing_models</span><span class="p">[</span><span class="n">agent</span><span class="p">])])</span>
+
+<span class="n">rmpx_bayes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">payload_df</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;agent&#39;</span><span class="p">)</span>
+
+<span class="n">bayes_table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">table_data</span><span class="p">,</span>
+                       <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge&#39;</span><span class="p">,</span> <span class="s1">&#39;Generalization&#39;</span><span class="p">,</span> <span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="s1">&#39;Trial time&#39;</span><span class="p">],</span>
+                       <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;ch33_1_bayes_table&#39;</span><span class="p">,</span> <span class="n">bayes_table</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;ch33_1_bayes_fig&#39;</span><span class="p">,</span> <span class="n">plot_bayes_comparison</span><span class="p">(</span><span class="n">rmpx_bayes_df</span><span class="p">,</span> <span class="s1">&#39;rMPX&#39;</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_bayes.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="tabbed-set docutils">
+<input checked="checked" id="ed5aa626-0070-4066-860a-aa0e92d3f795" name="6b5e68cc-f457-4ed8-84cd-311d8a9ac71e" type="radio">
+</input><label class="tabbed-label" for="ed5aa626-0070-4066-860a-aa0e92d3f795">
+Bayes Table</label><div class="tabbed-content docutils">
+<p><span class="pasted-inline"><span class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">       </th><th style="text-align: right;">    Knowledge</th><th style="text-align: right;">  Generalization</th><th style="text-align: right;">      Population</th><th style="text-align: right;">   Trial time</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">    ACS</td><td style="text-align: right;">    0.0 ± 0.0</td><td style="text-align: right;">   0.875 ± 0.001</td><td style="text-align: right;">     4.0 ± 0.001</td><td style="text-align: right;">0.001 ± 0.001</td></tr>
+<tr><td style="text-align: right;">   ACS2</td><td style="text-align: right;">0.998 ± 0.001</td><td style="text-align: right;">   0.174 ± 0.001</td><td style="text-align: right;">1622.405 ± 7.313</td><td style="text-align: right;">0.007 ± 0.001</td></tr>
+<tr><td style="text-align: right;">ACS2_GA</td><td style="text-align: right;">  1.0 ± 0.001</td><td style="text-align: right;">   0.318 ± 0.001</td><td style="text-align: right;"> 977.517 ± 5.966</td><td style="text-align: right;">0.006 ± 0.001</td></tr>
+<tr><td style="text-align: right;">   YACS</td><td style="text-align: right;">0.978 ± 0.001</td><td style="text-align: right;">   0.106 ± 0.005</td><td style="text-align: right;">1160.178 ± 6.192</td><td style="text-align: right;"> 0.03 ± 0.001</td></tr>
+<tr><td style="text-align: right;">  DYNAQ</td><td style="text-align: right;">0.998 ± 0.001</td><td style="text-align: right;">       0.0 ± 0.0</td><td style="text-align: right;">  2000.0 ± 0.001</td><td style="text-align: right;">    0.0 ± 0.0</td></tr>
+</tbody>
+</table></span></span></p>
+</div>
+<input id="a82ba76f-eac1-4e6c-94d8-d730eb77316c" name="6b5e68cc-f457-4ed8-84cd-311d8a9ac71e" type="radio">
+</input><label class="tabbed-label" for="a82ba76f-eac1-4e6c-94d8-d730eb77316c">
+Radar plot</label><div class="tabbed-content docutils">
+<div class="figure align-default" id="ch33-1-bayes-fig">
+<div class="cell_output docutils container">
+<img alt="../../../_images/33_experiment_3_9_1.png" src="../../../_images/33_experiment_3_9_1.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-1-bayes-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="observations">
