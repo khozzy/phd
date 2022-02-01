@@ -1,10 +1,4 @@
-import numpy as np
-import pandas as pd
 from lcs.metrics import population_metrics
-from matplotlib import pyplot as plt
-from matplotlib.ticker import MultipleLocator, FormatStrFormatter
-
-from src.visualization import PLOT_DPI, diminishing_reward_colors
 
 
 def common_metrics(agent, env):
