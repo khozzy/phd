@@ -15,4 +15,4 @@ And here is a code block:
 e = mc^2
 ```
 
-Check out the content pages bundled with this sample book to see more {cite}`ruby`.
+Check out the content pages bundled with this sample book to see more {cite}`wilson1999get`.

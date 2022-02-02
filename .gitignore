@@ -134,3 +134,4 @@ cache
 book/_build
 src/pyalcs
 src/parrotprediction-openai-envs
+words_phrases
