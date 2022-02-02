@@ -43,6 +43,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -486,6 +488,7 @@
 <span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.bayes_plotting</span> <span class="kn">import</span> <span class="n">plot_bayes_comparison</span>
@@ -507,6 +510,8 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-single-step">
 <span id="section-internalizing-experiment-3"></span><h1>Experiment 3 - Single step<a class="headerlink" href="#experiment-3-single-step" title="Permalink to this headline">¶</a></h1>
+<p>To convert real numbers into integers, a <span class="math notranslate nohighlight">\(k\)</span> bins discretizer is used. Its value is used to control the accuracy of generated rules. Thus, the input space of the environment can be calculated as <span class="math notranslate nohighlight">\(2k^n\)</span>, where k refers to the number of bins and <span class="math notranslate nohighlight">\(n\)</span> the length of the MPX signal.</p>
+<p>Example of discretizing real-valued input using 6 bins. A random perception signal of 6-bit rMPX extended with 1 bit (last column) was used. The size of the input space is <span class="math notranslate nohighlight">\(2\cdot6^6=93312\)</span> unique states.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RMPX_BINS</span> <span class="o">=</span> <span class="mi">10</span>
@@ -816,7 +821,7 @@
     <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
-        <span class="n">last_trial</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;agent == &quot;</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">last_trial</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;agent == &quot;</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;trial&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="n">data_arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;agent == &quot;</span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s1">&quot; and trial == </span><span class="si">{</span><span class="n">last_trial</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="n">bayes_model</span> <span class="o">=</span> <span class="n">bayes_estimate</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span>
         <span class="n">results</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
@@ -824,22 +829,22 @@
     <span class="k">return</span> <span class="n">results</span>
 
 
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/population.dill&#39;</span><span class="p">)</span>
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/population.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_population_model</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">)</span>
 
 
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/knowledge.dill&#39;</span><span class="p">)</span>
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/knowledge.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_knowledge_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;knowledge&#39;</span><span class="p">)</span>
 
 
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/generalization.dill&#39;</span><span class="p">)</span>
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/generalization.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_generalization_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;generalization&#39;</span><span class="p">)</span>
 
 
-<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/timing.dill&#39;</span><span class="p">)</span>
+<span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/timing.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_timing_models</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
 
@@ -878,7 +883,7 @@
                        <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Knowledge&#39;</span><span class="p">,</span> <span class="s1">&#39;Generalization&#39;</span><span class="p">,</span> <span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="s1">&#39;Trial time&#39;</span><span class="p">],</span>
                        <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;ch33_1_bayes_table&#39;</span><span class="p">,</span> <span class="n">bayes_table</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;ch33_1_bayes_table&#39;</span><span class="p">,</span> <span class="n">HTML</span><span class="p">(</span><span class="n">bayes_table</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;ch33_1_bayes_fig&#39;</span><span class="p">,</span> <span class="n">plot_bayes_comparison</span><span class="p">(</span><span class="n">rmpx_bayes_df</span><span class="p">,</span> <span class="s1">&#39;rMPX&#39;</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_bayes.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -887,8 +892,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="ed5aa626-0070-4066-860a-aa0e92d3f795" name="6b5e68cc-f457-4ed8-84cd-311d8a9ac71e" type="radio">
-</input><label class="tabbed-label" for="ed5aa626-0070-4066-860a-aa0e92d3f795">
+<input checked="checked" id="7bf2f36b-e0c9-4bcf-8530-bd7d70125a47" name="1f535350-4fcc-4438-ac19-ebf5ad65034d" type="radio">
+</input><label class="tabbed-label" for="7bf2f36b-e0c9-4bcf-8530-bd7d70125a47">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -903,12 +908,12 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="a82ba76f-eac1-4e6c-94d8-d730eb77316c" name="6b5e68cc-f457-4ed8-84cd-311d8a9ac71e" type="radio">
-</input><label class="tabbed-label" for="a82ba76f-eac1-4e6c-94d8-d730eb77316c">
+<input id="e4fa4ca6-cc7f-4aa8-b086-b4fa12aedceb" name="1f535350-4fcc-4438-ac19-ebf5ad65034d" type="radio">
+</input><label class="tabbed-label" for="e4fa4ca6-cc7f-4aa8-b086-b4fa12aedceb">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-1-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_3_9_1.png" src="../../../_images/33_experiment_3_9_1.png" />
+<img alt="../../../_images/33_experiment_3_10_1.png" src="../../../_images/33_experiment_3_10_1.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-1-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
