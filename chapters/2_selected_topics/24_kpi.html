@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -399,18 +401,18 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#classifier-population">
-   Classifier population
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#knowledge">
-   Knowledge
+  <a class="reference internal nav-link" href="#classifier-population-size">
+   Classifier population size
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalization">
    Generalization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#knowledge">
+   Knowledge
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -444,18 +446,18 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#classifier-population">
-   Classifier population
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#knowledge">
-   Knowledge
+  <a class="reference internal nav-link" href="#classifier-population-size">
+   Classifier population size
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalization">
    Generalization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#knowledge">
+   Knowledge
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -478,25 +480,37 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="key-performance-indicators">
-<h1><span class="section-number">2.3. </span>Key performance indicators<a class="headerlink" href="#key-performance-indicators" title="Permalink to this headline">¶</a></h1>
-<p>Measures of success / efficiency</p>
-<div class="section" id="classifier-population">
-<h2>Classifier population<a class="headerlink" href="#classifier-population" title="Permalink to this headline">¶</a></h2>
-<p>Whole and reliable, measure of compactness</p>
-</div>
-<div class="section" id="knowledge">
-<h2>Knowledge<a class="headerlink" href="#knowledge" title="Permalink to this headline">¶</a></h2>
-<p>In percentage</p>
+<span id="section-topics-kpi"></span><h1><span class="section-number">2.3. </span>Key performance indicators<a class="headerlink" href="#key-performance-indicators" title="Permalink to this headline">¶</a></h1>
+<p>The ALCS comprise complex mechanisms such as ALP or GG, which might be hard to comprehend and analyse. Therefore, in order to visualize system behaviour over time and assess its performance certain metrics reflecting their nature were chosen. This section presents several metrics used across further experimental evaluations. Each of them can be collected at a particular interval of time (for example every ten trials) and can access the properties of both the environment and the agent within the single simulation.</p>
+<div class="section" id="classifier-population-size">
+<span id="section-topics-kpi-population-size"></span><h2>Classifier population size<a class="headerlink" href="#classifier-population-size" title="Permalink to this headline">¶</a></h2>
+<p>Each LCS creates an internal population of classifiers. Knowing it’s total size <span class="math notranslate nohighlight">\(|P|\)</span> represents the agent’s ability to express the internal model of the environment. Having a smaller population size, when maintaining a high performance also means that the agent is commendable at building more compact and compressed representation of knowledge.</p>
+<p>Besides knowing the total population size, it’s subset of reliable classifiers size <span class="math notranslate nohighlight">\(|P_{\text{reliable}}|\)</span> might also be easily obtained - equation <a class="reference internal" href="#equation-kpi-reliable-population-eq">(2.1)</a>. Both the total population and reliable population size should converge over the course of an experiment to a single value.</p>
+<div class="math notranslate nohighlight" id="equation-kpi-reliable-population-eq">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-kpi-reliable-population-eq" title="Permalink to this equation">¶</a></span>\[P_{\text{reliable}} = \{ cl \in P : cl.q \geq \theta_r \}\]</div>
 </div>
 <div class="section" id="generalization">
-<h2>Generalization<a class="headerlink" href="#generalization" title="Permalink to this headline">¶</a></h2>
+<span id="section-topics-kpi-generalization"></span><h2>Generalization<a class="headerlink" href="#generalization" title="Permalink to this headline">¶</a></h2>
+<p>The generalization metrics reflect the agent’s generalization abilities. It is calculated by analyzing all classifiers in a population <span class="math notranslate nohighlight">\(P\)</span>. The proportion of condition attributes containing the wildcard symbol is calculated using the equation <a class="reference internal" href="#equation-kpi-generalization-eq">(2.2)</a></p>
+<div class="math notranslate nohighlight" id="equation-kpi-generalization-eq">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-kpi-generalization-eq" title="Permalink to this equation">¶</a></span>\[\text{Generalization}(P) = \frac{ \vert \bigcup \bigg( cond.att | cond \in \big( cl.cond | cl \in P \big) \land cond.att = \# \bigg) \vert }{ \vert \bigcup \bigg( cond.att | cond \in \big( cl.cond | cl \in P \big) \bigg) \vert }\]</div>
+<p>The greater generalization score means that the algorithm tends to create classifiers covering larger portion of the observation space, therefore creating more compact solution of the problem.</p>
+</div>
+<div class="section" id="knowledge">
+<span id="section-topics-kpi-knowledge"></span><h2>Knowledge<a class="headerlink" href="#knowledge" title="Permalink to this headline">¶</a></h2>
+<p>The knowledge KPI allows to analyze all possible consequences of actions in all available states of a certain environment. That gives a comprehensive picture of a state of agent’s internal environment model. The metric is a ratio of reliable classifiers being able to predict each <em>state-action-state’</em> movement and the total number of possible transitions.</p>
+<p>Due to possible complexity of increased observation space not all environments are feasible for calculating this metric. And obviously the agent itself does not have access to the internal state of the environment.</p>
 </div>
 <div class="section" id="trial-time">
-<h2>Trial time<a class="headerlink" href="#trial-time" title="Permalink to this headline">¶</a></h2>
+<span id="section-topics-kpi-time"></span><h2>Trial time<a class="headerlink" href="#trial-time" title="Permalink to this headline">¶</a></h2>
+<p>The trial time is simply a time needed to complete one agent’s trial phase - either exploration or exploitation. This metric is used to infer about the computation complexity of the examined algorithms and environments.</p>
+<p>In all cases the computations are performed in controlled environment on a single machine. Therefore, the obtained results can be relatively compared to each other.</p>
 </div>
 <div class="section" id="exploitation-performance">
-<h2>Exploitation performance<a class="headerlink" href="#exploitation-performance" title="Permalink to this headline">¶</a></h2>
-<p>Obtained reward / steps in trial</p>
+<span id="section-topics-kpi-performance"></span><h2>Exploitation performance<a class="headerlink" href="#exploitation-performance" title="Permalink to this headline">¶</a></h2>
+<p>The exploitation performance is a measure of utilizing agent’s internal model of the environment in order to obtain the highest possible payoff. It is most often gathered in the exploit phase, where the agent focuses solely on selecting the best possible classifiers for each situation.</p>
+<p>Depending on the type of environment this metric might differ - for example in a multistep <a class="reference internal" href="26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> the interest is in reaching the final state as fast as possible. Therefore, the metric is simply a number of step in each trial that should be close to the optimal value. For a single-step environment, such as <a class="reference internal" href="26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> a reward is paid out after giving a correct answer in each trial. In this case a good measure is to keep track of all obtained rewards and averaging them.</p>
+<p>The metric itself is depends on major components (learning and credit assignment) involved in the agent’s algorithm providing an estimate of its practical usefulness.</p>
 </div>
 </div>
 

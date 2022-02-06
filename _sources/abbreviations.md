@@ -6,8 +6,17 @@ ACS
 ALCS
   Anticipatory Learning Classifier Systems
 
+ALP
+  Anticipatory Learning Process
+
 BEST
   Bayesian estimation
+
+GG
+  Genetic Generalization
+
+KPI
+  Key performance indicator
 
 MPX
   Multiplexer environment
