@@ -540,7 +540,7 @@
 <p>To show an example of this technique, the performance of an ACS2 algorithm operating in a multistep, toy-problem - Simple Maze environment <span id="id6">[<a class="reference internal" href="../../bibliography.html#id14">7</a>]</span> (see Figure <a class="reference internal" href="#simple-maze-env"><span class="std std-numref">2.2</span></a>) will be discussed using three methods - the summary statistics, frequentist approach and the Bayesian estimation.</p>
 <div class="figure align-default" id="simple-maze-env">
 <a class="reference internal image-reference" href="../../_images/simple-maze.png"><img alt="../../_images/simple-maze.png" src="../../_images/simple-maze.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The Simple Maze environment is a POMDP where the agent is placed in the starting location (denoted as “S”), at the beginning of each new trial, and the goal is to reach the final state “F” by executing four possible actions – moving north, east, south or west. The goal can be reached optimally in eight successive steps.</span><a class="headerlink" href="#simple-maze-env" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The Simple Maze environment is a POMDP where the agent is placed in the starting location (denoted as “S”), at the beginning of each new trial, and the goal is to reach the final state “F” by executing four possible actions – moving north, east, south or west. The bolded lines represent the walls. The goal can be reached optimally in seven successive steps.</span><a class="headerlink" href="#simple-maze-env" title="Permalink to this image">¶</a></p>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -776,7 +776,16 @@
 </div>
 <p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">Parameter distributions of Student-t estimation of population size data for two agents.</span><a class="headerlink" href="#stats-bayes-params-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Describe the usage of the ROPE intervals to inference about the data.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-credible-values admonition">
+<p class="admonition-title">Credible values</p>
+<p>The credible values are defined by the <em>highest density interval</em> <strong>HDI</strong>, which is a useful summary of where the bulk of the moset credible values falls.</p>
+<p>By definition every value inside the HDI has higher probability density than any value outside the HDI, and the total mass of points inside the 95%  HDI is 95% of the distribution.</p>
+</div>
+</div>
+<p>The posterior distribution allows to more credibly assess the null value. Contrary to NHST, it can also accept <span class="math notranslate nohighlight">\(H_0\)</span>. To do so a researcher defines a <em>region of practical equivalence</em> (ROPE) <span id="id7">[<a class="reference internal" href="../../bibliography.html#id15">8</a>]</span>, enclosing the values of the parameter that are deemed to be negligibly different  from the null values for practical purposes. When nearly all the credible values fall within the ROPE, the null value is said to be accepted for practical purposes.</p>
+<p>Figure <a class="reference internal" href="#stats-bayes-delta-fig"><span class="std std-numref">2.5</span></a> shows the graphical example of verifying the null hypothesis using the difference between two population means <span class="math notranslate nohighlight">\(\mu_{ACS2}-\mu_{ACS2GA}\)</span>. The ROPE region (red sector) was assumed to be <span class="math notranslate nohighlight">\([-1, 1]\)</span>, which means that the difference of one classifier is acceptable to consider two populations equal. Blue lines represent the area of credible values of the previously calculated difference. Since the credible value region does not fall into the ROPE region the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected (while the NHST approach retained it).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span>
@@ -806,8 +815,10 @@
     <span class="c1"># ROPE</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rope</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ROPE&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">rope</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rope</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rope</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Probabilistic density function of parameter difference&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Assessing $H_0$ using Bayes estimation&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
@@ -818,13 +829,21 @@
 
 
 <span class="n">data_diff</span> <span class="o">=</span> <span class="n">bayes_acs2_trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">bayes_acs2ga_trace</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
-<span class="n">plot_kde</span><span class="p">(</span><span class="n">data_diff</span><span class="p">)</span>
+
+<span class="n">bayes_delta_fig</span> <span class="o">=</span> <span class="n">plot_kde</span><span class="p">(</span><span class="n">data_diff</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/stats-bayes-delta.png&#39;</span><span class="p">)</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;stats_bayes_delta_fig&#39;</span><span class="p">,</span> <span class="n">bayes_delta_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+</div>
+</div>
+<div class="figure align-default" id="stats-bayes-delta-fig">
+<div class="cell_output docutils container">
 <img alt="../../_images/25_stats_12_0.png" src="../../_images/25_stats_12_0.png" />
 </div>
+<p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">Assessing <span class="math notranslate nohighlight">\(H_0\)</span> using the probabilistic density function of <span class="math notranslate nohighlight">\(\mu\)</span> parameter difference of two examined populations. The ROPE interval was chosen to <span class="math notranslate nohighlight">\([-1, 1]\)</span> meaning that a difference of one classifier can be neglected in terms of population equality. Even though the mean of the difference is less than one, the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected because the HDI region is not contained within the ROPE.</span><a class="headerlink" href="#stats-bayes-delta-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
