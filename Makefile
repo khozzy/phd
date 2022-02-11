@@ -1,6 +1,10 @@
-.PHONY: book
+.PHONY: graphs book
 
-book:
+graphs:
+	dot -Gdpi=200 -Tpng graphs/xncs_action_network.gv -o book/_static/graphs/xncs_action_network.png
+	dot -Gdpi=200 -Tpng graphs/xncs_anticipation_network.gv -o book/_static/graphs/xncs_anticipation_network.png
+
+book: graphs
 	jupyter-book build -W -n --keep-going --all book/
 
 publish: book

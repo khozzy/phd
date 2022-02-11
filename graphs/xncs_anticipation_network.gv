@@ -1,0 +1,70 @@
+digraph G {
+    labelloc = "t";
+    label = "Anticipation Network in X-NCS";
+
+    fontname = "Hilda 10"
+    rankdir = LR
+    splines = line
+    nodesep = .08
+    ranksep = 1
+
+    edge [color = black, arrowsize = .5]
+    node [fixedsize = true,label = "",style = filled,color = none,fillcolor = gray,shape = circle, fontcolor = white, fontsize = 8]
+
+    subgraph cluster_0 {
+    color = none;
+    node [style = filled, color = white, shape = circle, penwidth = 15, fillcolor = black];
+    i1 [label = "i1"] i2 [label = "i2"] i3 [label = "i3"] i4 [label = "i4"];
+    label = "Input Layer";
+    }
+
+    subgraph cluster_1 {
+    color = none;
+    node [style = filled,color = white, shape = circle, penwidth = 15, fillcolor = gray];
+    a12 a22 a32;
+    label = "Hidden Layer";
+    }
+
+    subgraph cluster_2 {
+
+    color = none;
+    node [style = filled, color = white, shape = circle, penwidth = 15, fillcolor = black];
+    o1 [label = "o1"] o2 [label = "o2"] o3 [label = "o3"] o4 [label = "o4"];
+    label = "Output Layer";
+    }
+
+    i1 -> a12;
+    i1 -> a22;
+    i1 -> a32;
+
+    i2 -> a12;
+    i2 -> a22;
+    i2 -> a32;
+
+    i3 -> a12;
+    i3 -> a22;
+    i3 -> a32;
+
+    i4 -> a12;
+    i4 -> a22;
+    i4 -> a32;
+
+    a12 -> o1
+    a22 -> o1
+    a32 -> o1
+
+    a12 -> o2
+    a22 -> o2
+    a32 -> o2
+
+    a12 -> o3
+    a22 -> o3
+    a32 -> o3
+    a32 -> o3
+
+    a12 -> o4
+    a22 -> o4
+    a32 -> o4
+    a32 -> o4
+
+}
