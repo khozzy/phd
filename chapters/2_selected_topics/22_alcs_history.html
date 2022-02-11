@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -416,6 +418,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#xcs">
+   XCS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#acs2">
    ACS2
   </a>
@@ -445,6 +452,11 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#xcs">
+   XCS
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#acs2">
    ACS2
@@ -490,15 +502,14 @@
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir_name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir_name</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># turn off interactive plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">();</span>  <span class="c1"># turn off interactive plotting</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.pyplot._IoffContext at 0x7f1fdf49a760&gt;
-</pre></div>
 </div>
-</div>
+<div class="section" id="xcs">
+<h2>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h2>
+<p>XCS uses niche-GA [Booker, 1985] meaning that GA acts in the action space <span class="math notranslate nohighlight">\([A]\)</span>, instead of globally.</p>
 </div>
 <div class="section" id="acs2">
 <h2>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h2>
@@ -915,10 +926,10 @@ jupyter_client      7.1.2
 jupyter_core        4.9.1
 notebook            6.4.8
 -----
-Python 3.9.10 | packaged by conda-forge | (main, Jan 28 2022, 19:23:19) [GCC 9.4.0]
-Linux-5.13.0-27-generic-x86_64-with-glibc2.31
+Python 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:24:11) [GCC 9.4.0]
+Linux-5.13.0-28-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-01-30 13:40
+Session information updated at 2022-02-10 13:30
 </pre>
 </details></div></div>
 </div>
