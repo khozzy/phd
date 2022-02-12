@@ -31,6 +31,13 @@ digraph G {
     node [style = filled, color = white, shape = circle, penwidth = 15, fillcolor = black];
     o1 [label = "o1"] o2 [label = "o2"] o3 [label = "o3"] o4 [label = "o4"];
     label = "Output Layer";
+
+    {
+    rank = same;
+    edge [style = invis];
+    o4 -> o3 -> o2 -> o1;
+    rankdir = LR;
+    }
     }
 
     i1 -> a12;
@@ -66,5 +73,6 @@ digraph G {
     a22 -> o4
     a32 -> o4
     a32 -> o4
+
 
 }

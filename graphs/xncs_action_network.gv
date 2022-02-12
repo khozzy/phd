@@ -28,12 +28,21 @@ digraph G {
     }
 
     subgraph cluster_2 {
-
-    color = none;
-    node [style = filled, color = white, shape = circle, penwidth = 15, fillcolor = black];
-    a1 [label = "a1"] a2 [label = "a2"] a3 [label = "?"];
     label = "Output Layer";
+    color = none;
+
+    node [style = filled, color = white, shape = circle, penwidth = 15, fillcolor = black];
+    a1 [label = "a1"]; a2 [label = "a2"]; a3 [label = "?"];
+
+    {
+    rank = same;
+    edge [style = invis];
+    a1 -> a3 -> a2;
+    rankdir = LR;
     }
+    }
+
+
 
     i1 -> a12;
     i1 -> a22;
@@ -76,5 +85,4 @@ digraph G {
     a32 -> a3
     a42 -> a3
     a52 -> a3
-
 }

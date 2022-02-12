@@ -1,15 +1,16 @@
 (section-topics-real)=
 # Real-valued signal challenge
 
-Why important. Mention other LCS implementations operating in real-valued realm. Need to adopt, Fuzzy and neural network are very promising by a suitable representations but each requires significant modifications to be adopted.
+Why important. Mention other LCS implementations operating in real-valued realm. Need to adopt, Fuzzy and neural network are very promising by a suitable representations but each requires significant modifications to be adopted and create non-readable rules.
 
 (section-topics-real-discretization)=
 ## Discretization
-XCSI, custom bins per attribute
+custom bins per attribute
 
 (section-topics-real-alphabets)=
 ## Dedicated alphabets
 CSR, UBR, XCSR, interval predicates
+XCSI
 
 (section-topics-real-neural)=
 ## Neural networks
@@ -18,7 +19,7 @@ O’Hara and Bull experimented with representing the rule structure of an XCS cl
 Both networks are fully connected multi-layered perceptrons (MLP) with the same number of nodes in their hidden layer. The input layer in both cases matches the observation state vector provided by the environment. In the action network the size of an output layer is equal to the number of possible actions incremented with an extra node signifying a non-matching situation. Hence, the anticipation network is responsible for predicting next state, the size of its output layer is equal to the input one. Figures {numref}`{number} <xncs-action-network>` and {numref}`{number} <xncs-anticipation-network>` visualize both topologies. 
 
 ````{tabbed} Action Network
-```{figure} ../../_static/graphs/xncs_action_network.png
+```{figure} ../../_static/graphs/xncs_action_network.gv.png
 :name: xncs-action-network
 
 The topology of fully connected MLP of the network determing the agent's action based on the observed state (input layer). The number of output nodes is equal to the number of possible actions with an extra state representing a non-matching case.
@@ -26,7 +27,7 @@ The topology of fully connected MLP of the network determing the agent's action 
 ````
 
 ````{tabbed} Anticipation Network
-```{figure} ../../_static/graphs/xncs_anticipation_network.png
+```{figure} ../../_static/graphs/xncs_anticipation_network.gv.png
 :name: xncs-anticipation-network
 
 Bla bla bla
@@ -43,4 +44,23 @@ The extension was tested by authors in various configurations showing promising 
 
 (section-topics-real-fuzzy)=
 ## Fuzzy representation
-...
+Kondziela undertook an approach to create a fuzzy variant of ACS in 2021 {cite}`kondziela2021facs`. The presented idea modified the system comprising four major elements {cite}`rudnik2011koncepcja`:
+
+- _fuzzification_ - assigning set membership of current environmental perception,
+- _inference_ - aggregates the results by comparing the membership functions with collected knowledge,
+- _knowledge-store_ - stores population of classifiers where representing rules using the _Fuzzy Inference System_ (Mamandi) of `IF..AND..THEN` statements {cite}`zadeh1996fuzzy`,
+- _defuzzification_ - provides single value response obtained from the inference phase determining the final action value.
+
+As the first step the vector of environment signal determines set memberships using predefined functions {cite}`casillas2007fuzzy` {cite}`bonarini2007fixcs`. Then using the rule representation described by Equation {math:numref}`fuzzy-eq` the match set is formed. Each input value $X_i$ is equal to a linguistic set of $\tilde{A_i} = \{ A_{i1} \lor \dots \lor A_{il} \}$ meaning that classifier internally consists of a rule described with $\{0, 1, \# \}$ symbols.
+
+```{math}
+:label: fuzzy-eq
+
+\mathbf{IF}\ X_1\ \text{is}\ \tilde{A_1}\ \text{and}\ \dots \ X_n\ \text{is}\ \tilde{A_n}\ \mathbf{THEN}\ Y\ \text{is}\ B 
+```
+
+In the next step the action set $[A]$ is formed in the same way as in traditional ACS, but the final action selection procedure differs - it is proposed by taking advantage of each rule's membership function values and the _Center of Gravity_ method for defuzzification {cite}`kondziela2021facs`.
+
+Preliminary tests made on multistep, discrete maze environments showed that fuzzy ACS implementation successfully predicts more than 75% of encountered situations and maintained limited number of reliable classifiers (although highly oscillating). Author did not report any other operational metrics.
+
+The usage of fuzzy logic enables the system to naturally handle the real-valued input. The obvious impediment is the requirement to specify membership functions for each environmental perception upfront. The selection of optimal values is complicated and further increases the number of overall system tunable parameters. The other identified flaw relates to the GA phase which is not suited for new representation. Both the mutation and cross-over operators should be reviewed accordingly.
