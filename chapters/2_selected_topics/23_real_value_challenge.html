@@ -354,9 +354,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/2_selected_topics/23_real_value_challenge.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/2_selected_topics/23_real_value_challenge.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -390,6 +390,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/khozzy/phd/gh-pages?urlpath=tree/chapters/2_selected_topics/23_real_value_challenge.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -406,8 +423,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dedicated-alphabets">
-   Dedicated alphabets
+  <a class="reference internal nav-link" href="#interval-predicates">
+   Interval predicates
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -446,8 +463,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dedicated-alphabets">
-   Dedicated alphabets
+  <a class="reference internal nav-link" href="#interval-predicates">
+   Interval predicates
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -471,54 +488,84 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="real-valued-signal-challenge">
 <span id="section-topics-real"></span><h1><span class="section-number">2.2. </span>Real-valued signal challenge<a class="headerlink" href="#real-valued-signal-challenge" title="Permalink to this headline">¶</a></h1>
-<p>Why important. Mention other LCS implementations operating in real-valued realm. Need to adopt, Fuzzy and neural network are very promising by a suitable representations but each requires significant modifications to be adopted.</p>
+<p>Majority of real-world environments or dataset are represented using solely continue-valued inputs or alongside with discrete attributes. Unfortunately, the know ALCS implementations were not initially designed for such representations. The fundamental modification required to overcome aforementioned limitation is the adaptation of rule representation within the system. Despite the variety of possible approaches listed in this chapter each one comes with own merits and perils.</p>
+<p>Two major concepts involving the discretization and interval encoding using dedicated alphabets will be pursued in the later section, while the hindmost ones involving the neural network and fuzzy logic will be only mentioned. There are two main reason of this decision:</p>
+<ol class="simple">
+<li><p>drastic changes in rule representation requires significant modifications in existing and tightly coupled components. In some cases some of them are not usable in their proposed form - like the ALP component in ACS systems needs a complete redefinition for other alphabet encodings,</p></li>
+<li><p>rule interpretability is relevantly blemished.</p></li>
+</ol>
+<p>Therefore, even if some approaches are more appealing for the problem their usage violates major ALCS principles of creating compact set of human-readable rules or does not formally specify the behaviour of related inner mechanisms fulfilling the evolution and assessing each classifier. A more detailed research is however highly advised, but won’t be pursued herein.</p>
 <div class="section" id="discretization">
 <span id="section-topics-real-discretization"></span><h2>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">¶</a></h2>
-<p>XCSI, custom bins per attribute</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-ternary-representation admonition">
+<p class="admonition-title">Ternary representation</p>
+<p>A typical representation of a rule in LCS systems comprising three symbols - <span class="math notranslate nohighlight">\(\{0, 1, \#\}\)</span></p>
 </div>
-<div class="section" id="dedicated-alphabets">
-<span id="section-topics-real-alphabets"></span><h2>Dedicated alphabets<a class="headerlink" href="#dedicated-alphabets" title="Permalink to this headline">¶</a></h2>
-<p>CSR, UBR, XCSR, interval predicates</p>
+</div>
+<p>One of the approach for handling continuous attributes is to partition them into a number of sub-ranges and treat each sub-range as a category. This process is known as <em>discretization</em> and is used across many families of ML algorithms in order to create better models <span id="id1">[<a class="reference internal" href="../../bibliography.html#id37">16</a>]</span>. Minding the nature of ALCS, the usage of such nominal values would be the simplest and most straightforward approach. ALCS systems by design are not limited by <em>ternary representation</em>, therefore creating arbitrary number of possible states is achievable. The first such implementation called rACS was proposed by Unold and Mianowski in 2016 <span id="id2">[<a class="reference internal" href="../../bibliography.html#id36">17</a>]</span> and tested successfully on <a class="reference internal" href="26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a> environments. Both of them have a regular structure, meaning that the intervals are evenly distributed throughout the investigated range.</p>
+<p>Unfortunately, the number of ways to discretize a continuous attribute is infinite. Kotsiantis in <span id="id3">[<a class="reference internal" href="../../bibliography.html#id38">18</a>]</span> takes a survey of possible discretization techniques, but in this work the preferred approach is to divide the search-space into <span class="math notranslate nohighlight">\(n\)</span> equally spaced intervals, referred later as <em>bins</em> or <em>buckets</em>. When the <span class="math notranslate nohighlight">\(n\)</span> is large, that means that system precision is increased resulting obviously in growth of classifier population. Such a population can be further optimized by compacting the classifiers operating in the neighbouring space regions <span id="id4">[<a class="reference internal" href="../../bibliography.html#id39">19</a>]</span> <span id="id5">[<a class="reference internal" href="../../bibliography.html#id40">20</a>]</span>. On the contrary, when the <span class="math notranslate nohighlight">\(n\)</span> is low the system under-performs due to inability of creating accurate classifiers.</p>
+<p>The process of assigning a discrete value for each consecutive interval region is depicted on Figure <a class="reference internal" href="#discretization-fig"><span class="std std-numref">2.2</span></a>.</p>
+<div class="figure align-default" id="discretization-fig">
+<a class="reference internal image-reference" href="../../_images/discretization.png"><img alt="../../_images/discretization.png" src="../../_images/discretization.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Representation of allele in rACS as a natural number of partition. Figure taken from <span id="id6">[<a class="reference internal" href="../../bibliography.html#id36">17</a>]</span>.</span><a class="headerlink" href="#discretization-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>Such solution for real-value representation in simple scenario does not require significant changes to any major components and retain the human-readability and interpretability of created rules. However, in situations when an arbitrary number of bins for each observation attribute is used certain modifications might be necessary (for example additional restrictions for the GA cross-over operator).</p>
+</div>
+<div class="section" id="interval-predicates">
+<span id="section-topics-real-interval"></span><h2>Interval predicates<a class="headerlink" href="#interval-predicates" title="Permalink to this headline">¶</a></h2>
+<p>The discretization approach assumed that a distinct value of condition attribute represents a fixed-length interval part of an input range. Another approach is to encode the signal using inequities, ie</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_i &lt; \theta_i\)</span> for problems where decision surface is a hyperplane in <span class="math notranslate nohighlight">\(n\)</span>-dimensional solution space,</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_i \leq x_i &lt; q_i\)</span> for problems where requiring hyper-rectangular solution</p></li>
+</ul>
+<p>Such approach facilitates creation of more general and compact population size, due to arbitrarily interval ranges.</p>
+<p>CSR, UBR, XCSR, interval predicates
+XCSI</p>
 </div>
 <div class="section" id="neural-networks">
 <span id="section-topics-real-neural"></span><h2>Neural networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">¶</a></h2>
-<p>O’Hara and Bull experimented with representing the rule structure of an XCS classifier with two artificial neural networks named X-NCS <span id="id1">[<a class="reference internal" href="../../bibliography.html#id22">6</a>]</span> <span id="id2">[<a class="reference internal" href="../../bibliography.html#id23">7</a>]</span>. While the first one, called the <em>action-network</em>  determines the application condition of the classifiers replacing the condition-action part, the latter one - <em>anticipation network</em> - forms the description of the predicted next state.</p>
-<p>Both networks are fully connected multi-layered perceptrons (MLP) with the same number of nodes in their hidden layer. The input layer in both cases matches the observation state vector provided by the environment. In the action network the size of an output layer is equal to the number of possible actions incremented with an extra node signifying a non-matching situation. Hence, the anticipation network is responsible for predicting next state, the size of its output layer is equal to the input one. Figures <a class="reference internal" href="#xncs-action-network"><span class="std std-numref">2.2</span></a> and <a class="reference internal" href="#xncs-anticipation-network"><span class="std std-numref">2.3</span></a> visualize both topologies.</p>
+<p>O’Hara and Bull experimented with representing the rule structure of an XCS classifier with two artificial neural networks named X-NCS <span id="id7">[<a class="reference internal" href="../../bibliography.html#id26">21</a>]</span> <span id="id8">[<a class="reference internal" href="../../bibliography.html#id27">22</a>]</span>. While the first one, called the <em>action-network</em>  determines the application condition of the classifiers replacing the condition-action part, the latter one - <em>anticipation network</em> - forms the description of the predicted next state.</p>
+<p>Both networks are fully connected multi-layered perceptrons (MLP) with the same number of nodes in their hidden layer. The input layer in both cases matches the observation state vector provided by the environment. In the action network the size of an output layer is equal to the number of possible actions incremented with an extra node signifying a non-matching situation. Hence, the anticipation network is responsible for predicting next state, the size of its output layer is equal to the input one. Figures <a class="reference internal" href="#xncs-action-network"><span class="std std-numref">2.3</span></a> and <a class="reference internal" href="#xncs-anticipation-network"><span class="std std-numref">2.4</span></a> visualize both topologies.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="e9a07532-b983-45a9-b82f-f06e21869715" name="bce82cfb-fbfd-4350-a425-fc18d195bae5" type="radio">
-</input><label class="tabbed-label" for="e9a07532-b983-45a9-b82f-f06e21869715">
+<input checked="checked" id="915c0fe2-a7bf-4a4b-adea-2974cad90220" name="cc2e23b1-d7d6-4e86-b857-f03813051404" type="radio">
+</input><label class="tabbed-label" for="915c0fe2-a7bf-4a4b-adea-2974cad90220">
 Action Network</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="xncs-action-network">
 <img alt="../../_images/xncs_action_network.gv.png" src="../../_images/xncs_action_network.gv.png" />
-<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The topology of fully connected MLP of the network determing the agent’s action based on the observed state (input layer). The number of output nodes is equal to the number of possible actions with an extra state representing a non-matching case.</span><a class="headerlink" href="#xncs-action-network" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">The topology of fully connected MLP of the network determing the agent’s action based on the observed state (input layer). The number of output nodes is equal to the number of possible actions with an extra state representing a non-matching case.</span><a class="headerlink" href="#xncs-action-network" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="a4b99790-ec97-4ef5-b114-bd543c056105" name="bce82cfb-fbfd-4350-a425-fc18d195bae5" type="radio">
-</input><label class="tabbed-label" for="a4b99790-ec97-4ef5-b114-bd543c056105">
+<input id="1cd51dc5-6370-45b6-9ba6-d08add91ad06" name="cc2e23b1-d7d6-4e86-b857-f03813051404" type="radio">
+</input><label class="tabbed-label" for="1cd51dc5-6370-45b6-9ba6-d08add91ad06">
 Anticipation Network</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="xncs-anticipation-network">
 <img alt="../../_images/xncs_anticipation_network.gv.png" src="../../_images/xncs_anticipation_network.gv.png" />
-<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Bla bla bla</span><a class="headerlink" href="#xncs-anticipation-network" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">Bla bla bla</span><a class="headerlink" href="#xncs-anticipation-network" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
-<p>The system starts with an initial random population, containing the maximum number of classifiers considered in certain experiment, as opposed to standard XCS <span id="id3">[<a class="reference internal" href="../../bibliography.html#id24">8</a>]</span>. The weights of the network are randomly initialized in the range <span class="math notranslate nohighlight">\([-1.0, 1.0]\)</span> and throughout the experiment are updated using two search techniques - the local search performed by backpropagation complemented by the global sampling performed by GA.</p>
+<p>The system starts with an initial random population, containing the maximum number of classifiers considered in certain experiment, as opposed to standard XCS <span id="id9">[<a class="reference internal" href="../../bibliography.html#id28">13</a>]</span>. The weights of the network are randomly initialized in the range <span class="math notranslate nohighlight">\([-1.0, 1.0]\)</span> and throughout the experiment are updated using two search techniques - the local search performed by backpropagation complemented by the global sampling performed by GA.</p>
 <p>In order to assess the general system error all of internal mechanisms remained unchanged expect for the calculation of rule’s absolute error, which is defined as the sum of prediction and  lookahead error (measuring the correctness of the prediction).</p>
 <p>The key differences between the traditional ternary representation is obviously the lack of explicit wildcard symbol and hence no explicit pass-through of input to anticipations. A concept of a reliable classifier cannot be applied in X-NCS - the anticipation accuracy is based on a percentage of accurate anticipations per presentation.</p>
 <p>The extension was tested by authors in various configurations showing promising results especially on discrete multistep problems. Due to novel rule representation the X-NCS system is suited for real-valued data representation, but the conceptual differences makes it difficult to compare it with other systems. Aspects like vague generalization metric, constant population size or the anticipation accuracy computation would require performing dedicated research solely on this implementation.</p>
 </div>
 <div class="section" id="fuzzy-representation">
 <span id="section-topics-real-fuzzy"></span><h2>Fuzzy representation<a class="headerlink" href="#fuzzy-representation" title="Permalink to this headline">¶</a></h2>
-<p>Kondziela undertook an approach to create a fuzzy variant of ACS in 2021 <span id="id4">[<a class="reference internal" href="../../bibliography.html#id31">9</a>]</span>. The presented idea modified the system comprising four major elements <span id="id5">[<a class="reference internal" href="../../bibliography.html#id28">10</a>]</span>:</p>
+<p>Kondziela undertook an approach to create a fuzzy variant of ACS in 2021 <span id="id10">[<a class="reference internal" href="../../bibliography.html#id35">23</a>]</span>. The presented idea modified the system comprising four major elements <span id="id11">[<a class="reference internal" href="../../bibliography.html#id32">24</a>]</span>:</p>
 <ul class="simple">
 <li><p><em>fuzzification</em> - assigning set membership of current environmental perception,</p></li>
 <li><p><em>inference</em> - aggregates the results by comparing the membership functions with collected knowledge,</p></li>
-<li><p><em>knowledge-store</em> - stores population of classifiers where representing rules using the <em>Fuzzy Inference System</em> (Mamandi) of <code class="docutils literal notranslate"><span class="pre">IF..AND..THEN</span></code> statements <span id="id6">[<a class="reference internal" href="../../bibliography.html#id27">11</a>]</span>,</p></li>
+<li><p><em>knowledge-store</em> - stores population of classifiers where representing rules using the <em>Fuzzy Inference System</em> (Mamandi) of <code class="docutils literal notranslate"><span class="pre">IF..AND..THEN</span></code> statements <span id="id12">[<a class="reference internal" href="../../bibliography.html#id31">25</a>]</span>,</p></li>
 <li><p><em>defuzzification</em> - provides single value response obtained from the inference phase determining the final action value.</p></li>
 </ul>
-<p>As the first step the vector of environment signal determines set memberships using predefined functions <span id="id7">[<a class="reference internal" href="../../bibliography.html#id29">12</a>]</span> <span id="id8">[<a class="reference internal" href="../../bibliography.html#id30">13</a>]</span>. Then using the rule representation described by Equation <a class="reference internal" href="#equation-fuzzy-eq">(2.1)</a> the match set is formed. Each input value <span class="math notranslate nohighlight">\(X_i\)</span> is equal to a linguistic set of <span class="math notranslate nohighlight">\(\tilde{A_i} = \{ A_{i1} \lor \dots \lor A_{il} \}\)</span> meaning that classifier internally consists of a rule described with <span class="math notranslate nohighlight">\(\{0, 1, \# \}\)</span> symbols.</p>
+<p>As the first step the vector of environment signal determines set memberships using predefined functions <span id="id13">[<a class="reference internal" href="../../bibliography.html#id33">26</a>]</span> <span id="id14">[<a class="reference internal" href="../../bibliography.html#id34">27</a>]</span>. Then using the rule representation described by Equation <a class="reference internal" href="#equation-fuzzy-eq">(2.1)</a> the match set is formed. Each input value <span class="math notranslate nohighlight">\(X_i\)</span> is equal to a linguistic set of <span class="math notranslate nohighlight">\(\tilde{A_i} = \{ A_{i1} \lor \dots \lor A_{il} \}\)</span> meaning that classifier internally consists of a rule described with <span class="math notranslate nohighlight">\(\{0, 1, \# \}\)</span> symbols.</p>
 <div class="math notranslate nohighlight" id="equation-fuzzy-eq">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-fuzzy-eq" title="Permalink to this equation">¶</a></span>\[\mathbf{IF}\ X_1\ \text{is}\ \tilde{A_1}\ \text{and}\ \dots \ X_n\ \text{is}\ \tilde{A_n}\ \mathbf{THEN}\ Y\ \text{is}\ B \]</div>
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-fuzzy-eq" title="Permalink to this equation">¶</a></span>\[\mathbf{IF}\ X_1\ \text{is}\ \tilde{A_1}\ \text{and}\ \dots \ X_n\ \text{is}\ \tilde{A_n}\ \mathbf{THEN}\ Y\ \text{is}\ B\]</div>
+<p>In the next step the action set <span class="math notranslate nohighlight">\([A]\)</span> is formed in the same way as in traditional ACS, but the final action selection procedure differs - it is proposed by taking advantage of each rule’s membership function values and the <em>Center of Gravity</em> method for defuzzification <span id="id15">[<a class="reference internal" href="../../bibliography.html#id35">23</a>]</span>.</p>
+<p>Preliminary tests made on multistep, discrete maze environments showed that fuzzy ACS implementation successfully predicts more than 75% of encountered situations and maintained limited number of reliable classifiers (although both metrics were highly oscillating). Author did not report any other operational performance indicators.</p>
+<p>The usage of fuzzy logic enables the system to naturally handle the real-valued input. The obvious impediment is the requirement to specify membership functions for each environmental perception upfront. The selection of optimal values is complicated and further increases the number of overall system tunable parameters. The other identified flaw relates to the GA phase which is not suited for new representation. Both the mutation and cross-over operators should be reviewed accordingly.</p>
 </div>
 </div>
 

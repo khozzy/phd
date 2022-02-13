@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -413,12 +415,26 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="motivation-and-challenges">
 <span id="section-motivation"></span><h1><span class="section-number">1.1. </span>Motivation and challenges<a class="headerlink" href="#motivation-and-challenges" title="Permalink to this headline">¶</a></h1>
+<p>ALCS systems were designed and thoroughly tested in problems where the concept or a function sought is essentially “logical” - meaning that it can be expressed by a combination of logical operators applied to attribute values <span id="id1">[<a class="reference internal" href="../../bibliography.html#id42">8</a>]</span>. However, in many problems the solution can’t be conveyed solely by <em>and</em>, <em>or</em>, <em>not</em> operators, because it’s discrimination surface is oblique - neither parallel nor perpendicular to the attribute axes. If the problem’s discrimination surface is oblique the classifier rule are capable of capturing parts of space within hyper-rectangles, that can only approximate the function shape using numerous distinct classifiers.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-s-expression admonition">
+<p class="admonition-title">S-expression</p>
+<p>An <strong>s-expression</strong>, also known as a <strong>sexpr</strong> or <strong>sexp</strong>, is a way to represent a nested list of data. It stands for “symbolic expression,” and it is commonly encountered in the Lisp programming language. It use s-expressions to represent the computer program, and the program’s data.</p>
+<p>For example, the simple mathematical expression “five times the sum of seven and three” can be written as a s-expression with prefix notation. In Lisp, the s-expression might look like the example below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span> <span class="mi">5</span> <span class="p">(</span><span class="o">+</span> <span class="mi">7</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://www.computerhope.com/jargon/s/s-expression.htm">source</a></p>
+</div>
+</div>
+<p>The most popular family of LCS, and the ALCS predecessor - <a class="reference internal" href="../2_selected_topics/22_alcs_history.html#section-topics-history-xcs"><span class="std std-ref">XCS</span></a> was comprehensively evaluated for problems with non-linear decision surface. In 1999 Lanzi took approach to use <em>S-classifiers</em> <span id="id2">[<a class="reference internal" href="../../bibliography.html#id44">9</a>]</span>, where the classifier’s condition part are Lisp S-expressions and can be based on arithmetic function primitives. In 2000 Wilson focuses solely on continuous value inputs introducing XCSR implementation <span id="id3">[<a class="reference internal" href="../../bibliography.html#id3">10</a>]</span>. There the condition attribute was an interval represented by a pair of number - it’s center and the spread. He examined if the optimal decisive thresholds are found automatically in a modified Multiplexer benchmark problem. In the same year he introduced a XCSI system <span id="id4">[<a class="reference internal" href="../../bibliography.html#id42">8</a>]</span>, focusing on forming bounded intervals for integer inputs. One year later, in 2001, another an implementation named XCSF <span id="id5">[<a class="reference internal" href="../../bibliography.html#id43">11</a>]</span> allowing piecewise-linear function approximation was proposed. For a function <span class="math notranslate nohighlight">\(y=f(x)\)</span> the system assumed that <span class="math notranslate nohighlight">\(x\)</span> is the input, <span class="math notranslate nohighlight">\(y\)</span> the payoff and after sufficient amount of sampling the input space XCSF should converge to a population of rule, that over their respective input ranges, predict payoff well. In 2003 Stone and Bull scrupulously addressed the limitations of XCSR system <span id="id6">[<a class="reference internal" href="../../bibliography.html#id11">12</a>]</span> and introduced two new interval representations alongside more versatile benchmark problem.</p>
 <p>The following thesis aims to evaluate the possible behaviour of the ALCS systems when interacting with real-valued environments.</p>
 <ul class="simple">
-<li><p>Paragraph 2: Why it is important</p></li>
-<li><p>Paragraph 3: Real world example</p></li>
+<li><p>Paragraph 2: Why it is important (biased exploration, long action chains)</p></li>
+<li><p>Paragraph 3: Real world example (noisy environments)</p></li>
 <li><p>Paragraph 4: Brief literature recap</p></li>
-<li><p>Paragraph 5: Proposed solution</p></li>
+<li><p>Paragraph 5: Proposed solution (bridge the gap of XCS advancemens for handling continuous input and ACS)</p></li>
 </ul>
 </div>
 

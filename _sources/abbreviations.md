@@ -12,8 +12,8 @@ ALP
 BEST
   Bayesian estimation
 
-GG
-  Genetic Generalization
+GA
+  Genetic Algorithm
 
 KPI
   Key performance indicator

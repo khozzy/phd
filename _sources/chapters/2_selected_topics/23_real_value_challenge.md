@@ -1,15 +1,27 @@
 (section-topics-real)=
 # Real-valued signal challenge
 
-Why important. Mention other LCS implementations operating in real-valued realm. Need to adopt, Fuzzy and neural network are very promising by a suitable representations but each requires significant modifications to be adopted.
+Why important. Mention other LCS implementations operating in real-valued realm. Need to adopt, Fuzzy and neural network are very promising by a suitable representations but each requires significant modifications to be adopted and create non-readable rules.
 
 (section-topics-real-discretization)=
 ## Discretization
-XCSI, custom bins per attribute
+````{margin}
+```{admonition} Ternary representation
+A typical representation of a rule in LCS systems comprising three symbols - $\{0, 1, \#\}$
+```
+````
+
+Because the nature of ALCS the most straightforward approach would be to treat real-values intervals as nominal values. ALCS systems by design are not limited by _ternary representation_, therefore creating arbitrary number of possible states is achievable. The first such implementation called rACS was proposed by Unold and Mianowski in 2016 {cite}`unold2016real` and tested on [](section-topics-environments-corridor) and [](section-topics-environments-grid) environments.
+
+
+Such solution for real-value representation does not require significant changes to any major components and retain the human-readability and interpretability of created rules. 
+
+custom bins per attribute (mind cross-over)
 
 (section-topics-real-alphabets)=
 ## Dedicated alphabets
 CSR, UBR, XCSR, interval predicates
+XCSI
 
 (section-topics-real-neural)=
 ## Neural networks
@@ -57,3 +69,9 @@ As the first step the vector of environment signal determines set memberships us
 
 \mathbf{IF}\ X_1\ \text{is}\ \tilde{A_1}\ \text{and}\ \dots \ X_n\ \text{is}\ \tilde{A_n}\ \mathbf{THEN}\ Y\ \text{is}\ B 
 ```
+
+In the next step the action set $[A]$ is formed in the same way as in traditional ACS, but the final action selection procedure differs - it is proposed by taking advantage of each rule's membership function values and the _Center of Gravity_ method for defuzzification {cite}`kondziela2021facs`.
+
+Preliminary tests made on multistep, discrete maze environments showed that fuzzy ACS implementation successfully predicts more than 75% of encountered situations and maintained limited number of reliable classifiers (although highly oscillating). Author did not report any other operational metrics.
+
+The usage of fuzzy logic enables the system to naturally handle the real-valued input. The obvious impediment is the requirement to specify membership functions for each environmental perception upfront. The selection of optimal values is complicated and further increases the number of overall system tunable parameters. The other identified flaw relates to the GA phase which is not suited for new representation. Both the mutation and cross-over operators should be reviewed accordingly.
