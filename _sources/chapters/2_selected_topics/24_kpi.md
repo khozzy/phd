@@ -1,7 +1,7 @@
 (section-topics-kpi)=
 # Key performance indicators
 
-The ALCS comprise complex mechanisms such as ALP or GG, which might be hard to comprehend and analyse. Therefore, in order to visualize system behaviour over time and assess its performance certain metrics reflecting their nature were chosen. This section presents several metrics used across further experimental evaluations. Each of them can be collected at a particular interval of time (for example every ten trials) and can access the properties of both the environment and the agent within the single simulation.
+The ALCS comprise complex mechanisms such as ALP or GA, which might be hard to comprehend and analyse. Therefore, in order to visualize system behaviour over time and assess its performance certain metrics reflecting their nature were chosen. This section presents several metrics used across further experimental evaluations. Each of them can be collected at a particular interval of time (for example every ten trials) and can access the properties of both the environment and the agent within the single simulation.
 
 (section-topics-kpi-population-size)=
 ## Classifier population size

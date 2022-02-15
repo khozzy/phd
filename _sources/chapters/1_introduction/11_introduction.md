@@ -25,4 +25,4 @@ The capabilities of ALCS were exhaustively examined on environments with discret
 
 The system can be used in variety of fields like data mining (discovering patterns in data {cite}`witten2002data`), supervised or reinforcement learning tasks. Example of such problems would include robotic control, game strategy, environmental navigation, modelling time-dependent complex systems (e.g., stock market) or design optimization (e.g., engineering applications). <creates new possibilites>
 
-This thesis will focus explicitly on the performance of ALCS algorithms evaluated on such problems.
+> This thesis will focus explicitly on the performance of ALCS algorithms evaluated on such problems.

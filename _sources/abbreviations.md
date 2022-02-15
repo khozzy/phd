@@ -1,7 +1,7 @@
 # Abbreviations
 ```{glossary}
 ACS
-  An indented explanation of term 1
+  Anticipatory Classifier System
 
 ALCS
   Anticipatory Learning Classifier Systems
@@ -27,6 +27,12 @@ MCMC
 NHST
   Null Hypothesis Statistical Testing
 
+OBR
+  Ordered-bounded representation
+
 XCS
   An indented explanation of term2
+
+UBR
+  Unordered-bounded representation
 ```
