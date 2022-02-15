@@ -9,7 +9,9 @@ _Anticipatory Classifiers Systems are capable of building the correct internal m
 
 ## Aims and goals
 In order to validate the expressed hypothesis, the following goals have been formulated:
+
 1. Propose modifications towards ALCS system capable of handling real-valued input and optimizing overall performance.
 2. Propose relevant benchmarking problems and metrics for evaluating ALCS performance.
-3. Conduct an experimental evaluation of proposed changes.
-4. Developing an open-sourced Python Machine Learning framework for evaluating various LCS algorithms.
+3. Propose relevant improvements towards neoteric changes.
+4. Conduct an experimental evaluation of intended adjustments.
+5. Developing an open-sourced Python Machine Learning framework for evaluating various LCS algorithms.
