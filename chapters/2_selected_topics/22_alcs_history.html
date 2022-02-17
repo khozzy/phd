@@ -438,11 +438,6 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#advantages-and-disadvantages">
-     Advantages and disadvantages
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pittsburgh-vs-michigan">
      Pittsburgh vs Michigan
     </a>
@@ -450,19 +445,43 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#xcs">
-   XCS
+  <a class="reference internal nav-link" href="#representative-michigan-style-lcs">
+   Representative Michigan-style LCS
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cs-1">
+     CS-1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zcs">
+     ZCS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xcs">
+     XCS
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#acs2">
-   ACS2
+  <a class="reference internal nav-link" href="#anticipatory-learning-classifier-systems">
+   Anticipatory Learning Classifier Systems
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#macs">
-   MACS
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acs2">
+     ACS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#macs">
+     MACS
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -505,11 +524,6 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#advantages-and-disadvantages">
-     Advantages and disadvantages
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pittsburgh-vs-michigan">
      Pittsburgh vs Michigan
     </a>
@@ -517,19 +531,43 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#xcs">
-   XCS
+  <a class="reference internal nav-link" href="#representative-michigan-style-lcs">
+   Representative Michigan-style LCS
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cs-1">
+     CS-1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zcs">
+     ZCS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xcs">
+     XCS
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#acs2">
-   ACS2
+  <a class="reference internal nav-link" href="#anticipatory-learning-classifier-systems">
+   Anticipatory Learning Classifier Systems
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#macs">
-   MACS
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acs2">
+     ACS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#macs">
+     MACS
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -570,9 +608,18 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="road-towards-anticipatory-learning-classifier-systems">
 <h1><span class="section-number">2.1. </span>Road towards Anticipatory Learning Classifier Systems<a class="headerlink" href="#road-towards-anticipatory-learning-classifier-systems" title="Permalink to this headline">¶</a></h1>
-<p>The concept of LCS was introduced by John Holland in 1975 <span id="id1">[<a class="reference internal" href="../../bibliography.html#id48">17</a>]</span> in order to model the idea of cognition based on adaptive mechanisms. From the early days they consist of a set of rules named <em>classifiers</em>  combined with mechanisms in charge of evolving them. Initially the goal was to handle problems related to online interaction with external environments, as described by Wilson in <span id="id2">[<a class="reference internal" href="../../bibliography.html#id49">18</a>]</span>.</p>
-<p>To accomplish this, the emphasis was put on parallelism in the architecture and evolutionary mechanisms allowing the agent to adapt to potentially changing environment <span id="id3">[<a class="reference internal" href="../../bibliography.html#id50">19</a>]</span>. This approach was referenced as <em>“escaping brittleness”</em> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id51">20</a>]</span> due to the problems related to the lack of robustness of the current artificial intelligence systems.</p>
-<p>The naming convention used to refer to the LCS algorithm also changed since its infancy. Holland initially called it as a classifier system, abbreviated either as (CS) or (CFS) <span id="id5">[<a class="reference internal" href="../../bibliography.html#id52">21</a>]</span>. From that time it was also referred to as adaptive agents <span id="id6">[<a class="reference internal" href="../../bibliography.html#id53">22</a>]</span>, cognitive systems <span id="id7">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span> and genetic-based machine learning <span id="id8">[<a class="reference internal" href="../../bibliography.html#id24">3</a>]</span> <span id="id9">[<a class="reference internal" href="../../bibliography.html#id54">23</a>]</span>. The current name of LCS was not adopted until the late 80s <span id="id10">[<a class="reference internal" href="../../bibliography.html#id55">24</a>]</span> after extending the architecture with a credit assignment component <span id="id11">[<a class="reference internal" href="../../bibliography.html#id51">20</a>]</span> <span id="id12">[<a class="reference internal" href="../../bibliography.html#id56">25</a>]</span>.</p>
+<p>The concept of LCS was introduced by John Holland in 1975 <span id="id1">[<a class="reference internal" href="../../bibliography.html#id48">25</a>]</span> in order to model the idea of cognition based on adaptive mechanisms. From the early days they consist of a set of rules named <em>classifiers</em>  combined with mechanisms in charge of evolving them. Initially the goal was to handle problems related to online interaction with external environments, as described by Wilson in <span id="id2">[<a class="reference internal" href="../../bibliography.html#id49">26</a>]</span>.</p>
+<p>To accomplish this, the emphasis was put on parallelism in the architecture and evolutionary mechanisms allowing the agent to adapt to potentially changing environment <span id="id3">[<a class="reference internal" href="../../bibliography.html#id50">27</a>]</span>. This approach was referenced as <em>“escaping brittleness”</em> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id51">28</a>]</span> due to the problems related to the lack of robustness of the current artificial intelligence systems.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-john-holland admonition">
+<p class="admonition-title">John Holland</p>
+<img alt="../../_images/John_Holland.jpg" src="../../_images/John_Holland.jpg" />
+<p><strong>John Henry Holland</strong> (February 2, 1929 – August 9, 2015) was an American scientist and Professor of psychology and Professor of electrical engineering and computer science at the University of Michigan, Ann Arbor.</p>
+<p>He was a pioneer in what became known as genetic algorithms.</p>
+</div>
+</div>
+<p>The naming convention used to refer to the LCS algorithm also changed since its infancy. Holland initially called it as a classifier system, abbreviated either as (CS) or (CFS) <span id="id5">[<a class="reference internal" href="../../bibliography.html#id52">29</a>]</span>. From that time it was also referred to as adaptive agents <span id="id6">[<a class="reference internal" href="../../bibliography.html#id53">30</a>]</span>, cognitive systems <span id="id7">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span> and genetic-based machine learning <span id="id8">[<a class="reference internal" href="../../bibliography.html#id24">3</a>]</span> <span id="id9">[<a class="reference internal" href="../../bibliography.html#id54">31</a>]</span>. The current name of LCS was not adopted until the late 80s <span id="id10">[<a class="reference internal" href="../../bibliography.html#id55">32</a>]</span> after extending the architecture with a credit assignment component <span id="id11">[<a class="reference internal" href="../../bibliography.html#id51">28</a>]</span> <span id="id12">[<a class="reference internal" href="../../bibliography.html#id56">33</a>]</span>.</p>
 <p>This section provides a synopsis of crucial LCS concepts alongside the most popular variants, and the contributions they made to the field.</p>
 <div class="section" id="selected-topics-of-lcs">
 <h2>Selected topics of LCS<a class="headerlink" href="#selected-topics-of-lcs" title="Permalink to this headline">¶</a></h2>
@@ -586,12 +633,12 @@
 <h3>Driving Mechanisms<a class="headerlink" href="#driving-mechanisms" title="Permalink to this headline">¶</a></h3>
 <p>There are two fundamental components behind every LCS algorithm - the discovery and learning (credit assignment) component. Both of them have generated respective fields of study, but it is in the context of LCS that we wish to understand their function and purpose.</p>
 <p><strong>Discovery component</strong></p>
-<p>The discovery component is responsible for exploring the search space of the target problem with the purpose of discovering new rules. A vast majority of LCS algorithms employ some form of Evolutionary Computation, most often Genetic Algorithm (GA), employing Neo-Darwinist theory of natural selection <span id="id13">[<a class="reference internal" href="../../bibliography.html#id57">26</a>]</span> <span id="id14">[<a class="reference internal" href="../../bibliography.html#id54">23</a>]</span>. The evolution of rules is modeled after the evolution of organisms using following biological analogies:</p>
+<p>The discovery component is responsible for exploring the search space of the target problem with the purpose of discovering new rules. A vast majority of LCS algorithms employ some form of Evolutionary Computation, most often Genetic Algorithm (GA), employing Neo-Darwinist theory of natural selection <span id="id13">[<a class="reference internal" href="../../bibliography.html#id57">34</a>]</span> <span id="id14">[<a class="reference internal" href="../../bibliography.html#id54">31</a>]</span>. The evolution of rules is modeled after the evolution of organisms using following biological analogies:</p>
 <ol class="simple">
 <li><p>a code is used to represent the genotype/genome (condition),</p></li>
 <li><p>a solution (phenotype) representation is associated with that genome (action),</p></li>
 <li><p>a phenotype selection process (survival of the fittest) - the fittest organism (rule) has the greatest chances of reproducing and passing parts of its genome to offsprings,</p></li>
-<li><p>certain genetic genome operators are utilized in order to chase after fitter organisms (rules) <span id="id15">[<a class="reference internal" href="../../bibliography.html#id45">27</a>]</span> <span id="id16">[<a class="reference internal" href="../../bibliography.html#id58">28</a>]</span>.</p></li>
+<li><p>certain genetic genome operators are utilized in order to chase after fitter organisms (rules) <span id="id15">[<a class="reference internal" href="../../bibliography.html#id45">35</a>]</span> <span id="id16">[<a class="reference internal" href="../../bibliography.html#id58">36</a>]</span>.</p></li>
 </ol>
 <p>Two genetic operators are typically used to alternate genome (rule) - mutation and crossover (recombination). The first one randomly modify an element in a genotype of an individual (rule), while the latter one recombine parts of two promising genotypes (rules) creating a new one. The selection pressure driving better organisms (rules) to reproduce more frequently depends on the fitness function. The fitness function quantifies the optimality of given rule, allowing it to be ranked across all rules in entire population.</p>
 <p>GA implementation varies in certain LCS, but the overall scheme involves evaluating all available rules, selecting most promising offsprings (according to fitness value), applying genetic operators, introducing new offspring back to population set and finally removing excess or under-performing individuals.</p>
@@ -601,27 +648,62 @@
 <li><p>identification of classifiers responsible for obtaining large future rewards,</p></li>
 <li><p>encourage the discoverability of new rules (by directly affecting the fitness value)</p></li>
 </ol>
-<p>The learning strategy depends on the nature of the problem and is realized differently in LCS implementations. In all cases, however the process is performed through trial-and-error interactions with the environment, where occasional immediate reward is used to generate the policy (state-action mapping of agent-environment interactions) maximizing long-term reward <span id="id17">[<a class="reference internal" href="../../bibliography.html#id29">29</a>]</span> <span id="id18">[<a class="reference internal" href="../../bibliography.html#id59">30</a>]</span> <span id="id19">[<a class="reference internal" href="../../bibliography.html#id60">31</a>]</span>.</p>
+<p>The learning strategy depends on the nature of the problem and is realized differently in LCS implementations. In all cases, however the process is performed through trial-and-error interactions with the environment, where occasional immediate reward is used to generate the policy (state-action mapping of agent-environment interactions) maximizing long-term reward <span id="id17">[<a class="reference internal" href="../../bibliography.html#id29">37</a>]</span> <span id="id18">[<a class="reference internal" href="../../bibliography.html#id59">38</a>]</span> <span id="id19">[<a class="reference internal" href="../../bibliography.html#id60">39</a>]</span>.</p>
 </div>
 <div class="section" id="functional-cycle">
 <h3>Functional cycle<a class="headerlink" href="#functional-cycle" title="Permalink to this headline">¶</a></h3>
-<p>..</p>
-</div>
-<div class="section" id="advantages-and-disadvantages">
-<h3>Advantages and disadvantages<a class="headerlink" href="#advantages-and-disadvantages" title="Permalink to this headline">¶</a></h3>
-<p>…</p>
+<p>The agent interacts with the environment in consecutive trials. Each trial consists of sequential steps usually executed as follows:</p>
+<ol class="simple">
+<li><p>Filter population <span class="math notranslate nohighlight">\([P]\)</span> and select classifiers where condition matches environmental perception forming a <em>match-set</em> <span class="math notranslate nohighlight">\([M]\)</span>.</p></li>
+<li><p>Determine action that will be executed (depending on the strategy).</p></li>
+<li><p>Narrow-down the match-set by selecting only classifiers advocating proposed action.</p></li>
+<li><p>Execute the action in the environment obtaining a new state</p></li>
+<li><p>Refine classifiers by executing discovery and learning components.</p></li>
+</ol>
+<p>The action selection and classifiers evolution phases are implemented individually in different LCS, but the main objective of reaching ideal generalization level is crucial to all of them. The system should find a population that covers the search space as compactly as possible without being detrimental to the optimality of behavior.</p>
 </div>
 <div class="section" id="pittsburgh-vs-michigan">
-<span id="section-topics-history-pittsburgh"></span><h3>Pittsburgh vs Michigan<a class="headerlink" href="#pittsburgh-vs-michigan" title="Permalink to this headline">¶</a></h3>
+<h3>Pittsburgh vs Michigan<a class="headerlink" href="#pittsburgh-vs-michigan" title="Permalink to this headline">¶</a></h3>
+<p>One of the most fundamental distinction in LSC research is the way of storing knowledge by using two different approaches - <em>Michigan-style</em> or <em>Pittsburgh-style</em>. The first ones were proposed by Holland <span id="id20">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span> while the latter one by Kenneth DeJong and his student <span id="id21">[<a class="reference internal" href="../../bibliography.html#id64">40</a>]</span> <span id="id22">[<a class="reference internal" href="../../bibliography.html#id65">41</a>]</span>.</p>
+<p>The fundamental distinction is the structure of an individual. In Michigan systems each individual is a classifier, in Pittsburgh each individual is a set of classifiers - see Figure <a class="reference internal" href="#michigan-pittsburgh-fig"><span class="std std-numref">2.1</span></a>.</p>
+<div class="figure align-default" id="michigan-pittsburgh-fig">
+<img alt="../../_images/michigan_pittsburgh.png" src="../../_images/michigan_pittsburgh.png" />
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Differences between representing knowledge in both Michigan-style and Pittsburgh-style LCS. Figure taken from <span id="id23">[<a class="reference internal" href="../../bibliography.html#id66">42</a>]</span>.</span><a class="headerlink" href="#michigan-pittsburgh-fig" title="Permalink to this image">¶</a></p>
 </div>
+<p>Therefore, the classifiers in Michigan-style LCS are being continuously evaluated and evolved, while in Pittsburgh-style LCS the same process is much more complicated because the whole population needs to be assessed. Thus, Michigan-style systems are typically applied in interactive, online learning problems, while Pittsburgh ones are rather suitable for offline learning <span id="id24">[<a class="reference internal" href="../../bibliography.html#id66">42</a>]</span>. This work focuses on the first class of LCS.</p>
+</div>
+</div>
+<div class="section" id="representative-michigan-style-lcs">
+<h2>Representative Michigan-style LCS<a class="headerlink" href="#representative-michigan-style-lcs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cs-1">
+<h3>CS-1<a class="headerlink" href="#cs-1" title="Permalink to this headline">¶</a></h3>
+<p>Two years after presenting the theoretical model of CS Holland and Reitman proposed its implementation CS-1 <span id="id25">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span>. The system realized the Darwinian principle of the survival of the fittest and was generating adaptive behaviour by maximizing reinforcement using the bucket brigade algorithm <span id="id26">[<a class="reference internal" href="../../bibliography.html#id75">43</a>]</span>. Some internal mechanisms like the usage of a message list or interactions between evolving both single classifier and entire population were considered difficult <span id="id27">[<a class="reference internal" href="../../bibliography.html#id76">44</a>]</span> which signifies the need for improvements.</p>
+</div>
+<div class="section" id="zcs">
+<h3>ZCS<a class="headerlink" href="#zcs" title="Permalink to this headline">¶</a></h3>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-steward-wilson admonition">
+<p class="admonition-title">Steward Wilson</p>
+<img alt="../../_images/steward_wilson.gif" src="../../_images/steward_wilson.gif" />
+<p><a class="reference external" href="https://ieeexplore.ieee.org/author/37550361200">link</a></p>
+</div>
+</div>
+<p>The <em>Zeroth Level Classifier</em> (ZCS) introduced by Wilson in 1994 <span id="id28">[<a class="reference internal" href="../../bibliography.html#id77">45</a>]</span> encompasses all LCS components while simplifying the CS-1 increasing its understandability and performance. The major changes was the removing of the internal message list (determining the rule’s format entirely by the system interface) alongside with rule-bidding credit assignment (replacing it with Q-learning <span id="id29">[<a class="reference internal" href="../../bibliography.html#id78">46</a>]</span>).</p>
+<p>Moreover, the classifier fitness was based on the accumulated reward that the agent can get from firing the classifier which gave rise to the <em>“strength-based”</em> family of LCS. As a result the discovery component eliminates classifiers providing less reward than others from the population.</p>
+<p>This premature converge onto suboptimal rules before space can be properly explores and stable population formed led Wilson to consider other ways in which this might be achieved.</p>
 </div>
 <div class="section" id="xcs">
-<span id="section-topics-history-xcs"></span><h2>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h2>
-<p>XCS <span id="id20">[<a class="reference internal" href="../../bibliography.html#id28">32</a>]</span> <span id="id21">[<a class="reference internal" href="../../bibliography.html#id4">33</a>]</span> <span id="id22">[<a class="reference internal" href="../../bibliography.html#id5">34</a>]</span></p>
+<span id="section-topics-history-xcs"></span><h3>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Learning_classifier_system">wiki</a>
+XCS <span id="id30">[<a class="reference internal" href="../../bibliography.html#id28">47</a>]</span> <span id="id31">[<a class="reference internal" href="../../bibliography.html#id4">48</a>]</span> <span id="id32">[<a class="reference internal" href="../../bibliography.html#id5">49</a>]</span></p>
 <p>XCS uses niche-GA [Booker, 1985] meaning that GA acts in the action space <span class="math notranslate nohighlight">\([A]\)</span>, instead of globally.</p>
 </div>
+</div>
+<div class="section" id="anticipatory-learning-classifier-systems">
+<h2>Anticipatory Learning Classifier Systems<a class="headerlink" href="#anticipatory-learning-classifier-systems" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="acs2">
-<h2>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h2>
+<h3>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lcs.agents.acs2</span> <span class="k">as</span> <span class="nn">acs2</span>
@@ -738,11 +820,11 @@
 </div>
 <div class="full-width figure align-default" id="maze5-fig">
 <img alt="../../_images/acs2-maze5-policy.png" src="../../_images/acs2-maze5-policy.png" />
-<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="macs">
-<h2>MACS<a class="headerlink" href="#macs" title="Permalink to this headline">¶</a></h2>
+<h3>MACS<a class="headerlink" href="#macs" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lcs.agents.macs.macs</span> <span class="k">as</span> <span class="nn">macs</span>
@@ -1041,6 +1123,7 @@ Linux-5.13.0-28-generic-x86_64-with-glibc2.31
 Session information updated at 2022-02-10 13:30
 </pre>
 </details></div></div>
+</div>
 </div>
 </div>
 </div>

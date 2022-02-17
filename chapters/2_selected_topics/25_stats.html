@@ -502,11 +502,11 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="statistical-verification-of-results">
 <h1><span class="section-number">2.4. </span>Statistical verification of results<a class="headerlink" href="#statistical-verification-of-results" title="Permalink to this headline">¶</a></h1>
-<p>In order to assess significance and performance of obtained results two statistical approaches were used. The majority of metrics were compared using the Bayesian estimation (BEST) method <span id="id1">[<a class="reference internal" href="../../bibliography.html#id13">46</a>]</span>, while the other straightforward metrics were just averaged.</p>
+<p>In order to assess significance and performance of obtained results two statistical approaches were used. The majority of metrics were compared using the Bayesian estimation (BEST) method <span id="id1">[<a class="reference internal" href="../../bibliography.html#id13">61</a>]</span>, while the other straightforward metrics were just averaged.</p>
 <div class="section" id="bayesian-analysis">
 <h2>Bayesian analysis<a class="headerlink" href="#bayesian-analysis" title="Permalink to this headline">¶</a></h2>
-<p>The Bayesian approach towards comparing data from multiple groups was used instead of traditional methods of <em>null hypothesis significance testing</em> (NHST). They are more intuitive than the calculation and interpretation of <em>p-value</em> scores, provides complete information about credible parameter values and allow more coherent inferences from data <span id="id2">[<a class="reference internal" href="../../bibliography.html#id12">47</a>]</span>.</p>
-<p>The perils of frequentist NHST approach when comparing machine learning classifiers were depicted by Benavoli in <span id="id3">[<a class="reference internal" href="../../bibliography.html#id14">48</a>]</span>, which is particularly suited for this work. He points the following reasons against using the NHST methods:</p>
+<p>The Bayesian approach towards comparing data from multiple groups was used instead of traditional methods of <em>null hypothesis significance testing</em> (NHST). They are more intuitive than the calculation and interpretation of <em>p-value</em> scores, provides complete information about credible parameter values and allow more coherent inferences from data <span id="id2">[<a class="reference internal" href="../../bibliography.html#id12">62</a>]</span>.</p>
+<p>The perils of frequentist NHST approach when comparing machine learning classifiers were depicted by Benavoli in <span id="id3">[<a class="reference internal" href="../../bibliography.html#id14">63</a>]</span>, which is particularly suited for this work. He points the following reasons against using the NHST methods:</p>
 <ul class="simple">
 <li><p>it does not estimate probability of hypotheses,</p></li>
 <li><p>point-wise null hypothesis are practically always false,</p></li>
@@ -515,7 +515,7 @@
 <li><p>it yields no information about the null hypothesis,</p></li>
 <li><p>there is no principled way to decide the <span class="math notranslate nohighlight">\(\alpha\)</span> level</p></li>
 </ul>
-<p>Additionally, in 2016 the <em><a class="reference external" href="https://www.amstat.org/">American Statistical Association</a></em> made a statement against p-values <span id="id4">[<a class="reference internal" href="../../bibliography.html#id15">49</a>]</span> which might be a motivation for other disciplines to pursue the Bayesian approach.</p>
+<p>Additionally, in 2016 the <em><a class="reference external" href="https://www.amstat.org/">American Statistical Association</a></em> made a statement against p-values <span id="id4">[<a class="reference internal" href="../../bibliography.html#id15">64</a>]</span> which might be a motivation for other disciplines to pursue the Bayesian approach.</p>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
 <div class="admonition-t-distribution admonition">
@@ -527,7 +527,7 @@
 <p>In this work we focus on establishing a descriptive mathematical model of the data <span class="math notranslate nohighlight">\(D\)</span> using the Equation <a class="reference internal" href="#equation-bayesian-approach">(2.6)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-bayesian-approach">
 <span class="eqno">(2.6)<a class="headerlink" href="#equation-bayesian-approach" title="Permalink to this equation">¶</a></span>\[\underbrace{p(\mu, \sigma, \nu|D)}_{\text{posterior}} = \underbrace{p(D|\mu, \sigma, \nu)}_{\text{likelihood}} \times \underbrace{p(\mu, \sigma, \nu)}_{\text{prior}} \big/ \underbrace{p(D)}_{\text{evidence}}\]</div>
-<p>Each experiment is performed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times, generating independent samples, which according to the Central Limit Theorem, should be enough to consider it approximating the normal distribution <span id="id5">[<a class="reference internal" href="../../bibliography.html#id16">50</a>]</span>. To further provide a robust solution towards dealing with potential outliers, the <em>Student t-distribution</em> is chosen. The prior distribution, described with three parameters - <span class="math notranslate nohighlight">\(\mu\)</span> (expected mean value), <span class="math notranslate nohighlight">\(\sigma\)</span> (standard deviation) and <span class="math notranslate nohighlight">\(\nu\)</span> (degrees of freedom) is presented using the Equation <a class="reference internal" href="#equation-bayesian-prior">(2.7)</a>.</p>
+<p>Each experiment is performed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times, generating independent samples, which according to the Central Limit Theorem, should be enough to consider it approximating the normal distribution <span id="id5">[<a class="reference internal" href="../../bibliography.html#id16">65</a>]</span>. To further provide a robust solution towards dealing with potential outliers, the <em>Student t-distribution</em> is chosen. The prior distribution, described with three parameters - <span class="math notranslate nohighlight">\(\mu\)</span> (expected mean value), <span class="math notranslate nohighlight">\(\sigma\)</span> (standard deviation) and <span class="math notranslate nohighlight">\(\nu\)</span> (degrees of freedom) is presented using the Equation <a class="reference internal" href="#equation-bayesian-prior">(2.7)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-bayesian-prior">
 <span class="eqno">(2.7)<a class="headerlink" href="#equation-bayesian-prior" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{align}
     \mu &amp;\sim \mathrm{N}(\mu_D, \sigma^2_D) \\
@@ -537,10 +537,10 @@
 <p>The posterior distribution is approximated to arbitrarily high accuracy by generating a large representative sample from it using <em>Markov chain Monte Carlo</em> (MCMC) methods. It’s sample provides many thousands of combinations of parameter values <span class="math notranslate nohighlight">\(&lt;\mu, \sigma, \nu&gt;\)</span>. Each such combination of values is representative of credible parameter values that simultaneously accommodate the observed data and the prior distribution. From the MCMC sample, one can infer credible parameter values like the mean or standard deviation.</p>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>To show an example of this technique, the performance of an ACS2 algorithm operating in a multistep, toy-problem - Simple Maze environment <span id="id6">[<a class="reference internal" href="../../bibliography.html#id18">51</a>]</span> (see Figure <a class="reference internal" href="#simple-maze-env"><span class="std std-numref">2.5</span></a>) will be discussed using three methods - the summary statistics, frequentist approach and the Bayesian estimation.</p>
+<p>To show an example of this technique, the performance of an ACS2 algorithm operating in a multistep, toy-problem - Simple Maze environment <span id="id6">[<a class="reference internal" href="../../bibliography.html#id18">66</a>]</span> (see Figure <a class="reference internal" href="#simple-maze-env"><span class="std std-numref">2.6</span></a>) will be discussed using three methods - the summary statistics, frequentist approach and the Bayesian estimation.</p>
 <div class="figure align-default" id="simple-maze-env">
 <a class="reference internal image-reference" href="../../_images/simple-maze.png"><img alt="../../_images/simple-maze.png" src="../../_images/simple-maze.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">The Simple Maze environment is a POMDP where the agent is placed in the starting location (denoted as “S”), at the beginning of each new trial, and the goal is to reach the final state “F” by executing four possible actions – moving north, east, south or west. The bolded lines represent the walls. The goal can be reached optimally in seven successive steps.</span><a class="headerlink" href="#simple-maze-env" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.6 </span><span class="caption-text">The Simple Maze environment is a POMDP where the agent is placed in the starting location (denoted as “S”), at the beginning of each new trial, and the goal is to reach the final state “F” by executing four possible actions – moving north, east, south or west. The bolded lines represent the walls. The goal can be reached optimally in seven successive steps.</span><a class="headerlink" href="#simple-maze-env" title="Permalink to this image">¶</a></p>
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -627,7 +627,7 @@
 <p>The classifier population sizes obtained by ACS2 and ACS2 GA in the last trial <span class="math notranslate nohighlight">\(x\)</span> are equal</p>
 </div>
 <p><strong>Descriptive statistics</strong></p>
-<p>First option is to understand the data and extract basic summary statistics. Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.6</span></a> presents a whisker plot showing basic data aggregations like the minimum, first quartile, median, third quartile, maximum values alongside the histogram visualization. While the values look similar it is still not clear whether they can be considered the same.</p>
+<p>First option is to understand the data and extract basic summary statistics. Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.7</span></a> presents a whisker plot showing basic data aggregations like the minimum, first quartile, median, third quartile, maximum values alongside the histogram visualization. While the values look similar it is still not clear whether they can be considered the same.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_summary_statistics</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -677,7 +677,7 @@
 </div>
 <div class="full-width figure align-default" id="summary-stats">
 <a class="reference internal image-reference" href="../../_images/summary-stats.png"><img alt="../../_images/summary-stats.png" src="../../_images/summary-stats.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2.6 </span><span class="caption-text">Descriptive statistics depicting population size obtained after executing two versions of the ACS2 agent in the Simple Maze environment.</span><a class="headerlink" href="#summary-stats" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Descriptive statistics depicting population size obtained after executing two versions of the ACS2 agent in the Simple Maze environment.</span><a class="headerlink" href="#summary-stats" title="Permalink to this image">¶</a></p>
 </div>
 <p><strong>Frequentist approach</strong></p>
 <p>For the frequentist approach first two hypothesis about data distribution are formed:</p>
@@ -686,7 +686,7 @@
 &amp;H_0: \text{The classifier population sizes obtained by ACS2 and ACS2 GA are equal}\\
 &amp;H_1: \text{The classifier population sizes obtained by ACS2 and ACS2 GA are different}
 \end{align*}\end{split}\]</div>
-<p>In traditional NHST workflow the first step would be to apply normality tests to verify whether the data is normally distributed. However, looking at the histograms from the Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.6</span></a> we might assume that the data follows the Gaussian distribution and skip this step.</p>
+<p>In traditional NHST workflow the first step would be to apply normality tests to verify whether the data is normally distributed. However, looking at the histograms from the Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.7</span></a> we might assume that the data follows the Gaussian distribution and skip this step.</p>
 <p>If the <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis will be rejected it means that there is no significant difference between the means. To do so a p-value will be calculated and compared with certain threshold <span class="math notranslate nohighlight">\(\alpha \leq 0.05\)</span>. If the p-value fall below the threshold, it means that the null hypothesis <span class="math notranslate nohighlight">\(H_0\)</span> can be rejected and <strong>there is 95% confidence that both means are significantly different</strong>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -704,7 +704,7 @@
 </div>
 <p>In this case the after running the two-sided t-Test the calculated p-value is <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">0.68</span></code></span> which indicates strong evidence for the <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis, meaning that it is retained. Keep in mind that NHST does not accept the null hypothesis, it can be only rejected or failed to be rejected. Stating that it is correct implies 100% certainty, which is not valid in this methodology.</p>
 <p><strong>Bayesian estimation</strong></p>
-<p>Throughout this work a <a class="reference external" href="https://docs.pymc.io/en/v3/">PyMC3</a> open-sourced Python framework is used for the probabilistic programming. Figure <a class="reference internal" href="#stats-bayes-params-fig"><span class="std std-numref">2.7</span></a> depicts two separate Student-t posterior distribution hyper-parameters estimated by using the MCMC method.</p>
+<p>Throughout this work a <a class="reference external" href="https://docs.pymc.io/en/v3/">PyMC3</a> open-sourced Python framework is used for the probabilistic programming. Figure <a class="reference internal" href="#stats-bayes-params-fig"><span class="std std-numref">2.8</span></a> depicts two separate Student-t posterior distribution hyper-parameters estimated by using the MCMC method.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
@@ -774,7 +774,7 @@
 <div class="cell_output docutils container">
 <img alt="../../_images/25_stats_10_0.png" src="../../_images/25_stats_10_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Parameter distributions of Student-t estimation of population size data for two agents.</span><a class="headerlink" href="#stats-bayes-params-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Parameter distributions of Student-t estimation of population size data for two agents.</span><a class="headerlink" href="#stats-bayes-params-fig" title="Permalink to this image">¶</a></p>
 </div>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -784,8 +784,8 @@
 <p>By definition every value inside the HDI has higher probability density than any value outside the HDI, and the total mass of points inside the 95%  HDI is 95% of the distribution.</p>
 </div>
 </div>
-<p>The posterior distribution allows to more credibly assess the null value. Contrary to NHST, it can also accept <span class="math notranslate nohighlight">\(H_0\)</span>. To do so a researcher defines a <em>region of practical equivalence</em> (ROPE) <span id="id7">[<a class="reference internal" href="../../bibliography.html#id19">52</a>]</span>, enclosing the values of the parameter that are deemed to be negligibly different  from the null values for practical purposes. When nearly all the credible values fall within the ROPE, the null value is said to be accepted for practical purposes.</p>
-<p>Figure <a class="reference internal" href="#stats-bayes-delta-fig"><span class="std std-numref">2.8</span></a> shows the graphical example of verifying the null hypothesis using the difference between two population means <span class="math notranslate nohighlight">\(\mu_{ACS2}-\mu_{ACS2GA}\)</span>. The ROPE region (red sector) was assumed to be <span class="math notranslate nohighlight">\([-1, 1]\)</span>, which means that the difference of one classifier is acceptable to consider two populations equal. Blue lines represent the area of credible values of the previously calculated difference. Since the credible value region does not fall into the ROPE region the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected (while the NHST approach retained it).</p>
+<p>The posterior distribution allows to more credibly assess the null value. Contrary to NHST, it can also accept <span class="math notranslate nohighlight">\(H_0\)</span>. To do so a researcher defines a <em>region of practical equivalence</em> (ROPE) <span id="id7">[<a class="reference internal" href="../../bibliography.html#id19">67</a>]</span>, enclosing the values of the parameter that are deemed to be negligibly different  from the null values for practical purposes. When nearly all the credible values fall within the ROPE, the null value is said to be accepted for practical purposes.</p>
+<p>Figure <a class="reference internal" href="#stats-bayes-delta-fig"><span class="std std-numref">2.9</span></a> shows the graphical example of verifying the null hypothesis using the difference between two population means <span class="math notranslate nohighlight">\(\mu_{ACS2}-\mu_{ACS2GA}\)</span>. The ROPE region (red sector) was assumed to be <span class="math notranslate nohighlight">\([-1, 1]\)</span>, which means that the difference of one classifier is acceptable to consider two populations equal. Blue lines represent the area of credible values of the previously calculated difference. Since the credible value region does not fall into the ROPE region the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected (while the NHST approach retained it).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span>
@@ -843,7 +843,7 @@
 <div class="cell_output docutils container">
 <img alt="../../_images/25_stats_12_0.png" src="../../_images/25_stats_12_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Assessing <span class="math notranslate nohighlight">\(H_0\)</span> using the probabilistic density function of <span class="math notranslate nohighlight">\(\mu\)</span> parameter difference of two examined populations. The ROPE interval was chosen to <span class="math notranslate nohighlight">\([-1, 1]\)</span> meaning that a difference of one classifier can be neglected in terms of population equality. Even though the mean of the difference is less than one, the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected because the HDI region is not contained within the ROPE.</span><a class="headerlink" href="#stats-bayes-delta-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Assessing <span class="math notranslate nohighlight">\(H_0\)</span> using the probabilistic density function of <span class="math notranslate nohighlight">\(\mu\)</span> parameter difference of two examined populations. The ROPE interval was chosen to <span class="math notranslate nohighlight">\([-1, 1]\)</span> meaning that a difference of one classifier can be neglected in terms of population equality. Even though the mean of the difference is less than one, the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected because the HDI region is not contained within the ROPE.</span><a class="headerlink" href="#stats-bayes-delta-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
