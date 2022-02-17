@@ -35,4 +35,7 @@ XCS
 
 UBR
   Unordered-bounded representation
+
+ZCS
+  Zeroth Level Classifier
 ```

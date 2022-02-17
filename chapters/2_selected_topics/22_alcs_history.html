@@ -445,8 +445,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#representative-michigan-style-lcs">
-   Representative Michigan-style LCS
+  <a class="reference internal nav-link" href="#representative-lcs">
+   Representative LCS
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -531,8 +531,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#representative-michigan-style-lcs">
-   Representative Michigan-style LCS
+  <a class="reference internal nav-link" href="#representative-lcs">
+   Representative LCS
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -612,11 +612,11 @@
 <p>To accomplish this, the emphasis was put on parallelism in the architecture and evolutionary mechanisms allowing the agent to adapt to potentially changing environment <span id="id3">[<a class="reference internal" href="../../bibliography.html#id50">27</a>]</span>. This approach was referenced as <em>“escaping brittleness”</em> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id51">28</a>]</span> due to the problems related to the lack of robustness of the current artificial intelligence systems.</p>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
-<div class="admonition-john-holland admonition">
-<p class="admonition-title">John Holland</p>
+<div class="admonition-john-henry-holland admonition">
+<p class="admonition-title">John Henry Holland</p>
 <img alt="../../_images/John_Holland.jpg" src="../../_images/John_Holland.jpg" />
-<p><strong>John Henry Holland</strong> (February 2, 1929 – August 9, 2015) was an American scientist and Professor of psychology and Professor of electrical engineering and computer science at the University of Michigan, Ann Arbor.</p>
-<p>He was a pioneer in what became known as genetic algorithms.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/John_Henry_Holland">John H. Holland</a> is best known for his role as a founding father of the complex systems approach. In particular, he developed genetic algorithms and learning classifier systems.</p>
+<p>These foundational building blocks of an evolutionary approach to optimization are now included in all texts on optimization and programming.</p>
 </div>
 </div>
 <p>The naming convention used to refer to the LCS algorithm also changed since its infancy. Holland initially called it as a classifier system, abbreviated either as (CS) or (CFS) <span id="id5">[<a class="reference internal" href="../../bibliography.html#id52">29</a>]</span>. From that time it was also referred to as adaptive agents <span id="id6">[<a class="reference internal" href="../../bibliography.html#id53">30</a>]</span>, cognitive systems <span id="id7">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span> and genetic-based machine learning <span id="id8">[<a class="reference internal" href="../../bibliography.html#id24">3</a>]</span> <span id="id9">[<a class="reference internal" href="../../bibliography.html#id54">31</a>]</span>. The current name of LCS was not adopted until the late 80s <span id="id10">[<a class="reference internal" href="../../bibliography.html#id55">32</a>]</span> after extending the architecture with a credit assignment component <span id="id11">[<a class="reference internal" href="../../bibliography.html#id51">28</a>]</span> <span id="id12">[<a class="reference internal" href="../../bibliography.html#id56">33</a>]</span>.</p>
@@ -673,25 +673,28 @@
 <p>Therefore, the classifiers in Michigan-style LCS are being continuously evaluated and evolved, while in Pittsburgh-style LCS the same process is much more complicated because the whole population needs to be assessed. Thus, Michigan-style systems are typically applied in interactive, online learning problems, while Pittsburgh ones are rather suitable for offline learning <span id="id24">[<a class="reference internal" href="../../bibliography.html#id66">42</a>]</span>. This work focuses on the first class of LCS.</p>
 </div>
 </div>
-<div class="section" id="representative-michigan-style-lcs">
-<h2>Representative Michigan-style LCS<a class="headerlink" href="#representative-michigan-style-lcs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="representative-lcs">
+<h2>Representative LCS<a class="headerlink" href="#representative-lcs" title="Permalink to this headline">¶</a></h2>
+<p>This sections describes Michigan-style LCS implementations contributing mostly to the current advancements.</p>
 <div class="section" id="cs-1">
 <h3>CS-1<a class="headerlink" href="#cs-1" title="Permalink to this headline">¶</a></h3>
-<p>Two years after presenting the theoretical model of CS Holland and Reitman proposed its implementation CS-1 <span id="id25">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span>. The system realized the Darwinian principle of the survival of the fittest and was generating adaptive behaviour by maximizing reinforcement using the bucket brigade algorithm <span id="id26">[<a class="reference internal" href="../../bibliography.html#id75">43</a>]</span>. Some internal mechanisms like the usage of a message list or interactions between evolving both single classifier and entire population were considered difficult <span id="id27">[<a class="reference internal" href="../../bibliography.html#id76">44</a>]</span> which signifies the need for improvements.</p>
-</div>
-<div class="section" id="zcs">
-<h3>ZCS<a class="headerlink" href="#zcs" title="Permalink to this headline">¶</a></h3>
+<p>Two years after presenting the theoretical model of CS Holland and Reitman proposed its implementation CS-1 <span id="id25">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span>. The system realized the Darwinian principle of the <em>survival of the fittest</em> and was generating adaptive behaviour by maximizing reinforcement using the bucket brigade algorithm <span id="id26">[<a class="reference internal" href="../../bibliography.html#id75">43</a>]</span>.</p>
+<p>Some internal mechanisms like the usage of a message list or interactions between evolving both single classifier and entire population were considered difficult <span id="id27">[<a class="reference internal" href="../../bibliography.html#id76">44</a>]</span> which signified the need for improvements.</p>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
 <div class="admonition-steward-wilson admonition">
 <p class="admonition-title">Steward Wilson</p>
 <img alt="../../_images/steward_wilson.gif" src="../../_images/steward_wilson.gif" />
-<p><a class="reference external" href="https://ieeexplore.ieee.org/author/37550361200">link</a></p>
+<p><a class="reference external" href="https://ieeexplore.ieee.org/author/37550361200">Steward Wilson</a> is an Independent Researcher in classifier systems and evolutionary computation.</p>
+<p>His Ph.D. thesis investigated what would happen if a child could ask questions and receive excellent spoken answers from a machine that connected him to recordings made by a scientist such as Carl Sagan. The results showed long, thoughtful lines of inquiry for this student-driven style of learning.</p>
 </div>
 </div>
+</div>
+<div class="section" id="zcs">
+<h3>ZCS<a class="headerlink" href="#zcs" title="Permalink to this headline">¶</a></h3>
 <p>The <em>Zeroth Level Classifier</em> (ZCS) introduced by Wilson in 1994 <span id="id28">[<a class="reference internal" href="../../bibliography.html#id77">45</a>]</span> encompasses all LCS components while simplifying the CS-1 increasing its understandability and performance. The major changes was the removing of the internal message list (determining the rule’s format entirely by the system interface) alongside with rule-bidding credit assignment (replacing it with Q-learning <span id="id29">[<a class="reference internal" href="../../bibliography.html#id78">46</a>]</span>).</p>
 <p>Moreover, the classifier fitness was based on the accumulated reward that the agent can get from firing the classifier which gave rise to the <em>“strength-based”</em> family of LCS. As a result the discovery component eliminates classifiers providing less reward than others from the population.</p>
-<p>This premature converge onto suboptimal rules before space can be properly explores and stable population formed led Wilson to consider other ways in which this might be achieved.</p>
+<p>This premature converge onto suboptimal rules before search space can be properly explored and stable population formed led Wilson to consider other ways in which this might be achieved.</p>
 </div>
 <div class="section" id="xcs">
 <span id="section-topics-history-xcs"></span><h3>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h3>
