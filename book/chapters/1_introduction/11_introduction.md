@@ -25,4 +25,4 @@ The capabilities of ALCS were exhaustively examined on environments with discret
 
 The LCS systems can be used in variety of fields {cite}`bull2004applications` like data mining {cite}`witten2002data` {cite}`bernado2001xcs` {cite}`bacardit2003data` {cite}`abbass2004online` {cite}`dam2007evolutionary` (discovering patterns in data), supervised or reinforcement learning tasks. Example of such problems would include fighter aircraft maneuvers {cite}`smith2004fighter`, medical domains {cite}`holmes2000learning`, robotic control, game strategy, environmental navigation, modelling time-dependent complex systems (e.g., stock market) {cite}`browne2004development` or design optimization (e.g., engineering applications).
 
-> This thesis will focus explicitly on the performance of ALCS algorithms evaluated on such problems.
+> TODO: introduction ending... This thesis will focus explicitly on the performance of ALCS algorithms evaluated on such problems.
