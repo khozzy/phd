@@ -487,11 +487,6 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#agentp">
-     AgentP
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#yacs">
      YACS
     </a>
@@ -593,11 +588,6 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#agentp">
-     AgentP
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#yacs">
      YACS
     </a>
@@ -628,6 +618,8 @@
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
+
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">lcs</span> <span class="kn">import</span> <span class="n">Perception</span>
@@ -739,20 +731,20 @@
 </div>
 <div class="section" id="xcs">
 <span id="section-topics-history-xcs"></span><h3>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h3>
-<p>In 1995 Wilson introduce yet another, groundbreaking modification called the <em>eXtended Classifier System</em> (XCS) <span id="id33">[<a class="reference internal" href="../../bibliography.html#id28">49</a>]</span> <span id="id34">[<a class="reference internal" href="../../bibliography.html#id4">50</a>]</span> <span id="id35">[<a class="reference internal" href="../../bibliography.html#id5">51</a>]</span> noted for being able to reach optimal performance while evolving accurate and maximally general classifiers.</p>
+<p>In 1995 Wilson introduce yet another, groundbreaking modification called the <em>eXtended Classifier System</em> (XCS) <span id="id33">[<a class="reference internal" href="../../bibliography.html#id28">49</a>]</span> <span id="id34">[<a class="reference internal" href="../../bibliography.html#id4">50</a>]</span> <span id="id35">[<a class="reference internal" href="../../bibliography.html#id5">51</a>]</span> <span id="id36">[<a class="reference internal" href="../../bibliography.html#id91">52</a>]</span> noted for being able to reach optimal performance while evolving accurate and maximally general classifiers.</p>
 <p>The most important changes includes:</p>
 <ul class="simple">
 <li><p>rule fitness is based on accuracy of predictions (forming the <em>accuracy-based</em> LCS family),</p></li>
-<li><p>replacement of panmictically acting GA with a <em>niche-GA</em>  <span id="id36">[<a class="reference internal" href="../../bibliography.html#id79">52</a>]</span> (acting only in action set <span class="math notranslate nohighlight">\([A]\)</span> instead of globally <span class="math notranslate nohighlight">\([P]\)</span>),</p></li>
+<li><p>replacement of panmictically acting GA with a <em>niche-GA</em>  <span id="id37">[<a class="reference internal" href="../../bibliography.html#id79">53</a>]</span> (acting only in action set <span class="math notranslate nohighlight">\([A]\)</span> instead of globally <span class="math notranslate nohighlight">\([P]\)</span>),</p></li>
 <li><p>explicit generalization mechanism (<em>subsumption</em>),</p></li>
 <li><p>adaptation of Q-Learning credit assignment</p></li>
 </ul>
-<p>The XCS design drives it to form an all-inclusive and accurate representation of the problem space rather than focusing on higher payoff niches. Very promising performance results showed that RL <span id="id37">[<a class="reference internal" href="../../bibliography.html#id45">35</a>]</span> and LCS are not only linked but inherently overlapping, redefining LCSs as RL endowed with a generalization capabilities <span id="id38">[<a class="reference internal" href="../../bibliography.html#id84">53</a>]</span> <span id="id39">[<a class="reference internal" href="../../bibliography.html#id85">54</a>]</span>. As a result it becomes the most popular LCS implementation, guiding other system implementations that are heavily inspired by its architecture.</p>
+<p>The XCS design drives it to form an all-inclusive and accurate representation of the problem space rather than focusing on higher payoff niches. Very promising performance results showed that RL <span id="id38">[<a class="reference internal" href="../../bibliography.html#id45">35</a>]</span> and LCS are not only linked but inherently overlapping, redefining LCSs as RL endowed with a generalization capabilities <span id="id39">[<a class="reference internal" href="../../bibliography.html#id84">54</a>]</span> <span id="id40">[<a class="reference internal" href="../../bibliography.html#id85">55</a>]</span>. As a result it becomes the most popular LCS implementation, guiding other system implementations that are heavily inspired by its architecture.</p>
 </div>
 </div>
 <div class="section" id="anticipatory-learning-classifier-systems">
 <h2>Anticipatory Learning Classifier Systems<a class="headerlink" href="#anticipatory-learning-classifier-systems" title="Permalink to this headline">¶</a></h2>
-<p>The investigation about the presence and importance of anticipations were initially guided by the field of cognitive psychology. It was proved that “higher” animals form and exploit anticipations while adopting their behaviour in distinct tasks. Wilson noted that when simulating adaptive behaviour the animats should be endowed with anticipations <span id="id40">[<a class="reference internal" href="../../bibliography.html#id87">55</a>]</span>. In traditional RL the first approaches manifested in Dyna architecture <span id="id41">[<a class="reference internal" href="../../bibliography.html#id29">37</a>]</span>, but due to the lack of generalization capabilities its utilization was limited. The Anticipatory Learning Classifier Systems (ALCS) aims to bridge the gap for exploiting the generalization capabilities while including the explicit notion of anticipations.</p>
+<p>The investigation about the presence and importance of anticipations were initially guided by the field of cognitive psychology. It was proved that “higher” animals form and exploit anticipations while adopting their behaviour in distinct tasks. Wilson noted that when simulating adaptive behaviour the animats should be endowed with anticipations <span id="id41">[<a class="reference internal" href="../../bibliography.html#id87">56</a>]</span>. In traditional RL the first approaches manifested in Dyna architecture <span id="id42">[<a class="reference internal" href="../../bibliography.html#id29">37</a>]</span>, but due to the lack of generalization capabilities its utilization was limited. The Anticipatory Learning Classifier Systems (ALCS) aims to bridge the gap for exploiting the generalization capabilities while including the explicit notion of anticipations.</p>
 <div class="section" id="cfcs2">
 <h3>CFCS2<a class="headerlink" href="#cfcs2" title="Permalink to this headline">¶</a></h3>
 <div class="margin sidebar">
@@ -762,14 +754,21 @@
 <p>Learning without an explicit reward feedback (e.g. learning a sequence of states based on actions taken and the following expected states).</p>
 </div>
 </div>
-<p>First foundations towards including predictions were laid by Riolo in 1991 by introducing a modification called CFCS2 <span id="id42">[<a class="reference internal" href="../../bibliography.html#id82">56</a>]</span>. It addressed the task of performing “latent learning” or “lookahead planning” where <em>“actions are based on predictions of future states of the world, using both current information and past experience as embodied in the agent’s internal models of the world”</em> <span id="id43">[<a class="reference internal" href="../../bibliography.html#id83">57</a>]</span>.</p>
+<p>First foundations towards including predictions were laid by Riolo in 1991 by introducing a modification called CFCS2 <span id="id43">[<a class="reference internal" href="../../bibliography.html#id82">57</a>]</span>. It addressed the task of performing “latent learning” or “lookahead planning” where <em>“actions are based on predictions of future states of the world, using both current information and past experience as embodied in the agent’s internal models of the world”</em> <span id="id44">[<a class="reference internal" href="../../bibliography.html#id83">58</a>]</span>.</p>
 <p>CFCS2 used “tags” to specify if a current action posted to a message list refers to an actual action or an anticipation, claiming a reduction in the learning time for general sequential decision tasks. Riolo was able to show the possibilities of latent learning and lookahead planning, but the implicit formation of anticipations appeared to be misleading. Additionally, the CFCS2 did not achieve any generalization capabilities.</p>
 </div>
 <div class="section" id="acs">
 <h3>ACS<a class="headerlink" href="#acs" title="Permalink to this headline">¶</a></h3>
-<p>The first system capable of evolving a maximally generalized, accurate and complete mapping of all possible situation-effect-action triples observable in the environment - the Anticipatory Classifier System (ACS) was introduced by Stolzmann in 1997 <span id="id44">[<a class="reference internal" href="../../bibliography.html#id88">58</a>]</span> <span id="id45">[<a class="reference internal" href="../../bibliography.html#id86">59</a>]</span>.</p>
+<p>The first system capable of evolving a maximally generalized, accurate and complete mapping of all possible situation-effect-action triples observable in the environment - the Anticipatory Classifier System (ACS) was introduced by Stolzmann in 1997 <span id="id45">[<a class="reference internal" href="../../bibliography.html#id88">59</a>]</span> <span id="id46">[<a class="reference internal" href="../../bibliography.html#id86">60</a>]</span>.</p>
 <p>The rule structure was enhanced with an anticipatory or <em>effect</em> part that anticipates the effects of an action in a given situation. The effect part was capable of determining which attributes change after executing an action by using a “pass-through” symbol - <span class="math notranslate nohighlight">\(\#\)</span>, which greatly enhances the rule’s interpretability. In order to perform latent learning, forming and refining classifiers a new discovery component - the Anticipatory Learning Process (ALP) was introduced.</p>
-<p>ALP realizes the psychological Hoffmann’s anticipatory behavioral control theory <span id="id46">[<a class="reference internal" href="../../bibliography.html#id89">60</a>]</span> stating that conditional action-effects relations are learned latently using anticipations, which he further refined in <span id="id47">[<a class="reference internal" href="../../bibliography.html#id90">61</a>]</span>. The following points (visualised in Figure <a class="reference internal" href="#abc-fig"><span class="std std-numref">2.2</span></a>) can be distinguished:</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-perceptual-aliasing admonition">
+<p class="admonition-title">Perceptual aliasing</p>
+<p>Case when same observation is obtained in distinct states requiring different actions.</p>
+</div>
+</div>
+<p>ALP realizes the psychological Hoffmann’s anticipatory behavioral control theory <span id="id47">[<a class="reference internal" href="../../bibliography.html#id92">61</a>]</span> <span id="id48">[<a class="reference internal" href="../../bibliography.html#id89">62</a>]</span> stating that conditional action-effects relations are learned latently using anticipations, which he further refined in <span id="id49">[<a class="reference internal" href="../../bibliography.html#id90">63</a>]</span>. The following points (visualised in Figure <a class="reference internal" href="#abc-fig"><span class="std std-numref">2.2</span></a>) can be distinguished:</p>
 <ol class="simple">
 <li><p>Any behavioural act or response (<span class="math notranslate nohighlight">\(R\)</span>) is accompanied by anticipation of its effects.</p></li>
 <li><p>The anticipations of the effects <span class="math notranslate nohighlight">\(E_{ant}\)</span> are compared with the real effects <span class="math notranslate nohighlight">\(E_{real}\)</span>.</p></li>
@@ -778,19 +777,9 @@
 </ol>
 <div class="figure align-default" id="abc-fig">
 <img alt="../../_images/abc.png" src="../../_images/abc.png" />
-<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The theory of anticipatory behavioural control. Adapted from <span id="id48">[<a class="reference internal" href="../../bibliography.html#id90">61</a>]</span>.</span><a class="headerlink" href="#abc-fig" title="Permalink to this image">¶</a></p>
-</div>
-<div class="margin sidebar">
-<p class="sidebar-title"></p>
-<div class="admonition-perceptual-aliasing admonition">
-<p class="admonition-title">Perceptual aliasing</p>
-<p>Case when same observation is obtained in distinct states requiring different actions.</p>
-</div>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The theory of anticipatory behavioural control. Adapted from <span id="id50">[<a class="reference internal" href="../../bibliography.html#id90">63</a>]</span>.</span><a class="headerlink" href="#abc-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>The proposed architecture was capable of solving multistep problems, planning, speeding up learning or disambiguating perceptual aliasing.</p>
-</div>
-<div class="section" id="acs2">
-<h3>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lcs.agents.acs2</span> <span class="k">as</span> <span class="nn">acs2</span>
@@ -867,7 +856,7 @@
 
     <span class="k">return</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">action</span>
 
-<span class="k">def</span> <span class="nf">plot_policy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_policy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
     <span class="n">max_x</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">maze</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span>
@@ -879,7 +868,7 @@
     <span class="k">for</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">action_matrix</span><span class="p">):</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;$</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Policy in Maze5 environment&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ACS2 policy in Maze5 environment&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_x</span><span class="p">)</span>
@@ -887,7 +876,11 @@
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_x</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_y</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/acs2-maze5-policy.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span>
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/acs2_maze5.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_acs2_in_maze5</span><span class="p">():</span>
@@ -900,21 +893,38 @@
 
 <span class="c1"># Plot the policy</span>
 <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span> <span class="o">=</span> <span class="n">build_fitness_and_action_matrices</span><span class="p">(</span><span class="n">env_</span><span class="p">,</span> <span class="n">explore_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-<span class="n">plot_policy</span><span class="p">(</span><span class="n">env_</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">)</span>
+<span class="n">acs2_policy_fig</span> <span class="o">=</span> <span class="n">plot_policy</span><span class="p">(</span><span class="n">env_</span><span class="p">,</span> <span class="n">fitness_matrix</span><span class="p">,</span> <span class="n">action_matrix</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/acs2-maze5-policy.png&#39;</span><span class="p">)</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;acs2_policy_fig&#39;</span><span class="p">,</span> <span class="n">acs2_policy_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;acs2_population_size&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">explore_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="full-width figure align-default" id="maze5-fig">
-<img alt="../../_images/acs2-maze5-policy.png" src="../../_images/acs2-maze5-policy.png" />
-<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
+<div class="cell_output docutils container">
 </div>
 </div>
-<div class="section" id="agentp">
-<h3>AgentP<a class="headerlink" href="#agentp" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="acs2">
+<h3>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h3>
+<p>Later,  in  2002 Martin Butz  <span id="id51">[<a class="reference internal" href="../../bibliography.html#id6">64</a>]</span> <span id="id52">[<a class="reference internal" href="../../bibliography.html#id93">65</a>]</span>  presented  an  extension  called ACS2.  The  significant  changes  from  the  previous  version include</p>
+<ul class="simple">
+<li><p>application of learning component across the whole action set <span class="math notranslate nohighlight">\([A]\)</span> (all classifiers from <span class="math notranslate nohighlight">\([M]\)</span> advocating selected action),</p></li>
+<li><p>introduction of GA component,</p></li>
+<li><p>condition-action-effect triples that anticipate no change in the environment are encompassed in population</p></li>
+</ul>
+<p>Experiments showed that the genetic generalization process in ACS2 was able to decrease the population size and consequently speed up the computational process.</p>
+<p>Figure <a class="reference internal" href="#acs2-policy-fig"><span class="std std-numref">2.3</span></a> shows an example of RL policy generated by a population of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">322</span></code></span> classifiers trained over 5000 trials operating in popular Maze5 benchmarking problem. The model knows the consequences of each available action in every possible state, therefore after estimating the fitness value of each classifier is able to suggest most promising action. The learning can be still optimized by using cognitive mechanisms like the lookahead planning.</p>
+<div class="figure align-default" id="acs2-policy-fig">
+<div class="cell_output docutils container">
+<img alt="../../_images/22_alcs_history_7_0.png" src="../../_images/22_alcs_history_7_0.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Policy generated by ACS2 in Maze5 environment. Saturation of red color reflects the best classifier fitness value. In each trial the agent is inserted randomly on the red field with the goal of reaching the reward state “R” by executing eight possible actions.</span><a class="headerlink" href="#acs2-policy-fig" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="yacs">
 <h3>YACS<a class="headerlink" href="#yacs" title="Permalink to this headline">¶</a></h3>
+<p>Gérard introduced a “<em>Yet Another Classifier System</em>” (YACS) <span id="id53">[<a class="reference internal" href="../../bibliography.html#id94">66</a>]</span> in 2002. It shares the same C-A-E classifier structure as ACS and ACS2 but the essential conceptual difference between those two is that YACS is designed to decorrelate the acquisition of relevant <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(E\)</span> parts by building them independently using a set of heuristics. The latent learning process is designed to set the E parts to actually perceived changes in the environment and then to discover relevant C parts. Additionally, it does not take advantage of genetic generalization mechanisms relying on the discovery process to correctly determine significant attributes.</p>
+<p>Evaluation was performed in simple Maze environment reaching <em>near optimal</em> solutions. The specialization process in YACS leads to less over-specialization then the corresponding process in ACS, but still suffers from the lack of dedicated generalization mechanism.</p>
 </div>
 <div class="section" id="macs">
 <h3>MACS<a class="headerlink" href="#macs" title="Permalink to this headline">¶</a></h3>
@@ -1113,6 +1123,7 @@ gym                 0.21.0
 gym_maze            NA
 lcs                 NA
 matplotlib          3.5.1
+myst_nb             0.13.1
 numpy               1.22.1
 session_info        1.0.0
 src                 (embedded book's utils module)
@@ -1123,6 +1134,8 @@ src                 (embedded book's utils module)
 <pre>
 PIL                         8.4.0
 asttokens                   NA
+attr                        21.4.0
+babel                       2.9.1
 backcall                    0.2.0
 brotli                      NA
 certifi                     2021.10.08
@@ -1142,26 +1155,45 @@ debugpy                     1.5.1
 decorator                   5.1.1
 defusedxml                  0.7.1
 dill                        0.3.4
+docutils                    0.16
 entrypoints                 0.3
 executing                   0.8.2
 filelock                    3.4.2
 google                      NA
+greenlet                    1.1.2
 grpc                        1.43.0
 hiredis                     2.0.0
 idna                        3.3
+imagesize                   NA
 importlib_metadata          NA
 ipykernel                   6.7.0
 ipython_genutils            0.2.0
+ipywidgets                  7.6.5
 jedi                        0.18.1
+jinja2                      3.0.3
+jsonschema                  3.2.0
+jupyter_cache               0.4.3
+jupyter_sphinx              0.3.2
+jupyterlab_pygments         0.1.2
 kiwisolver                  1.3.2
+linkify_it                  1.0.3
 lxml                        4.7.1
+markdown_it                 1.1.0
+markupsafe                  2.0.1
 matplotlib_inline           NA
+mdit_py_plugins             0.2.8
+mistune                     0.8.4
 mlflow                      1.23.1
 mpl_toolkits                NA
 msgpack                     1.0.3
+myst_parser                 0.15.2
+nbclient                    0.5.10
+nbconvert                   6.4.1
+nbformat                    5.1.3
 networkx                    2.5
 packaging                   21.3
 pandas                      1.4.0
+pandocfilters               NA
 parso                       0.8.3
 pexpect                     4.8.0
 pickleshare                 0.7.5
@@ -1170,6 +1202,7 @@ prompt_toolkit              3.0.26
 psutil                      5.9.0
 ptyprocess                  0.7.0
 pure_eval                   0.2.2
+pvectorc                    NA
 pydev_ipython               NA
 pydevconsole                NA
 pydevd                      2.6.0
@@ -1180,6 +1213,7 @@ pydevd_tracing              NA
 pygments                    2.11.2
 pylab                       NA
 pyparsing                   3.0.7
+pyrsistent                  NA
 pytz                        2021.3
 ray                         1.9.2
 redis                       4.1.2
@@ -1189,12 +1223,16 @@ setproctitle                1.2.2
 setuptools                  60.5.0
 six                         1.16.0
 socks                       1.7.1
+sphinx                      4.4.0
 sphinxcontrib               NA
+sqlalchemy                  1.4.31
 stack_data                  0.1.4
+testpath                    0.5.0
 tornado                     6.1
 tqdm                        4.62.3
 traitlets                   5.1.1
 typing_extensions           NA
+uc_micro                    1.0.1
 unicodedata2                NA
 urllib3                     1.26.8
 wcwidth                     0.2.5
@@ -1213,7 +1251,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:24:11) [GCC 9.4.0]
 Linux-5.13.0-28-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-02-10 13:30
+Session information updated at 2022-02-18 14:33
 </pre>
 </details></div></div>
 </div>
