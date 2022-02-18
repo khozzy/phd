@@ -9,6 +9,9 @@ ALCS
 ALP
   Anticipatory Learning Process
 
+BBA
+  Bucket Brigade Algorithm
+
 BEST
   Bayesian estimation
 
@@ -31,7 +34,7 @@ OBR
   Ordered-bounded representation
 
 XCS
-  An indented explanation of term2
+  _eXtended Classifier System
 
 UBR
   Unordered-bounded representation

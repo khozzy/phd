@@ -472,8 +472,28 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cfcs2">
+     CFCS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acs">
+     ACS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#acs2">
      ACS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#agentp">
+     AgentP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yacs">
+     YACS
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -558,8 +578,28 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cfcs2">
+     CFCS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acs">
+     ACS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#acs2">
      ACS2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#agentp">
+     AgentP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yacs">
+     YACS
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -656,7 +696,7 @@
 <ol class="simple">
 <li><p>Filter population <span class="math notranslate nohighlight">\([P]\)</span> and select classifiers where condition matches environmental perception forming a <em>match-set</em> <span class="math notranslate nohighlight">\([M]\)</span>.</p></li>
 <li><p>Determine action that will be executed (depending on the strategy).</p></li>
-<li><p>Narrow-down the match-set by selecting only classifiers advocating proposed action.</p></li>
+<li><p>Narrow-down the match-set by selecting only classifiers advocating proposed action - create the <em>action-set</em> <span class="math notranslate nohighlight">\([A]\)</span>.</p></li>
 <li><p>Execute the action in the environment obtaining a new state</p></li>
 <li><p>Refine classifiers by executing discovery and learning components.</p></li>
 </ol>
@@ -679,8 +719,8 @@
 <p>This sections describes Michigan-style LCS implementations contributing mostly to the current advancements.</p>
 <div class="section" id="cs-1">
 <h3>CS-1<a class="headerlink" href="#cs-1" title="Permalink to this headline">¶</a></h3>
-<p>Two years after presenting the theoretical model of CS Holland and Reitman proposed its implementation CS-1 <span id="id25">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span>. The system realized the Darwinian principle of the <em>survival of the fittest</em> and was generating adaptive behaviour by maximizing reinforcement using the bucket brigade algorithm <span id="id26">[<a class="reference internal" href="../../bibliography.html#id75">43</a>]</span>.</p>
-<p>Some internal mechanisms like the usage of an internal message list (storing recent environmental perceptions) or interactions between evolving both single classifier and entire population were considered difficult <span id="id27">[<a class="reference internal" href="../../bibliography.html#id76">44</a>]</span> which already signified the need for improvements.</p>
+<p>Two years after presenting the theoretical model of CS Holland and Reitman proposed its implementation CS-1 <span id="id25">[<a class="reference internal" href="../../bibliography.html#id22">2</a>]</span>. The system realized the Darwinian principle of the <em>survival of the fittest</em>  <span id="id26">[<a class="reference internal" href="../../bibliography.html#id75">43</a>]</span> and was generating adaptive behaviour by maximizing reinforcement using the bucket brigade algorithm (BBA) <span id="id27">[<a class="reference internal" href="../../bibliography.html#id80">44</a>]</span> <span id="id28">[<a class="reference internal" href="../../bibliography.html#id81">45</a>]</span>.</p>
+<p>Some internal mechanisms like the usage of an internal message list (handling all input and output communications between the system and the environment and providing a makeshift memory) or interactions between evolving both single classifier and entire population were considered difficult <span id="id29">[<a class="reference internal" href="../../bibliography.html#id76">46</a>]</span> <span id="id30">[<a class="reference internal" href="../../bibliography.html#id54">31</a>]</span>. Moreover, the obtained results were inconsistent which already signified the need for improvements.</p>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
 <div class="admonition-steward-wilson admonition">
@@ -693,19 +733,62 @@
 </div>
 <div class="section" id="zcs">
 <h3>ZCS<a class="headerlink" href="#zcs" title="Permalink to this headline">¶</a></h3>
-<p>The <em>Zeroth Level Classifier</em> (ZCS) introduced by Wilson in 1994 <span id="id28">[<a class="reference internal" href="../../bibliography.html#id77">45</a>]</span> encompasses all LCS components while simplifying the CS-1 increasing its understandability and performance. The major changes was the removing of the internal message list (determining the rule’s format entirely by the system interface) alongside with rule-bidding credit assignment (replacing it with Q-learning <span id="id29">[<a class="reference internal" href="../../bibliography.html#id78">46</a>]</span>).</p>
+<p>The <em>Zeroth Level Classifier</em> (ZCS) introduced by Wilson in 1994 <span id="id31">[<a class="reference internal" href="../../bibliography.html#id77">47</a>]</span> encompasses all LCS components while simplifying the CS-1 increasing its understandability and performance. The major changes was the removing of the internal message list (determining the rule’s format entirely by the system interface) alongside with rule-bidding credit assignment (replacing it with BBA/Q-learning <span id="id32">[<a class="reference internal" href="../../bibliography.html#id78">48</a>]</span> algorithm).</p>
 <p>Moreover, the classifier fitness was based on the accumulated reward that the agent can get from firing the classifier which gave rise to the <em>“strength-based”</em> family of LCS. As a result the discovery component eliminates classifiers providing less reward than others from the population.</p>
-<p>This premature converge onto suboptimal rules before search space can be properly explored and stable population formed led Wilson to consider other ways in which this might be achieved.</p>
+<p>ZCS managed to achieve similar performance to CS-1, demonstrating Holland’s idea could work even in a very simple framework. However, the premature converge onto suboptimal rules before search space can be properly explored and stable population formed led Wilson to consider other ways in which this might be achieved.</p>
 </div>
 <div class="section" id="xcs">
 <span id="section-topics-history-xcs"></span><h3>XCS<a class="headerlink" href="#xcs" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Learning_classifier_system">wiki</a>
-XCS <span id="id30">[<a class="reference internal" href="../../bibliography.html#id28">47</a>]</span> <span id="id31">[<a class="reference internal" href="../../bibliography.html#id4">48</a>]</span> <span id="id32">[<a class="reference internal" href="../../bibliography.html#id5">49</a>]</span></p>
-<p>XCS uses niche-GA [Booker, 1985] meaning that GA acts in the action space <span class="math notranslate nohighlight">\([A]\)</span>, instead of globally.</p>
+<p>In 1995 Wilson introduce yet another, groundbreaking modification called the <em>eXtended Classifier System</em> (XCS) <span id="id33">[<a class="reference internal" href="../../bibliography.html#id28">49</a>]</span> <span id="id34">[<a class="reference internal" href="../../bibliography.html#id4">50</a>]</span> <span id="id35">[<a class="reference internal" href="../../bibliography.html#id5">51</a>]</span> noted for being able to reach optimal performance while evolving accurate and maximally general classifiers.</p>
+<p>The most important changes includes:</p>
+<ul class="simple">
+<li><p>rule fitness is based on accuracy of predictions (forming the <em>accuracy-based</em> LCS family),</p></li>
+<li><p>replacement of panmictically acting GA with a <em>niche-GA</em>  <span id="id36">[<a class="reference internal" href="../../bibliography.html#id79">52</a>]</span> (acting only in action set <span class="math notranslate nohighlight">\([A]\)</span> instead of globally <span class="math notranslate nohighlight">\([P]\)</span>),</p></li>
+<li><p>explicit generalization mechanism (<em>subsumption</em>),</p></li>
+<li><p>adaptation of Q-Learning credit assignment</p></li>
+</ul>
+<p>The XCS design drives it to form an all-inclusive and accurate representation of the problem space rather than focusing on higher payoff niches. Very promising performance results showed that RL <span id="id37">[<a class="reference internal" href="../../bibliography.html#id45">35</a>]</span> and LCS are not only linked but inherently overlapping, redefining LCSs as RL endowed with a generalization capabilities <span id="id38">[<a class="reference internal" href="../../bibliography.html#id84">53</a>]</span> <span id="id39">[<a class="reference internal" href="../../bibliography.html#id85">54</a>]</span>. As a result it becomes the most popular LCS implementation, guiding other system implementations that are heavily inspired by its architecture.</p>
 </div>
 </div>
 <div class="section" id="anticipatory-learning-classifier-systems">
 <h2>Anticipatory Learning Classifier Systems<a class="headerlink" href="#anticipatory-learning-classifier-systems" title="Permalink to this headline">¶</a></h2>
+<p>The investigation about the presence and importance of anticipations were initially guided by the field of cognitive psychology. It was proved that “higher” animals form and exploit anticipations while adopting their behaviour in distinct tasks. Wilson noted that when simulating adaptive behaviour the animats should be endowed with anticipations <span id="id40">[<a class="reference internal" href="../../bibliography.html#id87">55</a>]</span>. In traditional RL the first approaches manifested in Dyna architecture <span id="id41">[<a class="reference internal" href="../../bibliography.html#id29">37</a>]</span>, but due to the lack of generalization capabilities its utilization was limited. The Anticipatory Learning Classifier Systems (ALCS) aims to bridge the gap for exploiting the generalization capabilities while including the explicit notion of anticipations.</p>
+<div class="section" id="cfcs2">
+<h3>CFCS2<a class="headerlink" href="#cfcs2" title="Permalink to this headline">¶</a></h3>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-latent-learning admonition">
+<p class="admonition-title">Latent learning</p>
+<p>Learning without an explicit reward feedback (e.g. learning a sequence of states based on actions taken and the following expected states).</p>
+</div>
+</div>
+<p>First foundations towards including predictions were laid by Riolo in 1991 by introducing a modification called CFCS2 <span id="id42">[<a class="reference internal" href="../../bibliography.html#id82">56</a>]</span>. It addressed the task of performing “latent learning” or “lookahead planning” where <em>“actions are based on predictions of future states of the world, using both current information and past experience as embodied in the agent’s internal models of the world”</em> <span id="id43">[<a class="reference internal" href="../../bibliography.html#id83">57</a>]</span>.</p>
+<p>CFCS2 used “tags” to specify if a current action posted to a message list refers to an actual action or an anticipation, claiming a reduction in the learning time for general sequential decision tasks. Riolo was able to show the possibilities of latent learning and lookahead planning, but the implicit formation of anticipations appeared to be misleading. Additionally, the CFCS2 did not achieve any generalization capabilities.</p>
+</div>
+<div class="section" id="acs">
+<h3>ACS<a class="headerlink" href="#acs" title="Permalink to this headline">¶</a></h3>
+<p>The first system capable of evolving a maximally generalized, accurate and complete mapping of all possible situation-effect-action triples observable in the environment - the Anticipatory Classifier System (ACS) was introduced by Stolzmann in 1997 <span id="id44">[<a class="reference internal" href="../../bibliography.html#id88">58</a>]</span> <span id="id45">[<a class="reference internal" href="../../bibliography.html#id86">59</a>]</span>.</p>
+<p>The rule structure was enhanced with an anticipatory or <em>effect</em> part that anticipates the effects of an action in a given situation. The effect part was capable of determining which attributes change after executing an action by using a “pass-through” symbol - <span class="math notranslate nohighlight">\(\#\)</span>, which greatly enhances the rule’s interpretability. In order to perform latent learning, forming and refining classifiers a new discovery component - the Anticipatory Learning Process (ALP) was introduced.</p>
+<p>ALP realizes the psychological Hoffmann’s anticipatory behavioral control theory <span id="id46">[<a class="reference internal" href="../../bibliography.html#id89">60</a>]</span> stating that conditional action-effects relations are learned latently using anticipations, which he further refined in <span id="id47">[<a class="reference internal" href="../../bibliography.html#id90">61</a>]</span>. The following points (visualised in Figure <a class="reference internal" href="#abc-fig"><span class="std std-numref">2.2</span></a>) can be distinguished:</p>
+<ol class="simple">
+<li><p>Any behavioural act or response (<span class="math notranslate nohighlight">\(R\)</span>) is accompanied by anticipation of its effects.</p></li>
+<li><p>The anticipations of the effects <span class="math notranslate nohighlight">\(E_{ant}\)</span> are compared with the real effects <span class="math notranslate nohighlight">\(E_{real}\)</span>.</p></li>
+<li><p>When the anticipations were correct, the bond between response and anticipation is strengthened and weakened otherwise.</p></li>
+<li><p>Behavioural stimuli further differentiate the <span class="math notranslate nohighlight">\(R-E_{ant}\)</span> relations.</p></li>
+</ol>
+<div class="figure align-default" id="abc-fig">
+<img alt="../../_images/abc.png" src="../../_images/abc.png" />
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">The theory of anticipatory behavioural control. Adapted from <span id="id48">[<a class="reference internal" href="../../bibliography.html#id90">61</a>]</span>.</span><a class="headerlink" href="#abc-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-perceptual-aliasing admonition">
+<p class="admonition-title">Perceptual aliasing</p>
+<p>Case when same observation is obtained in distinct states requiring different actions.</p>
+</div>
+</div>
+<p>The proposed architecture was capable of solving multistep problems, planning, speeding up learning or disambiguating perceptual aliasing.</p>
+</div>
 <div class="section" id="acs2">
 <h3>ACS2<a class="headerlink" href="#acs2" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
@@ -824,8 +907,14 @@ XCS <span id="id30">[<a class="reference internal" href="../../bibliography.html
 </div>
 <div class="full-width figure align-default" id="maze5-fig">
 <img alt="../../_images/acs2-maze5-policy.png" src="../../_images/acs2-maze5-policy.png" />
-<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Policy of Maze5. Saturation of red color reflects the best classifier fitness value.</span><a class="headerlink" href="#maze5-fig" title="Permalink to this image">¶</a></p>
 </div>
+</div>
+<div class="section" id="agentp">
+<h3>AgentP<a class="headerlink" href="#agentp" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="yacs">
+<h3>YACS<a class="headerlink" href="#yacs" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="macs">
 <h3>MACS<a class="headerlink" href="#macs" title="Permalink to this headline">¶</a></h3>
