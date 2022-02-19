@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
+    await self.async_execute_cell(
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+s = sorted(macs_agent.population.form_match_set(left_from_reward), key=lambda cl: cl.action)
+
+action_mapping = ['STEP_AHEAD', 'ROTATE_LEFT', 'ROTATE_RIGHT']
+
+foo = {}
+
+for action, group_cl in groupby(s, key=lambda cl: cl.action):
+    foo[action] = {}
+    foo[action]['anticipation'] = ''.join(macs_agent.get_anticipations(left_from_reward, action))
+    foo[action]['classifiers'] = []
+
+    for cl in sorted(group_cl, key=lambda cl: cl.effect):
+        foo[action]['classifiers'].append(f'<code>{cl.condition} {cl.action} {cl.effect}</code>')
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [5][0m, in [0;36m<module>[0;34m[0m
+[1;32m      7[0m [38;5;28;01mfor[39;00m action, group_cl [38;5;129;01min[39;00m groupby(s, key[38;5;241m=[39m[38;5;28;01mlambda[39;00m cl: cl[38;5;241m.[39maction):
+[1;32m      8[0m     foo[action] [38;5;241m=[39m {}
+[0;32m----> 9[0m     foo[action][[38;5;124m'[39m[38;5;124manticipation[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;124;43m'[39;49m[38;5;124;43m'[39;49m[38;5;241;43m.[39;49m[43mjoin[49m[43m([49m[43mmacs_agent[49m[38;5;241;43m.[39;49m[43mget_anticipations[49m[43m([49m[43mleft_from_reward[49m[43m,[49m[43m [49m[43maction[49m[43m)[49m[43m)[49m
+[1;32m     10[0m     foo[action][[38;5;124m'[39m[38;5;124mclassifiers[39m[38;5;124m'[39m] [38;5;241m=[39m []
+[1;32m     12[0m     [38;5;28;01mfor[39;00m cl [38;5;129;01min[39;00m [38;5;28msorted[39m(group_cl, key[38;5;241m=[39m[38;5;28;01mlambda[39;00m cl: cl[38;5;241m.[39meffect):
+
+[0;31mTypeError[0m: sequence item 0: expected str instance, Perception found
+TypeError: sequence item 0: expected str instance, Perception found
+
