@@ -16,3 +16,5 @@ LCS are now considered as sequential decision problem-solving systems endowed wi
 - Model free - limited assumptions about the environment [link](https://en.wikipedia.org/wiki/Model-free_(reinforcement_learning))
 
 - list advantages and disadvantages of LCS here
+
+- all code used is available for reproduction

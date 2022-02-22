@@ -43,6 +43,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -416,8 +418,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -451,8 +453,8 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -490,7 +492,6 @@
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
-
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
@@ -503,6 +504,10 @@
 
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
+
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">20_000</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
 
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
@@ -597,25 +602,27 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">fig</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e1_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e1_experiments&#39;</span><span class="p">,</span> <span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-encoding-precision">
 <h1>Experiment 1 - Encoding precision<a class="headerlink" href="#experiment-1-encoding-precision" title="Permalink to this headline">¶</a></h1>
-<p>Info about algorithms, environments used, metrics collected, methods, reproducibility, statistical verification</p>
-<p>Due to the increased complexity for larger MPX the questions (impact of bits) will be validated on smaller instance</p>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>..</p>
+<p>The impact of the setting the encoder bits value when forming interval predicates was validated on the single-step rMPX environment. Due to potential computational complexity issues the problem was scaled down to 3bit rMPX where the perception vector is represented by four attributes (first three bits are both the address and register, and the last one indicates whether the given answer was correct).</p>
+<p>The impact of four different encoder bits values was examined by collecting metrics including representative metrics of the average reward in each execution phase and the size of evolved population.</p>
+<p>In each trial of the experiment the agent alternates between explore and exploit phases for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20000</span></code></span> trials, which gives the opportunity to discern shift in performance over time. Moreover, to present coherent results and draw statistical inferences each experiment is repeated <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and those independent runs are averaged.</p>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p><strong>rACS parameters</strong></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.05\)</span>, <span class="math notranslate nohighlight">\(\gamma = 0.95\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.2\)</span>, <span class="math notranslate nohighlight">\(\epsilon = 1.0\)</span>, <span class="math notranslate nohighlight">\(\theta_{GA} = 100\)</span>, <span class="math notranslate nohighlight">\(m_u=0.1\)</span>, <span class="math notranslate nohighlight">\(\chi=1.0\)</span>, <span class="math notranslate nohighlight">\(\epsilon_{cover} = 0\)</span>, <span class="math notranslate nohighlight">\(\epsilon_{mutation}=0.25\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">20_000</span>
-<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
-
-
-<span class="k">def</span> <span class="nf">rmpx3bit_env_provider</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmpx3bit_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_multiplexer</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;real-multiplexer-3bit-v0&#39;</span><span class="p">)</span>
 
@@ -661,54 +668,51 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="93dfb9ce-0b86-4c6c-a779-cc32f20339b7" name="8b2da016-d35a-436a-b6ad-50c1d41eaf1b" type="radio">
-</input><label class="tabbed-label" for="93dfb9ce-0b86-4c6c-a779-cc32f20339b7">
+<input checked="checked" id="c532a563-ad13-4914-b439-bd6cd744627e" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
+</input><label class="tabbed-label" for="c532a563-ad13-4914-b439-bd6cd744627e">
 1 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc1bit-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/32_experiment_1_2_0.png" src="../../../_images/32_experiment_1_2_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Performance in 3bit rMPX UBR with 1bit</span><a class="headerlink" href="#rmpx3bit-enc1bit-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Performance in 3bit rMPX UBR with 1bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc1bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="47f092c5-7293-4031-bd92-75ad386fb8c9" name="8b2da016-d35a-436a-b6ad-50c1d41eaf1b" type="radio">
-</input><label class="tabbed-label" for="47f092c5-7293-4031-bd92-75ad386fb8c9">
+<input id="fdeaf244-254f-49df-8f11-6d1fe9796a5b" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
+</input><label class="tabbed-label" for="fdeaf244-254f-49df-8f11-6d1fe9796a5b">
 2 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc2bit-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/32_experiment_1_2_1.png" src="../../../_images/32_experiment_1_2_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Performance in 3bit rMPX UBR with 2bit</span><a class="headerlink" href="#rmpx3bit-enc2bit-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Performance in 3bit rMPX UBR with 2bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc2bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="ab31831c-26ed-43ba-b687-e4b762561ca9" name="8b2da016-d35a-436a-b6ad-50c1d41eaf1b" type="radio">
-</input><label class="tabbed-label" for="ab31831c-26ed-43ba-b687-e4b762561ca9">
+<input id="19636523-d424-4167-a9d9-0a4236400c79" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
+</input><label class="tabbed-label" for="19636523-d424-4167-a9d9-0a4236400c79">
 3 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc3bit-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/32_experiment_1_2_2.png" src="../../../_images/32_experiment_1_2_2.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Performance in 3bit rMPX UBR with 3bit</span><a class="headerlink" href="#rmpx3bit-enc3bit-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Performance in 3bit rMPX UBR with 3bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc3bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="53f9b16d-0127-4cb5-8a74-c6c9046f1cd5" name="8b2da016-d35a-436a-b6ad-50c1d41eaf1b" type="radio">
-</input><label class="tabbed-label" for="53f9b16d-0127-4cb5-8a74-c6c9046f1cd5">
+<input id="fe7127ef-6b58-49f1-879d-7374c7510008" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
+</input><label class="tabbed-label" for="fe7127ef-6b58-49f1-879d-7374c7510008">
 4 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc4bit-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/32_experiment_1_2_3.png" src="../../../_images/32_experiment_1_2_3.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Performance in 3bit rMPX UBR with 4bit</span><a class="headerlink" href="#rmpx3bit-enc4bit-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Performance in 3bit rMPX UBR with 4bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc4bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>Table below presents posterior data generated from Bayesian model regarding population sizes in the last trial when using different encoding values. Since the reward obtained by the agent can be either 0 or 1000, it’s average value over last 100 exploit trials is also presented.</p>
-</div>
+<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from last 100 exploit trials is considered as a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/population.dill&#39;</span><span class="p">)</span>
@@ -778,7 +782,10 @@
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>What conclusions can be drawn?</p>
+<p>The rACS algorithm implementation proved to be capable of solving 3bit rMPX problem with the hyper-plane decision surface. The performance of four distinct values of encoding resolutions are depicted in Figures <a class="reference internal" href="#rmpx3bit-enc1bit-fig"><span class="std std-numref">3.2</span></a>, <a class="reference internal" href="#rmpx3bit-enc2bit-fig"><span class="std std-numref">3.3</span></a>, <a class="reference internal" href="#rmpx3bit-enc3bit-fig"><span class="std std-numref">3.4</span></a>, <a class="reference internal" href="#rmpx3bit-enc4bit-fig"><span class="std std-numref">3.5</span></a>.</p>
+<p>For this particular environment the threshold mapping each real-value attribute into binary signal was set to <span class="math notranslate nohighlight">\(0.5\)</span> therefore satisfying performance was obtained with very rough encoding values. With a single encoding bit, the agent was able to consistently exploit the environment by choosing the correct answer and converged the population size.</p>
+<p>Raising the encoding bits should lead to similar results but slower. Due to the expansion of possible interval combinations the agent component need more time evolving proper rules. This progression is observed in Figure <a class="reference internal" href="#rmpx3bit-enc2bit-fig"><span class="std std-numref">3.3</span></a> where 2 encoding bits are used. Similar performance as before is observed, but due to the lack of rule compaction the final population size is almost three times larger.</p>
+<p>The problems are emphasized when using 3 and 4 encoding bits. The average reward in the exploit phase is still significantly greater than in explore one, meaning that the agent is able to pick up correct decision most of the time, but the convergence of population size is becoming elusive. The algorithm is struggling with increasing population size, which due to its nature is a significant computational bottleneck.</p>
 </div>
 </div>
 

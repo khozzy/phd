@@ -43,6 +43,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -416,11 +418,6 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
    Results
   </a>
@@ -455,11 +452,6 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
-  </a>
- </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
    Results
@@ -517,6 +509,9 @@
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
+<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">RealValueEncoder</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
@@ -640,190 +635,11 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">fig</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-nature-of-the-intervals">
-<h1>Experiment 2 - Nature of the intervals<a class="headerlink" href="#experiment-2-nature-of-the-intervals" title="Permalink to this headline">¶</a></h1>
-<p>Info about algorithms, environments used, metrics collected, methods, reproducibility, statistical verification</p>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>To highlight the impact of selecting proper bit number for the encoding the following table highlights the number of distinct values for each perception step (increased by <code class="docutils literal notranslate"><span class="pre">0.1</span></code>).</p>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">.1</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Perception&#39;</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]:</span>
-    <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bit</span><span class="si">}</span><span class="s1">-bit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">encode</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Perception&#39;</span><span class="p">],</span> <span class="n">bit</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Perception&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>1-bit</th>
-      <th>2-bit</th>
-      <th>3-bit</th>
-      <th>4-bit</th>
-      <th>5-bit</th>
-      <th>6-bit</th>
-      <th>7-bit</th>
-    </tr>
-    <tr>
-      <th>Perception</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0.0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>0.1</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>6</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>0.2</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>6</td>
-      <td>12</td>
-      <td>25</td>
-    </tr>
-    <tr>
-      <th>0.3</th>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>4</td>
-      <td>9</td>
-      <td>19</td>
-      <td>38</td>
-    </tr>
-    <tr>
-      <th>0.4</th>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>6</td>
-      <td>12</td>
-      <td>25</td>
-      <td>51</td>
-    </tr>
-    <tr>
-      <th>0.5</th>
-      <td>1</td>
-      <td>2</td>
-      <td>4</td>
-      <td>8</td>
-      <td>16</td>
-      <td>32</td>
-      <td>64</td>
-    </tr>
-    <tr>
-      <th>0.6</th>
-      <td>1</td>
-      <td>2</td>
-      <td>4</td>
-      <td>9</td>
-      <td>19</td>
-      <td>38</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>0.7</th>
-      <td>1</td>
-      <td>2</td>
-      <td>5</td>
-      <td>11</td>
-      <td>22</td>
-      <td>44</td>
-      <td>89</td>
-    </tr>
-    <tr>
-      <th>0.8</th>
-      <td>1</td>
-      <td>3</td>
-      <td>6</td>
-      <td>12</td>
-      <td>25</td>
-      <td>51</td>
-      <td>102</td>
-    </tr>
-    <tr>
-      <th>0.9</th>
-      <td>1</td>
-      <td>3</td>
-      <td>7</td>
-      <td>14</td>
-      <td>28</td>
-      <td>57</td>
-      <td>115</td>
-    </tr>
-    <tr>
-      <th>1.0</th>
-      <td>1</td>
-      <td>3</td>
-      <td>7</td>
-      <td>15</td>
-      <td>31</td>
-      <td>63</td>
-      <td>127</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">encode_array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">encode_array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="n">bits</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
 
-
-<span class="k">def</span> <span class="nf">plot_checkerboard_splits</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_checkerboard_splits</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
@@ -846,33 +662,45 @@
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_</span><span class="si">{</span><span class="n">splits</span><span class="si">}</span><span class="s1">_splits_</span><span class="si">{</span><span class="n">bits</span><span class="si">}</span><span class="s1">_bits.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot_filename</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_experiments&#39;</span><span class="p">,</span> <span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_checkerboard_3_splits_4_bits_fig&#39;</span><span class="p">,</span> <span class="n">plot_checkerboard_splits</span><span class="p">(</span><span class="n">splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_3_splits_4_bits.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-<span class="n">plot_checkerboard_splits</span><span class="p">(</span><span class="n">splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</pre></div>
+<div class="cell_output docutils container">
 </div>
 </div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-nature-of-the-intervals">
+<h1>Experiment 2 - Nature of the intervals<a class="headerlink" href="#experiment-2-nature-of-the-intervals" title="Permalink to this headline">¶</a></h1>
+<p>In order to provide the correct answer in the checkerboard problem the agent must be able to correctly partition the hyper-rectangular solution space. Four categories are used to determine the nature of the evolved intervals:</p>
+<ul class="simple">
+<li><p>Region 1 <span class="math notranslate nohighlight">\([p_i, q_i]\)</span> - consists of specific intervals.</p></li>
+<li><p>Region 2 <span class="math notranslate nohighlight">\([p_{min}, q_i)\)</span> - interval bounded from the right side.</p></li>
+<li><p>Region 3 <span class="math notranslate nohighlight">\([p_i, q_{max})\)</span> - interval bounded from the left side.</p></li>
+<li><p>Region 4 <span class="math notranslate nohighlight">\([p_{min}, q_{max})\)</span> - general interval (<em>“don’t care”</em>).</p></li>
+</ul>
+<p>The two-dimensional checkerboard divided by three splits in each direction is used. The experiment uses the rACS agent and evaluates its performance with different encoding values. Because of the splits the system response is dependent on precise boundaries estimations. Figure <a class="reference internal" href="#e2-checkerboard-3-splits-4-bits-fig"><span class="std std-numref">3.6</span></a> shows possible ambiguities near the split lines, where the same nominal value is applicable in both regions.</p>
+<p>As in the previous section, each trial of the experiment the agent alternates between explore and exploit phases for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials. Each independent pass is averaged across <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times. For the collected metrics besides the average performance and the population size, the proportion of condition interval regions is collected for each trial.</p>
+<div class="figure align-default" id="e2-checkerboard-3-splits-4-bits-fig">
+<div class="cell_output docutils container">
+<img alt="../../../_images/32_experiment_2_0_2.png" src="../../../_images/32_experiment_2_0_2.png" />
 </div>
-<div class="full-width figure align-default" id="checkerboard-3-splits-4-bits">
-<img alt="../../../_images/checkerboard_3_splits_4_bits.png" src="../../../_images/checkerboard_3_splits_4_bits.png" />
-<p class="caption"><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Checkerboard splits</span><a class="headerlink" href="#checkerboard-3-splits-4-bits" title="Permalink to this image">¶</a></p>
-</div>
+<p class="caption"><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Example of dividing the space into three equal splits. When using low encoding resolution potential ambiguity is visible near the splitting lines.</span><a class="headerlink" href="#e2-checkerboard-3-splits-4-bits-fig" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Figures <a class="reference internal" href="#checkerboard4bit-enc4bit-regions-fig"><span class="std std-numref">3.7</span></a>, <a class="reference internal" href="#checkerboard4bit-enc4bit-performance-fig"><span class="std std-numref">3.8</span></a> and <a class="reference internal" href="#checkerboard4bit-enc4bit-population-fig"><span class="std std-numref">3.9</span></a> illustrate the metrics progression on the 3x3 Checkerboard problem using 4 bit interval encoding. Due to brevity the plots for other encoding values were not presented, but final values are outlined using statistical estimation.</p>
+<p><strong>rACS parameters</strong></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.05\)</span>, <span class="math notranslate nohighlight">\(\gamma = 0.95\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.3\)</span>, <span class="math notranslate nohighlight">\(\epsilon = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_{GA} = 100\)</span>, <span class="math notranslate nohighlight">\(m_u=0.2\)</span>, <span class="math notranslate nohighlight">\(\chi=0.6\)</span>, <span class="math notranslate nohighlight">\(\epsilon_{cover} = 0.1\)</span>, <span class="math notranslate nohighlight">\(\epsilon_{mutation}=0.25\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
-<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="k">def</span> <span class="nf">checkboard_env_provider</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">checkboard_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_checkerboard</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;checkerboard-2D-3div-v0&#39;</span><span class="p">)</span>
 
@@ -907,13 +735,8 @@
 <span class="n">checkerboard_encoding_3bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_3bit_encoding</span><span class="p">()</span>
 <span class="n">checkerboard_encoding_4bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_4bit_encoding</span><span class="p">()</span>
 <span class="n">checkerboard_encoding_5bit_runs</span> <span class="o">=</span> <span class="n">run_checkerboard_5bit_encoding</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># average runs</span>
+
+<span class="c1"># average runs</span>
 <span class="n">checkerboard_encoding_4bit_avg</span> <span class="o">=</span> <span class="n">average_experiment_runs</span><span class="p">(</span><span class="n">checkerboard_encoding_4bit_runs</span><span class="p">)</span>
 
 <span class="c1"># generate plots</span>
@@ -927,44 +750,41 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="84da25cb-98e8-432c-af1d-a58b0d3d75a2" name="1ff6201a-8f5b-461f-b697-f0511759213e" type="radio">
-</input><label class="tabbed-label" for="84da25cb-98e8-432c-af1d-a58b0d3d75a2">
+<input checked="checked" id="1ec0ce41-92fa-4215-b3f1-5514dd25c15e" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
+</input><label class="tabbed-label" for="1ec0ce41-92fa-4215-b3f1-5514dd25c15e">
 Condition Interval regions</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-regions-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/32_experiment_2_8_0.png" src="../../../_images/32_experiment_2_8_0.png" />
+<img alt="../../../_images/32_experiment_2_3_0.png" src="../../../_images/32_experiment_2_3_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Condition interval regions in 3x3 Checkerboard environment.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Evolution of condition interval regions in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="803b7a3f-9b0e-4eb8-bef0-021895d3540c" name="1ff6201a-8f5b-461f-b697-f0511759213e" type="radio">
-</input><label class="tabbed-label" for="803b7a3f-9b0e-4eb8-bef0-021895d3540c">
+<input id="ad6679e0-b913-4bf7-80a9-d6b14649eaae" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
+</input><label class="tabbed-label" for="ad6679e0-b913-4bf7-80a9-d6b14649eaae">
 Average reward</label><div class="tabbed-content docutils">
-<div class="figure align-default" id="g2">
+<div class="figure align-default" id="checkerboard4bit-enc4bit-performance-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/32_experiment_2_8_1.png" src="../../../_images/32_experiment_2_8_1.png" />
+<img alt="../../../_images/32_experiment_2_3_1.png" src="../../../_images/32_experiment_2_3_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Performance of 3x3 Checkerboard environment.</span><a class="headerlink" href="#g2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Average reward obtained in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="d587e739-28aa-422d-a83b-06ef212027d1" name="1ff6201a-8f5b-461f-b697-f0511759213e" type="radio">
-</input><label class="tabbed-label" for="d587e739-28aa-422d-a83b-06ef212027d1">
+<input id="2c438e21-48e0-4665-91a2-96cc0cf6aa5e" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
+</input><label class="tabbed-label" for="2c438e21-48e0-4665-91a2-96cc0cf6aa5e">
 Classifier numerosity</label><div class="tabbed-content docutils">
-<div class="figure align-default" id="g3">
+<div class="figure align-default" id="checkerboard4bit-enc4bit-population-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/32_experiment_2_8_2.png" src="../../../_images/32_experiment_2_8_2.png" />
+<img alt="../../../_images/32_experiment_2_3_2.png" src="../../../_images/32_experiment_2_3_2.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Population of 3x3 Checkerboard environment.</span><a class="headerlink" href="#g3" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Population size of 3x3 Checkerboard environment encoded with 4 bits (notice the logarithmic scalling of y-axis).</span><a class="headerlink" href="#checkerboard4bit-enc4bit-population-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>I don’t know if any hypothesis tests are needed here. The main value in my opinion is in Figure <a class="reference internal" href="#checkerboard4bit-enc4bit-regions-fig"><span class="std std-numref">3.6</span></a>. What might be beneficial is to plot what are the interval propotions wrt to the encoding bits used. But that would require some clever visualization (or a table).</p>
-</div>
+<p>To statistically assess the population size and region proportions the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from last 100 exploit trials is considered as a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1058,7 +878,14 @@ Classifier numerosity</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>What conclusions can be drawn?</p>
+<p>In most of the experiments the rACS agent build the population consisting mostly of Region 1 interval predicates. The amount of attributes represented as Region 3 and Region 4, which are spanning to the maximum value from the right side tends to diminish. The results however are correlated with the number of trials which was kept the same in all cases. More precise boundary representation naturally would require more trials to converge. However, for the first 4 bits there is the following trend can be noticed when intensifying encoding resolution:</p>
+<ul class="simple">
+<li><p>Ratio of Region 1 attributes increases</p></li>
+<li><p>Ratio of Region 2, 3, 4 attributes decreases</p></li>
+</ul>
+<p>This fact is caused by the lack of online rule compaction or consolidation mechanism. The only possibility for the agent to create more general attribute is due to the mutation algorithm controlled by <span class="math notranslate nohighlight">\(\epsilon_{mutation}\)</span> parameter. However, this value must be set carefully, because its effect can be inadvertently ignored by limitations of selected encoding resolution.</p>
+<p>The hypothesis about the need of more trials is also visible in the other metrics. The size of overall population is correlated with the number of encoding bits, but it became more difficult for the agent to discriminate between reliable classifiers. For example, when using 5-bits encoding after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials there is no single reliable classifier despite having a population with more than 10 thousand individuals.</p>
+<p>The experiment with 1-bit encoding also confirms the situation, when it is impossible to successfully learn the environment with hyper-plane decision boundary. Such representation is not sufficient to handle regularities, which results in the lack of reliable classifiers and random average reward from exploit runs.</p>
 </div>
 </div>
 
