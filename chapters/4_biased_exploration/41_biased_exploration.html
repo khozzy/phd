@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -52,7 +54,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Experiment 1 - Multi-steps problems performance" href="41_experiment_1.html" />
+    <link rel="next" title="Experiment 1 - Single-step problem performance" href="41_experiment_1.html" />
     <link rel="prev" title="4. Optimizing formation of internal model" href="41_introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -240,12 +242,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="41_experiment_1.html">
-       Experiment 1 - Multi-steps problems performance
+       Experiment 1 - Single-step problem performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="41_experiment_2.html">
-       Experiment 2 - Single-step problem performance
+       Experiment 2 - Multi-steps problems performance
       </a>
      </li>
      <li class="toctree-l3">
@@ -402,26 +404,28 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -447,26 +451,28 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -480,16 +486,32 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="biased-exploration">
 <h1><span class="section-number">4.1. </span>Biased exploration<a class="headerlink" href="#biased-exploration" title="Permalink to this headline">¶</a></h1>
 <p>LCS are being considered as self-adaptive and autonomous learners. However, in order to reach full autonomy, the credit assignment part must decide on their own when to exploit the existing knowledge by taking the most promising action and when to deliberately select an action that is not apparent best to potentially gain additional knowledge.</p>
-<p>This decision is commonly referred as to as the explore/exploit dilemma, since obtaining new knowledge through exploration incurs a short-term performance loss, while too much exploitation risks staying on an unnecessary low level of performance in the long term <span id="id1">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. Moreover, a real-valued environment introduces a potentially much greater possible search space that makes the problem of acquiring knowledge more challenging and potentially time-consuming.</p>
-<p>This chapter aims to narrow the existing gap in research by experimentally comparing four biased exploration strategies. An ALCS agent operating large realm of observation space  might take advantage of the possibility of improving the time needed to form an internal model.</p>
+<p>This decision is commonly referred as to as the explore/exploit dilemma, since obtaining new knowledge through exploration incurs a short-term performance loss, while too much exploitation risks staying on an unnecessary low level of performance in the long term <span id="id1">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. In a typical exploration phase the action is selected randomly with intention of an unbiased exploration.</p>
+<p>For real-valued environments where the search space is presumably large, such exploration might be inefficient. Certain regions of space might be explored multiple times, while the other ones still remain unknown. Therefore, an approach towards optimizing the process of acquiring knowledge by suggesting more valuable actions is considered herein.</p>
+<p>At first, model learning capabilities in ALCS was enhanced by Stolzmann and Butz by using behavioral capabilities (internal reinforcement learning or lookahead action selection) in <span id="id2">[<a class="reference internal" href="../../bibliography.html#id98">97</a>]</span> and by introducing the <em>action planning</em> mechanism <span id="id3">[<a class="reference internal" href="../../bibliography.html#id99">98</a>]</span> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id100">99</a>]</span>.</p>
+<p>Later, Butz suggested that by using computationally inexpensive methods by biasing exploration towards specially chosen regions of search-space, the model can be learned locally <span id="id5">[<a class="reference internal" href="../../bibliography.html#id101">100</a>]</span>.</p>
+<p>This chapter aims to narrow the existing gap in research by experimentally comparing four biased exploration strategies. Any ALCS agent operating large realm of observation space might take advantage of the possibility of improving the time needed to form an internal model. First, a baseline method - <em>epsilon-greedy</em>, which is a default option for LCS, will be described. Later two methods introduced by Butz - <em>action-delay</em> and <em>knowledge-array</em> bias. They examine the match set <span class="math notranslate nohighlight">\([M]\)</span> searching for indications which action might result in the highest information gain. Eventually, the latter approach is inspired by an “<em>Optimistic Initial Values</em>” approach described by Sutton in <span id="id6">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. This strategy turned out to be very effective for Multi-armed bandit problems, where the main objective is to select the most promising action and was never examined in any LCS domain.</p>
 <hr class="docutils" />
-<p>Increase the speed of gaining knowledge by determining the most valuable regions of the input-space. Tell why it is important for the real-valued case. Describe the action selection, methods (epsilon-greedy, action delay, knowledge-array and OIQ - novel).</p>
+<p><strong>Epsilon-Greedy (EG)</strong></p>
+<p>In the epsilon-greedy approach, the agent discovers all regions from the input-space equally, not favoring any specific behavior.  In each step, random action is executed with <span class="math notranslate nohighlight">\(p_{explr}\)</span> probability. Then it is chosen uniform randomly from classifiers composing a match set <span class="math notranslate nohighlight">\([M]\)</span>. In the case of <span class="math notranslate nohighlight">\(1-p_{explr}\)</span>, action from the most fitted classifier is executed. By doing so, the agent can occasionally perform the move he thinks is the best at a given time, reinforcing its beliefs about the consequences.</p>
+<p><strong>Action-Delay (AD)</strong></p>
+<p>This bias is based on the <em>recency-based</em> principle assuming that the action executed a long time ago, might introduce new situation-action-effect triples. To determine which action was executed most long ago at the current time <span class="math notranslate nohighlight">\(t\)</span> the <span class="math notranslate nohighlight">\(t_{alp}\)</span> field of all classifiers in match set <span class="math notranslate nohighlight">\([M](t)\)</span> is analyzed. For situation <span class="math notranslate nohighlight">\(\sigma(t)\)</span> the action of classifier <span class="math notranslate nohighlight">\(cl\)</span> with the lowest value of <span class="math notranslate nohighlight">\(t_{alp}\)</span> is selected.</p>
+<p>In case if there exists an action not represented by any classifier in <span class="math notranslate nohighlight">\([M](t)\)</span> that it is assumed to be experienced most long ago (if ever) and therefore chosen for execution.</p>
+<p><strong>Knowledge Array (KA)</strong></p>
+<p>This method, on the contrary, is based on the <em>error-based</em> principle. For ACS2, a quality <span class="math notranslate nohighlight">\(q\)</span> denoting the accuracy of predictions for each classifier can be used to measure it.</p>
+<p>The bias generates the knowledge array KA from classifiers in a match set <span class="math notranslate nohighlight">\([M]\)</span> in which each entry specifies the averaged quality for the anticipation for each possible action - see Equation <a class="reference internal" href="#equation-ka-eq">(4.1)</a>.</p>
+<div class="math notranslate nohighlight" id="equation-ka-eq">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-ka-eq" title="Permalink to this equation">¶</a></span>\[KA[a] = \frac{\sum_{cl \in [M] \wedge cl.A = a}cl.q \cdot cl.num}{\sum_{cl \in [M] \wedge cl.A = a} cl.num}\]</div>
+<p>An action with the lowest value in the knowledge array is selected for execution. Similarly, as in the action delay bias, if there are actions not expressed by any classifiers, they are chosen first.</p>
+<p><strong>Optimistic Initial Quality (OIQ)</strong></p>
+<p>By default, newly created classifiers <span class="math notranslate nohighlight">\(cl\)</span> have the initial quality set to <span class="math notranslate nohighlight">\(cl.q = 0.5\)</span>. It can be said that they are biased towards their initial quality. In practice, it should not be a problem because this value will converge to optimal ones over a set of trials. Changing this parameter provides an easy way of supplying the agent with the confidence of the generated classifiers.</p>
+<p>In this method, the behavior of the agent was parametrized by an extra parameter - <em>initial quality</em> - <span class="math notranslate nohighlight">\(q_0\)</span>. Every time a new classifier is generated, its quality is set to new value <span class="math notranslate nohighlight">\(cl.q = q_0\)</span>.</p>
+<p>In all the experiments, there was fixed <span class="math notranslate nohighlight">\(q_0 = 0.8\)</span>, with the expectation that the agent will be able to build an internal model of knowledge representation faster (especially in early stages). For the action selection strategy, the default epsilon-greedy method was chosen.</p>
 <div class="section" id="experimental-evaluation">
 <h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
 <p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
-</div>
 <div class="section" id="research-questions">
-<h2>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h2>
+<h3>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h3>
 <p>The conducted research aims to answer the following question regarding rACS algorithm and the interval based representation</p>
 <ol class="simple">
 <li><p>Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?</p></li>
@@ -497,15 +519,15 @@
 </ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
-<h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
+<h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
 <p>In all the experiments the difference between four exploration methods will be compared using the ACS2 agent.</p>
-<div class="admonition-experiment-1-multiple-step-problems-performance admonition">
-<p class="admonition-title"><em>Experiment 1 - Multiple-step problems performance</em></p>
-<p>Use two basic multistep environments (<a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>) to determine the differences between the rate of gaining knowledge, ability of building internal pool of classifiers and operating in the environments.</p>
-</div>
-<div class="admonition-experiment-2-single-step-problem-performance admonition">
-<p class="admonition-title"><em>Experiment 2 - Single-step problem performance</em></p>
+<div class="admonition-experiment-1-single-step-problem-performance admonition">
+<p class="admonition-title"><em>Experiment 1 - Single-step problem performance</em></p>
 <p>Similarly, as above but in this case a single step 6-bit <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment is used introducing much larger possible states space. Since calculating precise model knowledge is infeasible, the key indicators chosen are the average obtained reward and model size.</p>
+</div>
+<div class="admonition-experiment-2-multiple-step-problems-performance admonition">
+<p class="admonition-title"><em>Experiment 2 - Multiple-step problems performance</em></p>
+<p>Use two basic multistep environments (<a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>) to determine the differences between the rate of gaining knowledge, ability of building internal pool of classifiers and operating in the environments.</p>
 </div>
 <div class="admonition-experiment-3-balacing-the-pole admonition">
 <p class="admonition-title"><em>Experiment 3 - Balacing the pole</em></p>
@@ -513,19 +535,20 @@
 </div>
 </div>
 <div class="section" id="experiments">
-<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
+<h3>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="41_experiment_1.html">Experiment 1 - Multi-steps problems performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="41_experiment_2.html">Experiment 2 - Single-step problem performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="41_experiment_1.html">Experiment 1 - Single-step problem performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="41_experiment_2.html">Experiment 2 - Multi-steps problems performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="41_experiment_3.html">Experiment 3 - Balacing the pole</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="answers-to-research-questions">
-<h2>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h2>
+<h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
 <p>…</p>
-<p>What is interesting is that Hansmeier and Platzner took effort to compare four strategies optimizating the time for alternating E/E  phases using the XCS algorithm <span id="id2">[<a class="reference internal" href="../../bibliography.html#id30">96</a>]</span>.  It turned out that despite automized parameter tuning that none of the strategies is superior to the other. On the other side they noticed that certain multi-step environments with scarce reward signal become challenging due to the setting the classifier’s accuracy value too aggressively. Such problem with scarce reward and long action-chains is further discussed in the next chapter.</p>
+<p>What is interesting is that Hansmeier and Platzner took effort to compare four strategies optimizating the time for alternating E/E  phases using the XCS algorithm <span id="id7">[<a class="reference internal" href="../../bibliography.html#id30">101</a>]</span>.  It turned out that despite automized parameter tuning that none of the strategies is superior to the other. On the other side they noticed that certain multi-step environments with scarce reward signal become challenging due to the setting the classifier’s accuracy value too aggressively. Such problem with scarce reward and long action-chains is further discussed in the next chapter.</p>
+</div>
 </div>
 </div>
 
@@ -564,7 +587,7 @@
     <a class='right-next' id="next-link" href="41_experiment_1.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Experiment 1 - Multi-steps problems performance</p>
+        <p class="prev-next-title">Experiment 1 - Single-step problem performance</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -577,9 +600,12 @@
     
       By Norbert Kozłowski<br/>
     
-        &copy; Copyright 2021.<br/>
+        &copy; Copyright 2022.<br/>
       <div class="extra_footer">
-        <div><a href="https://wit.pwr.edu.pl/en/">Faculty of Computer Science and Telecommunications</a> - <a href="https://dce.pwr.edu.pl/">Department of Computer Engineering</a></div> 
+        <div>
+  <p><a href="https://wit.pwr.edu.pl/en/">Faculty of Computer Science and Telecommunications</a> - <a href="https://dce.pwr.edu.pl/">Department of Computer Engineering</a></p>
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://khozzy.github.io/phd">Real-valued Anticipatory Classifier System</a> by <span property="cc:attributionName">Norbert Kozlowski</span> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a></p>
+</div> 
 
       </div>
   </p>
