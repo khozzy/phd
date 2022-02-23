@@ -18,3 +18,9 @@ LCS are now considered as sequential decision problem-solving systems endowed wi
 - list advantages and disadvantages of LCS here
 
 - all code used is available for reproduction
+
+## Final thoughts
+
+<img src="https://www.smbc-comics.com/comics/1495978231-20170528.png">
+
+[source](https://www.smbc-comics.com/comic/epsilon)
