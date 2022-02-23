@@ -43,6 +43,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -52,7 +54,7 @@
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Experiment 3 - Single step" href="33_experiment_3.html" />
+    <link rel="next" title="Experiment 3 - Single step environment performance" href="33_experiment_3.html" />
     <link rel="prev" title="Experiment 2 - Nature of the intervals" href="../interval/32_experiment_2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -206,12 +208,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_3.html">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_4.html">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -402,26 +404,50 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets">
+       Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q2-which-system-creates-the-most-compact-and-general-population-of-classifiers">
+       Q2: Which system creates the most compact and general population of classifiers?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system">
+       Q3: What is the relative trial execution time for each evaluated system?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm">
+       Q4: How selected  systems relates to the benchmark Dyna-Q algorithm?
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -447,26 +473,50 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets">
+       Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q2-which-system-creates-the-most-compact-and-general-population-of-classifiers">
+       Q2: Which system creates the most compact and general population of classifiers?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system">
+       Q3: What is the relative trial execution time for each evaluated system?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm">
+       Q4: How selected  systems relates to the benchmark Dyna-Q algorithm?
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -479,14 +529,21 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="discretizing-input-signal">
 <h1><span class="section-number">3.2. </span>Discretizing input signal<a class="headerlink" href="#discretizing-input-signal" title="Permalink to this headline">¶</a></h1>
-<p>Describe discretization workflow chosen (bucketing/hashing). Discretization can be done by dividing each attribute into fixed sized bucket or by providing custom configuration. maybe also add something about the hashing?</p>
+<p>Previous chapter proved that ALCS are capable of operating in real-valued realm by using UBR interval representation. Due to the underlying foundations, certain limitations were reveled, requiring major rethinking in order to hold virtues like balancing compact population size while maintaining maximum accuracy and generalization.</p>
+<p>But ALCS are not limited to ternary alphabets - they can be arbitrary extended to any discrete amount of symbols. This provides an opportunity to split the range of perception value into <span class="math notranslate nohighlight">\(k\)</span> fixed-sized intervals (<em>buckets</em>). By performing such <a class="reference internal" href="../../2_selected_topics/23_real_value_challenge.html#section-topics-real-discretization"><span class="std std-ref">Discretization</span></a>, each consecutive symbol represents a successive interval. The biggest benefit is that no modifications to internal components are needed for any of the investigated systems, just an additional layer between environment-agent interface. The interface is capable of executing any predefined signal transformation, like assigning each observation attributes using the same logic or having dedicated rules for each of them (in case when range of values varies significantly).</p>
+<p>This chapter aims to contrast the latent learning capabilities of ACS, ACS2, YACS systems in both single- and multistep environments. Furthermore, they were compared to basic RL algorithm competent of building internal environmental model and lookahead planning - Dyna-Q <span id="id1">[<a class="reference internal" href="../../../bibliography.html#id29">39</a>]</span>.</p>
+<div class="admonition-dyna-architecture admonition">
+<p class="admonition-title">Dyna Architecture</p>
+<p>RL algorithms like Q-Learning cannot perform operations considered “cognitive”, such as reasoning and planning (because they do not learn an internal model of the environment’s dynamics). Dyna architecture is an online planning agent with internal environmental model.</p>
+<p>Each <span class="math notranslate nohighlight">\((S_t, A_t)\)</span> tuple outputs a prediction of the resultant reward and next state <span class="math notranslate nohighlight">\((R_{t+1}, S_{t+1})\)</span>. The environmental model is table-based and assumes the environment is deterministic. After each transition <span class="math notranslate nohighlight">\((S_t, A_t) \rightarrow (R_{t+1}, S_{t+1})\)</span> the model records in its table entry for <span class="math notranslate nohighlight">\((S_t, A_t)\)</span> the prediction that <span class="math notranslate nohighlight">\((R_{t+1}, S_{t+1})\)</span> will deterministically follow.</p>
+<p>When interacting with the environment, real experiences are augmented by performing learning steps using the internal model. The planning here is the random-sample one-step tabular Q-learning method that only uses previously experienced samples.</p>
+</div>
 <div class="section" id="experimental-evaluation">
 <h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
 <p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
-</div>
 <div class="section" id="research-questions">
-<h2>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h2>
-<p>The conducted research aims to answers three main questions about bucketing discretization:</p>
+<h3>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h3>
+<p>The conducted research aims to answer the following questions about bucketing discretization:</p>
 <ol class="simple">
 <li><p>Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?</p></li>
 <li><p>Which system creates the most compact and general population of classifiers?</p></li>
@@ -495,29 +552,44 @@
 </ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
-<h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
-<p>The goal of the experiment is to evaluate the performance of selected ALCS agents (ACS, ACS2, YACS) discretized into fixed-width buckets</p>
-<div class="admonition-experiment-3-single-step admonition">
-<p class="admonition-title"><em>Experiment 3 - Single step</em></p>
-<p>The aim of this experiments is to determine the behaviour using the <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a>.</p>
+<h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-experiment-3-single-step-environment-performance admonition">
+<p class="admonition-title"><em>Experiment 3 - Single step environment performance</em></p>
+<p>The aim of this experiments is to determine the agents’ latent learning competences using the <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> discretized into fixed amount of buckets.</p>
 </div>
-<div class="admonition-experiment-4-multistep-environments admonition">
-<p class="admonition-title"><em>Experiment 4 - Multistep environments</em></p>
-<p><a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a> environments.</p>
+<div class="admonition-experiment-4-multistep-environments-performance admonition">
+<p class="admonition-title"><em>Experiment 4 - Multistep environments performance</em></p>
+<p>Corresponding comparison is performed for two multistep problems with similar regularities - <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>.</p>
 </div>
 </div>
 <div class="section" id="experiments">
-<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
+<h3>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="33_experiment_3.html">Experiment 3 - Single step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="33_experiment_4.html">Experiment 4 - Multistep environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_3.html">Experiment 3 - Single step environment performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_4.html">Experiment 4 - Multi-step environments performance</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="answers-to-research-questions">
-<h2>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h2>
+<h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets">
+<h4>Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?<a class="headerlink" href="#q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets" title="Permalink to this headline">¶</a></h4>
 <p>…</p>
+</div>
+<div class="section" id="q2-which-system-creates-the-most-compact-and-general-population-of-classifiers">
+<h4>Q2: Which system creates the most compact and general population of classifiers?<a class="headerlink" href="#q2-which-system-creates-the-most-compact-and-general-population-of-classifiers" title="Permalink to this headline">¶</a></h4>
+<p>…</p>
+</div>
+<div class="section" id="q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system">
+<h4>Q3: What is the relative trial execution time for each evaluated system?<a class="headerlink" href="#q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system" title="Permalink to this headline">¶</a></h4>
+<p>…</p>
+</div>
+<div class="section" id="q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm">
+<h4>Q4: How selected  systems relates to the benchmark Dyna-Q algorithm?<a class="headerlink" href="#q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm" title="Permalink to this headline">¶</a></h4>
+<p>…</p>
+</div>
+</div>
 </div>
 </div>
 
@@ -556,7 +628,7 @@
     <a class='right-next' id="next-link" href="33_experiment_3.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Experiment 3 - Single step</p>
+        <p class="prev-next-title">Experiment 3 - Single step environment performance</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

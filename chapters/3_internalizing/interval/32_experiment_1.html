@@ -208,12 +208,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_3.html">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_4.html">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -493,6 +493,7 @@
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
+<span class="kn">from</span> <span class="nn">src.commons</span> <span class="kn">import</span> <span class="n">NUM_EXPERIMENTS</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
@@ -505,7 +506,6 @@
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">20_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -604,7 +604,6 @@
     <span class="k">return</span> <span class="n">fig</span>
 
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e1_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e1_experiments&#39;</span><span class="p">,</span> <span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -668,8 +667,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="c532a563-ad13-4914-b439-bd6cd744627e" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
-</input><label class="tabbed-label" for="c532a563-ad13-4914-b439-bd6cd744627e">
+<input checked="checked" id="2e8445f9-b029-46a9-b864-6ca6463138cb" name="4f58b2b3-2b50-4642-92ce-b41855d98005" type="radio">
+</input><label class="tabbed-label" for="2e8445f9-b029-46a9-b864-6ca6463138cb">
 1 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc1bit-fig">
 <div class="cell_output docutils container">
@@ -678,8 +677,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Performance in 3bit rMPX UBR with 1bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc1bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="fdeaf244-254f-49df-8f11-6d1fe9796a5b" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
-</input><label class="tabbed-label" for="fdeaf244-254f-49df-8f11-6d1fe9796a5b">
+<input id="b33f7d61-be85-4c3d-9bfe-a13adc3ad8dc" name="4f58b2b3-2b50-4642-92ce-b41855d98005" type="radio">
+</input><label class="tabbed-label" for="b33f7d61-be85-4c3d-9bfe-a13adc3ad8dc">
 2 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc2bit-fig">
 <div class="cell_output docutils container">
@@ -688,8 +687,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Performance in 3bit rMPX UBR with 2bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc2bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="19636523-d424-4167-a9d9-0a4236400c79" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
-</input><label class="tabbed-label" for="19636523-d424-4167-a9d9-0a4236400c79">
+<input id="a6a5429e-de72-47d2-8437-116e53acdd5a" name="4f58b2b3-2b50-4642-92ce-b41855d98005" type="radio">
+</input><label class="tabbed-label" for="a6a5429e-de72-47d2-8437-116e53acdd5a">
 3 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc3bit-fig">
 <div class="cell_output docutils container">
@@ -698,8 +697,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Performance in 3bit rMPX UBR with 3bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc3bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="fe7127ef-6b58-49f1-879d-7374c7510008" name="15f74142-988c-400f-a24f-a63968f3f680" type="radio">
-</input><label class="tabbed-label" for="fe7127ef-6b58-49f1-879d-7374c7510008">
+<input id="72b5b014-176e-445a-8250-baa6f695f627" name="4f58b2b3-2b50-4642-92ce-b41855d98005" type="radio">
+</input><label class="tabbed-label" for="72b5b014-176e-445a-8250-baa6f695f627">
 4 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc4bit-fig">
 <div class="cell_output docutils container">

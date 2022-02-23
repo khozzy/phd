@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experiment 3 - Single step &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>Experiment 3 - Single step environment performance &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet">
   <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -54,7 +54,7 @@
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Experiment 4 - Multistep environments" href="33_experiment_4.html" />
+    <link rel="next" title="Experiment 4 - Multi-step environments performance" href="33_experiment_4.html" />
     <link rel="prev" title="3.2. Discretizing input signal" href="33_discretizing_input_signal.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -208,12 +208,12 @@
     <ul class="current">
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_4.html">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -418,8 +418,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot">
-   Plot
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -442,7 +442,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Experiment 3 - Single step</h1>
+                <h1>Experiment 3 - Single step environment performance</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -453,8 +453,8 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot">
-   Plot
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -492,6 +492,7 @@
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
 <span class="kn">from</span> <span class="nn">src.bayes_plotting</span> <span class="kn">import</span> <span class="n">plot_bayes_comparison</span>
+<span class="kn">from</span> <span class="nn">src.commons</span> <span class="kn">import</span> <span class="n">NUM_EXPERIMENTS</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.discretized_experiments</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
@@ -504,21 +505,34 @@
 
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
+
+<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">RMPX_BINS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">RMPX_SIZE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">RMPX_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">CTRL_BITS</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;33_e3_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;33_e3_rmpx_threshold&#39;</span><span class="p">,</span> <span class="n">RMPX_THRESHOLD</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;33_e3_rmpx_bins&#39;</span><span class="p">,</span> <span class="n">RMPX_BINS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-single-step">
-<span id="section-internalizing-experiment-3"></span><h1>Experiment 3 - Single step<a class="headerlink" href="#experiment-3-single-step" title="Permalink to this headline">¶</a></h1>
-<p>To convert real numbers into integers, a <span class="math notranslate nohighlight">\(k\)</span> bins discretizer is used. Its value is used to control the accuracy of generated rules. Thus, the input space of the environment can be calculated as <span class="math notranslate nohighlight">\(2k^n\)</span>, where k refers to the number of bins and <span class="math notranslate nohighlight">\(n\)</span> the length of the MPX signal.</p>
-<p>Example of discretizing real-valued input using 6 bins. A random perception signal of 6-bit rMPX extended with 1 bit (last column) was used. The size of the input space is <span class="math notranslate nohighlight">\(2\cdot6^6=93312\)</span> unique states.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-single-step-environment-performance">
+<span id="section-internalizing-experiment-3"></span><h1>Experiment 3 - Single step environment performance<a class="headerlink" href="#experiment-3-single-step-environment-performance" title="Permalink to this headline">¶</a></h1>
+<p>The potential of evolving the internal model of environment is explored by three ALCS implementations - ACS, ACS2 and YACS. Moreover, two additional enhancements are also explicitly investigated - ACS2 with enabled GA component and traditional Dyna-Q implementation. All the algorithms use similar rule structure and their behaviour can be compared using a set of common metrics of <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-population-size"><span class="std std-ref">Classifier population size</span></a>, <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-knowledge"><span class="std std-ref">Knowledge</span></a>, <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-generalization"><span class="std std-ref">Generalization</span></a> and <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-time"><span class="std std-ref">Trial time</span></a>.</p>
+<p>The environment chosen in a single-step 3-bit <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a>. The investigation was not carried for greater perception vectors, due to increased computational complexity required for handling greater amount of interacting classifiers and calculating the metrics, however with sufficient resources similar results can be obtained also for larger instances.</p>
+<p>The agent perceives an observation vector of four real-valued attributed. To convert them into integers, a <span class="math notranslate nohighlight">\(k\)</span> bins discretizer is used. Its value is used to control the accuracy of generated rules. Thus, the input space of the environment can be calculated as <span class="math notranslate nohighlight">\(2k^n\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> refers to the number of bins and <span class="math notranslate nohighlight">\(n\)</span> the length of the multiplexer signal.</p>
+<p>Because the rMPX threshold was set to the value of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">0.5</span></code></span> a setting of <span class="math notranslate nohighlight">\(k=2\)</span> bins should be sufficient to model the hyper-plane decision surface. The tests were however performed by discretizing each attribute into <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10</span></code></span> fixed sized buckets. The following setting provides excessive resolution and substantiates the capabilities of handling real-valued signal.</p>
+<p>In each trial of the experiment the agent executes solely the exploration phase for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials. Moreover, to present coherent results and draw statistical inferences each experiment is repeated <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RMPX_BINS</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">RMPX_SIZE</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">CTRL_BITS</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="n">rmpx</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;real-multiplexer-</span><span class="si">{</span><span class="n">RMPX_SIZE</span><span class="si">}</span><span class="s1">bit-v0&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmpx</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;real-multiplexer-</span><span class="si">{</span><span class="n">RMPX_SIZE</span><span class="si">}</span><span class="s1">bit-v0&#39;</span><span class="p">)</span>
 
 <span class="n">_range</span><span class="p">,</span> <span class="n">_low</span> <span class="o">=</span> <span class="p">(</span><span class="n">rmpx</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">high</span> <span class="o">-</span> <span class="n">rmpx</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="n">rmpx</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">low</span><span class="p">)</span>
 
@@ -526,7 +540,7 @@
 
 
 <span class="k">class</span> <span class="nc">RealMultiplexerUtils</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">ctrl_bits</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">_range</span><span class="p">,</span> <span class="n">_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">ctrl_bits</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">_range</span><span class="p">,</span> <span class="n">_threshold</span><span class="o">=</span><span class="n">RMPX_THRESHOLD</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ctrl_bits</span> <span class="o">=</span> <span class="n">ctrl_bits</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bins</span> <span class="o">=</span> <span class="n">bins</span>
@@ -572,7 +586,6 @@
 
 
 <span class="n">rmpx_utils</span> <span class="o">=</span> <span class="n">RealMultiplexerUtils</span><span class="p">(</span><span class="n">RMPX_SIZE</span><span class="p">,</span> <span class="n">CTRL_BITS</span><span class="p">,</span> <span class="n">RMPX_BINS</span><span class="p">,</span> <span class="n">_range</span><span class="p">)</span>
-<span class="c1"># print(f&quot;Possible states: {len(rmpx_utils.state_mapping)}&quot;)</span>
 </pre></div>
 </div>
 </div>
@@ -582,9 +595,7 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># metrics</span>
 <span class="k">def</span> <span class="nf">generalization_score</span><span class="p">(</span><span class="n">pop</span><span class="p">):</span>
     <span class="c1"># Compute proportion of wildcards in classifier condition across all classifiers</span>
-    <span class="n">wildcards</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">condition</span> <span class="k">if</span>
-                    <span class="n">cond</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="ow">or</span> <span class="p">(</span>
-                            <span class="nb">hasattr</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cond</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">))</span>
+    <span class="n">wildcards</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span> <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">condition</span> <span class="k">if</span> <span class="n">cond</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cond</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">))</span>
     <span class="n">all_symbols</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="p">)</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wildcards</span> <span class="o">/</span> <span class="n">all_symbols</span>
 
@@ -655,7 +666,7 @@
     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
     <span class="s1">&#39;metrics_fcn&#39;</span><span class="p">:</span> <span class="n">rmpx_metrics_collector</span><span class="p">,</span>
-    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="mi">15_000</span>
+    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="n">TRIALS</span>
 <span class="p">}</span>
 
 <span class="n">yacs_params</span> <span class="o">=</span> <span class="p">{</span>
@@ -670,9 +681,6 @@
     <span class="s1">&#39;knowledge_fcn&#39;</span><span class="p">:</span> <span class="n">dynaq_rmpx_knowledge_calculator</span><span class="p">,</span>
     <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
 <span class="p">}</span>
-
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
 
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_</span><span class="si">{</span><span class="n">RMPX_SIZE</span><span class="si">}</span><span class="s1">bit/acs.dill&#39;</span><span class="p">)</span>
@@ -786,32 +794,31 @@
 
 <span class="c1"># Average them by agent and trial</span>
 <span class="n">metrics_averaged_df</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;agent&#39;</span><span class="p">,</span> <span class="s1">&#39;trial&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="plot">
-<h2>Plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+
+<span class="c1"># plot figure</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-    <span class="n">plot_comparison</span><span class="p">(</span><span class="n">metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_performance.png&#39;</span><span class="p">)</span>
+    <span class="n">rmpx3bit_fig</span> <span class="o">=</span> <span class="n">plot_comparison</span><span class="p">(</span><span class="n">metrics_averaged_df</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit_performance.png&#39;</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e1_rmpx3bit_discretized_performance_fig&#39;</span><span class="p">,</span> <span class="n">rmpx3bit_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
-<div class="figure align-default" id="rmpx3bit-discretized-performance-fig">
-<img alt="../../../_images/rmpx_3bit_performance.png" src="../../../_images/rmpx_3bit_performance.png" />
-<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Performance of 3bit discretized rMPX with 10 bins.</span><a class="headerlink" href="#rmpx3bit-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Common parameters that were used across the experiments included the following: learning rate <span class="math notranslate nohighlight">\(\beta=0.1\)</span>, exploration probability <span class="math notranslate nohighlight">\(\epsilon=0.5\)</span>, discount factor <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, inadequacy threshold <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, reliability threshold <span class="math notranslate nohighlight">\(\theta_r=0.9\)</span>, YACS trace length 3. The Dyna-Q algorithm performs five steps ahead simulation in each trial.</p>
+<div class="figure align-default" id="e1-rmpx3bit-discretized-performance-fig">
+<div class="cell_output docutils container">
+<img alt="../../../_images/33_experiment_3_4_0.png" src="../../../_images/33_experiment_3_4_0.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Performance of 3bit discretized rMPX with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10</span></code></span> bins. Metric collected every 100 trials and averaged across <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</span><a class="headerlink" href="#e1-rmpx3bit-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>The same plot as in the latest IEEE submission</p>
-</div>
+<p>The posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. Obtained results were presented both in table and by using the radar plot scaled accordingly highlighting the relative differences between each algorithm.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acs&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2_ga&#39;</span><span class="p">,</span> <span class="s1">&#39;yacs&#39;</span><span class="p">,</span> <span class="s1">&#39;dynaq&#39;</span><span class="p">]</span>
@@ -892,8 +899,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="106a55a2-e7df-4011-93fe-684680d13060" name="e3521403-a79e-4ef3-8686-87782f0a6692" type="radio">
-</input><label class="tabbed-label" for="106a55a2-e7df-4011-93fe-684680d13060">
+<input checked="checked" id="bb502ad0-db45-4f42-9773-6101428dffa0" name="ddc2c5ee-a713-44d8-897b-ca77f9f66c84" type="radio">
+</input><label class="tabbed-label" for="bb502ad0-db45-4f42-9773-6101428dffa0">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -908,12 +915,12 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="92672f5e-1883-4727-b1b6-07ffcf4c8aa9" name="e3521403-a79e-4ef3-8686-87782f0a6692" type="radio">
-</input><label class="tabbed-label" for="92672f5e-1883-4727-b1b6-07ffcf4c8aa9">
+<input id="01e34f8b-24a6-4a9f-97f8-e41b838872e7" name="ddc2c5ee-a713-44d8-897b-ca77f9f66c84" type="radio">
+</input><label class="tabbed-label" for="01e34f8b-24a6-4a9f-97f8-e41b838872e7">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-1-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_3_10_1.png" src="../../../_images/33_experiment_3_10_1.png" />
+<img alt="../../../_images/33_experiment_3_7_1.png" src="../../../_images/33_experiment_3_7_1.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-1-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
@@ -922,6 +929,15 @@ Radar plot</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
+<p>The size of the examined problem input space is <span class="math notranslate nohighlight">\(2\cdot 10^3=2000\)</span> unique states. Even though, using the excessive resolution size almost every algorithm managed to build the internal model of the environment in an imposed number of trials.</p>
+<p><strong>ACS</strong></p>
+<p>Only the ACS agent was unable to go beyond four semi-general classifiers in the whole experiment, being unable to learn any of the transitions. Therefore, the generalization and trial-time metrics also cannot be directly compared to other agents due to improper population size.</p>
+<p><strong>ACS2</strong></p>
+<p>The successor of ACS - ACS2 was able to completely learn the environment using significantly fewer classifiers than the problem input size. The GA extension have benign effect on compacting the population size and therefore increasing the generalization level.</p>
+<p><strong>YACS</strong></p>
+<p>The heuristic nature of YACS allows it to rapidly gain knowledge at the beginning of the experiment. However, due to the lack of generalization capabilities, it provides the worst generalization compared to both ACS2 variants. Moreover, the trial execution time is significantly larger than any other systems because all visited states are represented and processed inside the agent’s memory.</p>
+<p><strong>Dyna-Q</strong></p>
+<p>By design the Dyna-Q algorithm does not expose any generalization capabilities - therefore is unable to learn latently with more compacted knowledge representation. Due to the lookahead capabilities the system managed to rapidly learn all available transitions while operating faster than competitors.</p>
 </div>
 </div>
 
@@ -960,7 +976,7 @@ Radar plot</label><div class="tabbed-content docutils">
     <a class='right-next' id="next-link" href="33_experiment_4.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Experiment 4 - Multistep environments</p>
+        <p class="prev-next-title">Experiment 4 - Multi-step environments performance</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

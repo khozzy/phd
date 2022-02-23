@@ -208,12 +208,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_3.html">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_4.html">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -497,6 +497,7 @@
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
+<span class="kn">from</span> <span class="nn">src.commons</span> <span class="kn">import</span> <span class="n">NUM_EXPERIMENTS</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">build_plots_dir_path</span><span class="p">,</span> <span class="n">build_cache_dir_path</span>
 <span class="kn">from</span> <span class="nn">src.visualization</span> <span class="kn">import</span> <span class="n">PLOT_DPI</span>
@@ -509,7 +510,6 @@
 <span class="n">plot_dir</span> <span class="o">=</span> <span class="n">build_plots_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">build_cache_dir_path</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">cwd_dir</span><span class="o">.</span><span class="n">name</span>
 
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">15_000</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -668,7 +668,6 @@
     <span class="k">return</span> <span class="n">fig</span>
 
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_experiments&#39;</span><span class="p">,</span> <span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;32_e2_checkerboard_3_splits_4_bits_fig&#39;</span><span class="p">,</span> <span class="n">plot_checkerboard_splits</span><span class="p">(</span><span class="n">splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/checkerboard_3_splits_4_bits.png&#39;</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -689,7 +688,7 @@
 <p>As in the previous section, each trial of the experiment the agent alternates between explore and exploit phases for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials. Each independent pass is averaged across <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times. For the collected metrics besides the average performance and the population size, the proportion of condition interval regions is collected for each trial.</p>
 <div class="figure align-default" id="e2-checkerboard-3-splits-4-bits-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/32_experiment_2_0_2.png" src="../../../_images/32_experiment_2_0_2.png" />
+<img alt="../../../_images/32_experiment_2_0_1.png" src="../../../_images/32_experiment_2_0_1.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Example of dividing the space into three equal splits. When using low encoding resolution potential ambiguity is visible near the splitting lines.</span><a class="headerlink" href="#e2-checkerboard-3-splits-4-bits-fig" title="Permalink to this image">¶</a></p>
 </div>
@@ -750,8 +749,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="1ec0ce41-92fa-4215-b3f1-5514dd25c15e" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
-</input><label class="tabbed-label" for="1ec0ce41-92fa-4215-b3f1-5514dd25c15e">
+<input checked="checked" id="f4c22d9a-4ded-40b9-88a6-c059b69e516c" name="611e6f9e-a0e1-4a0f-bac8-1f689b687703" type="radio">
+</input><label class="tabbed-label" for="f4c22d9a-4ded-40b9-88a6-c059b69e516c">
 Condition Interval regions</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-regions-fig">
 <div class="cell_output docutils container">
@@ -760,8 +759,8 @@ Condition Interval regions</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Evolution of condition interval regions in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="ad6679e0-b913-4bf7-80a9-d6b14649eaae" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
-</input><label class="tabbed-label" for="ad6679e0-b913-4bf7-80a9-d6b14649eaae">
+<input id="34896421-1d75-481b-8db2-0be77c9a9fdf" name="611e6f9e-a0e1-4a0f-bac8-1f689b687703" type="radio">
+</input><label class="tabbed-label" for="34896421-1d75-481b-8db2-0be77c9a9fdf">
 Average reward</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-performance-fig">
 <div class="cell_output docutils container">
@@ -770,8 +769,8 @@ Average reward</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Average reward obtained in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="2c438e21-48e0-4665-91a2-96cc0cf6aa5e" name="a8aac08a-b0bd-4d71-a495-aa65aaad3c7f" type="radio">
-</input><label class="tabbed-label" for="2c438e21-48e0-4665-91a2-96cc0cf6aa5e">
+<input id="2ec0bef8-3c6f-4103-bf13-4d8da480531b" name="611e6f9e-a0e1-4a0f-bac8-1f689b687703" type="radio">
+</input><label class="tabbed-label" for="2ec0bef8-3c6f-4103-bf13-4d8da480531b">
 Classifier numerosity</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-population-fig">
 <div class="cell_output docutils container">

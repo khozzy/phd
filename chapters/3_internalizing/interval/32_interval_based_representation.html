@@ -208,12 +208,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_3.html">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../discretization/33_experiment_4.html">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -441,6 +441,13 @@
     <a class="reference internal nav-link" href="#answers-to-research-questions">
      Answers to research questions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully">
+       Q1: Can the rACS algorithm form the internal model of the environment and exploit it successfully?
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -488,6 +495,13 @@
     <a class="reference internal nav-link" href="#answers-to-research-questions">
      Answers to research questions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully">
+       Q1: Can the rACS algorithm form the internal model of the environment and exploit it successfully?
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -730,16 +744,16 @@
 </div>
 <div class="section" id="answers-to-research-questions">
 <h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Q1: Can the rACS algorithm form the internal model of the environment and exploit it successfully?</p>
-</div></blockquote>
+<div class="section" id="q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully">
+<h4>Q1: Can the rACS algorithm form the internal model of the environment and exploit it successfully?<a class="headerlink" href="#q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully" title="Permalink to this headline">¶</a></h4>
 <p>The performed experiments involved two single-step problems with varying difficulties. In both of them the rACS implementation showed promising results but also reveled certain limits.</p>
-<p><strong>Lack of rule compaction</strong></p>
+<p><strong>Rule compaction</strong></p>
 <p>Due to the nature of LCS systems most of the components interact in sequential manner, frequently iterating over the population of classifiers. rACS agents showed to be biased towards creating rules capturing specific small niches of the solution space, therefore significantly increasing population size. The enhancement merging rules affecting neighbouring areas of solution space, would have heavy impact on the computational performance and the compactness of the solution.</p>
 <p><strong>Encoding resolution</strong></p>
 <p>The proposed approach represented interval boundaries as integer values. While this decision have positive impact mostly on simplification of internal operators, there are certain drawbacks. First and foremost, there is a tradeoff between selected resolution and the size of the population. In all performed experiments, situations with high resolution yield the biggest internal models containing very specific classifiers. Second, knowledge about environment regularities is beneficial for determining optimal value, because some of the regularities might not be captured, due to perception encoding ambiguity (see <a class="reference internal" href="#hybrid-interval-df"><span class="std std-numref">Fig. 3.1</span></a>).</p>
 <p><strong>Effect part</strong></p>
-<p>Majority of rACS modifications focus on building correct <em>condition</em> part, ignoring the evolution of the <em>effect</em> side. The ALP component responsible for driving the agent’s learning mechanism was not intended for real-valued representation. Therefore, it’s usage was simplified, indicating a need for a dedicated solution.</p>
+<p>Majority of rACS modifications focus on building correct <em>condition</em> part, ignoring the evolution of the <em>effect</em> side. The ALP component responsible for driving the agent’s learning mechanism was not intended for real-valued representation. Moreover, the problem with growing population is also related due to creation of duplicated and overlapping classifiers where the aforementioned processes are unable to perform subsumption and merging of classifiers with similar rule structure meanwhile favoring more general classifiers. Therefore, in rACS it’s usage was simplified, indicating a need for a dedicated solution.</p>
+</div>
 </div>
 </div>
 </div>

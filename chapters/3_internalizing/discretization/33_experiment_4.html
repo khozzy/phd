@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experiment 4 - Multistep environments &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>Experiment 4 - Multi-step environments performance &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet">
   <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -43,6 +43,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -53,7 +55,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="4. Optimizing formation of internal model" href="../../4_biased_exploration/41_introduction.html" />
-    <link rel="prev" title="Experiment 3 - Single step" href="33_experiment_3.html" />
+    <link rel="prev" title="Experiment 3 - Single step environment performance" href="33_experiment_3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -206,12 +208,12 @@
     <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_3.html">
-       Experiment 3 - Single step
+       Experiment 3 - Single step environment performance
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Experiment 4 - Multistep environments
+       Experiment 4 - Multi-step environments performance
       </a>
      </li>
     </ul>
@@ -416,8 +418,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -452,7 +454,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Experiment 4 - Multistep environments</h1>
+                <h1>Experiment 4 - Multi-step environments performance</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -463,8 +465,8 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
+  <a class="reference internal nav-link" href="#results">
+   Results
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -541,11 +543,9 @@
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multistep-environments">
-<span id="section-internalizing-experiment-4"></span><h1>Experiment 4 - Multistep environments<a class="headerlink" href="#experiment-4-multistep-environments" title="Permalink to this headline">¶</a></h1>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multi-step-environments-performance">
+<span id="section-internalizing-experiment-4"></span><h1>Experiment 4 - Multi-step environments performance<a class="headerlink" href="#experiment-4-multi-step-environments-performance" title="Permalink to this headline">¶</a></h1>
 <p>All experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</p>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">)</span>
@@ -935,23 +935,26 @@
 <div class="cell_output docutils container">
 </div>
 </div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Common parameters that were used across the experiments included the following: learning rate <span class="math notranslate nohighlight">\(\beta=0.1\)</span>, exploration probability <span class="math notranslate nohighlight">\(\epsilon=0.5\)</span>, discount factor <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, inadequacy threshold <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, reliability threshold <span class="math notranslate nohighlight">\(\theta_r=0.9\)</span>, YACS trace length 3, OIQ initial quality <span class="math notranslate nohighlight">\(q_{oiq} = 0.8\)</span>. The Dyna-Q algorithm performs five steps ahead simulation in each trial</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="22b836f7-275b-4a16-bc9b-d3acd52a1ea6" name="71e7643a-c1c4-4dcf-82f4-d20495e067aa" type="radio">
-</input><label class="tabbed-label" for="22b836f7-275b-4a16-bc9b-d3acd52a1ea6">
+<input checked="checked" id="ac6143c3-32ec-4076-b3f5-0143e278936a" name="4d03afb7-2404-44e8-82a9-6e0e67d55c44" type="radio">
+</input><label class="tabbed-label" for="ac6143c3-32ec-4076-b3f5-0143e278936a">
 Corridor</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-discretized-performance-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_3_0.png" src="../../../_images/33_experiment_4_3_0.png" />
+<img alt="../../../_images/33_experiment_4_2_0.png" src="../../../_images/33_experiment_4_2_0.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.12 </span><span class="caption-text">Performance of discretized Corridor. Experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="f3775a8e-c597-4164-b96f-63a40049c23a" name="71e7643a-c1c4-4dcf-82f4-d20495e067aa" type="radio">
-</input><label class="tabbed-label" for="f3775a8e-c597-4164-b96f-63a40049c23a">
+<input id="4a646d3f-b5c7-42ea-b6c4-d6ae79409065" name="4d03afb7-2404-44e8-82a9-6e0e67d55c44" type="radio">
+</input><label class="tabbed-label" for="4a646d3f-b5c7-42ea-b6c4-d6ae79409065">
 Grid</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="grid-discretized-performance-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_4_0.png" src="../../../_images/33_experiment_4_4_0.png" />
+<img alt="../../../_images/33_experiment_4_3_0.png" src="../../../_images/33_experiment_4_3_0.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.13 </span><span class="caption-text">Performance of discretized Grid</span><a class="headerlink" href="#grid-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
@@ -1036,7 +1039,7 @@ Grid</label><div class="tabbed-content docutils">
 <span class="k">def</span> <span class="nf">build_corridor_timing_models</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">corridor_metrics_df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
 
-
+<span class="c1"># grid</span>
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/bayes/population.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_grid_population_model</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">grid_metrics_df</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">)</span>
@@ -1056,6 +1059,7 @@ Grid</label><div class="tabbed-content docutils">
 <span class="k">def</span> <span class="nf">build_grid_timing_models</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">grid_metrics_df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
 
+<span class="c1"># BEST models</span>
 <span class="n">corridor_population_models</span> <span class="o">=</span> <span class="n">build_corridor_population_model</span><span class="p">()</span>
 <span class="n">corridor_knowledge_models</span> <span class="o">=</span> <span class="n">build_corridor_knowledge_models</span><span class="p">()</span>
 <span class="n">corridor_generalization_models</span> <span class="o">=</span> <span class="n">build_corridor_generalization_models</span><span class="p">()</span>
@@ -1082,8 +1086,8 @@ Grid</label><div class="tabbed-content docutils">
 <div class="section" id="corridor">
 <h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="dd8890d7-61e2-4a0d-aaea-6fc1cb19bbd8" name="f7e0b594-b9f6-49ce-968e-e261947456b9" type="radio">
-</input><label class="tabbed-label" for="dd8890d7-61e2-4a0d-aaea-6fc1cb19bbd8">
+<input checked="checked" id="d3ef8590-c132-4cb9-86eb-1e0cbaed5082" name="38f2b686-791e-47c5-bc7f-ab6e35a4a2fa" type="radio">
+</input><label class="tabbed-label" for="d3ef8590-c132-4cb9-86eb-1e0cbaed5082">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1098,12 +1102,12 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="995974bb-b137-46dc-bfd2-83639ae8e8b1" name="f7e0b594-b9f6-49ce-968e-e261947456b9" type="radio">
-</input><label class="tabbed-label" for="995974bb-b137-46dc-bfd2-83639ae8e8b1">
+<input id="50f63c41-ff70-40c6-aecb-e3f9d42aca5b" name="38f2b686-791e-47c5-bc7f-ab6e35a4a2fa" type="radio">
+</input><label class="tabbed-label" for="50f63c41-ff70-40c6-aecb-e3f9d42aca5b">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-2-corridor-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_8_2.png" src="../../../_images/33_experiment_4_8_2.png" />
+<img alt="../../../_images/33_experiment_4_7_2.png" src="../../../_images/33_experiment_4_7_2.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.14 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-2-corridor-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
@@ -1113,8 +1117,8 @@ Radar plot</label><div class="tabbed-content docutils">
 <div class="section" id="grid">
 <h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="5e534d5c-d551-42dd-a4b2-b32c0ef71d3f" name="098e7ecb-7190-4240-a60c-71f982341a81" type="radio">
-</input><label class="tabbed-label" for="5e534d5c-d551-42dd-a4b2-b32c0ef71d3f">
+<input checked="checked" id="6d9e086e-73f0-4024-bb64-d53a46c2652a" name="4110ac82-9d28-48ac-9952-47c48f3899d1" type="radio">
+</input><label class="tabbed-label" for="6d9e086e-73f0-4024-bb64-d53a46c2652a">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1129,12 +1133,12 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="61778419-7836-43b6-934f-dedff5181034" name="098e7ecb-7190-4240-a60c-71f982341a81" type="radio">
-</input><label class="tabbed-label" for="61778419-7836-43b6-934f-dedff5181034">
+<input id="61f2d279-9b33-47a8-acc9-0b37012ca7c5" name="4110ac82-9d28-48ac-9952-47c48f3899d1" type="radio">
+</input><label class="tabbed-label" for="61f2d279-9b33-47a8-acc9-0b37012ca7c5">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-2-grid-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_8_3.png" src="../../../_images/33_experiment_4_8_3.png" />
+<img alt="../../../_images/33_experiment_4_7_3.png" src="../../../_images/33_experiment_4_7_3.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3.15 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-2-grid-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
@@ -1176,7 +1180,7 @@ Radar plot</label><div class="tabbed-content docutils">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Experiment 3 - Single step</p>
+            <p class="prev-next-title">Experiment 3 - Single step environment performance</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../../4_biased_exploration/41_introduction.html" title="next page">
