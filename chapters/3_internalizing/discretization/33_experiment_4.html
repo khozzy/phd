@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experiment 4 - Multi-step environments performance &#8212; Real-valued Anticipatory Classifier System</title>
+    <title>Experiment 4 - Multiple-step environments performance &#8212; Real-valued Anticipatory Classifier System</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet">
   <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="4. Optimizing formation of internal model" href="../../4_biased_exploration/41_introduction.html" />
-    <link rel="prev" title="Experiment 3 - Single step environment performance" href="33_experiment_3.html" />
+    <link rel="prev" title="Experiment 3 - Single-step environment performance" href="33_experiment_3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -208,12 +208,12 @@
     <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_3.html">
-       Experiment 3 - Single step environment performance
+       Experiment 3 - Single-step environment performance
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Experiment 4 - Multi-step environments performance
+       Experiment 4 - Multiple-step environments performance
       </a>
      </li>
     </ul>
@@ -454,7 +454,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Experiment 4 - Multi-step environments performance</h1>
+                <h1>Experiment 4 - Multiple-step environments performance</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -504,6 +504,8 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
 
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
@@ -538,14 +540,21 @@
     <span class="k">return</span> <span class="n">wildcards</span> <span class="o">/</span> <span class="n">all_symbols</span>
 
 
+<span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">300</span>
 <span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;33_e4_trials&#39;</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multi-step-environments-performance">
-<span id="section-internalizing-experiment-4"></span><h1>Experiment 4 - Multi-step environments performance<a class="headerlink" href="#experiment-4-multi-step-environments-performance" title="Permalink to this headline">¶</a></h1>
-<p>All experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-4-multiple-step-environments-performance">
+<span id="section-internalizing-experiment-4"></span><h1>Experiment 4 - Multiple-step environments performance<a class="headerlink" href="#experiment-4-multiple-step-environments-performance" title="Permalink to this headline">¶</a></h1>
+<p>The multistep learning performance was also examined by a set of five algorithms - ACS, ACS2, ACS2 with GA, YACS and Dyna-Q using the same metrics as in the single-step experiment case.</p>
+<p>On the contrary the problems investigated herein, does not provide an immediate feedback to the agent about the potential outcomes of selected action. Therefore, a chain of correct decisions needs to be formed in order to locate the incentive. The <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> is a one-dimensional grid discretized into 20 states, and <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a> provides an extension by adding another dimension of the same length alongside two more possible actions.</p>
+<p>In each trial of the experiment the agent executes solely the exploration phase for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">300</span></code></span> trials. Moreover, to present coherent results and draw statistical inferences each experiment is repeated <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">)</span>
@@ -593,7 +602,7 @@
     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s1">&#39;metrics_fcn&#39;</span><span class="p">:</span> <span class="n">corridor_metrics_collect</span><span class="p">,</span>
-    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="mi">300</span>
+    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="n">TRIALS</span>
 <span class="p">}</span>
 
 <span class="n">yacs_params</span> <span class="o">=</span> <span class="p">{</span>
@@ -807,7 +816,7 @@
     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s1">&#39;metrics_fcn&#39;</span><span class="p">:</span> <span class="n">grid_metrics_collector</span><span class="p">,</span>
-    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="mi">250</span>
+    <span class="s1">&#39;trials&#39;</span><span class="p">:</span> <span class="n">TRIALS</span>
 <span class="p">}</span>
 
 <span class="n">yacs_params</span> <span class="o">=</span> <span class="p">{</span>
@@ -937,36 +946,33 @@
 </div>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
-<p>Common parameters that were used across the experiments included the following: learning rate <span class="math notranslate nohighlight">\(\beta=0.1\)</span>, exploration probability <span class="math notranslate nohighlight">\(\epsilon=0.5\)</span>, discount factor <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, inadequacy threshold <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, reliability threshold <span class="math notranslate nohighlight">\(\theta_r=0.9\)</span>, YACS trace length 3, OIQ initial quality <span class="math notranslate nohighlight">\(q_{oiq} = 0.8\)</span>. The Dyna-Q algorithm performs five steps ahead simulation in each trial</p>
+<p>Common parameters that were used across the experiments included the following: learning rate <span class="math notranslate nohighlight">\(\beta=0.1\)</span>, exploration probability <span class="math notranslate nohighlight">\(\epsilon=0.5\)</span>, discount factor <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, inadequacy threshold <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, reliability threshold <span class="math notranslate nohighlight">\(\theta_r=0.9\)</span>, YACS trace length 3. The Dyna-Q algorithm performs five steps ahead simulation in each trial</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="ac6143c3-32ec-4076-b3f5-0143e278936a" name="4d03afb7-2404-44e8-82a9-6e0e67d55c44" type="radio">
-</input><label class="tabbed-label" for="ac6143c3-32ec-4076-b3f5-0143e278936a">
+<input checked="checked" id="70697415-6e2e-4a36-8a02-8348155525d1" name="d2738cfe-fcb7-41f4-9477-08356e0ae26a" type="radio">
+</input><label class="tabbed-label" for="70697415-6e2e-4a36-8a02-8348155525d1">
 Corridor</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-discretized-performance-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/33_experiment_4_2_0.png" src="../../../_images/33_experiment_4_2_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.12 </span><span class="caption-text">Performance of discretized Corridor. Experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.12 </span><span class="caption-text">Performance of discretized Corridor-20 environment. Experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</span><a class="headerlink" href="#corridor-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="4a646d3f-b5c7-42ea-b6c4-d6ae79409065" name="4d03afb7-2404-44e8-82a9-6e0e67d55c44" type="radio">
-</input><label class="tabbed-label" for="4a646d3f-b5c7-42ea-b6c4-d6ae79409065">
+<input id="9c2e75ed-8b30-47ff-98f3-17e26735dbcc" name="d2738cfe-fcb7-41f4-9477-08356e0ae26a" type="radio">
+</input><label class="tabbed-label" for="9c2e75ed-8b30-47ff-98f3-17e26735dbcc">
 Grid</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="grid-discretized-performance-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/33_experiment_4_3_0.png" src="../../../_images/33_experiment_4_3_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.13 </span><span class="caption-text">Performance of discretized Grid</span><a class="headerlink" href="#grid-discretized-performance-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.13 </span><span class="caption-text">Performance of discretized Grid-20 environment with 400 distinct states. Experiments were executed <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times and averaged.</span><a class="headerlink" href="#grid-discretized-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>The same plot as in the latest IEEE submission</p>
-</div>
+<p>The posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. Obtained results were presented both in table and by using the radar plot scaled accordingly highlighting the relative differences between each algorithm.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acs&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2&#39;</span><span class="p">,</span> <span class="s1">&#39;acs2_ga&#39;</span><span class="p">,</span> <span class="s1">&#39;yacs&#39;</span><span class="p">,</span> <span class="s1">&#39;dynaq&#39;</span><span class="p">]</span>
@@ -984,6 +990,7 @@ Grid</label><div class="tabbed-content docutils">
         <span class="n">results</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">bayes_model</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">results</span>
+
 
 <span class="k">def</span> <span class="nf">build_bayes_data_structures</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">knowledge_models</span><span class="p">,</span> <span class="n">generalization_models</span><span class="p">,</span> <span class="n">population_models</span><span class="p">,</span> <span class="n">timing_models</span><span class="p">):</span>
     <span class="n">payload_df</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1013,13 +1020,9 @@ Grid</label><div class="tabbed-content docutils">
                            <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">bayes_table</span><span class="p">),</span> <span class="n">bayes_df</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># corridor</span>
+
+
+<span class="c1"># corridor</span>
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/population.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_corridor_population_model</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">corridor_metrics_df</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">)</span>
@@ -1038,6 +1041,7 @@ Grid</label><div class="tabbed-content docutils">
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/corridor/bayes/timing.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_corridor_timing_models</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">corridor_metrics_df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
+
 
 <span class="c1"># grid</span>
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/bayes/population.dill&#39;</span><span class="p">)</span>
@@ -1058,6 +1062,7 @@ Grid</label><div class="tabbed-content docutils">
 <span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/bayes/timing.dill&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">build_grid_timing_models</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">build_models</span><span class="p">(</span><span class="n">grid_metrics_df</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
+
 
 <span class="c1"># BEST models</span>
 <span class="n">corridor_population_models</span> <span class="o">=</span> <span class="n">build_corridor_population_model</span><span class="p">()</span>
@@ -1086,8 +1091,8 @@ Grid</label><div class="tabbed-content docutils">
 <div class="section" id="corridor">
 <h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="d3ef8590-c132-4cb9-86eb-1e0cbaed5082" name="38f2b686-791e-47c5-bc7f-ab6e35a4a2fa" type="radio">
-</input><label class="tabbed-label" for="d3ef8590-c132-4cb9-86eb-1e0cbaed5082">
+<input checked="checked" id="4a0f03df-13a7-40a5-8a71-f53584ddf834" name="933be46c-0965-4d10-bf38-3f918b42fee8" type="radio">
+</input><label class="tabbed-label" for="4a0f03df-13a7-40a5-8a71-f53584ddf834">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1102,14 +1107,14 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="50f63c41-ff70-40c6-aecb-e3f9d42aca5b" name="38f2b686-791e-47c5-bc7f-ab6e35a4a2fa" type="radio">
-</input><label class="tabbed-label" for="50f63c41-ff70-40c6-aecb-e3f9d42aca5b">
+<input id="a318281e-cb20-4ffa-8e9f-77e567e93c5a" name="933be46c-0965-4d10-bf38-3f918b42fee8" type="radio">
+</input><label class="tabbed-label" for="a318281e-cb20-4ffa-8e9f-77e567e93c5a">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-2-corridor-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_7_2.png" src="../../../_images/33_experiment_4_7_2.png" />
+<img alt="../../../_images/33_experiment_4_6_2.png" src="../../../_images/33_experiment_4_6_2.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.14 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-2-corridor-bayes-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.14 </span><span class="caption-text">Normalized metrics presented on the radar plot for Corridor-20 environment.</span><a class="headerlink" href="#ch33-2-corridor-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -1117,8 +1122,8 @@ Radar plot</label><div class="tabbed-content docutils">
 <div class="section" id="grid">
 <h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="6d9e086e-73f0-4024-bb64-d53a46c2652a" name="4110ac82-9d28-48ac-9952-47c48f3899d1" type="radio">
-</input><label class="tabbed-label" for="6d9e086e-73f0-4024-bb64-d53a46c2652a">
+<input checked="checked" id="7ee79928-eadd-44e6-8f07-c93bbba38715" name="ed260cc5-f1a4-45d4-9f32-83c79a10caaa" type="radio">
+</input><label class="tabbed-label" for="7ee79928-eadd-44e6-8f07-c93bbba38715">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1133,21 +1138,152 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="61f2d279-9b33-47a8-acc9-0b37012ca7c5" name="4110ac82-9d28-48ac-9952-47c48f3899d1" type="radio">
-</input><label class="tabbed-label" for="61f2d279-9b33-47a8-acc9-0b37012ca7c5">
+<input id="d39ffdaa-a5df-4ef9-915d-7b5b7a7543b1" name="ed260cc5-f1a4-45d4-9f32-83c79a10caaa" type="radio">
+</input><label class="tabbed-label" for="d39ffdaa-a5df-4ef9-915d-7b5b7a7543b1">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-2-grid-bayes-fig">
 <div class="cell_output docutils container">
-<img alt="../../../_images/33_experiment_4_7_3.png" src="../../../_images/33_experiment_4_7_3.png" />
+<img alt="../../../_images/33_experiment_4_6_3.png" src="../../../_images/33_experiment_4_6_3.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3.15 </span><span class="caption-text">Radar plot</span><a class="headerlink" href="#ch33-2-grid-bayes-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3.15 </span><span class="caption-text">Normalized metrics presented on the radar plot for Grid-20 environment.</span><a class="headerlink" href="#ch33-2-grid-bayes-fig" title="Permalink to this image">¶</a></p>
 </div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/grid/comparison.dill&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">evaluate_simple_classifiers</span><span class="p">(</span><span class="n">trials</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+    <span class="n">acs_results</span> <span class="o">=</span> <span class="n">single_acs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">])</span>
+
+    <span class="n">acs2_results</span> <span class="o">=</span> <span class="n">single_acs2_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">do_ga</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">initial_q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">yacs_results</span> <span class="o">=</span> <span class="n">single_yacs_experiment</span><span class="p">(</span>
+        <span class="n">env_provider</span><span class="o">=</span><span class="n">grid_env_provider</span><span class="p">,</span>
+        <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span>
+        <span class="n">classifier_length</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;classifier_length&#39;</span><span class="p">],</span>
+        <span class="n">possible_actions</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;possible_actions&#39;</span><span class="p">],</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+        <span class="n">trace_length</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;trace_length&#39;</span><span class="p">],</span>
+        <span class="n">estimate_expected_improvements</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;estimate_expected_improvements&#39;</span><span class="p">],</span>
+        <span class="n">feature_possible_values</span><span class="o">=</span><span class="n">yacs_params</span><span class="p">[</span><span class="s1">&#39;feature_possible_values&#39;</span><span class="p">],</span>
+        <span class="n">metrics_trial_freq</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">],</span>
+        <span class="n">metrics_fcn</span><span class="o">=</span><span class="n">common_params</span><span class="p">[</span><span class="s1">&#39;metrics_fcn&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">acs_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">acs2_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">yacs_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">population</span>
+
+
+<span class="k">def</span> <span class="nf">build_classifier_comparison_df</span><span class="p">(</span><span class="n">perception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">print_cl</span><span class="p">(</span><span class="n">cl</span><span class="p">):</span>
+        <span class="n">moves</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;←&#39;</span><span class="p">,</span> <span class="s1">&#39;→&#39;</span><span class="p">,</span> <span class="s1">&#39;↑&#39;</span><span class="p">,</span> <span class="s1">&#39;↓&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">condition</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">moves</span><span class="p">[</span><span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">effect</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">agent</span><span class="p">,</span> <span class="n">population</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;ACS&#39;</span><span class="p">,</span> <span class="s1">&#39;ACS2&#39;</span><span class="p">,</span> <span class="s1">&#39;YACS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">acs_grid_pop</span><span class="p">,</span> <span class="n">acs2_grid_pop</span><span class="p">,</span> <span class="n">yacs_grid_pop</span><span class="p">]):</span>
+        <span class="n">sorted_match_set</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="o">.</span><span class="n">form_match_set</span><span class="p">(</span><span class="n">perception</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">sorted_match_set</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cl</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">action</span><span class="p">):</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">print_cl</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span> <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+
+<span class="n">acs_grid_pop</span><span class="p">,</span> <span class="n">acs2_grid_pop</span><span class="p">,</span> <span class="n">yacs_grid_pop</span> <span class="o">=</span> <span class="n">evaluate_simple_classifiers</span><span class="p">()</span>
+<span class="n">perception</span> <span class="o">=</span> <span class="n">Perception</span><span class="p">((</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">))</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;grid_cls_comparison_df&#39;</span><span class="p">,</span> <span class="n">build_classifier_comparison_df</span><span class="p">(</span><span class="n">perception</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
+<p>All investigated algorithms converge towards obtaining complete knowledge of selected problems. Interesting behavioral patters are revealed despite relatively small number of input space.</p>
+<p><strong>ACS</strong></p>
+<p>For the simple Corridor environment the ACS maintains stable population with only one irrelevant classifier, therefore wrongly suggesting generalization capabilities. The agent has significantly the slowest learning curve. Surprisingly, in the Grid environment it managed to have the smallest population of classifiers with the highest generalization score outperforming other agents.</p>
+<p><strong>ACS2</strong></p>
+<p>Since the lack of generalization capabilities in the Corridor problem the performance of ACS2 and ACS2_GA is identical in this environment. Both of them modeled the environment internally using minimal possible number of rules. In the Grid environment the GA addition managed to further reduce the population size, by extending the applicability of rules.</p>
+<p><strong>YACS</strong></p>
+<p>The YACS on average was taking the longest amount of time to compute each trial. For the Corridor case, it started very rapidly by generating an overpopulation of classifiers (being the fastest of learning the whole environment) and eventually settled into optimal values. However, it was unable of forming the correct population size for the Grid problem. While knowing the consequences of all actions the under-performing generalization resulted in excessive number of classifiers.</p>
+<p>The visual comparison of rules created for certain environmental perception in the Grid environment is shown in <a class="reference internal" href="#grid-cls-comparison-df"><span class="std std-numref">Fig. 3.16</span></a>.</p>
+<div class="figure align-default" id="grid-cls-comparison-df">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ACS</th>
+      <th>ACS2</th>
+      <th>YACS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>## ← ##, 18# ← 17#</td>
+      <td>18# ← 17#</td>
+      <td>18# ← 17#</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>## → ##, 18# → 19#</td>
+      <td>18# → 19#</td>
+      <td>1819 → ##, 1819 → 19#</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>## ↑ ##</td>
+      <td>#19 ↑ ##</td>
+      <td>#19 ↑ ##</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>## ↓ ##, #19 ↓ #18</td>
+      <td>#19 ↓ #18</td>
+      <td>18# ↓ #5, 18# ↓ #4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+<p class="caption"><span class="caption-number">Fig. 3.16 </span><span class="caption-text">Classifier structure comparison in Grid environment for the <span class="math notranslate nohighlight">\((18,19)\)</span> state. The population was created after 25 explore trials. For each action, ACS2 manages to create a correct list of classifiers. The ACS is slower, and a default initial classifier accompanies each action. Finally, the YACS is unable to create fully general and accurate classifiers at all</span><a class="headerlink" href="#grid-cls-comparison-df" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Dyna-Q</strong></p>
+<p>Dyna-Q stands out in computation time, being the fastest investigated algorithm. However, due to full representation of all possible state-action transitions it needs to explicitly process each environmental interaction, which might be difficult with potential noise or other disturbances. Therefore, the knowledge accumulation process was significantly slower compared to other algorithms.</p>
 </div>
 </div>
 
@@ -1180,7 +1316,7 @@ Radar plot</label><div class="tabbed-content docutils">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Experiment 3 - Single step environment performance</p>
+            <p class="prev-next-title">Experiment 3 - Single-step environment performance</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../../4_biased_exploration/41_introduction.html" title="next page">

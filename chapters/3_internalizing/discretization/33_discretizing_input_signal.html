@@ -54,7 +54,7 @@
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Experiment 3 - Single step environment performance" href="33_experiment_3.html" />
+    <link rel="next" title="Experiment 3 - Single-step environment performance" href="33_experiment_3.html" />
     <link rel="prev" title="Experiment 2 - Nature of the intervals" href="../interval/32_experiment_2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -208,12 +208,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_3.html">
-       Experiment 3 - Single step environment performance
+       Experiment 3 - Single-step environment performance
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="33_experiment_4.html">
-       Experiment 4 - Multi-step environments performance
+       Experiment 4 - Multiple-step environments performance
       </a>
      </li>
     </ul>
@@ -554,11 +554,11 @@
 <div class="section" id="goals-of-the-experiments">
 <h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
 <div class="admonition-experiment-3-single-step-environment-performance admonition">
-<p class="admonition-title"><em>Experiment 3 - Single step environment performance</em></p>
+<p class="admonition-title"><em>Experiment 3 - Single-step environment performance</em></p>
 <p>The aim of this experiments is to determine the agents’ latent learning competences using the <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> discretized into fixed amount of buckets.</p>
 </div>
-<div class="admonition-experiment-4-multistep-environments-performance admonition">
-<p class="admonition-title"><em>Experiment 4 - Multistep environments performance</em></p>
+<div class="admonition-experiment-4-multiple-step-environments-performance admonition">
+<p class="admonition-title"><em>Experiment 4 - Multiple-step environments performance</em></p>
 <p>Corresponding comparison is performed for two multistep problems with similar regularities - <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>.</p>
 </div>
 </div>
@@ -566,8 +566,8 @@
 <h3>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="33_experiment_3.html">Experiment 3 - Single step environment performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="33_experiment_4.html">Experiment 4 - Multi-step environments performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_3.html">Experiment 3 - Single-step environment performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_experiment_4.html">Experiment 4 - Multiple-step environments performance</a></li>
 </ul>
 </div>
 </div>
@@ -575,19 +575,19 @@
 <h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets">
 <h4>Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?<a class="headerlink" href="#q1-can-popular-alcs-systems-build-the-internal-model-of-the-environment-when-discretizing-the-real-valued-input-signal-into-fixed-width-buckets" title="Permalink to this headline">¶</a></h4>
-<p>…</p>
+<p>All investigated ALCS systems with common rule (ACS, ACS2, YACS) structure managed to deal with real-valued signal represented as a vector of nominal values. The corresponding changes affected only the interface layer, leaving agent mechanisms intact. Moreover, the nature of the <em>don’t care</em> and <em>pass-through</em> symbol was fully preserved.</p>
 </div>
 <div class="section" id="q2-which-system-creates-the-most-compact-and-general-population-of-classifiers">
 <h4>Q2: Which system creates the most compact and general population of classifiers?<a class="headerlink" href="#q2-which-system-creates-the-most-compact-and-general-population-of-classifiers" title="Permalink to this headline">¶</a></h4>
-<p>…</p>
+<p>ACS2 with GA enhancement proved to diligently evolve most general and compact population of classifiers. Certain problems, however, were discovered in ACS, which was unable to progress by creating novel classifiers or in YACS that suffers from insufficient heuristics and lacks of dedicated generalization mechanism.</p>
 </div>
 <div class="section" id="q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system">
 <h4>Q3: What is the relative trial execution time for each evaluated system?<a class="headerlink" href="#q3-what-is-the-relative-trial-execution-time-for-each-evaluated-system" title="Permalink to this headline">¶</a></h4>
-<p>…</p>
+<p>Due to its simplicity Dyna-Q was the fastest algorithm in all comparisons. However, for the ALCS family the ACS and ACS2 are much faster than YACS, mainly due to YACS processes where each visited state is still stored internally despite generalization. Those states are processed in each trial, which for large problem spaces might squander computational resources.</p>
 </div>
 <div class="section" id="q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm">
 <h4>Q4: How selected  systems relates to the benchmark Dyna-Q algorithm?<a class="headerlink" href="#q4-how-selected-systems-relates-to-the-benchmark-dyna-q-algorithm" title="Permalink to this headline">¶</a></h4>
-<p>…</p>
+<p>The Dyna-Q is a traditional benchmarking RL problem capable of representing consequences of certain actions in particular states. The most obvious difference is the lack of generalization capabilities, which forces the Dyna-Q to explicitly model all encountered transitions. This fact leads to larger internal model size and potentially slower formation of an optimal policy. However, on the other side, lack of sophisticated, interacting components results in more transparent workflow and swifter execution.</p>
 </div>
 </div>
 </div>
@@ -628,7 +628,7 @@
     <a class='right-next' id="next-link" href="33_experiment_3.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Experiment 3 - Single step environment performance</p>
+        <p class="prev-next-title">Experiment 3 - Single-step environment performance</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
