@@ -20,7 +20,7 @@ The conducted research aims to answer the following question regarding rACS algo
 ## Goals of the experiments
 In all the experiments the difference between four exploration methods will be compared using the ACS2 agent.
 
-```{admonition} _Experiment 1 - Multi-steps problems performance_
+```{admonition} _Experiment 1 - Multiple-step problems performance_
 Use two basic multistep environments ([](section-topics-environments-corridor) and [](section-topics-environments-grid)) to determine the differences between the rate of gaining knowledge, ability of building internal pool of classifiers and operating in the environments.
 ```
 

@@ -26,11 +26,11 @@ The conducted research aims to answer the following questions about bucketing di
 4. How selected  systems relates to the benchmark Dyna-Q algorithm?
 
 ### Goals of the experiments
-```{admonition} _Experiment 3 - Single step environment performance_
+```{admonition} _Experiment 3 - Single-step environment performance_
 The aim of this experiments is to determine the agents' latent learning competences using the [](section-topics-environments-rmpx) discretized into fixed amount of buckets.
 ```
 
-```{admonition} _Experiment 4 - Multistep environments performance_
+```{admonition} _Experiment 4 - Multiple-step environments performance_
 Corresponding comparison is performed for two multistep problems with similar regularities - [](section-topics-environments-corridor) and [](section-topics-environments-grid).
 ```
 
@@ -42,13 +42,13 @@ Corresponding comparison is performed for two multistep problems with similar re
 ### Answers to research questions
 
 #### Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?
-...
+All investigated ALCS systems with common rule (ACS, ACS2, YACS) structure managed to deal with real-valued signal represented as a vector of nominal values. The corresponding changes affected only the interface layer, leaving agent mechanisms intact. Moreover, the nature of the _don't care_ and _pass-through_ symbol was fully preserved.  
 
 #### Q2: Which system creates the most compact and general population of classifiers?
-...
+ACS2 with GA enhancement proved to diligently evolve most general and compact population of classifiers. Certain problems, however, were discovered in ACS, which was unable to progress by creating novel classifiers or in YACS that suffers from insufficient heuristics and lacks of dedicated generalization mechanism. 
 
 #### Q3: What is the relative trial execution time for each evaluated system?
-...
+Due to its simplicity Dyna-Q was the fastest algorithm in all comparisons. However, for the ALCS family the ACS and ACS2 are much faster than YACS, mainly due to YACS processes where each visited state is still stored internally despite generalization. Those states are processed in each trial, which for large problem spaces might squander computational resources. 
 
 #### Q4: How selected  systems relates to the benchmark Dyna-Q algorithm?
-...
+The Dyna-Q is a traditional benchmarking RL problem capable of representing consequences of certain actions in particular states. The most obvious difference is the lack of generalization capabilities, which forces the Dyna-Q to explicitly model all encountered transitions. This fact leads to larger internal model size and potentially slower formation of an optimal policy. However, on the other side, lack of sophisticated, interacting components results in more transparent workflow and swifter execution.
