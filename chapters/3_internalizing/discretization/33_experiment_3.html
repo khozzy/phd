@@ -899,8 +899,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="eedfa917-2b4a-4317-bdf1-08e52dd09831" name="e9cf2992-28cd-4157-b3f3-c46c85a7e598" type="radio">
-</input><label class="tabbed-label" for="eedfa917-2b4a-4317-bdf1-08e52dd09831">
+<input checked="checked" id="3897873e-d118-451b-bf88-442409ff28dd" name="268045fe-a6e0-49d4-aab1-98a0cc17c996" type="radio">
+</input><label class="tabbed-label" for="3897873e-d118-451b-bf88-442409ff28dd">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -915,8 +915,8 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="272020f7-5605-445c-9b13-0297cf35205d" name="e9cf2992-28cd-4157-b3f3-c46c85a7e598" type="radio">
-</input><label class="tabbed-label" for="272020f7-5605-445c-9b13-0297cf35205d">
+<input id="928234c8-0041-44f6-b1aa-f718ac6b3e0a" name="268045fe-a6e0-49d4-aab1-98a0cc17c996" type="radio">
+</input><label class="tabbed-label" for="928234c8-0041-44f6-b1aa-f718ac6b3e0a">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-1-bayes-fig">
 <div class="cell_output docutils container">
@@ -938,6 +938,169 @@ Radar plot</label><div class="tabbed-content docutils">
 <p>The heuristic nature of YACS allows it to rapidly gain knowledge at the beginning of the experiment. However, due to the lack of generalization capabilities, it provides the worst generalization compared to both ACS2 variants. Moreover, the trial execution time is significantly larger than any other systems because all visited states are represented and processed inside the agent’s memory.</p>
 <p><strong>Dyna-Q</strong></p>
 <p>By design the Dyna-Q algorithm does not expose any generalization capabilities - therefore is unable to learn latently with more compacted knowledge representation. Due to the lookahead capabilities the system managed to rapidly learn all available transitions while operating faster than competitors.</p>
+<hr class="docutils" />
+<p><strong>Software packages used</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">session_info</span>
+
+<span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><details>
+<summary>Click to view session information</summary>
+<pre>
+-----
+bitstring           3.1.7
+gym                 0.21.0
+gym_multiplexer     NA
+lcs                 NA
+matplotlib          3.5.1
+myst_nb             0.13.1
+numpy               1.22.1
+pandas              1.4.0
+session_info        1.0.0
+src                 (embedded book's utils module)
+tabulate            0.8.9
+-----
+</pre>
+<details>
+<summary>Click to view modules imported as dependencies</summary>
+<pre>
+PIL                         8.4.0
+arviz                       0.11.2
+asttokens                   NA
+attr                        21.4.0
+babel                       2.9.1
+backcall                    0.2.0
+beta_ufunc                  NA
+binom_ufunc                 NA
+brotli                      NA
+cachetools                  5.0.0
+certifi                     2021.10.08
+cffi                        1.15.0
+cftime                      1.5.2
+charset_normalizer          2.0.10
+click                       7.1.2
+cloudpickle                 2.0.0
+colorama                    0.4.4
+colorful                    0.5.4
+colorful_orig               0.5.4
+cryptography                36.0.1
+cycler                      0.10.0
+cython_runtime              NA
+databricks_cli              NA
+dateutil                    2.8.2
+debugpy                     1.5.1
+decorator                   5.1.1
+defusedxml                  0.7.1
+dill                        0.3.4
+docutils                    0.16
+entrypoints                 0.3
+executing                   0.8.2
+fastprogress                0.2.7
+filelock                    3.4.2
+google                      NA
+greenlet                    1.1.2
+grpc                        1.43.0
+hiredis                     2.0.0
+idna                        3.3
+imagesize                   NA
+importlib_metadata          NA
+ipykernel                   6.7.0
+ipython_genutils            0.2.0
+ipywidgets                  7.6.5
+jedi                        0.18.1
+jinja2                      3.0.3
+jsonschema                  3.2.0
+jupyter_cache               0.4.3
+jupyter_sphinx              0.3.2
+jupyterlab_pygments         0.1.2
+kiwisolver                  1.3.2
+linkify_it                  1.0.3
+markdown_it                 1.1.0
+markupsafe                  2.0.1
+matplotlib_inline           NA
+mdit_py_plugins             0.2.8
+mistune                     0.8.4
+mlflow                      1.23.1
+mpl_toolkits                NA
+msgpack                     1.0.3
+myst_parser                 0.15.2
+nbclient                    0.5.10
+nbconvert                   6.4.1
+nbformat                    5.1.3
+nbinom_ufunc                NA
+netCDF4                     1.5.8
+packaging                   21.3
+pandocfilters               NA
+parso                       0.8.3
+pexpect                     4.8.0
+pickleshare                 0.7.5
+pkg_resources               NA
+prompt_toolkit              3.0.26
+psutil                      5.9.0
+ptyprocess                  0.7.0
+pure_eval                   0.2.2
+pvectorc                    NA
+pydev_ipython               NA
+pydevconsole                NA
+pydevd                      2.6.0
+pydevd_concurrency_analyser NA
+pydevd_file_utils           NA
+pydevd_plugins              NA
+pydevd_tracing              NA
+pygments                    2.11.2
+pylab                       NA
+pymc3                       3.11.4
+pyparsing                   3.0.7
+pyrsistent                  NA
+pytz                        2021.3
+ray                         1.9.2
+redis                       4.1.2
+requests                    2.27.1
+scipy                       1.7.3
+semver                      2.13.0
+setproctitle                1.2.2
+setuptools                  60.5.0
+six                         1.16.0
+socks                       1.7.1
+sphinx                      4.4.0
+sphinxcontrib               NA
+sqlalchemy                  1.4.31
+stack_data                  0.1.4
+testpath                    0.5.0
+theano                      1.1.2
+tornado                     6.1
+tqdm                        4.62.3
+traitlets                   5.1.1
+typing_extensions           NA
+uc_micro                    1.0.1
+unicodedata2                NA
+urllib3                     1.26.8
+wcwidth                     0.2.5
+xarray                      0.21.0
+yaml                        6.0
+zipp                        NA
+zmq                         22.3.0
+</pre>
+</details> <!-- seems like this ends pre, so might as well be explicit -->
+<pre>
+-----
+IPython             8.0.1
+jupyter_client      7.1.2
+jupyter_core        4.9.1
+notebook            6.4.8
+-----
+Python 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:24:11) [GCC 9.4.0]
+Linux-5.13.0-30-generic-x86_64-with-glibc2.31
+-----
+Session information updated at 2022-02-24 12:35
+</pre>
+</details></div></div>
+</div>
 </div>
 </div>
 

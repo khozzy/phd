@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -416,11 +418,6 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
    Results
   </a>
@@ -455,11 +452,6 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup">
-   Setup
-  </a>
- </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#results">
    Results
@@ -602,19 +594,39 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># settings</span>
+<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">rmpx_bits</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># available sizes: 3, 6</span>
+<span class="n">rmpx_trials</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">15_000</span>  <span class="c1"># explore-exploit-explore-...</span>
+<span class="n">bins_v1</span><span class="p">,</span> <span class="n">bins_v2</span><span class="p">,</span> <span class="n">bins_v3</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;41_e1_trials&#39;</span><span class="p">,</span> <span class="n">rmpx_trials</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;41_e1_encoding_bits&#39;</span><span class="p">,</span> <span class="n">rmpx_bits</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-single-step-problem-performance">
 <h1>Experiment 1 - Single-step problem performance<a class="headerlink" href="#experiment-1-single-step-problem-performance" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The effect of biasing exploration was first evaluated on the 6-bit <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment. The input signal was discretized using the following buckets of sizes alongside the respective size of the input space:</p>
+<ul class="simple">
+<li><p>5 bits - <span class="math notranslate nohighlight">\(2\cdot 5^6=31250\)</span> possible states,</p></li>
+<li><p>6 bits - <span class="math notranslate nohighlight">\(2\cdot 6^6=93312\)</span> possible states,</p></li>
+<li><p>7 bits - <span class="math notranslate nohighlight">\(2\cdot 7^6=235298\)</span> possible states.</p></li>
+</ul>
+<p>Each experiment was performed by alternating explore and exploit phases for <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">30000</span></code></span> trials. The cross-over capabilities were deliberately disabled because of the last bit in perception <span class="math notranslate nohighlight">\(\sigma\)</span> was denoting the prediction result, which inadvertently might cause invalid rule evolution.</p>
+<p>The efficiency of aforementioned biased exploration strategies is measured by studying the trajectory of the average reward and classifiers population size plots over time. Figures <a class="reference internal" href="#rmpx-5-bins-fig"><span class="std std-numref">4.1</span></a>, <a class="reference internal" href="#rmpx-6-bins-fig"><span class="std std-numref">4.2</span></a> and <a class="reference internal" href="#rmpx-7-bins-fig"><span class="std std-numref">4.3</span></a> presents the average aggregation of results along with statistical inference calculated over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p><strong>ACS2 parameters</strong></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.2\)</span>, <span class="math notranslate nohighlight">\(\gamma = 0.95\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(\epsilon = 0.8\)</span> <span class="math notranslate nohighlight">\(\theta_{GA} = 50\)</span>, <span class="math notranslate nohighlight">\(\theta_{AS}=20\)</span>, <span class="math notranslate nohighlight">\(\theta_{exp}=50\)</span>, <span class="math notranslate nohighlight">\(m_u=0.03\)</span>, <span class="math notranslate nohighlight">\(u_{max}=4\)</span>, <span class="math notranslate nohighlight">\(\chi=0.0\)</span></p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">BinnedObservationWrapper</span>
-
-<span class="n">rmpx_bits</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># available sizes: 3, 6</span>
 
 
 <span class="k">def</span> <span class="nf">rmpx_metrics</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
@@ -649,15 +661,6 @@
 <span class="p">}</span>
 
 <span class="c1"># Start experiments</span>
-<span class="n">USE_RAY</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="n">rmpx_trials</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">15_000</span>  <span class="c1"># explore-exploit-explore-...</span>
-
-<span class="n">bins_v1</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">bins_v2</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="n">bins_v3</span> <span class="o">=</span> <span class="mi">7</span>
-
-
 <span class="k">def</span> <span class="nf">run_rmpx_biased_exploration</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
     <span class="n">env_provider</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">rmpx_env_provider</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
 
@@ -685,16 +688,8 @@
 <span class="nd">@repeat</span><span class="p">(</span><span class="n">num_times</span><span class="o">=</span><span class="n">NUM_EXPERIMENTS</span><span class="p">,</span> <span class="n">use_ray</span><span class="o">=</span><span class="n">USE_RAY</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">rmpx_bins_v3</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">run_rmpx_biased_exploration</span><span class="p">(</span><span class="n">bins_v3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">experiment_runs</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">experiment_runs</span><span class="p">):</span>
     <span class="n">eg_dfs</span><span class="p">,</span> <span class="n">ad_dfs</span><span class="p">,</span> <span class="n">ka_dfs</span><span class="p">,</span> <span class="n">oiq_dfs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">eg_df</span><span class="p">,</span> <span class="n">ad_df</span><span class="p">,</span> <span class="n">ka_df</span><span class="p">,</span> <span class="n">oiq_df</span> <span class="ow">in</span> <span class="n">experiment_runs</span><span class="p">:</span>
@@ -729,44 +724,41 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="bc706c74-f2f9-434f-b284-14637db6fc1b" name="86bb56e5-bf72-4556-b171-6943cd70095b" type="radio">
-</input><label class="tabbed-label" for="bc706c74-f2f9-434f-b284-14637db6fc1b">
+<input checked="checked" id="cbea4ed3-479d-4861-b778-2a33e20e6f96" name="7a1411ff-56a9-4145-a5c8-d51f0b90b39f" type="radio">
+</input><label class="tabbed-label" for="cbea4ed3-479d-4861-b778-2a33e20e6f96">
 5 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-5-bins-fig">
 <div class="cell_output docutils container">
-<img alt="../../_images/41_experiment_1_5_0.png" src="../../_images/41_experiment_1_5_0.png" />
+<img alt="../../_images/41_experiment_1_3_0.png" src="../../_images/41_experiment_1_3_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">6 bit rMPX discretized with 5 bins</span><a class="headerlink" href="#rmpx-5-bins-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">6-bit rMPX discretized with 5 bins. Faded lines shows performance of explore mode, solid ones for exploit</span><a class="headerlink" href="#rmpx-5-bins-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="298d8904-bfc5-4a6c-9063-b50fa9c4c657" name="86bb56e5-bf72-4556-b171-6943cd70095b" type="radio">
-</input><label class="tabbed-label" for="298d8904-bfc5-4a6c-9063-b50fa9c4c657">
+<input id="2c9ee514-0b9b-469c-ab8e-2e8d0a76b5b2" name="7a1411ff-56a9-4145-a5c8-d51f0b90b39f" type="radio">
+</input><label class="tabbed-label" for="2c9ee514-0b9b-469c-ab8e-2e8d0a76b5b2">
 6 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-6-bins-fig">
 <div class="cell_output docutils container">
-<img alt="../../_images/41_experiment_1_5_1.png" src="../../_images/41_experiment_1_5_1.png" />
+<img alt="../../_images/41_experiment_1_3_1.png" src="../../_images/41_experiment_1_3_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">6 bit rMPX discretized with 6 bins</span><a class="headerlink" href="#rmpx-6-bins-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">6-bit rMPX discretized with 6 bins. Faded lines shows performance of explore mode, solid ones for exploit</span><a class="headerlink" href="#rmpx-6-bins-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="876ae761-41a8-4217-8302-15c61af36635" name="86bb56e5-bf72-4556-b171-6943cd70095b" type="radio">
-</input><label class="tabbed-label" for="876ae761-41a8-4217-8302-15c61af36635">
+<input id="eae6c9b6-6bd7-4452-b7d8-0688ce199b61" name="7a1411ff-56a9-4145-a5c8-d51f0b90b39f" type="radio">
+</input><label class="tabbed-label" for="eae6c9b6-6bd7-4452-b7d8-0688ce199b61">
 7 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-7-bins-fig">
 <div class="cell_output docutils container">
-<img alt="../../_images/41_experiment_1_5_2.png" src="../../_images/41_experiment_1_5_2.png" />
+<img alt="../../_images/41_experiment_1_3_2.png" src="../../_images/41_experiment_1_3_2.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.3 </span><span class="caption-text">6 bit rMPX discretized with 7 bins</span><a class="headerlink" href="#rmpx-7-bins-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.3 </span><span class="caption-text">6-bit rMPX discretized with 7 bins. Faded lines shows performance of explore mode, solid ones for exploit</span><a class="headerlink" href="#rmpx-7-bins-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>Novel idea would be to introduce a metric combining both average reward and number of classifiers (like <em>efficiency index</em>). Then such indicator might be used to plot the change when modifying number of bins. Otherwise a regular table might be used.</p>
-</div>
+<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from last 100 exploit trials is considered as a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_bayes_model</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
@@ -830,8 +822,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="a392b9a7-0015-4e1e-835c-730459f416f6" name="a5117443-26ce-42f7-8b6c-bb6d207a37e6" type="radio">
-</input><label class="tabbed-label" for="a392b9a7-0015-4e1e-835c-730459f416f6">
+<input checked="checked" id="544655b7-bce3-4024-b821-bf6f2ca2348a" name="170d75e8-e07b-4494-bf0b-b9428e835600" type="radio">
+</input><label class="tabbed-label" for="544655b7-bce3-4024-b821-bf6f2ca2348a">
 Average Reward</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -844,8 +836,8 @@ Average Reward</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="4da51fb6-2aa4-4e5a-b77b-bf5e61b4b24c" name="a5117443-26ce-42f7-8b6c-bb6d207a37e6" type="radio">
-</input><label class="tabbed-label" for="4da51fb6-2aa4-4e5a-b77b-bf5e61b4b24c">
+<input id="4e45a5e5-1a2d-46f4-9556-e50c1d87be17" name="170d75e8-e07b-4494-bf0b-b9428e835600" type="radio">
+</input><label class="tabbed-label" for="4e45a5e5-1a2d-46f4-9556-e50c1d87be17">
 Reliable classifiers</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -862,7 +854,8 @@ Reliable classifiers</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Despite large size of the problem’s search space the investigated biased exploration strategies have no impact on the average obtained reward. None of the method can be distinguished by introducing peculiar rules into the population having an imprint on the performance. However, the differences between discretization resolution are depicted. The ACS2 agent is selecting valid action for most of the time when 6 bins are used to divide the perception input range. For the other odd values, the exploit performance is significantly worse, but still better than random guessing.</p>
+<p>The rate of reliable classifier acquisition begins equally for all the strategies and resolutions. After a few thousand trials the KA method tends to drive the exploration process into the unknown regions of the space, therefore forming more and better novel rules. The performance of other approaches of EG, AD and OIQ is not distinguishable.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">
@@ -1022,7 +1015,7 @@ notebook            6.4.8
 Python 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:24:11) [GCC 9.4.0]
 Linux-5.13.0-30-generic-x86_64-with-glibc2.31
 -----
-Session information updated at 2022-02-23 16:58
+Session information updated at 2022-02-24 11:15
 </pre>
 </details></div></div>
 </div>
