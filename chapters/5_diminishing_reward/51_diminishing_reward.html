@@ -250,7 +250,7 @@
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../4_biased_exploration/41_experiment_3.html">
-       Experiment 3 - Balacing the pole
+       Experiment 3 - Balancing the pole
       </a>
      </li>
     </ul>
@@ -285,11 +285,6 @@
      <li class="toctree-l3">
       <a class="reference internal" href="51_experiment_2.html">
        Experiment 2 - Finite-State-World environment
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="51_experiment_3.html">
-       Experiment 3 - Woods1 environment
       </a>
      </li>
     </ul>
@@ -419,26 +414,28 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -464,26 +461,28 @@
   <a class="reference internal nav-link" href="#experimental-evaluation">
    Experimental evaluation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#research-questions">
-   Research questions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#goals-of-the-experiments">
-   Goals of the experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments">
-   Experiments
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#answers-to-research-questions">
-   Answers to research questions
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#research-questions">
+     Research questions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#goals-of-the-experiments">
+     Goals of the experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#answers-to-research-questions">
+     Answers to research questions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -502,17 +501,16 @@ Explain the problem of reward distribution in long action chains. Describe Q- na
 <div class="section" id="experimental-evaluation">
 <h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
 <p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
-</div>
 <div class="section" id="research-questions">
-<h2>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h2>
-<p>The conducted research aims to answers the following questions:</p>
+<h3>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h3>
+<p>The conducted research aims to answer the following questions:</p>
 <ol class="simple">
 <li><p>Can the undiscounted reward criterion be used in discretized multistep environments?</p></li>
 <li><p>Does the undiscounted reward criterion result in better environment exploitation?</p></li>
 </ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
-<h2>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h2>
+<h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
 <p>In all the experiments different environments are evaluated by two versions of AACS2 algorithm. To accent the changes benchmarking algorithms such as pure ACS2, Q-Learning and R-Learning are also used. The main performance metrics, such as number of steps to reach reward state and the estimated average reward are collected. Additionally, each available state-action pair from the environment is analyzed for the potential calculated reward.</p>
 <div class="admonition-experiment-1-corridor-environment admonition">
 <p class="admonition-title"><em>Experiment 1 - Corridor environment</em></p>
@@ -522,24 +520,20 @@ Explain the problem of reward distribution in long action chains. Describe Q- na
 <p class="admonition-title"><em>Experiment 2 - Finite-State-World (FSW) environment</em></p>
 <p>The <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State Worlds (FSW)</span></a> environment is an extension to the Corridor. In each state actions alternate - one will bring the agent closer to the reward, the other one is languishing. The forager will have to learn to distinguish every other state and distribute rewards properly.</p>
 </div>
-<div class="admonition-experiment-3-woods1-environment admonition">
-<p class="admonition-title"><em>Experiment 3 - Woods1 environment</em></p>
-<p>Finally, the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-woods1"><span class="std std-ref">Woods1</span></a> grid realm measures the agents performance in the case where a certain pattern containing the reward signal is repeated indefinitely in the horizonal and vertical directions.</p>
-</div>
 </div>
 <div class="section" id="experiments">
-<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
+<h3>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="51_experiment_1.html">Experiment 1 - Corridor environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="51_experiment_2.html">Experiment 2 - Finite-State-World environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="51_experiment_3.html">Experiment 3 - Woods1 environment</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="answers-to-research-questions">
-<h2>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h2>
+<h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
 <p>…</p>
+</div>
 </div>
 </div>
 
