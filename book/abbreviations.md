@@ -18,6 +18,9 @@ BBA
 BEST
   Bayesian estimation test
 
+E/E
+  Explore/exploit phases
+
 EG
   Epsilon Greedy exploration technique
 
