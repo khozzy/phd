@@ -3,6 +3,9 @@
 ACS
   Anticipatory Classifier System
 
+AACS2
+  Averaged Anticipatory Classifier System
+
 AD
   Action-Delay exploration technique
 

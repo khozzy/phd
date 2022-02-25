@@ -281,12 +281,12 @@
     <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="../../5_diminishing_reward/51_experiment_1.html">
-       Experiment 1 - Corridor environment
+       Experiment 1 - Straight Corridor
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../../5_diminishing_reward/51_experiment_2.html">
-       Experiment 2 - Finite-State-World environment
+       Experiment 2 - Deceptive Corridor
       </a>
      </li>
     </ul>
@@ -699,7 +699,7 @@
 </div></div></div>
 <p class="caption"><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Examples of encoded values for different perceptions <span class="math notranslate nohighlight">\(\sigma\)</span> values. Maximum resolution is calculated with <span class="math notranslate nohighlight">\(2^n\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of bits used. E.g. a range <span class="math notranslate nohighlight">\([0.3;0.6]\)</span> encoded with 7 bits would be <span class="math notranslate nohighlight">\([38; 76]\)</span> for OBR/UBR or <span class="math notranslate nohighlight">\([76,38]\)</span> for UBR encoding (order is irrelevant).</span><a class="headerlink" href="#hybrid-interval-df" title="Permalink to this image">¶</a></p>
 </div>
-<p>The proprietary variation of ACS2 system was named rACS <span id="id2">[<a class="reference internal" href="../../../bibliography.html#id7">94</a>]</span> and can be distinguished from the native implementation by:</p>
+<p>The proprietary variation of ACS2 system was named rACS <span id="id2">[<a class="reference internal" href="../../../bibliography.html#id7">97</a>]</span> and can be distinguished from the native implementation by:</p>
 <ul class="simple">
 <li><p><strong>Don’t care symbol</strong> - In rACS the feature attributes consists solely of interval ranges. The <em>“don’t care”</em> and <em>“pass-through”</em> symbols are represented as a full-ranged interval (e.g. using 4 bit encoding - <span class="math notranslate nohighlight">\(\textrm{UBR}(0, 15)\)</span> or <span class="math notranslate nohighlight">\(\textrm{UBR}(15, 0)\)</span>).</p></li>
 <li><p><strong>Covering</strong> - The covering process introduces randomness when a new classifiers is added into population. A new parameter - <em>covering noise</em> <span class="math notranslate nohighlight">\(\epsilon_{cover}\)</span> defines the maximum noise that can alter current perception. The noise <span class="math notranslate nohighlight">\(\epsilon\)</span> is drawn from uniform random distribution <span class="math notranslate nohighlight">\(U[0, \epsilon_{cover}]\)</span>. When creating a new classifier each condition and effect attribute is spread <span class="math notranslate nohighlight">\(\textrm{UBR}(x_1 - \epsilon, x_2 + \epsilon)\)</span> accordingly.</p></li>
