@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -411,6 +413,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
   </a>
@@ -440,6 +447,11 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistical-verification">
    Statistical verification
@@ -478,6 +490,7 @@
 
 <span class="kn">from</span> <span class="nn">src.basic_rl</span> <span class="kn">import</span> <span class="n">run_q_learning_alternating</span><span class="p">,</span> <span class="n">run_r_learning_alternating</span><span class="p">,</span> <span class="n">qlearning</span><span class="p">,</span> <span class="n">rlearning</span>
 <span class="kn">from</span> <span class="nn">src.bayes_estimation</span> <span class="kn">import</span> <span class="n">bayes_estimate</span>
+<span class="kn">from</span> <span class="nn">src.commons</span> <span class="kn">import</span> <span class="n">NUM_EXPERIMENTS</span>
 <span class="kn">from</span> <span class="nn">src.decorators</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">get_from_cache_or_run</span>
 <span class="kn">from</span> <span class="nn">src.diminishing_reward</span> <span class="kn">import</span> <span class="n">common_metrics</span>
 <span class="kn">from</span> <span class="nn">src.observation_wrappers</span> <span class="kn">import</span> <span class="n">CorridorObservationWrapper</span>
@@ -560,21 +573,31 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">PLOT_DPI</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">fig</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-straight-corridor">
-<h1>Experiment 1 - Straight Corridor<a class="headerlink" href="#experiment-1-straight-corridor" title="Permalink to this headline">¶</a></h1>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Params</span>
+
+<span class="c1"># Params</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
+<span class="n">USE_RAY</span><span class="o">=</span> <span class="kc">True</span>
+
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.8</span>
 <span class="n">discount_factor</span> <span class="o">=</span> <span class="mf">0.95</span>
 <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.2</span>
 <span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.0001</span>
 
-<span class="k">def</span> <span class="nf">corridor20_env_provider</span><span class="p">():</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-e1-trials&#39;</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-straight-corridor">
+<h1>Experiment 1 - Straight Corridor<a class="headerlink" href="#experiment-1-straight-corridor" title="Permalink to this headline">¶</a></h1>
+<p>The following section describes the differences observed between using the ACS2 with standard discounted reward distribution and two proposed modifications. In all cases, the experiments were performed in an explore-exploit manner for the total number of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span>, where the mode was alternating in each trial. Additionally, for better reference and benchmarking purposes, basic implementations of Q-Learning and R-Learning algorithms were also introduced and used with the same parameter settings as ACS2 and AACS2.</p>
+<p>The most important thing was to distinguish whether the new reward distribution proposition still allows the agent to successfully update the classifier’s parameter to allow the exploitation of the environment. To illustrate this, figures presenting the number of steps to the final location, estimated average change during learning, and the reward payoff-landscape across all possible state-action pairs were plotted for the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> of size <span class="math notranslate nohighlight">\(n=20\)</span>.</p>
+<p>To assure that the modification worked as expected the statistical inference of obtained result was performed on scaled version of the problem. Each experiment is averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corridor20_env_provider</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">gym_corridor</span>  <span class="c1"># noqa: F401</span>
     <span class="k">return</span> <span class="n">CorridorObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;corridor-20-v0&#39;</span><span class="p">))</span>
 
@@ -599,10 +622,6 @@
     <span class="s1">&#39;biased_exploration_prob&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="s1">&#39;metrics_trial_freq&#39;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="p">}</span>
-
-<span class="n">NUM_EXPERIMENTS</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">trials</span> <span class="o">=</span> <span class="mi">10_000</span>
-<span class="n">USE_RAY</span><span class="o">=</span> <span class="kc">True</span>
 
 
 <span class="k">def</span> <span class="nf">run_multiple_qlearning</span><span class="p">(</span><span class="n">env_provider</span><span class="p">):</span>
@@ -730,13 +749,8 @@
 <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
     <span class="n">payoffs</span> <span class="o">=</span> <span class="n">calculate_state_action_payoffs</span><span class="p">(</span><span class="n">state_action</span><span class="p">,</span> <span class="n">pop_acs2</span><span class="p">,</span> <span class="n">pop_aacs2v1</span><span class="p">,</span> <span class="n">pop_aacs2v2</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridor_performance_fig</span> <span class="o">=</span> <span class="n">plot_pop_and_rho</span><span class="p">(</span><span class="n">agg_df</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-performance.png&#39;</span><span class="p">)</span>
+
+<span class="n">corridor_performance_fig</span> <span class="o">=</span> <span class="n">plot_pop_and_rho</span><span class="p">(</span><span class="n">agg_df</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-performance.png&#39;</span><span class="p">)</span>
 <span class="n">corridor_payoff_fig</span> <span class="o">=</span> <span class="n">plot_payoff_landscape</span><span class="p">(</span><span class="n">payoffs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span> <span class="n">rho_text_location</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">250</span><span class="p">},</span> <span class="n">plot_filename</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">/corridor-payoff-landscape.png&#39;</span><span class="p">)</span>
 
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;51-corridor-fig&#39;</span><span class="p">,</span> <span class="n">corridor_performance_fig</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -747,34 +761,36 @@
 <div class="cell_output docutils container">
 </div>
 </div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p><strong>Parameters</strong></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.2\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span></p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="6f544dc1-84c5-4cff-b6ec-590e4df6f1f4" name="3565e0a6-b755-4d16-844e-be40f99e4372" type="radio">
-</input><label class="tabbed-label" for="6f544dc1-84c5-4cff-b6ec-590e4df6f1f4">
+<input checked="checked" id="9ca7ba23-b799-443a-9591-22834658a2cb" name="61e6af28-d55b-435f-a648-210ade6d3f8f" type="radio">
+</input><label class="tabbed-label" for="9ca7ba23-b799-443a-9591-22834658a2cb">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-fig">
 <div class="cell_output docutils container">
-<img alt="../../_images/51_experiment_1_4_0.png" src="../../_images/51_experiment_1_4_0.png" />
+<img alt="../../_images/51_experiment_1_3_0.png" src="../../_images/51_experiment_1_3_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Number of steps in exploit trials averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Plots averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs. Number of steps in exploit trials averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="623737b7-082f-471d-accf-5d5175beaad4" name="3565e0a6-b755-4d16-844e-be40f99e4372" type="radio">
-</input><label class="tabbed-label" for="623737b7-082f-471d-accf-5d5175beaad4">
+<input id="83b42eab-34bc-4dae-913e-c0acf5259cac" name="61e6af28-d55b-435f-a648-210ade6d3f8f" type="radio">
+</input><label class="tabbed-label" for="83b42eab-34bc-4dae-913e-c0acf5259cac">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-payoff-fig">
 <div class="cell_output docutils container">
-<img alt="../../_images/51_experiment_1_4_1.png" src="../../_images/51_experiment_1_4_1.png" />
+<img alt="../../_images/51_experiment_1_3_1.png" src="../../_images/51_experiment_1_3_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Corridor-20 Payoff Landscape</span><a class="headerlink" href="#corridor-payoff-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Payoff Landscape for Corridor  20 environment. Payoff values were obtained after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials. For the Q-Learning and R-Learning, the same learning parameters were applied. The ACS2 and Q-Learning generate exactly the same payoffs for each state-action pair.</span><a class="headerlink" href="#corridor-payoff-fig" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<div class="tip admonition">
-<p class="admonition-title">Hypothesis testing</p>
-<p>3 subplots (AACSv1, AACSv2, R-learning) for the distribution of of estimated average for 3 corridor sizes.</p>
-</div>
+<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -849,8 +865,8 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="124b5d64-e946-4f5f-99a1-a32b9662e653" name="a0f8b9f5-93dd-4f7d-a707-45ef8a9378cd" type="radio">
-</input><label class="tabbed-label" for="124b5d64-e946-4f5f-99a1-a32b9662e653">
+<input checked="checked" id="1233b475-2ed2-49e7-9b73-9ca4125dbe41" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
+</input><label class="tabbed-label" for="1233b475-2ed2-49e7-9b73-9ca4125dbe41">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -862,8 +878,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="aa943f10-1096-4f5e-9999-1b8da6c159e3" name="a0f8b9f5-93dd-4f7d-a707-45ef8a9378cd" type="radio">
-</input><label class="tabbed-label" for="aa943f10-1096-4f5e-9999-1b8da6c159e3">
+<input id="bce30d43-dd5b-4697-ace2-091b9577672c" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
+</input><label class="tabbed-label" for="bce30d43-dd5b-4697-ace2-091b9577672c">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -875,8 +891,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="7117e415-ee24-4e39-b3e0-56af1d857da1" name="a0f8b9f5-93dd-4f7d-a707-45ef8a9378cd" type="radio">
-</input><label class="tabbed-label" for="7117e415-ee24-4e39-b3e0-56af1d857da1">
+<input id="4c8c49f6-5ccc-493e-b39f-acd62584edbf" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
+</input><label class="tabbed-label" for="4c8c49f6-5ccc-493e-b39f-acd62584edbf">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -892,7 +908,16 @@ Corridor 100</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>The average number of steps can be calculated <span class="math notranslate nohighlight">\(\frac{\sum_0^{n} n}{n-1}\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of distinct Corridor states. For the tested environment it gives the approximate value of <span class="math notranslate nohighlight">\(11.05\)</span>, therefore the average reward per step estimation should be close to <span class="math notranslate nohighlight">\(1000 / 11.05 = 90.49\)</span>, which corresponds to the Figure <a class="reference internal" href="#corridor-fig"><span class="std std-numref">5.1</span></a>.</p>
+<p>The same Figure demonstrates that all investigated agents learned the environments. The anticipatory classifier systems obtained an optimal number of steps after the same number of exploit trials, which is about 200. In addition, the AACS2-v2 updates the <span class="math notranslate nohighlight">\(\rho\)</span> value more aggressively in earlier phases, but the estimate converges near the optimal reward per step.</p>
+<p>For the payoff-landscape in Figure <a class="reference internal" href="#corridor-payoff-fig"><span class="std std-numref">5.2</span></a>, all allowed state–action pairs were identified in the environment (38 in this case). The final population of learning classifiers was established after 100 trials and was the same size. Both Q-table and R-learning tables were populated using the same parameters and number of trials.</p>
+<p>The relative distance between adjacent state-action pairs can be divided into three groups. The first one relates to the discounted reward agents (ACS2, Q-Learning). Both generate almost a similar reward payoff for each state–action. Later, there is the R-Learning algorithm, which estimates the <span class="math notranslate nohighlight">\(\rho\)</span> value and separates states evenly. Furthermore, two AACS2 agents are performing very similarly. The <span class="math notranslate nohighlight">\(\rho\)</span> value calculated by the R-Learning algorithm is lower than the average estimation by the AACS2 algorithm.</p>
+<p>Scaled problem instances revealed interesting properties:</p>
+<ul class="simple">
+<li><p>Q-Learning algorithm was not capable of executing optimal number of steps in environments with <span class="math notranslate nohighlight">\(n=40\)</span>, <span class="math notranslate nohighlight">\(n=100\)</span>,</p></li>
+<li><p>For the hardest problem of <span class="math notranslate nohighlight">\(n=1000\)</span>, the AACS2 modification yield better performance than ACS2,</p></li>
+<li><p>all algorithms with undiscounted reward criterions managed to calculate the average reward <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
+</ul>
 </div>
 </div>
 
