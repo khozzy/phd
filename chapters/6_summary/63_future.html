@@ -43,6 +43,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -430,9 +432,12 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="future-works">
 <h1><span class="section-number">6.2. </span>Future Works<a class="headerlink" href="#future-works" title="Permalink to this headline">¶</a></h1>
-<p>The ideas presented in this thesis may be potentially developed in the following dicrections:</p>
+<p>The ideas presented in this thesis may be potentially developed in the following directions:</p>
 <ul class="simple">
-<li><p>a</p></li>
+<li><p>Research on compacting the created population <span class="math notranslate nohighlight">\([P]\)</span>. Current solution evolves a set of distinct classifiers representing fine-grained niches of search-space. An online process capable of merging neighbouring rules would have positive impact both on the overall performance and transparency.</p></li>
+<li><p>Investigation of agent’s behaviour for non-stationary and non-deterministic environments. Problems like noise perception, of <em>concept drifting</em> where the agent has to refine population of classifiers over time.</p></li>
+<li><p>Utilization of specific ALCS mechanism like <em>action planning</em> to optimize process of building internal model of the real-valued environment.</p></li>
+<li><p>Efficient way of tuning system parameters. ALCS comprise numerous amount of hyper-parameters, therefore a employing a heuristic process would contribute towards better performance.</p></li>
 </ul>
 </div>
 
