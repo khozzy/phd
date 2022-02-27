@@ -293,10 +293,32 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../6_summary/61_summary.html">
    6. Summary
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/62_conclusions.html">
+     6.1. Conclusions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/63_future.html">
+     6.2. Future Works
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/64_publications.html">
+     6.3. Publications
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -766,8 +788,8 @@
 <p><strong>Parameters</strong></p>
 <p><span class="math notranslate nohighlight">\(\beta=0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.2\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span></p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="9ca7ba23-b799-443a-9591-22834658a2cb" name="61e6af28-d55b-435f-a648-210ade6d3f8f" type="radio">
-</input><label class="tabbed-label" for="9ca7ba23-b799-443a-9591-22834658a2cb">
+<input checked="checked" id="5c3d828f-9c47-4e28-9566-3231956b9e89" name="b1efdd4d-8a1a-48b0-b753-02ff63e34cd3" type="radio">
+</input><label class="tabbed-label" for="5c3d828f-9c47-4e28-9566-3231956b9e89">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-fig">
 <div class="cell_output docutils container">
@@ -776,8 +798,8 @@ Performance</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Plots averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs. Number of steps in exploit trials averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="83b42eab-34bc-4dae-913e-c0acf5259cac" name="61e6af28-d55b-435f-a648-210ade6d3f8f" type="radio">
-</input><label class="tabbed-label" for="83b42eab-34bc-4dae-913e-c0acf5259cac">
+<input id="7cb56c9a-0ded-43b2-afe5-722bcf322deb" name="b1efdd4d-8a1a-48b0-b753-02ff63e34cd3" type="radio">
+</input><label class="tabbed-label" for="7cb56c9a-0ded-43b2-afe5-722bcf322deb">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-payoff-fig">
 <div class="cell_output docutils container">
@@ -846,7 +868,7 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 
     <span class="n">bayes_table_data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">[</span><span class="s1">&#39;steps in last trial&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">print_row</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">steps_models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">name_prefix</span><span class="p">)],</span>
-        <span class="p">[</span><span class="s1">&#39;average reward&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="p">[</span><span class="s1">&#39;average reward per step&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">rho_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
     <span class="p">]</span>
 
     <span class="n">table</span> <span class="o">=</span> <span class="n">tabulate</span><span class="p">(</span><span class="n">bayes_table_data</span><span class="p">,</span>
@@ -865,42 +887,42 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="1233b475-2ed2-49e7-9b73-9ca4125dbe41" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
-</input><label class="tabbed-label" for="1233b475-2ed2-49e7-9b73-9ca4125dbe41">
+<input checked="checked" id="88767b93-539c-4fd5-91c3-585fb5b1562d" name="0f3ca66d-a954-462a-a083-5d48f825f48b" type="radio">
+</input><label class="tabbed-label" for="88767b93-539c-4fd5-91c3-585fb5b1562d">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
-<tr><th style="text-align: center;">                   </th><th style="text-align: center;">   ACS2    </th><th style="text-align: center;">  AACS2v1   </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
+<tr><th style="text-align: center;">                       </th><th style="text-align: center;">   ACS2    </th><th style="text-align: center;">  AACS2v1   </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">9.61 ± 0.84</td><td style="text-align: center;">9.54 ± 0.84 </td><td style="text-align: center;"> 9.0 ± 0.82 </td><td style="text-align: center;">7.91 ± 0.79 </td><td style="text-align: center;"> 9.31 ± 0.9 </td></tr>
-<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">     -     </td><td style="text-align: center;">88.52 ± 0.16</td><td style="text-align: center;">88.65 ± 0.29</td><td style="text-align: center;">     -      </td><td style="text-align: center;">89.9 ± 0.19 </td></tr>
+<tr><td style="text-align: center;">  steps in last trial  </td><td style="text-align: center;">9.61 ± 0.84</td><td style="text-align: center;">9.54 ± 0.84 </td><td style="text-align: center;"> 9.0 ± 0.82 </td><td style="text-align: center;">7.91 ± 0.79 </td><td style="text-align: center;"> 9.31 ± 0.9 </td></tr>
+<tr><td style="text-align: center;">average reward per step</td><td style="text-align: center;">     -     </td><td style="text-align: center;">88.52 ± 0.16</td><td style="text-align: center;">88.65 ± 0.29</td><td style="text-align: center;">     -      </td><td style="text-align: center;">89.9 ± 0.19 </td></tr>
 </tbody>
 </table></span></span></p>
 </div>
-<input id="bce30d43-dd5b-4697-ace2-091b9577672c" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
-</input><label class="tabbed-label" for="bce30d43-dd5b-4697-ace2-091b9577672c">
+<input id="417ad759-5b7e-482f-8a0f-c0eadd09d844" name="0f3ca66d-a954-462a-a083-5d48f825f48b" type="radio">
+</input><label class="tabbed-label" for="417ad759-5b7e-482f-8a0f-c0eadd09d844">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
-<tr><th style="text-align: center;">                   </th><th style="text-align: center;">    ACS2    </th><th style="text-align: center;">  AACS2v1  </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;">  Q-Learning  </th><th style="text-align: center;"> R-Learning </th></tr>
+<tr><th style="text-align: center;">                       </th><th style="text-align: center;">    ACS2    </th><th style="text-align: center;">  AACS2v1  </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;">  Q-Learning  </th><th style="text-align: center;"> R-Learning </th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">19.42 ± 1.65</td><td style="text-align: center;">19.43 ± 1.7</td><td style="text-align: center;">19.47 ± 1.46</td><td style="text-align: center;">124.96 ± 14.21</td><td style="text-align: center;">17.64 ± 1.67</td></tr>
-<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">     -      </td><td style="text-align: center;">44.7 ± 0.14</td><td style="text-align: center;">44.7 ± 0.19 </td><td style="text-align: center;">      -       </td><td style="text-align: center;">44.93 ± 0.12</td></tr>
+<tr><td style="text-align: center;">  steps in last trial  </td><td style="text-align: center;">19.42 ± 1.65</td><td style="text-align: center;">19.43 ± 1.7</td><td style="text-align: center;">19.47 ± 1.46</td><td style="text-align: center;">124.96 ± 14.21</td><td style="text-align: center;">17.64 ± 1.67</td></tr>
+<tr><td style="text-align: center;">average reward per step</td><td style="text-align: center;">     -      </td><td style="text-align: center;">44.7 ± 0.14</td><td style="text-align: center;">44.7 ± 0.19 </td><td style="text-align: center;">      -       </td><td style="text-align: center;">44.93 ± 0.12</td></tr>
 </tbody>
 </table></span></span></p>
 </div>
-<input id="4c8c49f6-5ccc-493e-b39f-acd62584edbf" name="9374abd7-6117-480c-8646-03cf1b3056ba" type="radio">
-</input><label class="tabbed-label" for="4c8c49f6-5ccc-493e-b39f-acd62584edbf">
+<input id="8392942c-0111-4baa-a4bf-677b48766770" name="0f3ca66d-a954-462a-a083-5d48f825f48b" type="radio">
+</input><label class="tabbed-label" for="8392942c-0111-4baa-a4bf-677b48766770">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
-<tr><th style="text-align: center;">                   </th><th style="text-align: center;">    ACS2    </th><th style="text-align: center;">  AACS2v1   </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
+<tr><th style="text-align: center;">                       </th><th style="text-align: center;">    ACS2    </th><th style="text-align: center;">  AACS2v1   </th><th style="text-align: center;">  AACS2v2   </th><th style="text-align: center;"> Q-Learning </th><th style="text-align: center;"> R-Learning </th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align: center;">steps in last trial</td><td style="text-align: center;">55.95 ± 4.13</td><td style="text-align: center;">51.25 ± 4.19</td><td style="text-align: center;">49.83 ± 4.48</td><td style="text-align: center;">200.0 ± 0.0 </td><td style="text-align: center;">48.65 ± 4.37</td></tr>
-<tr><td style="text-align: center;">  average reward   </td><td style="text-align: center;">     -      </td><td style="text-align: center;">17.84 ± 0.09</td><td style="text-align: center;">17.75 ± 0.13</td><td style="text-align: center;">     -      </td><td style="text-align: center;">17.85 ± 0.07</td></tr>
+<tr><td style="text-align: center;">  steps in last trial  </td><td style="text-align: center;">55.95 ± 4.13</td><td style="text-align: center;">51.25 ± 4.19</td><td style="text-align: center;">49.83 ± 4.48</td><td style="text-align: center;">200.0 ± 0.0 </td><td style="text-align: center;">48.65 ± 4.37</td></tr>
+<tr><td style="text-align: center;">average reward per step</td><td style="text-align: center;">     -      </td><td style="text-align: center;">17.84 ± 0.09</td><td style="text-align: center;">17.75 ± 0.13</td><td style="text-align: center;">     -      </td><td style="text-align: center;">17.85 ± 0.07</td></tr>
 </tbody>
 </table></span></span></p>
 </div>

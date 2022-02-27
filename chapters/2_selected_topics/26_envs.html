@@ -293,10 +293,32 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../6_summary/61_summary.html">
    6. Summary
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/62_conclusions.html">
+     6.1. Conclusions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/63_future.html">
+     6.2. Future Works
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/64_publications.html">
+     6.3. Publications
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -438,8 +460,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-state-worlds-fsw">
-   Finite State Worlds (FSW)
+  <a class="reference internal nav-link" href="#finite-state-worlds">
+   Finite State Worlds
   </a>
  </li>
 </ul>
@@ -488,8 +510,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-state-worlds-fsw">
-   Finite State Worlds (FSW)
+  <a class="reference internal nav-link" href="#finite-state-worlds">
+   Finite State Worlds
   </a>
  </li>
 </ul>
@@ -697,8 +719,8 @@
 <p>The environment is considered solved if the average reward if greater than or equal to 195 over last 100 trials.</p>
 <p><strong>Reward scheme</strong>: After each step, a reward of +1 is provided. The episode ends when the pole is more than 15 degrees from vertical, or the cart moves more than 2.4 units from the center.</p>
 </div>
-<div class="section" id="finite-state-worlds-fsw">
-<span id="section-topics-environments-fsw"></span><h2>Finite State Worlds (FSW)<a class="headerlink" href="#finite-state-worlds-fsw" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="finite-state-worlds">
+<span id="section-topics-environments-fsw"></span><h2>Finite State Worlds<a class="headerlink" href="#finite-state-worlds" title="Permalink to this headline">¶</a></h2>
 <p>Barry <span id="id14">[<a class="reference internal" href="../../bibliography.html#id20">99</a>]</span> introduced the <em>Finite State World</em> (FSW) environment to investigate the limits of XCS performance in long multi-steps environments with a delayed reward. It consists of <em>nodes</em> and directed <em>edges</em> joining the nodes. Each node represents a distinct environmental state and is labeled with a unique state identifier. Each edge represents a possible transition path from one node to another and is also labeled with the action(s) that will cause the movement. An edge can also lead back to the same node. The graph layout used in the experiments is presented in Figure <a class="reference internal" href="#fsw-env"><span class="std std-numref">2.17</span></a>.</p>
 <div class="figure align-default" id="fsw-env">
 <img alt="../../_images/fsw.png" src="../../_images/fsw.png" />

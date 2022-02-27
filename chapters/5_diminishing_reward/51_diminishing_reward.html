@@ -293,10 +293,32 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../6_summary/61_summary.html">
    6. Summary
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/62_conclusions.html">
+     6.1. Conclusions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/63_future.html">
+     6.2. Future Works
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_summary/64_publications.html">
+     6.3. Publications
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../abbreviations.html">
@@ -470,6 +492,18 @@
     <a class="reference internal nav-link" href="#answers-to-research-questions">
      Answers to research questions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#can-the-undiscounted-reward-criterion-be-used-in-discretized-multistep-environments">
+       Can the undiscounted reward criterion be used in discretized multistep environments?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation">
+       Does the undiscounted reward criterion result in better environment exploitation?
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -551,6 +585,18 @@
     <a class="reference internal nav-link" href="#answers-to-research-questions">
      Answers to research questions
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#can-the-undiscounted-reward-criterion-be-used-in-discretized-multistep-environments">
+       Can the undiscounted reward criterion be used in discretized multistep environments?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation">
+       Does the undiscounted reward criterion result in better environment exploitation?
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -565,7 +611,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="diminishing-reward">
 <h1><span class="section-number">5.1. </span>Diminishing reward<a class="headerlink" href="#diminishing-reward" title="Permalink to this headline">¶</a></h1>
-<p>Previous chapters showed that the application of real-valued either by using the interval predicates or discretization signal significantly increases the possible input-space. This magnitude of possible states implies the growth of classifier population size and the reward distribution using the traditional discounted sum of reward is not an appropriate option. It was designed for the case when the rewards received in all decision instances are equally important.</p>
+<p>Previous chapters showed that the application to the real-valued signal handling either by using the interval predicates or discretization significantly increases the input-space. This magnitude of possible states implies the growth of classifier population size, therefore the reward distribution using the traditional discounted sum of reward is not an appropriate option. The desired intention is for the case when the rewards received in all decision instances are equally important.</p>
 <p>The criterion applied in this situation is called <em>the average reward criterion</em> and was introduced by Puterman <span id="id1">[<a class="reference internal" href="../../bibliography.html#id103">104</a>]</span>. He stated that the decision maker might prefer it when the decisions are made frequently (so that the discount rate is very close to 1) or other terms cannot easily describe the performance criterion. Possible areas of an application might include situations where system performance is assessed based on the throughput rate (like making frequent decisions when controlling the flow of communication networks).</p>
 <p>The averaged reward criterion was first implemented in XCS by Tharakunnel and Goldberg <span id="id2">[<a class="reference internal" href="../../bibliography.html#id104">105</a>]</span>. They called their modification AXCS and showed that it performed similarly to the standard XCS in the Woods2 environment. Later, Zang et al. <span id="id3">[<a class="reference internal" href="../../bibliography.html#id105">106</a>]</span> formally introduced the R-learning <span id="id4">[<a class="reference internal" href="../../bibliography.html#id106">107</a>]</span> <span id="id5">[<a class="reference internal" href="../../bibliography.html#id107">108</a>]</span> technique to XCS and called it XCSAR. They compared it with XCSG (where the prediction parameters are modified by applying the idea of gradient descent) and ACXS (maximizing the average of successive rewards) in large multistep problems (Woods1, Maze6, and Woods14).</p>
 <p>In this chapter the ACS2 credit assignment component, which is optimizing the performance in the infinite horizon (discounted reward) is replaced with an averaged version. The introduced variant is named AACS2 (Averaged Anticipatory Classifier System) and is implemented in two slightly different variants - AACS2-v1 and AACS2-v2. The performance is validated using two scalable and discretized environments requiring performing multiple steps in pursuance of reward.</p>
@@ -660,7 +706,7 @@ cl.ir &amp; = &amp; cl.ir + \beta \left( \phi(t) - cl.ir \right)
 </div>
 <div class="admonition-experiment-2-deceptive-corridor admonition">
 <p class="admonition-title"><em>Experiment 2 - Deceptive Corridor</em></p>
-<p>The <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State Worlds (FSW)</span></a> environment is an extension to the Corridor. In each state actions alternate - one will bring the agent closer to the reward, the other one is languishing. The forager will have to learn to distinguish every other state and distribute rewards properly.</p>
+<p>The <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State Worlds</span></a> environment is an extension to the Corridor. In each state actions alternate - one will bring the agent closer to the reward, the other one is languishing. The forager will have to learn to distinguish every other state and distribute rewards properly.</p>
 </div>
 </div>
 <div class="section" id="experiments">
@@ -674,10 +720,19 @@ cl.ir &amp; = &amp; cl.ir + \beta \left( \phi(t) - cl.ir \right)
 </div>
 <div class="section" id="answers-to-research-questions">
 <h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
-<p>…</p>
-<blockquote>
-<div><p>Describe other approach like classifier bridging (page 13 in urbanowicz introduction, review, roadmap).</p>
-</div></blockquote>
+<div class="section" id="can-the-undiscounted-reward-criterion-be-used-in-discretized-multistep-environments">
+<h4>Can the undiscounted reward criterion be used in discretized multistep environments?<a class="headerlink" href="#can-the-undiscounted-reward-criterion-be-used-in-discretized-multistep-environments" title="Permalink to this headline">¶</a></h4>
+<p>Concluded experiments shown that the undiscounted reward criterion can be successfully applied to problem requiring long-action chains such as the Corridor of FSW. The new system AACS2 varies only in a way the classifier reward <span class="math notranslate nohighlight">\(cl.r\)</span> metric is calculated. The clear difference between the discounted criterion is visible on the payoff landscapes generated from the testing environments. The AACS2 can produce a distinct payoff-landscape with uniformly spaced payoff levels, which is very similar to the one generated by the R-learning algorithm. When taking a closer look, all algorithms generate step-like payoff-landscape plots, but each particular state-action pairs are more distinguishable when the reward-criterion is used. The explanation of why the agent moves toward the goal at all can be found in Equation <a class="reference internal" href="#equation-51-acs2-relative-reward-eq">(5.3)</a> - it is able to find the next best action by using the best classifiers’ fitness from the next match-set.</p>
+<p>In addition, the rate at which the average estimate value <span class="math notranslate nohighlight">\(\rho\)</span> converges is different for AACS2-v1 and AACS2-v2. Figures <a class="reference internal" href="51_experiment_1.html#corridor-fig"><span class="std std-numref">5.1</span></a> and <a class="reference internal" href="51_experiment_2.html#fsw-fig"><span class="std std-numref">5.3</span></a> demonstrate that the AACS2-v2 settles to the final value faster, but also has greater fluctuations. That is caused by the fact that both match sets’ maximum fitness is considered when updating the values. Zang also observed this and proposed that the learning rate <span class="math notranslate nohighlight">\(\zeta\)</span> in Equation <a class="reference internal" href="#equation-51-aacs2v2-rho-update-eq">(5.5)</a> could decay over time <span id="id18">[<a class="reference internal" href="../../bibliography.html#id105">106</a>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[\zeta \gets \zeta - \frac{\zeta^{max} - \zeta^{min}}{NumOfTrials}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\zeta^{max}\)</span> is the initial value of <span class="math notranslate nohighlight">\(\zeta\)</span>, and <span class="math notranslate nohighlight">\(\zeta^{min}\)</span> is the minimum learning rate required. The update should take place at the beginning of each exploration trial.</p>
+</div>
+<div class="section" id="does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation">
+<h4>Does the undiscounted reward criterion result in better environment exploitation?<a class="headerlink" href="#does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation" title="Permalink to this headline">¶</a></h4>
+<p>Number of steps during exploitation trials depicted on figures <a class="reference internal" href="51_experiment_1.html#corridor-fig"><span class="std std-numref">5.1</span></a> and <a class="reference internal" href="51_experiment_2.html#fsw-fig"><span class="std std-numref">5.3</span></a> indicate that the agent is able to pick up better actions when the undiscounted criterion is used.</p>
+<p>In addition, the fact that the <span class="math notranslate nohighlight">\(\rho\)</span> converged to a slightly    suboptimal value might be caused by the exploration strategy adopted, which was set to the <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy. Because the estimated average reward is updated only when the greedy action is executed, the number of greedy actions to be performed during the exploration trial is uncertain. Moreover, the probability distribution when the agent observes the rewarding state might be too low in order to enable the estimated average reward to reach optimal value. This was observed during the experimentation - the <span class="math notranslate nohighlight">\(\rho\)</span> value was correlated with the <span class="math notranslate nohighlight">\(\epsilon\)</span> parameter.</p>
+</div>
 </div>
 </div>
 </div>
