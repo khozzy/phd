@@ -554,16 +554,16 @@ q_i &amp;= m_i + s_i
 <p>O’Hara and Bull experimented with representing the rule structure of an XCS classifier with two artificial neural networks named X-NCS <span id="id14">[<a class="reference internal" href="../../bibliography.html#id26">77</a>]</span> <span id="id15">[<a class="reference internal" href="../../bibliography.html#id27">78</a>]</span>. While the first one, called the <em>action-network</em>  determines the application condition of the classifiers replacing the condition-action part, the latter one - <em>anticipation network</em> - forms the description of the predicted next state.</p>
 <p>Both networks are fully connected multi-layered perceptrons (MLP) with the same number of nodes in their hidden layer. The input layer in both cases matches the observation state vector provided by the environment. In the action network the size of an output layer is equal to the number of possible actions incremented with an extra node signifying a non-matching situation. Hence, the anticipation network is responsible for predicting next state, the size of its output layer is equal to the input one. Figures <a class="reference internal" href="#xncs-action-network"><span class="std std-numref">2.5</span></a> and <a class="reference internal" href="#xncs-anticipation-network"><span class="std std-numref">2.6</span></a> visualize both topologies.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="5b9b90b0-0d20-4d5d-919e-efe4987894d7" name="84503500-b4e1-4271-816d-b3fcba8caba7" type="radio">
-</input><label class="tabbed-label" for="5b9b90b0-0d20-4d5d-919e-efe4987894d7">
+<input checked="checked" id="cbc06962-acee-4ba0-aff8-e419fcd282b6" name="ee7ef86a-6376-435d-8d84-3f722c107b6a" type="radio">
+</input><label class="tabbed-label" for="cbc06962-acee-4ba0-aff8-e419fcd282b6">
 Action Network</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="xncs-action-network">
 <img alt="../../_images/xncs_action_network.gv.png" src="../../_images/xncs_action_network.gv.png" />
 <p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">The topology of fully connected MLP of the network determing the agent’s action based on the observed state (input layer). The number of output nodes is equal to the number of possible actions with an extra state representing a non-matching case.</span><a class="headerlink" href="#xncs-action-network" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="50bb816c-d437-42c4-a764-00fd94225b4f" name="84503500-b4e1-4271-816d-b3fcba8caba7" type="radio">
-</input><label class="tabbed-label" for="50bb816c-d437-42c4-a764-00fd94225b4f">
+<input id="8e40af21-bccf-40f4-86e5-a3a9f457305d" name="ee7ef86a-6376-435d-8d84-3f722c107b6a" type="radio">
+</input><label class="tabbed-label" for="8e40af21-bccf-40f4-86e5-a3a9f457305d">
 Anticipation Network</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="xncs-anticipation-network">
 <img alt="../../_images/xncs_anticipation_network.gv.png" src="../../_images/xncs_anticipation_network.gv.png" />
