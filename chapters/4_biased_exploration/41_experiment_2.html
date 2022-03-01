@@ -669,12 +669,12 @@
 <p>Both <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a> multiple-step environments were used for verifying the biased exploration strategies. In each case the ACS2 agent starts by performing <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">60</span></code></span> explore trials with selected strategy, followed by <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20</span></code></span> where the evolved population is validated.</p>
 <p>The following metrics are considered:</p>
 <ul class="simple">
-<li><p>knowledge - depicting the process of building internal model,</p></li>
-<li><p>population size - demonstrate total number of classifiers,</p></li>
-<li><p>steps in trial - both in explore and exploit phase.</p></li>
+<li><p>knowledge - depicting the process of building an internal model,</p></li>
+<li><p>population size - demonstrate the total number of classifiers,</p></li>
+<li><p>steps in a trial - both in explore and exploit phase.</p></li>
 </ul>
-<p>Figures <a class="reference internal" href="#e2-corridor-fig"><span class="std std-numref">4.4</span></a> and <a class="reference internal" href="#e2-grid-fig"><span class="std std-numref">4.5</span></a> presents the metric evolution for the basic versions of Corridor and Grid problems, containing 20 and 400 distinct states respectively, but the overall metrics look similar for larger instances. Additionally, for the Corridor the cross-over capability of the agent was switched off because of the unit length of the perception vector <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
-<p>To amplify the agent’s motivation for exploring possible options each problem was additionally increased to the sizes of <span class="math notranslate nohighlight">\(n=40\)</span> and <span class="math notranslate nohighlight">\(n=100\)</span>. Last trial statistical inferences were collected in all cases to estimate overall performance.</p>
+<p>Figures <a class="reference internal" href="#e2-corridor-fig"><span class="std std-numref">4.4</span></a> and <a class="reference internal" href="#e2-grid-fig"><span class="std std-numref">4.5</span></a> presents the metric evolution for the basic versions of Corridor and Grid problems, containing 20 and 400 distinct states respectively, but the overall metrics look similar for larger instances. Additionally, for the Corridor, the cross-over capability of the agent was switched off because of the unit length of the perception vector <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
+<p>To amplify the agent’s motivation for exploring possible options, each problem was additionally increased to the sizes of <span class="math notranslate nohighlight">\(n=40\)</span> and <span class="math notranslate nohighlight">\(n=100\)</span>. Last trial statistical inferences were collected in all cases to estimate overall performance.</p>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p><strong>Corridor ACS2 parameters</strong></p>
@@ -897,31 +897,31 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="ae1f5f6d-1ea9-4cda-9870-69eeb3eebd48" name="98c18ede-3f2f-4ca4-b8d7-f0c87cc4908f" type="radio">
-</input><label class="tabbed-label" for="ae1f5f6d-1ea9-4cda-9870-69eeb3eebd48">
+<input checked="checked" id="0efafcdd-8bf8-49c7-be15-72ec4bce464b" name="b6958d5a-63c1-4be2-8f61-965451122091" type="radio">
+</input><label class="tabbed-label" for="0efafcdd-8bf8-49c7-be15-72ec4bce464b">
 Corridor</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="e2-corridor-fig">
 <div class="cell_output docutils container">
 <img alt="../../_images/41_experiment_2_6_0.png" src="../../_images/41_experiment_2_6_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Performance of Corridor-20 environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">60</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. <em>Steps in a trial</em> was plotted with moving-average of 3 last steps for clarity. No explicit discretizer was needed. Maximum number of steps in a trial is 200. Dotted vertical line indicates the execution of explore and exploit phases.</span><a class="headerlink" href="#e2-corridor-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Performance of Corridor-20 environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">60</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. <em>Steps in a trial</em> was plotted with a moving average of 3 last steps for clarity. No explicit discretizer was needed. The maximum number of steps in a trial is 200. The dotted vertical line indicates the execution of explore and exploit phases.</span><a class="headerlink" href="#e2-corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="64e13b12-47e9-4180-9c8d-32d05e92c618" name="98c18ede-3f2f-4ca4-b8d7-f0c87cc4908f" type="radio">
-</input><label class="tabbed-label" for="64e13b12-47e9-4180-9c8d-32d05e92c618">
+<input id="35ac0bae-d656-433d-b1c3-0f6e52d3cb31" name="b6958d5a-63c1-4be2-8f61-965451122091" type="radio">
+</input><label class="tabbed-label" for="35ac0bae-d656-433d-b1c3-0f6e52d3cb31">
 Grid</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="e2-grid-fig">
 <div class="cell_output docutils container">
 <img alt="../../_images/41_experiment_2_6_1.png" src="../../_images/41_experiment_2_6_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.5 </span><span class="caption-text">Performance of Grid-20 environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">60</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. <em>Steps in a trial</em> was plotted with moving-average of 3 last steps for clarity. No explicit discretizer was needed. Maximum number of steps in a trial is 2000. Dotted vertical line indicates the execution of explore and exploit phases.</span><a class="headerlink" href="#e2-grid-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.5 </span><span class="caption-text">Performance of Grid-20 environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">60</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">20</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. <em>Steps in a trial</em> was plotted with a moving average of 3 last steps for clarity. No explicit discretizer was needed. The maximum number of steps in a trial is 2000. The dotted vertical line indicates the execution of explore and exploit phases.</span><a class="headerlink" href="#e2-grid-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from exploit trials is considered as a representative state of algorithm performance.</p>
+<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from exploit trials is considered a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1039,8 +1039,8 @@ Grid</label><div class="tabbed-content docutils">
 <div class="section" id="corridor">
 <h3>Corridor<a class="headerlink" href="#corridor" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="5ed74e45-ee6e-4458-8917-86ae0c75b1f3" name="9f11e26f-2bb1-4b16-b5ae-e4f8fccf142f" type="radio">
-</input><label class="tabbed-label" for="5ed74e45-ee6e-4458-8917-86ae0c75b1f3">
+<input checked="checked" id="d6fb5bdc-1eb6-4d8e-bdef-6c34142ae7f7" name="57779241-4995-48ac-8a99-39a85e1fb4fc" type="radio">
+</input><label class="tabbed-label" for="d6fb5bdc-1eb6-4d8e-bdef-6c34142ae7f7">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1055,8 +1055,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="64d2fcd5-ed26-46c4-b0ee-c99a11395e67" name="9f11e26f-2bb1-4b16-b5ae-e4f8fccf142f" type="radio">
-</input><label class="tabbed-label" for="64d2fcd5-ed26-46c4-b0ee-c99a11395e67">
+<input id="5f0faac6-dfed-450c-ad04-513c7ca7f1c1" name="57779241-4995-48ac-8a99-39a85e1fb4fc" type="radio">
+</input><label class="tabbed-label" for="5f0faac6-dfed-450c-ad04-513c7ca7f1c1">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1071,8 +1071,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="abc5c789-509d-43c9-8364-eb8a98619a27" name="9f11e26f-2bb1-4b16-b5ae-e4f8fccf142f" type="radio">
-</input><label class="tabbed-label" for="abc5c789-509d-43c9-8364-eb8a98619a27">
+<input id="9ed4b97e-e59b-4814-8858-c56925b05b10" name="57779241-4995-48ac-8a99-39a85e1fb4fc" type="radio">
+</input><label class="tabbed-label" for="9ed4b97e-e59b-4814-8858-c56925b05b10">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1092,8 +1092,8 @@ Corridor 100</label><div class="tabbed-content docutils">
 <div class="section" id="grid">
 <h3>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="3981da48-950a-4a98-81d1-a2e01418fb49" name="5c294dfa-5511-4948-8b69-bef9efb7b86e" type="radio">
-</input><label class="tabbed-label" for="3981da48-950a-4a98-81d1-a2e01418fb49">
+<input checked="checked" id="49130efb-5222-4525-8c55-ff7fd15673aa" name="4e3dc6b0-8a61-4251-aa66-e22f3d61ec7e" type="radio">
+</input><label class="tabbed-label" for="49130efb-5222-4525-8c55-ff7fd15673aa">
 Grid 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1108,8 +1108,8 @@ Grid 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="ef4d046f-755c-463a-b56f-5aa798cfecf0" name="5c294dfa-5511-4948-8b69-bef9efb7b86e" type="radio">
-</input><label class="tabbed-label" for="ef4d046f-755c-463a-b56f-5aa798cfecf0">
+<input id="5bc91a37-4b1d-42eb-8835-ea872ffb6d39" name="4e3dc6b0-8a61-4251-aa66-e22f3d61ec7e" type="radio">
+</input><label class="tabbed-label" for="5bc91a37-4b1d-42eb-8835-ea872ffb6d39">
 Grid 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1124,8 +1124,8 @@ Grid 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="04972c8c-2377-443f-b9c8-c93afee37d8b" name="5c294dfa-5511-4948-8b69-bef9efb7b86e" type="radio">
-</input><label class="tabbed-label" for="04972c8c-2377-443f-b9c8-c93afee37d8b">
+<input id="be63264d-02de-4bef-9182-421061be9059" name="4e3dc6b0-8a61-4251-aa66-e22f3d61ec7e" type="radio">
+</input><label class="tabbed-label" for="be63264d-02de-4bef-9182-421061be9059">
 Grid 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -1146,14 +1146,14 @@ Grid 100</label><div class="tabbed-content docutils">
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
 <p><strong>Corridor</strong></p>
-<p>Based on the Figure <a class="reference internal" href="#e2-corridor-fig"><span class="std std-numref">4.4</span></a> all methods converge to optimal population size, and after switching to the exploitation mode are able to utilize gained knowledge fully. Regardless of the exploration technique chosen, the agent can obtain full knowledge of the environment in about 20 trials. AD and KA techniques seem to reach this point faster than the baseline EG and with OIQ modification.</p>
+<p>Based on the Figure <a class="reference internal" href="#e2-corridor-fig"><span class="std std-numref">4.4</span></a> all methods converge to optimal population size, and after switching to the exploitation mode, can utilize gained knowledge fully. Regardless of the exploration technique chosen, the agent can obtain complete knowledge of the environment in about 20 trials. AD and KA techniques seem to reach this point faster than the baseline EG and with OIQ modification.</p>
 <p>The AD and KA methods accelerate the process of investigating the search-space resulting in earlier classifier creation.</p>
 <p>Finally, the agent can fully exploit the environment after switching to “exploit” mode performing a minimal number of steps to reach the goal in each trial. Its also worth mentioning the constant effect of the KA method in explore phase, not taking the optimal actions most of the time, by continually updating the assumptions about all possibilities.</p>
-<p>However, when the problem size increased twice (<span class="math notranslate nohighlight">\(n=40\)</span>), while all strategies obtained full knowledge of environment only the KA method managed to exploit it totally unerringly. This difference is highlighted more for <span class="math notranslate nohighlight">\(n=100\)</span>, where only about third of all exploit trials were successful by KA. Other strategies performed significantly worse.</p>
+<p>However, when the problem size increased twice (<span class="math notranslate nohighlight">\(n=40\)</span>), while all strategies obtained full knowledge of the environment, only the KA method managed to exploit it totally unerringly. This difference is highlighted more for <span class="math notranslate nohighlight">\(n=100\)</span>, where only about a third of all exploit trials were successful by KA, and other strategies performed significantly worse.</p>
 <p><strong>Grid</strong></p>
 <p>Performance plot using Grid of size <span class="math notranslate nohighlight">\(n=20\)</span> in Figure <a class="reference internal" href="#e2-grid-fig"><span class="std std-numref">4.5</span></a> shows that regardless of exploration technique chosen, the agent is still able to obtain full knowledge of the environment (even faster than in Corridor) and converge with the number of optimal classifiers (KA method here also creates much more classifiers at the beginning of the experimentation).</p>
-<p>Interestingly though, the KA is obtaining substantially worst average reward despite having the largest amount of reliable classifiers for problems where <span class="math notranslate nohighlight">\(n=20\)</span> and <span class="math notranslate nohighlight">\(n=40\)</span>.</p>
-<p>Moreover, what is interesting is that the agent is unable to exploit the environment even though he knows the exact consequences of each action (non-optimal number of steps in the exploitation phase). After investigation, it was found out that that most of the classifiers have very similar <span class="math notranslate nohighlight">\(cl.r\)</span> value, which represents expected future reward. The agent in the current form is unable to differentiate between aliasing states that results in inability of forming an optimal policy. This finding emphasize the need for more universal metric for quantifying the agent’s performance. Current definition of knowledge, modelling only encountered transitions, is inaccurate when the estimated reward is not distributed properly amongst participating classifiers.</p>
+<p>Interestingly, the KA obtains the worst average reward despite having the largest amount of reliable classifiers for problems where <span class="math notranslate nohighlight">\(n=20\)</span> and <span class="math notranslate nohighlight">\(n=40\)</span>.</p>
+<p>Moreover, what is interesting is that the agent cannot exploit the environment even though he knows the exact consequences of each action (non-optimal number of steps in the exploitation phase). After investigation, it was found that most classifiers have a very similar <span class="math notranslate nohighlight">\(cl.r\)</span> value, representing the expected future reward. The agent in the current form is unable to differentiate between aliasing states, resulting in an inability to form an optimal policy. This finding emphasizes a need for a universal metric for quantifying the agent’s performance. The current definition of knowledge, modelling only encountered transitions, is inaccurate when the estimated reward is not distributed correctly amongst participating classifiers.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">

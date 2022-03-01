@@ -619,15 +619,15 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-3-balancing-the-pole">
 <h1>Experiment 3 - Balancing the pole<a class="headerlink" href="#experiment-3-balancing-the-pole" title="Permalink to this headline">¶</a></h1>
-<p>The challenging part about the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-cartpole"><span class="std std-ref">Cart Pole</span></a> problem is that attributes from the perception vector are described with different scales. Moreover, two of them ranges to infinity. Such situation might occur when applying the ALCS agent into the real-world domain.</p>
-<p>Splitting each attribute into fixed amount of buckets is infeasible. Proposed solution involved assigning maximum, experienced values for both the cart <span class="math notranslate nohighlight">\(\sigma_1\)</span> and pole <span class="math notranslate nohighlight">\(\sigma_3\)</span> velocity. In this case:</p>
+<p>The challenging part about the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-cartpole"><span class="std std-ref">Cart Pole</span></a> problem is that attributes from the perception vector are described with different scales. Moreover, two of them range to infinity. This situation might occur when applying the ALCS agent to the real-world domain.</p>
+<p>Splitting each attribute into a fixed amount of buckets is infeasible. Proposed solution involved assigning maximum, experienced values for both the cart <span class="math notranslate nohighlight">\(\sigma_1\)</span> and pole <span class="math notranslate nohighlight">\(\sigma_3\)</span> velocity. In this case:</p>
 <ul class="simple">
 <li><p>cart velocity <span class="math notranslate nohighlight">\(\sigma_1 \in [-0.5, 0.5]\)</span>,</p></li>
 <li><p>pole velocity at tip <span class="math notranslate nohighlight">\(\sigma_3 \in [-3500, 3500]\)</span></p></li>
 </ul>
-<p>Additionally, a specific discretizer capable of dividing each attribute into predefined number of bins was used. This procedure implies precautions when performing the cross-over operation, therefore it was totally disabled.</p>
-<p>The experiment analyzes both the impact of selecting the granularity of discretization scheme and the biased exploration technique. The ACS2 agent is first executing <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> explore trials using specific method and then tries to use gained knowledge by selecting best action in further <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploit trials.</p>
-<p>Five different discretization schemes chosen arbitrarily, defining number of bins per attribute are listed below:</p>
+<p>Additionally, a specific discretizer was used to divide each attribute into a predefined number of bins. This procedure implies precautions when performing the cross-over operation; therefore, it was disabled.</p>
+<p>The experiment analyzes both the impact of selecting the granularity of the discretization scheme and the biased exploration technique. The ACS2 agent is first executing <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> explore trials using a specific method and then tries to use gained knowledge by selecting best action in further <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploit trials.</p>
+<p>Five different discretization schemes chosen arbitrarily, defining a number of bins per attribute are listed below:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">6,</span> <span class="pre">6</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">4,</span> <span class="pre">4,</span> <span class="pre">4,</span> <span class="pre">4</span></code>,</p></li>
@@ -635,7 +635,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">4</span></code>,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">8,</span> <span class="pre">8</span></code></p></li>
 </ul>
-<p>The metrics of reliable population size and actual performance were both depicted on Figure <a class="reference internal" href="#e3-cartpole-fig"><span class="std std-numref">4.6</span></a> and estimated probabilistically for above-mentioned schemes.</p>
+<p>The metrics of reliable population size and actual performance were both depicted in Figure <a class="reference internal" href="#e3-cartpole-fig"><span class="std std-numref">4.6</span></a> and estimated probabilistically for the above-mentioned schemes.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CartPoleObservationWrapper</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">ObservationWrapper</span><span class="p">):</span>
@@ -772,12 +772,12 @@
 <div class="cell_output docutils container">
 <img alt="../../_images/41_experiment_3_2_0.png" src="../../_images/41_experiment_3_2_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 4.6 </span><span class="caption-text">Performance in CartPole environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. Moving average of 5 last trials applied for clarity. Dotted vertical line indicates the execution of explore and exploit phases. The environment is considered solved if the average reward if greater than or equal to 195 over last 100 trials.</span><a class="headerlink" href="#e3-cartpole-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4.6 </span><span class="caption-text">Performance in CartPole environment. <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploration and <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">500</span></code></span> exploitation trials averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> runs. Moving average of 5 last trials applied for clarity. The dotted vertical line indicates the execution of explore and exploit phases. The environment is considered solved if the average reward is greater than or equal to 195 over the last 100 trials.</span><a class="headerlink" href="#e3-cartpole-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last experimental trial. For the obtained reward, the average value from exploit trials is considered as a representative state of algorithm performance.</p>
+<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last experimental trial. For the obtained reward, the average value from exploit trials is considered a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiments_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -848,8 +848,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="7918133d-c9f3-4efe-818f-30b84eaf451c" name="3aa0e598-5ca4-41f1-b725-7b24a819878e" type="radio">
-</input><label class="tabbed-label" for="7918133d-c9f3-4efe-818f-30b84eaf451c">
+<input checked="checked" id="189179b1-ec33-4d7c-b7b3-0d6ce8fa09e9" name="7ce21490-9c49-40b4-a77e-3ba820372d0a" type="radio">
+</input><label class="tabbed-label" for="189179b1-ec33-4d7c-b7b3-0d6ce8fa09e9">
 Average Number of Steps</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -864,8 +864,8 @@ Average Number of Steps</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="512c2791-4855-43e6-81b0-09f6efd0daf3" name="3aa0e598-5ca4-41f1-b725-7b24a819878e" type="radio">
-</input><label class="tabbed-label" for="512c2791-4855-43e6-81b0-09f6efd0daf3">
+<input id="c6e6a428-ca50-4ef4-8d9d-dedbd13e1e45" name="7ce21490-9c49-40b4-a77e-3ba820372d0a" type="radio">
+</input><label class="tabbed-label" for="c6e6a428-ca50-4ef4-8d9d-dedbd13e1e45">
 Reliable classifiers</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -884,8 +884,8 @@ Reliable classifiers</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>Surprisingly, when using the discretization of <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">6,</span> <span class="pre">6</span></code> the agent can keep the pole upright for about 175 steps in each trial after performing just 500 learning trials. This score was possible for every method except the AD. On the other side, AD was able to create more reliable classifiers quicker than other methods.</p>
-<p>The performance of the experiment turned out to be very sensitive to the discretization bins chosen. For example, a slightly larger amount of bins for pole angle and velocity (eight bins in both cases) managed to increase number of upright steps. In official terms, the environment is still not solved. However, it turned out that the number of reliable classifiers required to obtain such a score is less than 10. That allows a very compact and human-readable form of storing knowledge (see Table below for example).</p>
+<p>Surprisingly, when using the discretization of <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">6,</span> <span class="pre">6</span></code>, the agent can keep the pole upright for about 175 steps in each trial after performing just 500 learning trials. This score was possible for every method except the AD. On the other side, AD created more reliable classifiers quicker than other methods.</p>
+<p>The experiment’s performance turned out to be very sensitive to the discretization bins chosen. For example, a slightly larger amount of bins for pole angle and velocity (eight bins in both cases) increased the number of upright steps. In official terms, the environment is still not solved. However, it turned out that the number of reliable classifiers required to obtain such a score is less than 10. That allows a very compact and human-readable form of storing knowledge (see Table below for example).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/cart_pole/epsilon_greedy_single_run.dill&#39;</span><span class="p">)</span>
@@ -919,8 +919,8 @@ Reliable classifiers</label><div class="tabbed-content docutils">
 </div>
 </div>
 </div>
-<p>It can be seen that the majority of reliable classifiers are marked on the first two attributes, meaning that they too sweep and therefore should be more distinguishable (for example by increasing discretization). In order to set them properly, dedicated hyper-parameter optimization process is advised.</p>
-<p>Despite fragility, the obtained result are very promising, showing that ALCS methods can be compared to other highly sophisticated black-box approaches and maintain highly verbose problem model.</p>
+<p>It can be seen that the majority of reliable classifiers are marked on the first two attributes, meaning that they too sweep and therefore should be more distinguishable (for example, by increasing discretization). In order to set them properly, a dedicated hyper-parameter optimization process is advised.</p>
+<p>Despite fragility, the obtained result is auspicious, showing that ALCS methods can be compared to other highly sophisticated black-box approaches and maintain a highly verbose problem model.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">

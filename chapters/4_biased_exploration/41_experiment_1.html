@@ -635,7 +635,7 @@
 <li><p>6 bits - <span class="math notranslate nohighlight">\(2\cdot 6^6=93312\)</span> possible states,</p></li>
 <li><p>7 bits - <span class="math notranslate nohighlight">\(2\cdot 7^6=235298\)</span> possible states.</p></li>
 </ul>
-<p>Each experiment was performed by alternating explore and exploit phases for <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">30000</span></code></span> trials. The cross-over capabilities were deliberately disabled because of the last bit in perception <span class="math notranslate nohighlight">\(\sigma\)</span> was denoting the prediction result, which inadvertently might cause invalid rule evolution.</p>
+<p>Each experiment was performed by alternating explore and exploit phases for <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">30000</span></code></span> trials. The cross-over capabilities were deliberately disabled because the last bit in perception <span class="math notranslate nohighlight">\(\sigma\)</span> was denoting the prediction result, which might inadvertently cause invalid rule evolution.</p>
 <p>The efficiency of aforementioned biased exploration strategies is measured by studying the trajectory of the average reward and classifiers population size plots over time. Figures <a class="reference internal" href="#rmpx-5-bins-fig"><span class="std std-numref">4.1</span></a>, <a class="reference internal" href="#rmpx-6-bins-fig"><span class="std std-numref">4.2</span></a> and <a class="reference internal" href="#rmpx-7-bins-fig"><span class="std std-numref">4.3</span></a> presents the average aggregation of results along with statistical inference calculated over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
@@ -741,8 +741,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="effe816a-a62f-4dec-bb98-fd26095c14a7" name="6c8e4c69-f78b-4b44-9306-ae7383bc4345" type="radio">
-</input><label class="tabbed-label" for="effe816a-a62f-4dec-bb98-fd26095c14a7">
+<input checked="checked" id="5ed3931f-7070-465d-b412-6ab2318bd7b8" name="a2fe04eb-be4b-4263-a475-71f5f7eae647" type="radio">
+</input><label class="tabbed-label" for="5ed3931f-7070-465d-b412-6ab2318bd7b8">
 5 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-5-bins-fig">
 <div class="cell_output docutils container">
@@ -751,8 +751,8 @@
 <p class="caption"><span class="caption-number">Fig. 4.1 </span><span class="caption-text">6-bit rMPX discretized with 5 bins. Faded lines shows performance of explore mode, solid ones for exploit</span><a class="headerlink" href="#rmpx-5-bins-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="ee78c422-4a33-43ec-a623-47ed2ee0e92d" name="6c8e4c69-f78b-4b44-9306-ae7383bc4345" type="radio">
-</input><label class="tabbed-label" for="ee78c422-4a33-43ec-a623-47ed2ee0e92d">
+<input id="9aab5b7a-efd4-4f74-8cc6-57135034df37" name="a2fe04eb-be4b-4263-a475-71f5f7eae647" type="radio">
+</input><label class="tabbed-label" for="9aab5b7a-efd4-4f74-8cc6-57135034df37">
 6 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-6-bins-fig">
 <div class="cell_output docutils container">
@@ -761,8 +761,8 @@
 <p class="caption"><span class="caption-number">Fig. 4.2 </span><span class="caption-text">6-bit rMPX discretized with 6 bins. Faded lines shows performance of explore mode, solid ones for exploit</span><a class="headerlink" href="#rmpx-6-bins-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="a17cb5a1-dd36-45aa-aee6-dbb68de5e448" name="6c8e4c69-f78b-4b44-9306-ae7383bc4345" type="radio">
-</input><label class="tabbed-label" for="a17cb5a1-dd36-45aa-aee6-dbb68de5e448">
+<input id="5816f085-d8c1-4da9-8116-47b5742298b6" name="a2fe04eb-be4b-4263-a475-71f5f7eae647" type="radio">
+</input><label class="tabbed-label" for="5816f085-d8c1-4da9-8116-47b5742298b6">
 7 bins discretization</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx-7-bins-fig">
 <div class="cell_output docutils container">
@@ -775,7 +775,7 @@
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from last 100 exploit trials is considered as a representative state of algorithm performance.</p>
+<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from the last 100 exploit trials is considered a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_bayes_model</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
@@ -839,8 +839,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="7baefaba-a063-4371-a63a-d1d2c6dda4e6" name="020a5f3a-4568-46ba-90fb-1795e006c06e" type="radio">
-</input><label class="tabbed-label" for="7baefaba-a063-4371-a63a-d1d2c6dda4e6">
+<input checked="checked" id="05004148-face-4d4a-ae80-8870ee7e6227" name="b4375c64-c2a2-4b2b-9a81-ed9685aadb98" type="radio">
+</input><label class="tabbed-label" for="05004148-face-4d4a-ae80-8870ee7e6227">
 Average Reward</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -853,8 +853,8 @@ Average Reward</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="5f9394c2-4af4-426f-9b54-d5f41c3dc0d6" name="020a5f3a-4568-46ba-90fb-1795e006c06e" type="radio">
-</input><label class="tabbed-label" for="5f9394c2-4af4-426f-9b54-d5f41c3dc0d6">
+<input id="ca20cf31-640d-414f-8a3c-c36c1ee5b292" name="b4375c64-c2a2-4b2b-9a81-ed9685aadb98" type="radio">
+</input><label class="tabbed-label" for="ca20cf31-640d-414f-8a3c-c36c1ee5b292">
 Reliable classifiers</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -871,8 +871,8 @@ Reliable classifiers</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>Despite large size of the problem’s search space the investigated biased exploration strategies have no impact on the average obtained reward. None of the method can be distinguished by introducing peculiar rules into the population having an imprint on the performance. However, the differences between discretization resolution are depicted. The ACS2 agent is selecting valid action for most of the time when 6 bins are used to divide the perception input range. For the other odd values, the exploit performance is significantly worse, but still better than random guessing.</p>
-<p>The rate of reliable classifier acquisition begins equally for all the strategies and resolutions. After a few thousand trials the KA method tends to drive the exploration process into the unknown regions of the space, therefore forming more and better novel rules. The performance of other approaches of EG, AD and OIQ is not distinguishable.</p>
+<p>Despite the large size of the problem’s search space, the investigated biased exploration strategies have no impact on the average obtained reward. None of the methods can be distinguished by introducing peculiar rules into the population, imprinting on the performance. However, the differences between discretization resolution are depicted. The ACS2 agent selects valid action when six bins are used to divide the perception input range most of the time. The exploit performance is significantly worse for the other odd values but still better than random guessing.</p>
+<p>The rate of reliable classifier acquisition begins equally for all the strategies and resolutions. After a few thousand trials, the KA method tends to drive the exploration process into the unknown regions of the space, therefore forming more and better novel rules. The performance of other approaches of EG, AD and OIQ is not distinguishable.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">
