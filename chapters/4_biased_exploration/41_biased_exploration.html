@@ -443,8 +443,8 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-the-significantly-accelerate-agent-s-learning-speed">
-       Q1: Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?
+      <a class="reference internal nav-link" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-significantly-accelerate-the-agent-s-learning-speed">
+       Q1: Does the biased exploration methods (AD, KA, OIQ) have significantly accelerate the agent’s learning speed?
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -502,8 +502,8 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-the-significantly-accelerate-agent-s-learning-speed">
-       Q1: Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?
+      <a class="reference internal nav-link" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-significantly-accelerate-the-agent-s-learning-speed">
+       Q1: Does the biased exploration methods (AD, KA, OIQ) have significantly accelerate the agent’s learning speed?
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -526,20 +526,28 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="biased-exploration">
 <h1><span class="section-number">4.1. </span>Biased exploration<a class="headerlink" href="#biased-exploration" title="Permalink to this headline">¶</a></h1>
-<p>LCS are being considered as self-adaptive and autonomous learners. However, in order to reach full autonomy, the credit assignment part must decide on their own when to exploit the existing knowledge by taking the most promising action and when to deliberately select an action that is not apparent best to potentially gain additional knowledge.</p>
-<p>This decision is commonly referred as to as the explore/exploit (E/E) dilemma, since obtaining new knowledge through exploration incurs a short-term performance loss, while too much exploitation risks staying on an unnecessary low level of performance in the long term <span id="id1">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. In a typical exploration phase the action is selected randomly with intention of an unbiased exploration.</p>
-<p>For real-valued environments where the search space is presumably large, such exploration might be inefficient. Certain regions of space might be explored multiple times, while the other ones still remain unknown. Therefore, an approach towards optimizing the process of acquiring knowledge by suggesting more valuable actions is considered herein.</p>
-<p>At first, model learning capabilities in ALCS was enhanced by Stolzmann and Butz by using behavioral capabilities (internal reinforcement learning or lookahead action selection) in <span id="id2">[<a class="reference internal" href="../../bibliography.html#id98">99</a>]</span> and by introducing the <em>action planning</em> mechanism <span id="id3">[<a class="reference internal" href="../../bibliography.html#id99">100</a>]</span> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id100">67</a>]</span>.</p>
+<p>LCS are being considered as self-adaptive and autonomous learners. However, in order to reach full autonomy, the credit assignment part must decide on their own when to exploit the existing knowledge by taking the most promising action and when to deliberately select an action that is not apparent best to gain additional knowledge potentially.</p>
+<p>This decision is commonly referred to as the explore/exploit (E/E) dilemma, since obtaining new knowledge through exploration incurs a short-term performance loss, while too much exploitation risks staying on an unnecessarily low level of performance in the long term <span id="id1">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. In a typical exploration phase, the action is selected randomly with the intention of an unbiased exploration.</p>
+<p>Such exploration might be inefficient for real-valued environments where the search space is presumably large. Certain regions of space might be explored multiple times, while the other ones remain unknown. Therefore, an approach towards optimizing the process of acquiring knowledge by suggesting more valuable actions is considered herein.</p>
+<p>At first, model learning capabilities in ALCS was enhanced by Stolzmann and Butz by using behavioural capabilities (internal reinforcement learning or lookahead action selection) in <span id="id2">[<a class="reference internal" href="../../bibliography.html#id98">99</a>]</span> and by introducing the <em>action planning</em> mechanism <span id="id3">[<a class="reference internal" href="../../bibliography.html#id99">100</a>]</span> <span id="id4">[<a class="reference internal" href="../../bibliography.html#id100">67</a>]</span>.</p>
 <p>Later, Butz suggested that by using computationally inexpensive methods by biasing exploration towards specially chosen regions of search-space, the model can be learned locally <span id="id5">[<a class="reference internal" href="../../bibliography.html#id101">101</a>]</span>.</p>
-<p>This chapter aims to narrow the existing gap in research by experimentally comparing four biased exploration strategies. Any ALCS agent operating large realm of observation space might take advantage of the possibility of improving the time needed to form an internal model. First, a baseline method - <em>epsilon-greedy</em>, which is a default option for LCS, will be described. Later two methods introduced by Butz - <em>action-delay</em> and <em>knowledge-array</em> bias. They examine the match set <span class="math notranslate nohighlight">\([M]\)</span> searching for indications which action might result in the highest information gain. Eventually, the latter approach is inspired by an “<em>Optimistic Initial Values</em>” approach described by Sutton in <span id="id6">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. This strategy turned out to be very effective for Multi-armed bandit problems, where the main objective is to select the most promising action and was never examined in any LCS domain.</p>
+<p>This chapter aims to narrow the existing gap in research by experimentally comparing four biased exploration strategies. Any ALCS agent operating a large realm of observation space might take advantage of the possibility of improving the time needed to form an internal model. First, a baseline method - <em>epsilon-greedy</em>, which is a default option for LCS, will be described. Later two methods were introduced by Butz - <em>action-delay</em> and <em>knowledge-array</em> bias. They examine the match set <span class="math notranslate nohighlight">\([M]\)</span> searching for indications of which action might result in the highest information gain. Eventually, the latter approach is inspired by an “<em>Optimistic Initial Values</em>” approach described by Sutton in <span id="id6">[<a class="reference internal" href="../../bibliography.html#id29">39</a>]</span>. This strategy turned out to be very effective for Multi-armed bandit problems, where the main objective is to select the most promising action and was never examined in any LCS domain.
+In most experiments, the rACS agent builds the population consisting primarily of Region 1 interval predicates. The amount of attributes represented as Region 3 and 4, spanning to the maximum value from the right side, tends to diminish. However, the results are correlated with the number of trials that were kept the same in all cases. More precise boundary representation naturally would require more trials to converge. However, for the first 4 bits, there is the following trend can be noticed when intensifying encoding resolution:</p>
+<ul class="simple">
+<li><p>Ratio of Region 1 attributes increases</p></li>
+<li><p>Ratio of Region 2, 3, 4 attributes decreases</p></li>
+</ul>
+<p>This is caused by the lack of online rule compaction or consolidation mechanism. The only possibility for the agent to create a more general attribute is due to the mutation algorithm controlled by the <span class="math notranslate nohighlight">\(\epsilon_{mutation}\)</span> parameter. However, this value must be set carefully because limitations of selected encoding resolution can inadvertently ignore its effect.</p>
+<p>The other metrics also show the hypothesis about the need for more trials. The size of the overall population is correlated with the number of encoding bits, but it became more difficult for the agent to discriminate between reliable classifiers. For example, when using 5-bits encoding after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials, there is no single reliable classifier despite having a population with more than 10 thousand individuals.</p>
+<p>The experiment with 1-bit encoding also confirms the situation when it is impossible to learn the environment with hyper-plane decision boundary successfully. Such representation cannot handle regularities, resulting in unreliable classifiers and random average rewards from exploit runs.</p>
 <div class="tip admonition">
 <p class="admonition-title">Epsilon-Greedy (EG)</p>
-<p>In the epsilon-greedy approach, the agent discovers all regions from the input-space equally, not favoring any specific behavior.  In each step, random action is executed with <span class="math notranslate nohighlight">\(p_{explr}\)</span> probability. Then it is chosen uniform randomly from classifiers composing a match set <span class="math notranslate nohighlight">\([M]\)</span>. In the case of <span class="math notranslate nohighlight">\(1-p_{explr}\)</span>, action from the most fitted classifier is executed. By doing so, the agent can occasionally perform the move he thinks is the best at a given time, reinforcing its beliefs about the consequences.</p>
+<p>In the epsilon-greedy approach, the agent equally discovers all regions from the input-space, not favouring any specific behaviour. In each step, random action is executed with <span class="math notranslate nohighlight">\(p_{explr}\)</span> probability. Then it is chosen uniform randomly from classifiers composing a match set <span class="math notranslate nohighlight">\([M]\)</span>. In the case of <span class="math notranslate nohighlight">\(1-p_{explr}\)</span>, action from the most fitted classifier is executed. By doing so, the agent can occasionally perform the move he thinks is the best at a given time, reinforcing its beliefs about the consequences.</p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Action-Delay (AD)</p>
-<p>This bias is based on the <em>recency-based</em> principle assuming that the action executed a long time ago, might introduce new situation-action-effect triples. To determine which action was executed most long ago at the current time <span class="math notranslate nohighlight">\(t\)</span> the <span class="math notranslate nohighlight">\(t_{alp}\)</span> field of all classifiers in match set <span class="math notranslate nohighlight">\([M](t)\)</span> is analyzed. For situation <span class="math notranslate nohighlight">\(\sigma(t)\)</span> the action of classifier <span class="math notranslate nohighlight">\(cl\)</span> with the lowest value of <span class="math notranslate nohighlight">\(t_{alp}\)</span> is selected.</p>
-<p>In case if there exists an action not represented by any classifier in <span class="math notranslate nohighlight">\([M](t)\)</span> that it is assumed to be experienced most long ago (if ever) and therefore chosen for execution.</p>
+<p>This bias is based on the <em>recency-based</em> principle assuming that the action executed a long time ago might introduce new situation-action-effect triples. To determine which action was executed most long ago at the current time <span class="math notranslate nohighlight">\(t\)</span> the <span class="math notranslate nohighlight">\(t_{alp}\)</span> field of all classifiers in a match set <span class="math notranslate nohighlight">\([M](t)\)</span> is analyzed. For situation <span class="math notranslate nohighlight">\(\sigma(t)\)</span> the action of classifier <span class="math notranslate nohighlight">\(cl\)</span> with the lowest value of <span class="math notranslate nohighlight">\(t_{alp}\)</span> is selected.</p>
+<p>In case there exists an action not represented by any classifier in <span class="math notranslate nohighlight">\([M](t)\)</span> that it is assumed to be experienced most long ago (if ever) and therefore chosen for execution.</p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Knowledge Array (KA)</p>
@@ -547,40 +555,40 @@
 <p>The bias generates the knowledge array KA from classifiers in a match set <span class="math notranslate nohighlight">\([M]\)</span> in which each entry specifies the averaged quality for the anticipation for each possible action - see Equation <a class="reference internal" href="#equation-ka-eq">(4.1)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-ka-eq">
 <span class="eqno">(4.1)<a class="headerlink" href="#equation-ka-eq" title="Permalink to this equation">¶</a></span>\[KA[a] = \frac{\sum_{cl \in [M] \wedge cl.A = a}cl.q \cdot cl.num}{\sum_{cl \in [M] \wedge cl.A = a} cl.num}\]</div>
-<p>An action with the lowest value in the knowledge array is selected for execution. Similarly, as in the action delay bias, if there are actions not expressed by any classifiers, they are chosen first.</p>
+<p>An action with the lowest value in the knowledge array is selected for execution. Similarly, as in the action delay bias, if any classifiers do not express actions, they are chosen first.</p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Optimistic Initial Quality (OIQ)</p>
 <p>By default, newly created classifiers <span class="math notranslate nohighlight">\(cl\)</span> have the initial quality set to <span class="math notranslate nohighlight">\(cl.q = 0.5\)</span>. It can be said that they are biased towards their initial quality. In practice, it should not be a problem because this value will converge to optimal ones over a set of trials. Changing this parameter provides an easy way of supplying the agent with the confidence of the generated classifiers.</p>
-<p>In this method, the behavior of the agent was parametrized by an extra parameter - <em>initial quality</em> - <span class="math notranslate nohighlight">\(q_0\)</span>. Every time a new classifier is generated, its quality is set to new value <span class="math notranslate nohighlight">\(cl.q = q_0\)</span>.</p>
-<p>In all the experiments, there was fixed <span class="math notranslate nohighlight">\(q_0 = 0.8\)</span>, with the expectation that the agent will be able to build an internal model of knowledge representation faster (especially in early stages). For the action selection strategy, the default epsilon-greedy method was chosen.</p>
+<p>In this method, the agent’s behaviour was parametrized by an extra parameter - <em>initial quality</em> - <span class="math notranslate nohighlight">\(q_0\)</span>. Every time a new classifier is generated, its quality is set to new value <span class="math notranslate nohighlight">\(cl.q = q_0\)</span>.</p>
+<p>In all the experiments, there was fixed <span class="math notranslate nohighlight">\(q_0 = 0.8\)</span>, expecting the agent to build an internal model of knowledge representation faster (especially in the early stages). For the action selection strategy, the default epsilon-greedy method was chosen.</p>
 </div>
-<p>Interestingly, Hansmeier and Platzner took effort to compare four strategies optimizating the time for alternating E/E  phases using the XCS algorithm <span id="id7">[<a class="reference internal" href="../../bibliography.html#id30">102</a>]</span>.  It turned out that despite automized parameter tuning that none of the strategies is superior to the other. On the other side they noticed that certain multi-step environments with scarce reward signal become challenging due to the setting the classifier’s accuracy value too aggressively. Such problem with scarce reward and long action-chains is further discussed in the following chapter.</p>
+<p>Interestingly, Hansmeier and Platzner made an effort to compare four strategies optimizing the time for alternating E/E  phases using the XCS algorithm <span id="id7">[<a class="reference internal" href="../../bibliography.html#id30">102</a>]</span>. It turned out that despite automized parameter tuning that none of the strategies is superior to the other. On the other side, they noticed that specific multi-step environments with scarce reward signals become challenging due to setting the classifier’s accuracy value too aggressively. Such problem with scarce reward and long action-chains is further discussed in the following chapter.</p>
 <div class="section" id="experimental-evaluation">
 <h2>Experimental evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">¶</a></h2>
-<p>This section presents the motivation, goals and set-up of the performed experiments, as well as their results.</p>
+<p>This section presents the motivation, goals and setup of the performed experiments and their results.</p>
 <div class="section" id="research-questions">
 <h3>Research questions<a class="headerlink" href="#research-questions" title="Permalink to this headline">¶</a></h3>
-<p>The conducted research aims to answer the following question regarding rACS algorithm and the interval based representation</p>
+<p>The conducted research aims to answer the following question regarding the rACS algorithm and the interval-based representation</p>
 <ol class="simple">
-<li><p>Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?</p></li>
-<li><p>Can the OIQ method improve the performance in terms of ingesting knowledge or reducing classifier population size?</p></li>
+<li><p>Does the biased exploration methods (AD, KA, OIQ) significantly accelerate the agent’s learning speed?</p></li>
+<li><p>Can the OIQ method improve the performance of ingesting knowledge or reducing classifier population size?</p></li>
 </ol>
 </div>
 <div class="section" id="goals-of-the-experiments">
 <h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
-<p>In all the experiments the difference between four exploration methods will be compared using the ACS2 agent.</p>
+<p>The difference between the four exploration methods will be compared using the ACS2 agent in all the experiments.</p>
 <div class="admonition-experiment-1-single-step-problem-performance admonition">
 <p class="admonition-title"><em>Experiment 1 - Single-step problem performance</em></p>
-<p>Similarly, as above but in this case a single step 6-bit <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment is used introducing much larger possible states space. Since calculating precise model knowledge is infeasible, the key indicators chosen are the average obtained reward and model size.</p>
+<p>Similarly, as above but in this case, a single step 6-bit <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment is used, introducing much larger possible states space. Since calculating precise model knowledge is infeasible, the key performance indicators chosen are the average obtained reward and model size.</p>
 </div>
 <div class="admonition-experiment-2-multiple-step-problems-performance admonition">
 <p class="admonition-title"><em>Experiment 2 - Multiple-step problems performance</em></p>
-<p>Use two basic multistep environments (<a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>) to determine the differences between the rate of gaining knowledge, ability of building internal pool of classifiers and operating in the environments.</p>
+<p>Use two basic multistep environments (<a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> and <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-grid"><span class="std std-ref">Grid</span></a>) to determine the differences between the rate of gaining knowledge, the ability to build an internal pool of classifiers and operating in the environments.</p>
 </div>
 <div class="admonition-experiment-3-balacing-the-pole admonition">
 <p class="admonition-title"><em>Experiment 3 - Balacing the pole</em></p>
-<p>The methods will be evaluated on the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-cartpole"><span class="std std-ref">Cart Pole</span></a> problem of balacing a pole on a cart. This is a novel problem for the LCS due to specific observation space (where two attributes span to infinity) and specific reward scheme based on how long the pole is kept upright.</p>
+<p>The methods will be evaluated on the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-cartpole"><span class="std std-ref">Cart Pole</span></a> problem of balancing a pole on a cart. This is a novel problem for the LCS due to specific observation space (where two attributes span to infinity) and a specific reward scheme based on how long the pole is kept upright.</p>
 </div>
 </div>
 <div class="section" id="experiments">
@@ -595,13 +603,13 @@
 </div>
 <div class="section" id="answers-to-research-questions">
 <h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="q1-does-the-biased-exploration-methods-ad-ka-oiq-have-the-significantly-accelerate-agent-s-learning-speed">
-<h4>Q1: Does the biased exploration methods (AD, KA, OIQ) have the significantly accelerate agent’s learning speed?<a class="headerlink" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-the-significantly-accelerate-agent-s-learning-speed" title="Permalink to this headline">¶</a></h4>
-<p>Conducted research showed that indeed biased exploration method like AD and KA have positive impact on the knowledge evolution process. The OIQ performance was correlated with basic EG method and does not yield any competitive performance.</p>
+<div class="section" id="q1-does-the-biased-exploration-methods-ad-ka-oiq-have-significantly-accelerate-the-agent-s-learning-speed">
+<h4>Q1: Does the biased exploration methods (AD, KA, OIQ) have significantly accelerate the agent’s learning speed?<a class="headerlink" href="#q1-does-the-biased-exploration-methods-ad-ka-oiq-have-significantly-accelerate-the-agent-s-learning-speed" title="Permalink to this headline">¶</a></h4>
+<p>Conducted research showed that biased exploration methods like AD and KA positively impact the knowledge evolution process. The OIQ performance was correlated with the basic EG method and did not yield any competitive performance.</p>
 </div>
 <div class="section" id="q2-can-the-oiq-method-improve-the-performance-in-terms-of-ingesting-knowledge-or-reducing-classifier-population-size">
 <h4>Q2: Can the OIQ method improve the performance in terms of ingesting knowledge or reducing classifier population size?<a class="headerlink" href="#q2-can-the-oiq-method-improve-the-performance-in-terms-of-ingesting-knowledge-or-reducing-classifier-population-size" title="Permalink to this headline">¶</a></h4>
-<p>The impact of initializing classifier quality with higher (positive) value resulted to have an neglectable effect on all evaluated metrics. The OIQ in theory can perform better when forming population of reliable classifiers, but for the investigated problems the performance was highly correlated with a default EG method.</p>
+<p>The impact of initializing classifier quality with a higher (positive) value resulted in having a neglectable effect on all evaluated metrics. The OIQ, in theory, can perform better when forming a population of reliable classifiers, but for the investigated problems, the performance was highly correlated with a default EG method.</p>
 </div>
 </div>
 </div>

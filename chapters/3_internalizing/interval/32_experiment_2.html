@@ -694,15 +694,15 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-nature-of-the-intervals">
 <h1>Experiment 2 - Nature of the intervals<a class="headerlink" href="#experiment-2-nature-of-the-intervals" title="Permalink to this headline">¶</a></h1>
-<p>In order to provide the correct answer in the checkerboard problem the agent must be able to correctly partition the hyper-rectangular solution space. Four categories are used to determine the nature of the evolved intervals:</p>
+<p>In order to provide the correct answer to the checkerboard problem, the agent must be able to correctly partition the hyper-rectangular solution space. Four categories are used to determine the nature of the evolved intervals:</p>
 <ul class="simple">
 <li><p>Region 1 <span class="math notranslate nohighlight">\([p_i, q_i]\)</span> - consists of specific intervals.</p></li>
 <li><p>Region 2 <span class="math notranslate nohighlight">\([p_{min}, q_i)\)</span> - interval bounded from the right side.</p></li>
 <li><p>Region 3 <span class="math notranslate nohighlight">\([p_i, q_{max})\)</span> - interval bounded from the left side.</p></li>
 <li><p>Region 4 <span class="math notranslate nohighlight">\([p_{min}, q_{max})\)</span> - general interval (<em>“don’t care”</em>).</p></li>
 </ul>
-<p>The two-dimensional checkerboard divided by three splits in each direction is used. The experiment uses the rACS agent and evaluates its performance with different encoding values. Because of the splits the system response is dependent on precise boundaries estimations. Figure <a class="reference internal" href="#e2-checkerboard-3-splits-4-bits-fig"><span class="std std-numref">3.6</span></a> shows possible ambiguities near the split lines, where the same nominal value is applicable in both regions.</p>
-<p>As in the previous section, each trial of the experiment the agent alternates between explore and exploit phases for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials. Each independent pass is averaged across <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times. For the collected metrics besides the average performance and the population size, the proportion of condition interval regions is collected for each trial.</p>
+<p>The two-dimensional checkerboard divided by three splits in each direction is used. The experiment uses the rACS agent and evaluates its performance with different encoding values. Because of the splits, the system response is dependent on precise boundaries estimations. Figure <a class="reference internal" href="#e2-checkerboard-3-splits-4-bits-fig"><span class="std std-numref">3.6</span></a> shows possible ambiguities near the split lines, where the same nominal value is applicable in both regions.</p>
+<p>As in the previous section, in each trial of the experiment, the agent alternates between explore and exploit phases for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials. Each independent pass is averaged across <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times. For the collected metrics, besides the average performance and the population size, the proportion of condition interval regions is collected for each trial.</p>
 <div class="figure align-default" id="e2-checkerboard-3-splits-4-bits-fig">
 <div class="cell_output docutils container">
 <img alt="../../../_images/32_experiment_2_0_1.png" src="../../../_images/32_experiment_2_0_1.png" />
@@ -766,8 +766,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="2b35aa9f-4126-4efb-ba9e-18ae0cadc291" name="f701f7fa-6476-4459-825a-0fc468cd7bac" type="radio">
-</input><label class="tabbed-label" for="2b35aa9f-4126-4efb-ba9e-18ae0cadc291">
+<input checked="checked" id="50e8af42-43a8-436d-894d-f153ed52ebc6" name="e5a163d3-404b-4a57-974e-90787b57404d" type="radio">
+</input><label class="tabbed-label" for="50e8af42-43a8-436d-894d-f153ed52ebc6">
 Condition Interval regions</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-regions-fig">
 <div class="cell_output docutils container">
@@ -776,8 +776,8 @@ Condition Interval regions</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Evolution of condition interval regions in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="7e2e844d-fc64-44aa-b26c-704ff7154c7d" name="f701f7fa-6476-4459-825a-0fc468cd7bac" type="radio">
-</input><label class="tabbed-label" for="7e2e844d-fc64-44aa-b26c-704ff7154c7d">
+<input id="b7c9bc80-6c74-4d52-9326-f1780b2641e8" name="e5a163d3-404b-4a57-974e-90787b57404d" type="radio">
+</input><label class="tabbed-label" for="b7c9bc80-6c74-4d52-9326-f1780b2641e8">
 Average reward</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-performance-fig">
 <div class="cell_output docutils container">
@@ -786,8 +786,8 @@ Average reward</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Average reward obtained in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="e8efff5e-9003-4118-804a-33b6ab123f18" name="f701f7fa-6476-4459-825a-0fc468cd7bac" type="radio">
-</input><label class="tabbed-label" for="e8efff5e-9003-4118-804a-33b6ab123f18">
+<input id="24685ef4-d3ae-4f03-aae2-7a1a1a55c8c7" name="e5a163d3-404b-4a57-974e-90787b57404d" type="radio">
+</input><label class="tabbed-label" for="24685ef4-d3ae-4f03-aae2-7a1a1a55c8c7">
 Classifier numerosity</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-population-fig">
 <div class="cell_output docutils container">
@@ -800,7 +800,7 @@ Classifier numerosity</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size and region proportions the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the average value from last 100 exploit trials is considered as a representative state of algorithm performance.</p>
+<p>To statistically assess the population size and region ratios, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the mean value from the last 100 exploit trials is considered as a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -894,14 +894,14 @@ Classifier numerosity</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
-<p>In most of the experiments the rACS agent build the population consisting mostly of Region 1 interval predicates. The amount of attributes represented as Region 3 and Region 4, which are spanning to the maximum value from the right side tends to diminish. The results however are correlated with the number of trials which was kept the same in all cases. More precise boundary representation naturally would require more trials to converge. However, for the first 4 bits there is the following trend can be noticed when intensifying encoding resolution:</p>
+<p>In most experiments, the rACS agent builds the population consisting primarily of Region 1 interval predicates. The amount of attributes represented as Region 3 and 4, spanning to the maximum value from the right side, tends to diminish. However, the results are correlated with the number of trials that were kept the same in all cases. More precise boundary representation naturally would require more trials to converge. However, for the first 4 bits, there is the following trend can be noticed when intensifying encoding resolution:</p>
 <ul class="simple">
 <li><p>Ratio of Region 1 attributes increases</p></li>
 <li><p>Ratio of Region 2, 3, 4 attributes decreases</p></li>
 </ul>
-<p>This fact is caused by the lack of online rule compaction or consolidation mechanism. The only possibility for the agent to create more general attribute is due to the mutation algorithm controlled by <span class="math notranslate nohighlight">\(\epsilon_{mutation}\)</span> parameter. However, this value must be set carefully, because its effect can be inadvertently ignored by limitations of selected encoding resolution.</p>
-<p>The hypothesis about the need of more trials is also visible in the other metrics. The size of overall population is correlated with the number of encoding bits, but it became more difficult for the agent to discriminate between reliable classifiers. For example, when using 5-bits encoding after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials there is no single reliable classifier despite having a population with more than 10 thousand individuals.</p>
-<p>The experiment with 1-bit encoding also confirms the situation, when it is impossible to successfully learn the environment with hyper-plane decision boundary. Such representation is not sufficient to handle regularities, which results in the lack of reliable classifiers and random average reward from exploit runs.</p>
+<p>This is caused by the lack of online rule compaction or consolidation mechanism. The only possibility for the agent to create a more general attribute is due to the mutation algorithm controlled by the <span class="math notranslate nohighlight">\(\epsilon_{mutation}\)</span> parameter. However, this value must be set carefully because limitations of selected encoding resolution can inadvertently ignore its effect.</p>
+<p>The other metrics also show the hypothesis about the need for more trials. The size of the overall population is correlated with the number of encoding bits, but it became more difficult for the agent to discriminate between reliable classifiers. For example, when using 5-bits encoding after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials, there is no single reliable classifier despite having a population with more than 10 thousand individuals.</p>
+<p>The experiment with 1-bit encoding also confirms the situation when it is impossible to learn the environment with hyper-plane decision boundary successfully. Such representation is insufficient to handle regularities, resulting in unreliable classifiers and random average rewards from exploit runs.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">
