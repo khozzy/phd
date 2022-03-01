@@ -615,8 +615,8 @@
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-straight-corridor">
 <h1>Experiment 1 - Straight Corridor<a class="headerlink" href="#experiment-1-straight-corridor" title="Permalink to this headline">¶</a></h1>
 <p>The following section describes the differences observed between using the ACS2 with standard discounted reward distribution and two proposed modifications. In all cases, the experiments were performed in an explore-exploit manner for the total number of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span>, where the mode was alternating in each trial. Additionally, for better reference and benchmarking purposes, basic implementations of Q-Learning and R-Learning algorithms were also introduced and used with the same parameter settings as ACS2 and AACS2.</p>
-<p>The most important thing was to distinguish whether the new reward distribution proposition still allows the agent to successfully update the classifier’s parameter to allow the exploitation of the environment. To illustrate this, figures presenting the number of steps to the final location, estimated average change during learning, and the reward payoff-landscape across all possible state-action pairs were plotted for the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> of size <span class="math notranslate nohighlight">\(n=20\)</span>.</p>
-<p>To assure that the modification worked as expected the statistical inference of obtained result was performed on scaled version of the problem. Each experiment is averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
+<p>The most important thing was to distinguish whether the new reward distribution proposition still allows the agent to successfully update the classifier’s parameter to allow the exploitation of the environment. To illustrate this, figures presenting the number of steps to the final location, estimated average change during learning, and the reward payoff landscape across all possible state-action pairs were plotted for the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> of size <span class="math notranslate nohighlight">\(n=20\)</span>.</p>
+<p>To assure that the modification worked as expected, the statistical inference of obtained result was performed on a scaled version of the problem. Each experiment is averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corridor20_env_provider</span><span class="p">():</span>
@@ -788,18 +788,18 @@
 <p><strong>Parameters</strong></p>
 <p><span class="math notranslate nohighlight">\(\beta=0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.2\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span></p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="49750a48-7b21-4f75-b27a-c1bf5c743529" name="81be7381-79cc-44b3-9772-9118c30bcbf4" type="radio">
-</input><label class="tabbed-label" for="49750a48-7b21-4f75-b27a-c1bf5c743529">
+<input checked="checked" id="cf1f97fa-1ba3-4908-aaa6-f6e536cbd904" name="be76ebd9-3d5e-40d4-bb3f-940b936f0b09" type="radio">
+</input><label class="tabbed-label" for="cf1f97fa-1ba3-4908-aaa6-f6e536cbd904">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-fig">
 <div class="cell_output docutils container">
 <img alt="../../_images/51_experiment_1_3_0.png" src="../../_images/51_experiment_1_3_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Plots averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs. Number of steps in exploit trials averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Plots averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs. Number of steps in exploit trials is averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="2cc6eff9-8448-4815-982c-64def8df0cd6" name="81be7381-79cc-44b3-9772-9118c30bcbf4" type="radio">
-</input><label class="tabbed-label" for="2cc6eff9-8448-4815-982c-64def8df0cd6">
+<input id="95861a66-615b-4653-a5cd-331b07c8a93d" name="be76ebd9-3d5e-40d4-bb3f-940b936f0b09" type="radio">
+</input><label class="tabbed-label" for="95861a66-615b-4653-a5cd-331b07c8a93d">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-payoff-fig">
 <div class="cell_output docutils container">
@@ -812,7 +812,7 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial.</p>
+<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -887,8 +887,8 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="db6dee33-e38e-4b69-8887-538bfdc069ef" name="46d3164f-3f20-4a3f-afe4-fef7e08caa3e" type="radio">
-</input><label class="tabbed-label" for="db6dee33-e38e-4b69-8887-538bfdc069ef">
+<input checked="checked" id="6a21f054-9ca7-4235-8232-49d7f42ad67e" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
+</input><label class="tabbed-label" for="6a21f054-9ca7-4235-8232-49d7f42ad67e">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -900,8 +900,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="34601a81-5411-4df1-b1a5-88a13b4e25fe" name="46d3164f-3f20-4a3f-afe4-fef7e08caa3e" type="radio">
-</input><label class="tabbed-label" for="34601a81-5411-4df1-b1a5-88a13b4e25fe">
+<input id="45c1e9da-1524-408a-9021-0309cde30d4b" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
+</input><label class="tabbed-label" for="45c1e9da-1524-408a-9021-0309cde30d4b">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -913,8 +913,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="95cc2c3c-b7a6-4233-bf0f-858bc39a7d33" name="46d3164f-3f20-4a3f-afe4-fef7e08caa3e" type="radio">
-</input><label class="tabbed-label" for="95cc2c3c-b7a6-4233-bf0f-858bc39a7d33">
+<input id="16f09ba5-7332-43c0-8d73-5aee462e8588" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
+</input><label class="tabbed-label" for="16f09ba5-7332-43c0-8d73-5aee462e8588">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -936,9 +936,9 @@ Corridor 100</label><div class="tabbed-content docutils">
 <p>The relative distance between adjacent state-action pairs can be divided into three groups. The first one relates to the discounted reward agents (ACS2, Q-Learning). Both generate almost a similar reward payoff for each state–action. Later, there is the R-Learning algorithm, which estimates the <span class="math notranslate nohighlight">\(\rho\)</span> value and separates states evenly. Furthermore, two AACS2 agents are performing very similarly. The <span class="math notranslate nohighlight">\(\rho\)</span> value calculated by the R-Learning algorithm is lower than the average estimation by the AACS2 algorithm.</p>
 <p>Scaled problem instances revealed interesting properties:</p>
 <ul class="simple">
-<li><p>Q-Learning algorithm was not capable of executing optimal number of steps in environments with <span class="math notranslate nohighlight">\(n=40\)</span>, <span class="math notranslate nohighlight">\(n=100\)</span>,</p></li>
-<li><p>For the hardest problem of <span class="math notranslate nohighlight">\(n=1000\)</span>, the AACS2 modification yield better performance than ACS2,</p></li>
-<li><p>all algorithms with undiscounted reward criterions managed to calculate the average reward <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
+<li><p>the Q-Learning algorithm was not capable of executing the optimal number of steps in environments with <span class="math notranslate nohighlight">\(n=40\)</span>, <span class="math notranslate nohighlight">\(n=100\)</span>,</p></li>
+<li><p>for the most complex problem of <span class="math notranslate nohighlight">\(n=1000\)</span>, the AACS2 modification yield better performance than ACS2,</p></li>
+<li><p>all algorithms with undiscounted reward critera managed to calculate the average reward <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
 </ul>
 </div>
 </div>
