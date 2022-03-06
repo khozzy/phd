@@ -40,7 +40,7 @@ Corresponding comparison is performed for two multistep problems with similar re
 
 ### Answers to research questions
 #### Q1: Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?
-All investigated ALCS systems with common rule (ACS, ACS2, YACS) structure managed to deal with real-valued signal represented as a vector of nominal values. The corresponding changes affected only the interface layer, leaving agent mechanisms intact. Moreover, the nature of the _don't care_ and _pass-through_ symbol was fully preserved.  
+All investigated ALCS systems with common rule structure (ACS, ACS2, YACS) managed to deal with real-valued signal represented as a vector of nominal values. The corresponding changes affected only the interface layer, leaving agent mechanisms intact. Moreover, the nature of the _don't care_ and _pass-through_ symbol was fully preserved.  
 
 #### Q2: Which system creates the most compact and general population of classifiers?
 ACS2 with GA enhancement proved to evolve the most general and compact population of classifiers diligently. However, specific problems were discovered in ACS, which was unable to progress by creating novel classifiers or YACS that suffers from insufficient heuristics and lacks a dedicated generalization mechanism. 

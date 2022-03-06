@@ -5,12 +5,12 @@ This thesis focused on integrating anticipatory classifier systems with problems
 
 This intention was achieved and validated using two independent approaches:
 
-1. Changing the rule's attribute representations to incorporate _interval predicates_, resulting in a proprietary system variation named rACS,
-2. Perform signal discretization, keeping the most internal component interactions intact.
+1. changing the rule's attribute representations to incorporate _interval predicates_, resulting in a proprietary system variation named rACS,
+2. perform signal discretization, keeping the most internal component interactions intact.
 
 The first approach was based on the advancements made for the XCS systems. The rACS managed to show promising results. Nevertheless, because of the much richer rule complexity and the cooperation of components precisely forming the condition and effect parts, the obtained conclusion is that the nature of rACS is not aligned with the overall ALCS idea. The favoured implementation of ACS2, which is considered the most mature algorithm, is built upon the psychological theory of behavioural control, which was not investigated for this kind of problem. The algorithm performance, while being valid, is not elegant for the virtues of ALCS for creating the most general, compact and accurate rules.
 
-The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the interface layer. Hopefully, the internal representation is not limited to the ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing signal discretization _before_ an agent processes it. While promising results and better transparency, this approach was considered superior to interval formation and was pursued in consecutive experiments.
+The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the agent-environment interface layer. Hopefully, the internal representation is not limited to the ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing signal discretization _before_ an agent processes it. While promising results and better transparency, this approach was considered superior to interval formation and was pursued in consecutive experiments.
 
 The proposition of the first approach was published in {cite}`kozlowski2019preliminary`, while the latent learning experiments in discretized environments article is awaiting peer review {cite}`kozlowski2022internalizing`.
 

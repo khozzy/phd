@@ -1,7 +1,7 @@
 (section-topics-kpi)=
-# Key performance indicators
+# Key Performance Indicators (KPI)
 
-The ALCS comprise complex mechanisms such as ALP or GA, which might be hard to comprehend and analyse. Therefore, specific metrics reflecting their nature were chosen to visualise system behaviour over time and assess its performance. This section presents several metrics used across further experimental evaluations. Each of them can be collected at a particular interval of time (for example, every ten trials) and can access the properties of both the environment and the agent within the single simulation.
+The ALCS comprise complex mechanisms such as ALP or GA, which might be hard to comprehend and analyse. Therefore, specific metrics reflecting their nature were chosen to visualise system behaviour over time and assess its performance. This section presents several key performance indicators (KPI) used across further experimental evaluations. Each of them can be collected at a particular interval of time (for example, every ten trials) and can access the properties of both the environment and the agent within the single simulation.
 
 (section-topics-kpi-population-size)=
 ## Classifier population size
@@ -17,7 +17,7 @@ P_{\text{reliable}} = \{ cl \in P : cl.q \geq \theta_r \}
 
 (section-topics-kpi-generalization)=
 ## Generalization
-The generalization metrics reflect the agent's generalization abilities. It is calculated by analyzing all classifiers in a population $P$. Equation {math:numref}`kpi-generalization-eq` shows the proportion of condition attributes containing the wildcard symbol.
+The generalization metrics reflect the agent's generalization abilities. It is calculated by analyzing all classifiers in a population $[P]$. Equation {math:numref}`kpi-generalization-eq` shows the proportion of condition attributes containing the wildcard symbol.
 
 ```{math}
 :label: kpi-generalization-eq
@@ -43,6 +43,6 @@ The computations are performed in a controlled environment on a single machine i
 ## Exploitation performance
 The exploitation performance is a measure of utilizing the agent's internal model of the environment in order to obtain the highest possible payoff. It is most often gathered in the exploit phase, where the agent focuses solely on selecting the best possible classifiers for each situation.
 
-Depending on the type of environment, this metric might differ - for example, in a multistep [](section-topics-environments-corridor), the interest is in reaching the final state as fast as possible. Therefore, the metric is simply the number of steps in each trial that should be close to the optimal value. For a single-step environment, such as [](section-topics-environments-rmpx), a reward is paid out after giving a correct answer in each trial. In this case, a good measure is to keep track of all obtained rewards and average them.
+Depending on the type of environment, this metric might differ - for example, in a multistep [](section-topics-environments-corridor), the interest is in reaching the final state as fast as possible. Therefore, the metric is simply the number of steps in each trial that should be close to the optimal value. For a single-step environment, such as [](section-topics-environments-rmpx), a reward is paid out after giving a correct answer in each trial. In this case, a good measure is to keep track of latest obtained rewards and average them.
 
 The metric itself depends on significant components (learning and credit assignment) involved in the agent's algorithm to estimate its practical usefulness. 

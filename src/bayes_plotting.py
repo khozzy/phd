@@ -29,7 +29,7 @@ def plot_bayes_comparison(df, env_name, agents, plot_filename=None):
     for i, alg in enumerate(agents):
         v = df.loc[alg].to_list()
         ax.plot(theta, v, color=COLORS[alg])
-        ax.fill(theta, v, facecolor=COLORS[alg], alpha=0.25)
+        ax.fill(theta, v, facecolor=COLORS[alg], alpha=0.25, label=alg.upper())
 
     # realign theta labels
     for theta, label in zip(ax.get_xticks(), ax.get_xticklabels()):
@@ -45,23 +45,23 @@ def plot_bayes_comparison(df, env_name, agents, plot_filename=None):
         if y <= -0.5:
             label.set_verticalalignment('top')
 
-        fig.suptitle('Bayesian Estimation of metrics', fontsize=28)
-        fig.tight_layout()
-        fig.subplots_adjust(
-            top=0.85,
-            # left=0.0, right=0.75,
-            bottom=0.1,
-            wspace=-0.25,
-            hspace=0.35
-        )
+    fig.suptitle('Bayesian Estimation of metrics', fontsize=28)
+    fig.tight_layout()
+    fig.subplots_adjust(
+        top=0.85,
+        # left=0.0, right=0.75,
+        bottom=0.1,
+        wspace=-0.25,
+        hspace=0.35
+    )
 
-        # build legend
-        fig.legend([alg.upper() for alg in agents], loc='lower center', ncol=len(agents), labelspacing=0.5, prop={'size': 23})
+    # build legend
+    fig.legend(loc='lower center', labelspacing=0.5, ncol=len(agents), prop={'size': 23})
 
-        if plot_filename:
-            fig.savefig(plot_filename, dpi=PLOT_DPI, bbox_inches='tight')
+    if plot_filename:
+        fig.savefig(plot_filename, dpi=PLOT_DPI, bbox_inches='tight')
 
-        return fig
+    return fig
 
 
 def normalize(df: pd.DataFrame, norm_type: str = 'max'):

@@ -10,22 +10,12 @@ At first, model learning capabilities in ALCS was enhanced by Stolzmann and Butz
 Later, Butz suggested that by using computationally inexpensive methods by biasing exploration towards specially chosen regions of search-space, the model can be learned locally {cite}`butz2001biasing`.
 
 This chapter aims to narrow the existing gap in research by experimentally comparing four biased exploration strategies. Any ALCS agent operating a large realm of observation space might take advantage of the possibility of improving the time needed to form an internal model. First, a baseline method - _epsilon-greedy_, which is a default option for LCS, will be described. Later two methods were introduced by Butz - _action-delay_ and _knowledge-array_ bias. They examine the match set $[M]$ searching for indications of which action might result in the highest information gain. Eventually, the latter approach is inspired by an "_Optimistic Initial Values_" approach described by Sutton in {cite}`sutton2018reinforcement`. This strategy turned out to be very effective for Multi-armed bandit problems, where the main objective is to select the most promising action and was never examined in any LCS domain.
-In most experiments, the rACS agent builds the population consisting primarily of Region 1 interval predicates. The amount of attributes represented as Region 3 and 4, spanning to the maximum value from the right side, tends to diminish. However, the results are correlated with the number of trials that were kept the same in all cases. More precise boundary representation naturally would require more trials to converge. However, for the first 4 bits, there is the following trend can be noticed when intensifying encoding resolution:
-
-- Ratio of Region 1 attributes increases
-- Ratio of Region 2, 3, 4 attributes decreases
-
-This is caused by the lack of online rule compaction or consolidation mechanism. The only possibility for the agent to create a more general attribute is due to the mutation algorithm controlled by the $\epsilon_{mutation}$ parameter. However, this value must be set carefully because limitations of selected encoding resolution can inadvertently ignore its effect.
-
-The other metrics also show the hypothesis about the need for more trials. The size of the overall population is correlated with the number of encoding bits, but it became more difficult for the agent to discriminate between reliable classifiers. For example, when using 5-bits encoding after {glue:}`32_e2_trials` trials, there is no single reliable classifier despite having a population with more than 10 thousand individuals.
-
-The experiment with 1-bit encoding also confirms the situation when it is impossible to learn the environment with hyper-plane decision boundary successfully. Such representation cannot handle regularities, resulting in unreliable classifiers and random average rewards from exploit runs.
 
 
 ```{admonition} Epsilon-Greedy (EG)
 :class: tip
 
-In the epsilon-greedy approach, the agent equally discovers all regions from the input-space, not favouring any specific behaviour. In each step, random action is executed with $p_{explr}$ probability. Then it is chosen uniform randomly from classifiers composing a match set $[M]$. In the case of $1-p_{explr}$, action from the most fitted classifier is executed. By doing so, the agent can occasionally perform the move he thinks is the best at a given time, reinforcing its beliefs about the consequences. 
+In the epsilon-greedy approach, the agent equally discovers all regions from the input-space, not favouring any specific behaviour. In each step, random action is executed with $p_{explr}$ or $\epsilon$ probability. Then it is chosen uniform randomly from classifiers composing a match set $[M]$. In the case of $1-p_{explr}$, action from the most fitted classifier is executed. By doing so, the agent can occasionally perform the move he thinks is the best at a given time, reinforcing its beliefs about the consequences. 
 ```
 
 ```{admonition} Action-Delay (AD)
@@ -39,7 +29,7 @@ In case there exists an action not represented by any classifier in $[M](t)$ tha
 ````{admonition} Knowledge Array (KA)
 :class: tip
 
-This method, on the contrary, is based on the _error-based_ principle. For ACS2, a quality $q$ denoting the accuracy of predictions for each classifier can be used to measure it.
+This method, on the contrary, is based on the _error-based_ principle. A classifier quality $q$ metric denoting the accuracy of predictions for each individual can be used to measure it.
 
 The bias generates the knowledge array KA from classifiers in a match set $[M]$ in which each entry specifies the averaged quality for the anticipation for each possible action - see Equation {math:numref}`ka-eq`.
 
@@ -68,7 +58,7 @@ Interestingly, Hansmeier and Platzner made an effort to compare four strategies 
 This section presents the motivation, goals and setup of the performed experiments and their results.
 
 ### Research questions
-The conducted research aims to answer the following question regarding the rACS algorithm and the interval-based representation
+The conducted research aims to answer the following question regarding the biased exploration strategies
 
 1. Does the biased exploration methods (AD, KA, OIQ) significantly accelerate the agent's learning speed?
 2. Can the OIQ method improve the performance of ingesting knowledge or reducing classifier population size?
@@ -84,7 +74,7 @@ Similarly, as above but in this case, a single step 6-bit [](section-topics-envi
 Use two basic multistep environments ([](section-topics-environments-corridor) and [](section-topics-environments-grid)) to determine the differences between the rate of gaining knowledge, the ability to build an internal pool of classifiers and operating in the environments.
 ```
 
-```{admonition} _Experiment 3 - Balacing the pole_
+```{admonition} _Experiment 3 - Balancing the pole_
 The methods will be evaluated on the [](section-topics-environments-cartpole) problem of balancing a pole on a cart. This is a novel problem for the LCS due to specific observation space (where two attributes span to infinity) and a specific reward scheme based on how long the pole is kept upright.
 ```
 
