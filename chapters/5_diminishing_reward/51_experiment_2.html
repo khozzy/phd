@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -618,8 +618,8 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-2-deceptive-corridor">
 <h1>Experiment 2 - Deceptive Corridor<a class="headerlink" href="#experiment-2-deceptive-corridor" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State Worlds</span></a> differentiate from the Corridor by the presence of futile movement available in every step. Moreover, this action alternates between the states, demanding the agent to discriminate between relevant perceptions.</p>
-<p>Agent’s behaviour is expected to properly distribute reward across all valuable states, meanwhile ignoring the rest of them. The analysis was performed by executing consecutive <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials alternating between explore and exploit phases. Similarly, as in the previous experiment, there is only one state-observed; thus, the ACS2 genetic generalization mechanism remains wholly turned off.</p>
+<p><a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State World</span></a> differentiate from the Corridor by the presence of futile movement available in every step. Moreover, this action alternates between the states, demanding the agent to discriminate between relevant perceptions.</p>
+<p>Agent’s behaviour is expected to properly distribute reward across all valuable states, meanwhile ignoring the rest of them. The analysis was performed by executing consecutive <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials alternating between explore and exploit phases. Similarly, as in the previous experiment, there is only one state-observed; thus, the ACS2 genetic generalization mechanism remains turned off.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fsw10_env_provider</span><span class="p">():</span>
@@ -789,10 +789,10 @@
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p><strong>Parameters</strong></p>
-<p><span class="math notranslate nohighlight">\(\beta=0.5\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.5\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span>.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="aedb12ea-8415-44aa-9f74-bde009c26bba" name="31f4e982-ed6b-4d21-80d2-67440f96a7f9" type="radio">
-</input><label class="tabbed-label" for="aedb12ea-8415-44aa-9f74-bde009c26bba">
+<input checked="checked" id="4e58056d-aa5e-4b8b-a331-ba62c6151edd" name="0a376173-c992-4bc6-9ebb-474e3a0223c6" type="radio">
+</input><label class="tabbed-label" for="4e58056d-aa5e-4b8b-a331-ba62c6151edd">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-fig">
 <div class="cell_output docutils container">
@@ -801,8 +801,8 @@ Performance</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Performance in FSW-10 environment. Plots are averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> experiments. A moving average with window 25 was applied for the number of steps. Notice that the abscissa on both plots is scaled differently.</span><a class="headerlink" href="#fsw-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="2a1b0982-73e3-4565-9042-31da95913414" name="31f4e982-ed6b-4d21-80d2-67440f96a7f9" type="radio">
-</input><label class="tabbed-label" for="2a1b0982-73e3-4565-9042-31da95913414">
+<input id="68ad31a2-390a-4823-90f5-69f5409cd61a" name="0a376173-c992-4bc6-9ebb-474e3a0223c6" type="radio">
+</input><label class="tabbed-label" for="68ad31a2-390a-4823-90f5-69f5409cd61a">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-payoff-fig">
 <div class="cell_output docutils container">
@@ -890,8 +890,8 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="eac4b890-96d2-4082-9664-d9c54cf4a1f4" name="c34032f5-a185-4293-bcaf-c8ef2f9ef871" type="radio">
-</input><label class="tabbed-label" for="eac4b890-96d2-4082-9664-d9c54cf4a1f4">
+<input checked="checked" id="504855a3-0973-4334-a611-290663268bd5" name="2275785c-b494-4572-80a6-c340d55b1ef9" type="radio">
+</input><label class="tabbed-label" for="504855a3-0973-4334-a611-290663268bd5">
 FSW 10</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -903,8 +903,8 @@ FSW 10</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="529069d9-88ea-4443-9964-8722e60489df" name="c34032f5-a185-4293-bcaf-c8ef2f9ef871" type="radio">
-</input><label class="tabbed-label" for="529069d9-88ea-4443-9964-8722e60489df">
+<input id="70001664-dc1d-4b35-b5f4-ca0fccb51aa9" name="2275785c-b494-4572-80a6-c340d55b1ef9" type="radio">
+</input><label class="tabbed-label" for="70001664-dc1d-4b35-b5f4-ca0fccb51aa9">
 FSW 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -916,8 +916,8 @@ FSW 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="27c3d7c8-029d-4cb3-b4b3-ab7ee07bfb96" name="c34032f5-a185-4293-bcaf-c8ef2f9ef871" type="radio">
-</input><label class="tabbed-label" for="27c3d7c8-029d-4cb3-b4b3-ab7ee07bfb96">
+<input id="4662695f-f42d-4a29-ba7b-731a978495f8" name="2275785c-b494-4572-80a6-c340d55b1ef9" type="radio">
+</input><label class="tabbed-label" for="4662695f-f42d-4a29-ba7b-731a978495f8">
 FSW 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>

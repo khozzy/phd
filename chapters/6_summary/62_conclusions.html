@@ -147,7 +147,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -259,7 +259,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -430,37 +430,37 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="conclusions">
 <h1><span class="section-number">6.1. </span>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h1>
-<p>This thesis focused on the integration of anticipatory classifier systems with problems described by real-valued output. While this area was research was extensively and successfully researcher in other LCS families, none major contribution was still made for the ALCS. The stated hypothesis - <em>“Anticipatory Classifiers Systems are capable of building the correct internal model of the environment using the real-valued input signal”</em> is considered as valid by achieving the following goals:</p>
+<p>This thesis focused on integrating anticipatory classifier systems with problems described by real-valued output. While this area was researched extensively in other LCS families, no major contribution was still made for the ALCS. The stated hypothesis - <em>“Anticipatory Classifiers Systems are capable of building the correct internal model of the environment using the real-valued input signal”</em> is considered as valid by achieving the following goals:</p>
 <p><strong>1. Propose modifications towards ALCS system capable of handling real-valued input and optimizing overall performance</strong></p>
 <p>This intention was achieved and validated using two independent approaches:</p>
 <ol class="simple">
-<li><p>Changing the rule’s attribute representations to incorporate <em>interval predicates</em>, resulting in a proprietary system variation named rACS,</p></li>
-<li><p>Perform signal discretization, keeping the most internal component interactions intact.</p></li>
+<li><p>changing the rule’s attribute representations to incorporate <em>interval predicates</em>, resulting in a proprietary system variation named rACS,</p></li>
+<li><p>perform signal discretization, keeping the most internal component interactions intact.</p></li>
 </ol>
-<p>The first approach was based on the advancements made for the XCS systems. The rACS managed to show promising results. But because of the much richer rule complexity, and the co-operation of components precisely forming the condition and effect parts the obtained conclusion is that the nature of rACS is not aligned with the overall ALCS idea. The favoured implementation of ACS2, which is considered as the most matured algorithm is build upon the psychological theory of behavioral control, which was not investigated for this kind of problem. The algorithm performance while being valid are not elegant for the virtues of ALCS for creating most general, compact and accurate rules.</p>
-<p>The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the interface layer. Hopefully, the internal representation is not limited to ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing signal discretization <em>before</em> it was processed by an agent. While yielding promising results, having better transparency this approach was considered superior to interval formation and was pursued in consecutive experiments.</p>
-<p>The proposition of first approach was published in <span id="id1">[<a class="reference internal" href="../../bibliography.html#id7">96</a>]</span>, while the latent learning experiments in discretized environments article is awaiting peer review <span id="id2">[<a class="reference internal" href="../../bibliography.html#id116">114</a>]</span>.</p>
+<p>The first approach was based on the advancements made for the XCS systems. The rACS managed to show promising results. Nevertheless, because of the much richer rule complexity and the cooperation of components precisely forming the condition and effect parts, the obtained conclusion is that the nature of rACS is not aligned with the overall ALCS idea. The favoured implementation of ACS2, which is considered the most mature algorithm, is built upon the psychological theory of behavioural control, which was not investigated for this kind of problem. The algorithm performance, while being valid, is not elegant for the virtues of ALCS for creating the most general, compact and accurate rules.</p>
+<p>The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the agent-environment interface layer. Hopefully, the internal representation is not limited to the ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing signal discretization <em>before</em> an agent processes it. While promising results and better transparency, this approach was considered superior to interval formation and was pursued in consecutive experiments.</p>
+<p>The proposition of the first approach was published in <span id="id1">[<a class="reference internal" href="../../bibliography.html#id7">96</a>]</span>, while the latent learning experiments in discretized environments article is awaiting peer review <span id="id2">[<a class="reference internal" href="../../bibliography.html#id116">114</a>]</span>.</p>
 <p><strong>2. Propose relevant benchmarking problems and metrics for evaluating ALCS performance</strong></p>
-<p>The nature of performance was carefully reviewed in six problems using the continuous-valued signal as a description of an actual state. Most of them have been used as a toy-problems in LCS research, providing different problems of different natures, like:</p>
+<p>The nature of the performance was carefully reviewed in six problems using the continuous-valued signal as a description of an actual state. Most of them have been used as a toy-problems in LCS research, providing different problems of different natures, like:</p>
 <ul class="simple">
 <li><p>single and multiple steps,</p></li>
 <li><p>extensive mutual feature interaction,</p></li>
 <li><p>vast input space,</p></li>
-<li><p>need for long-action chain building.</p></li>
+<li><p>the need for long-action chain building.</p></li>
 </ul>
-<p>Moreover, a famous RL <em>Cart Pole</em> benchmarking problem was investigated by the LCS for the first time, obtaining very promising results with compact knowledge representation.</p>
-<p>To highlight performance five key metrics were selected that investigate the state of the systems from multiple angles. Aspects like the quality of evolving solution, it’s size and effective application are emphasized throughout performed research.</p>
+<p>Moreover, a famous RL <em>Cart Pole</em> benchmarking problem was investigated by the LCS for the first time, obtaining encouraging results with compact knowledge representation.</p>
+<p>To highlight performance, five key metrics were selected that investigate the state of the systems from multiple angles. Aspects like the quality of evolving solutions, size, and effective application are emphasized throughout the research.</p>
 <p><strong>3. Propose relevant improvements towards neoteric changes</strong></p>
-<p>The main effort of this work is put on investigating the ALCS behaviour with either interval-based rule representation (rACS) or by the use of discretization. The rACS adaptation require redefining certain internal processes and introduces new system parameters. Preliminary tests revealed two possible limitations of the system that were further studied.</p>
-<p>First, any form of continuous-value representation increased the search-space of the problem, impeding the agent’s learning speed. Four techniques probing for most promising action selection were inspected especially in terms of knowledge acquisition rate. The novel approach, based on the encouraging approach of <em>Optimistic Initial Values</em> in multi-armed bandits, named <em>Optimistic Initial Quality</em> was proposed herein, but did not provide substantial performance gains.</p>
-<p>The other limitation relates to multistep problems, where certain signal discretization might demand the agent to perform notably larger amount of actions to receive the feedback signal. The default reward assignment component might distribute the signal incorrectly amongst participating classifier when such long-action chains are experienced. An approach replacing the credit assignment with the undiscounted incentive distribution version was taken resulting in a system named AACS2. The method showed performance improvements for certain problems.</p>
+<p>This work’s primary effort is to investigate the ALCS behaviour with either interval-based rule representation (rACS) or by the use of discretization. The rACS adaptation requires redefining certain internal processes and introducing new system parameters. Preliminary tests revealed two possible limitations of the system that were further studied.</p>
+<p>First, any form of continuous-valued representation increased the problem’s search space, impeding the agent’s learning speed. Four techniques probing for the most promising action selection were inspected, especially regarding knowledge acquisition rate. The novel approach, based on the promising approach of <em>Optimistic Initial Values</em> in multi-armed bandits, named <em>Optimistic Initial Quality</em> was proposed herein but did not provide substantial performance gains.</p>
+<p>The other limitation relates to multistep problems, where certain signal discretization might demand the agent to perform a notably larger number of actions to receive the feedback signal. The default reward assignment component might distribute the signal incorrectly amongst participating classifiers when such long-action chains are experienced. An approach replacing the credit assignment with the undiscounted incentive distribution version resulted in a system named AACS2. The method showed performance improvements for specific problems.</p>
 <p>The biased exploration research was published in <span id="id3">[<a class="reference internal" href="../../bibliography.html#id63">25</a>]</span>, and the performance of long-action chaining in <span id="id4">[<a class="reference internal" href="../../bibliography.html#id62">26</a>]</span>.</p>
 <p><strong>4. Conduct an experimental evaluation of intended adjustments</strong></p>
-<p>All the experiments were tried to illustrate the evolution of selected metrics over the course of agent’s learning of selected problems. Such characteristics of investigated strategies of ALCS implementations were further smoothed by averaging multiple independent experiments.</p>
-<p>Moreover, bayesian estimation approach was used emphasize the differences between investigated cases, allowing to draw non-biased conclusions. Often selected environments were scaled up, where agents behaviour was challenged with increased complexity.</p>
+<p>All the experiments were tried to illustrate the evolution of selected metrics throughout the agent’s learning of selected problems. Such characteristics of investigated strategies of ALCS implementations were further smoothed by averaging multiple independent experiments.</p>
+<p>Moreover, the Bayesian estimation approach emphasized the differences between investigated cases, allowing to draw non-biased conclusions. Often, selected environments were scaled up, where agents’ behaviour was challenged with increased complexity.</p>
 <p><strong>5. Developing an open-sourced Python Machine Learning framework for evaluating various LCS algorithms</strong></p>
-<p>LCS algorithms are still not recognized by many ML practitioners and researches. One of the significant effort was put to implement most famous algorithms using the tools used nowadays by data scientist communities. Despite limited number of reference resources, the historical experiments were mostly reproduced drastically simplifying newcomers learning curve.</p>
-<p>By integrating with the industry standards, all algorithms share the same code base and operate with commonly agreeded interface enabling effortless benchmarking with other state-of-the-art systems. The incentives like open-source availability, vast amount of usage examples, possibility of interactive execution are intended to shed more light on this promising, yet underappreciated field of ML.</p>
+<p>LCS algorithms are still not recognized by many ML practitioners and researchers. Significant effort was put to implement the most famous ALCS algorithms using the tools used nowadays by data scientist communities. Despite a limited number of reference resources, the historical experiments were mostly reproduced, drastically simplifying newcomers learning curve.</p>
+<p>By integrating with the industry standards, all algorithms share the same code base and operate with a commonly agreed interface enabling effortless benchmarking with other state-of-the-art systems. The incentives like open-source availability, a vast amount of usage examples, possibility of interactive execution are intended to shed more light on this promising yet underappreciated field of ML.</p>
 <p>The developed <em>PyALCS</em> framework was described in <span id="id5">[<a class="reference internal" href="../../bibliography.html#id102">93</a>]</span> research paper.</p>
 </div>
 

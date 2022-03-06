@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.5. Overview of the selected environments" href="26_envs.html" />
-    <link rel="prev" title="2.3. Key performance indicators" href="24_kpi.html" />
+    <link rel="prev" title="2.3. Key Performance Indicators (KPI)" href="24_kpi.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../5_diminishing_reward/51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -530,7 +530,7 @@
 <li><p>the p-value does not separate between the effect size and the sample size,</p></li>
 <li><p>it ignores magnitude and uncertainty,</p></li>
 <li><p>it yields no information about the null hypothesis,</p></li>
-<li><p>there is no principled way to decide the <span class="math notranslate nohighlight">\(\alpha\)</span> level</p></li>
+<li><p>there is no principled way to decide the <span class="math notranslate nohighlight">\(\alpha\)</span> level.</p></li>
 </ul>
 <p>Additionally, in 2016 the <em><a class="reference external" href="https://www.amstat.org/">American Statistical Association</a></em> made a statement against p-values <span id="id4">[<a class="reference internal" href="../../bibliography.html#id15">86</a>]</span> which might be a motivation for other disciplines to pursue the Bayesian approach.</p>
 <div class="margin sidebar">
@@ -703,7 +703,7 @@
 &amp;H_0: \text{The classifier population sizes obtained by ACS2 and ACS2 GA are equal}\\
 &amp;H_1: \text{The classifier population sizes obtained by ACS2 and ACS2 GA are different}
 \end{align*}\end{split}\]</div>
-<p>In traditional NHST workflow, the first step would be to apply normality tests to verify whether the data is normally distributed. However, looking at the histograms from the Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.8</span></a> we might assume that the data follow the Gaussian distribution and skip this step.</p>
+<p>In traditional NHST workflow, the first step would be to apply normality tests to verify whether the data is normally distributed. However, looking at the histograms from the Figure <a class="reference internal" href="#summary-stats"><span class="std std-numref">2.8</span></a> we might assume that the data follow the Gaussian distribution and skip it.</p>
 <p>If the <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis is rejected, there is no significant difference between the means. To do so, a p-value will be calculated and compared with a certain threshold <span class="math notranslate nohighlight">\(\alpha \leq 0.05\)</span>. If the p-value falls below the threshold, it means that the null hypothesis <span class="math notranslate nohighlight">\(H_0\)</span> can be rejected and <strong>there is 95% confidence that both means are significantly different</strong>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -802,7 +802,7 @@
 </div>
 </div>
 <p>The posterior distribution allows assessing the null value more credibly. Contrary to NHST, it can also accept <span class="math notranslate nohighlight">\(H_0\)</span>. To do so, a researcher defines a <em>region of practical equivalence</em> (ROPE) <span id="id7">[<a class="reference internal" href="../../bibliography.html#id19">89</a>]</span>, enclosing the values of the parameter that are deemed to be negligibly different from the null values for practical purposes. When nearly all the credible values fall within the ROPE, the null value is said to be accepted for practical purposes.</p>
-<p>Figure <a class="reference internal" href="#stats-bayes-delta-fig"><span class="std std-numref">2.10</span></a> shows the graphical example of verifying the null hypothesis using the difference between two population means <span class="math notranslate nohighlight">\(\mu_{ACS2}-\mu_{ACS2GA}\)</span>. The ROPE region (red sector) was assumed to be <span class="math notranslate nohighlight">\([-1, 1]\)</span>, which means that the difference of one classifier is acceptable to consider two populations equal. Blue lines represent the area of credible values of the previously calculated difference. Since the credible value region does not fall into the ROPE region, the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected (while the NHST approach retained it).</p>
+<p>Figure <a class="reference internal" href="#stats-bayes-delta-fig"><span class="std std-numref">2.10</span></a> shows the graphical example of verifying the null hypothesis using the difference between two posterior distributions of population means <span class="math notranslate nohighlight">\(\mu_{ACS2}-\mu_{ACS2GA}\)</span>. The ROPE region (red sector) was assumed to be <span class="math notranslate nohighlight">\([-1, 1]\)</span>, which means that the difference of one classifier is acceptable to consider two populations equal. Blue lines represent the area of credible values of the previously calculated difference. Since the credible value region does not fall into the ROPE region, the <span class="math notranslate nohighlight">\(H_0\)</span> is rejected (while the NHST approach retained it).</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span>
@@ -895,7 +895,7 @@
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">2.3. </span>Key performance indicators</p>
+            <p class="prev-next-title"><span class="section-number">2.3. </span>Key Performance Indicators (KPI)</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="26_envs.html" title="next page">

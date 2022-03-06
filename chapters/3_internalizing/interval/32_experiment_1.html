@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../5_diminishing_reward/51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -684,8 +684,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="45cc2c8e-b1ee-4339-ac04-0dbf4a527536" name="24500139-00e2-4783-ba85-05a998879b08" type="radio">
-</input><label class="tabbed-label" for="45cc2c8e-b1ee-4339-ac04-0dbf4a527536">
+<input checked="checked" id="67aacb30-582b-48cb-aeb8-4f484a0d5fac" name="ce4db8f9-a614-49fd-973b-4b089c2eaf56" type="radio">
+</input><label class="tabbed-label" for="67aacb30-582b-48cb-aeb8-4f484a0d5fac">
 1 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc1bit-fig">
 <div class="cell_output docutils container">
@@ -694,8 +694,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Performance in 3bit rMPX UBR with 1bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc1bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="5c87fc11-faa3-41a7-9da9-e86cefb8bec0" name="24500139-00e2-4783-ba85-05a998879b08" type="radio">
-</input><label class="tabbed-label" for="5c87fc11-faa3-41a7-9da9-e86cefb8bec0">
+<input id="61b4b4f1-b1fa-4065-945f-104a182e5cc7" name="ce4db8f9-a614-49fd-973b-4b089c2eaf56" type="radio">
+</input><label class="tabbed-label" for="61b4b4f1-b1fa-4065-945f-104a182e5cc7">
 2 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc2bit-fig">
 <div class="cell_output docutils container">
@@ -704,8 +704,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Performance in 3bit rMPX UBR with 2bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc2bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="28fe153d-c272-432b-b292-b6d7264d126d" name="24500139-00e2-4783-ba85-05a998879b08" type="radio">
-</input><label class="tabbed-label" for="28fe153d-c272-432b-b292-b6d7264d126d">
+<input id="3df99a1c-c488-44c6-9612-7e329796a359" name="ce4db8f9-a614-49fd-973b-4b089c2eaf56" type="radio">
+</input><label class="tabbed-label" for="3df99a1c-c488-44c6-9612-7e329796a359">
 3 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc3bit-fig">
 <div class="cell_output docutils container">
@@ -714,8 +714,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Performance in 3bit rMPX UBR with 3bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc3bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="5c22e9a1-ec59-4b01-87ef-c8975267dc60" name="24500139-00e2-4783-ba85-05a998879b08" type="radio">
-</input><label class="tabbed-label" for="5c22e9a1-ec59-4b01-87ef-c8975267dc60">
+<input id="8cd0ddaf-f11f-4013-a709-41e2bbb0a552" name="ce4db8f9-a614-49fd-973b-4b089c2eaf56" type="radio">
+</input><label class="tabbed-label" for="8cd0ddaf-f11f-4013-a709-41e2bbb0a552">
 4 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc4bit-fig">
 <div class="cell_output docutils container">
@@ -800,8 +800,8 @@
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
 <p>The rACS algorithm implementation proved to be capable of solving 3bit rMPX problem with the hyper-plane decision surface. The performance of four distinct values of encoding resolutions are depicted in Figures <a class="reference internal" href="#rmpx3bit-enc1bit-fig"><span class="std std-numref">3.2</span></a>, <a class="reference internal" href="#rmpx3bit-enc2bit-fig"><span class="std std-numref">3.3</span></a>, <a class="reference internal" href="#rmpx3bit-enc3bit-fig"><span class="std std-numref">3.4</span></a>, <a class="reference internal" href="#rmpx3bit-enc4bit-fig"><span class="std std-numref">3.5</span></a>.</p>
 <p>For this particular environment, the threshold mapping each real-value attribute into binary signal was set to <span class="math notranslate nohighlight">\(0.5\)</span>; therefore, satisfying performance was obtained with very rough encoding values. The agent consistently exploited the environment with a single encoding bit by choosing the correct answer and converging the population size.</p>
-<p>Raising the encoding bits should lead to similar results but slower. Due to the expansion of possible interval combinations, the agent component needs more time to evolve proper rules. This progression is observed in Figure <a class="reference internal" href="#rmpx3bit-enc2bit-fig"><span class="std std-numref">3.3</span></a> where 2 encoding bits are used. Similar performance is observed, but the final population size is almost three times larger due to the lack of rule compaction.</p>
-<p>The problems are emphasized when using 3 and 4 encoding bits. The average reward in the exploit phase is still significantly greater than in explore one, meaning that the agent can pick up correct decisions most of the time, but the convergence of population size is becoming elusive. The algorithm is struggling with increasing population size, which is a significant computational bottleneck due to its nature.</p>
+<p>Raising the encoding bits should lead to similar results but slower. Due to the expansion of possible interval combinations, the learning component needs more time to evolve proper rules. This progression is observed in Figure <a class="reference internal" href="#rmpx3bit-enc2bit-fig"><span class="std std-numref">3.3</span></a> where 2 encoding bits are used. Similar performance is observed, but the final population size is almost three times larger due to the lack of rule compaction ability.</p>
+<p>The problems are emphasized when using 3 and 4 encoding bits. The average reward in the exploit phase is still significantly greater than in explore one, meaning that the agent can pick up correct decisions most of the time, but the convergence of population size is becoming elusive. The algorithm is struggling with increasing population size, which, due to its nature, is a significant computational bottleneck.</p>
 <hr class="docutils" />
 <p><strong>Software packages used</strong></p>
 <div class="cell docutils container">

@@ -14,8 +14,7 @@ During the work on the thesis I have also coauthored other research:
 
 - Olgierd Unold, Edyta Rogula, and Norbert Kozłowski. _Introducing action planning to the anticipatory classifier system ACS2_. In International Conference on Computer Recognition Systems, 264–275. Springer, 2019 (**CORE**: National, **MNiSW**: 20).
 
-Additionally, at the time of completing this thesis, the following article is undergoing
-the review process:
+Additionally, at the time of completing this thesis, the following article is undergoing the review process:
 
 - Norbert Kozłowski, Olgierd Unold - _Internalizing Knowledge for Anticipatory
 Classifier Systems in Discretized  Real-Valued Environments_. IEEE Access. 2022

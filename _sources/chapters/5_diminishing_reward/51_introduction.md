@@ -1,4 +1,4 @@
-# Optimizing distributing reward through long action chains
+# Optimizing reward distribution through long action chains
 
 ```{tableofcontents}
 ```

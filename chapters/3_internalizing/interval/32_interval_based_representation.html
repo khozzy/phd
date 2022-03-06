@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../5_diminishing_reward/51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -563,7 +563,7 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="interval-based-representation">
 <h1><span class="section-number">3.1. </span>Interval-based representation<a class="headerlink" href="#interval-based-representation" title="Permalink to this headline">¶</a></h1>
-<p>There are several possible ways of representing intervals as described in Section “<a class="reference internal" href="../../2_selected_topics/23_real_value_challenge.html#section-topics-real-interval"><span class="std std-ref">Interval predicates</span></a>”. This chapter deliberately selects the UBR approach introduced by Stone and Bull for XCS <span id="id1">[<a class="reference internal" href="../../../bibliography.html#id11">22</a>]</span>, since it supersedes both CSR and OBR encodings and tries to apply within the ALCS algorithm.</p>
+<p>There are several possible ways of representing intervals as described in Section “<a class="reference internal" href="../../2_selected_topics/23_real_value_challenge.html#section-topics-real-interval"><span class="std std-ref">Interval predicates</span></a>”. This chapter deliberately selects the UBR approach introduced by Stone and Bull for XCS <span id="id1">[<a class="reference internal" href="../../../bibliography.html#id11">22</a>]</span>, since it supersedes both CSR and OBR encodings and tries to apply it within the ALCS algorithm.</p>
 <p>However, any agent cannot be adapted to UBR just by changing the communication layer with the environment. Therefore, the ACS2 algorithm was elected as a representative candidate of the ALCS family due to its maturity and the considerable number of tightly interacting components.</p>
 <p>Moreover, to limit the flourishing population size, a hybrid approach was taken to represent intervals, where each boundary is represented using a nominal integer value within a certain range. It is assumed that the input attribute perception <span class="math notranslate nohighlight">\(\sigma_i\)</span> is defined as <span class="math notranslate nohighlight">\(\sigma_i \in [0, 1]\)</span>. <a class="reference internal" href="#hybrid-interval-df"><span class="std std-numref">Fig. 3.1</span></a> demonstrates an example of encoding real value signal using particular encoding resolutions. Obviously, low encoding values introduce ambiguity, and this parameter must be chosen carefully.</p>
 <div class="figure align-default" id="hybrid-interval-df">
@@ -743,7 +743,7 @@
 <h3>Goals of the experiments<a class="headerlink" href="#goals-of-the-experiments" title="Permalink to this headline">¶</a></h3>
 <div class="admonition-experiment-1-encoding-precision admonition">
 <p class="admonition-title"><em>Experiment 1 - Encoding precision</em></p>
-<p>The impact of using different values of bits for creating UBR ranges will be contrasted with the ability to exploit the single-step <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment. Due to the environment’s increasing complexity, a simple 3-bit variant is sufficient to demonstrate the potential pitfalls of using interval-based representation</p>
+<p>The impact of using different numbers of bits for creating UBR ranges will be contrasted with the ability to exploit the single-step <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a> environment. Due to the environment’s increasing complexity, a simple 3-bit variant is sufficient to demonstrate the potential pitfalls of the proposed interval-based representation</p>
 </div>
 <div class="admonition-experiment-2-nature-of-the-intervals admonition">
 <p class="admonition-title"><em>Experiment 2 - Nature of the intervals</em></p>
@@ -761,13 +761,14 @@
 </div>
 <div class="section" id="answers-to-research-questions">
 <h3>Answers to research questions<a class="headerlink" href="#answers-to-research-questions" title="Permalink to this headline">¶</a></h3>
+<p>The answers to the previously formulated research questions are as follows:</p>
 <div class="section" id="q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully">
 <h4>Q1: Can the rACS algorithm form the internal model of the environment and exploit it successfully?<a class="headerlink" href="#q1-can-the-racs-algorithm-form-the-internal-model-of-the-environment-and-exploit-it-successfully" title="Permalink to this headline">¶</a></h4>
-<p>The performed experiments involved two single-step problems with varying difficulties. The rACS implementation showed promising results and revealed certain limitations in both of them.</p>
+<p>The performed experiments involved two single-step problems with varying difficulties. The rACS implementation showed promising results, but revealed certain limitations were revealed in both of them.</p>
 <p><strong>Rule compaction</strong></p>
 <p>Due to the nature of LCS systems, most of the components interact sequentially, frequently iterating over the population of classifiers. rACS agents showed to be biased towards creating rules capturing specific small niches of the solution space, therefore significantly increasing population size. The enhancement merging rules affecting neighbouring areas of solution space would have a heavy impact on the solution’s computational performance and compactness.</p>
 <p><strong>Encoding resolution</strong></p>
-<p>The proposed approach represented interval boundaries as integer values. While this decision has a positive impact mainly on the simplification of internal operators, there are certain drawbacks. First and foremost, there is a tradeoff between selected resolution and the size of the population. In all performed experiments, situations with high resolution yield the most significant internal models containing very specific classifiers. Second, knowledge about environment regularities is beneficial for determining optimal value because some of the regularities might not be captured due to perception encoding ambiguity (see <a class="reference internal" href="#hybrid-interval-df"><span class="std std-numref">Fig. 3.1</span></a>).</p>
+<p>The proposed approach represented interval boundaries as integer values. While this decision has a positive impact mainly on the simplification of internal operators, there are certain drawbacks. First and foremost, there is a tradeoff between selected resolution and the size of the population. In all performed experiments, situations with high resolution yield the most significant internal models containing very specific classifiers. Second, knowledge about environment internal regularities (like the rRMPX threshold) is beneficial for determining optimal encoding value because some of the regularities might not be captured due to perceptional ambiguity (see <a class="reference internal" href="#hybrid-interval-df"><span class="std std-numref">Fig. 3.1</span></a>).</p>
 <p><strong>Effect part</strong></p>
 <p>The majority of rACS modifications focus on building the correct <em>condition</em> part, ignoring the evolution of the <em>effect</em> side. The ALP component responsible for driving the agent’s learning mechanism was not intended for real-valued representation. Moreover, the problem with the growing population is also related to the creation of duplicated and overlapping classifiers where the aforementioned processes cannot perform subsumption and merging of classifiers with similar rule structure while favouring more general classifiers. Therefore, in rACS, its usage was simplified, indicating a need for a dedicated solution.</p>
 </div>

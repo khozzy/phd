@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Experiment 1 - Straight Corridor" href="51_experiment_1.html" />
-    <link rel="prev" title="5. Optimizing distributing reward through long action chains" href="51_introduction.html" />
+    <link rel="prev" title="5. Optimizing reward distribution through long action chains" href="51_introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -611,8 +611,8 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="diminishing-reward">
 <h1><span class="section-number">5.1. </span>Diminishing reward<a class="headerlink" href="#diminishing-reward" title="Permalink to this headline">¶</a></h1>
-<p>Previous chapters showed that applying real-valued signal handling either by using the interval predicates or discretization significantly increases the input space. This magnitude of possible states implies the growth of classifier population size; therefore, the traditional discounted sum of reward distribution is not an appropriate option. The desired intention is for the case when the rewards received in all decision instances are equally important.</p>
-<p>The criterion applied in this situation is called <em>the average reward criterion</em> and was introduced by Puterman <span id="id1">[<a class="reference internal" href="../../bibliography.html#id103">103</a>]</span>. He stated that the decision-maker might prefer it when the decisions are made frequently (so that the discount rate is very close to 1), or other terms cannot easily describe the performance criterion. Possible areas of an application might include situations where system performance is assessed based on the throughput rate (like making frequent decisions when controlling the flow of communication networks).</p>
+<p>Previous chapters showed that applying real-valued signal handling either by using the interval predicates or discretization significantly increases the input space. This magnitude of possible states implies the growth of classifier population size; therefore, the traditional discounted sum of reward distribution might not be an appropriate option. The desired intention is for the case when the rewards received in all decision instances are equally important.</p>
+<p>The alternative criterion applied in this situation is called <em>the average reward criterion</em> and was introduced by Puterman <span id="id1">[<a class="reference internal" href="../../bibliography.html#id103">103</a>]</span>. He stated that the decision-maker might prefer it when the decisions are made frequently (so that the discount rate is very close to 1), or other terms cannot easily describe the performance criterion. Possible areas of an application might include situations where system performance is assessed based on the throughput rate (like making frequent decisions when controlling the flow of communication networks).</p>
 <p>The averaged reward criterion was first implemented in XCS by Tharakunnel and Goldberg <span id="id2">[<a class="reference internal" href="../../bibliography.html#id104">104</a>]</span>. They called their modification AXCS and showed that it performed similarly to the standard XCS in the Woods2 environment. Later, Zang et al. <span id="id3">[<a class="reference internal" href="../../bibliography.html#id105">105</a>]</span> formally introduced the R-learning <span id="id4">[<a class="reference internal" href="../../bibliography.html#id106">106</a>]</span> <span id="id5">[<a class="reference internal" href="../../bibliography.html#id107">107</a>]</span> technique to XCS and called it XCSAR. They compared it with XCSG (where the prediction parameters are modified by applying the idea of gradient descent) and ACXS (maximizing the average of successive rewards) in large multistep problems (Woods1, Maze6, and Woods14).</p>
 <p>This chapter replaces the ACS2 credit assignment component, optimizing the performance in the infinite horizon (discounted reward) with an averaged version. The introduced variant is AACS2 (Averaged Anticipatory Classifier System) and is implemented in two slightly different variants - AACS2-v1 and AACS2-v2. The performance is validated using two scalable and discretized environments requiring multiple steps to pursue reward.</p>
 <div class="section" id="reinforcement-learning-and-reward-criterion">
@@ -706,7 +706,7 @@ cl.ir &amp; = &amp; cl.ir + \beta \left( \phi(t) - cl.ir \right)
 </div>
 <div class="admonition-experiment-2-deceptive-corridor admonition">
 <p class="admonition-title"><em>Experiment 2 - Deceptive Corridor</em></p>
-<p>The <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State Worlds</span></a> environment is an extension to the Corridor. In each state, actions alternate - one will bring the agent closer to the reward, and the other is languishing. The forager will have to distinguish every other state and distribute rewards properly.</p>
+<p>The <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-fsw"><span class="std std-ref">Finite State World</span></a> environment is an extension to the Corridor. In each state, actions alternate - one will bring the agent closer to the reward, and the other is languishing. The forager will have to distinguish every other state and distribute rewards properly.</p>
 </div>
 </div>
 <div class="section" id="experiments">
@@ -730,7 +730,7 @@ cl.ir &amp; = &amp; cl.ir + \beta \left( \phi(t) - cl.ir \right)
 </div>
 <div class="section" id="does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation">
 <h4>Does the undiscounted reward criterion result in better environment exploitation?<a class="headerlink" href="#does-the-undiscounted-reward-criterion-result-in-better-environment-exploitation" title="Permalink to this headline">¶</a></h4>
-<p>Number of steps during exploitation trials depicted on figures <a class="reference internal" href="51_experiment_1.html#corridor-fig"><span class="std std-numref">5.1</span></a> and <a class="reference internal" href="51_experiment_2.html#fsw-fig"><span class="std std-numref">5.3</span></a> indicate that the agent is able to pick up better actions when the undiscounted criterion is used.</p>
+<p>Number of steps during exploitation trials depicted on figures <a class="reference internal" href="51_experiment_1.html#corridor-fig"><span class="std std-numref">5.1</span></a> and <a class="reference internal" href="51_experiment_2.html#fsw-fig"><span class="std std-numref">5.3</span></a> indicate that for the investigated problems the agent is able to pick up better actions when the undiscounted criterion is used.</p>
 <p>In addition, the fact that the <span class="math notranslate nohighlight">\(\rho\)</span> converged to a slightly suboptimal value might be caused by the exploration strategy adopted, which was set to the <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy. Because the estimated average reward is updated only when the greedy action is executed, the number of greedy actions to be performed during the exploration trial is uncertain. Moreover, the probability distribution when the agent observes the rewarding state might be too low in order to enable the estimated average reward to reach optimal value. This was observed during the experimentation - the <span class="math notranslate nohighlight">\(\rho\)</span> value was correlated with the <span class="math notranslate nohighlight">\(\epsilon\)</span> parameter.</p>
 </div>
 </div>
@@ -766,7 +766,7 @@ cl.ir &amp; = &amp; cl.ir + \beta \left( \phi(t) - cl.ir \right)
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">5. </span>Optimizing distributing reward through long action chains</p>
+            <p class="prev-next-title"><span class="section-number">5. </span>Optimizing reward distribution through long action chains</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="51_experiment_1.html" title="next page">

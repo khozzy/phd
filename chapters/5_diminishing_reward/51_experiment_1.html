@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../2_selected_topics/24_kpi.html">
-     2.3. Key performance indicators
+     2.3. Key Performance Indicators (KPI)
     </a>
    </li>
    <li class="toctree-l2">
@@ -261,7 +261,7 @@
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="51_introduction.html">
-   5. Optimizing distributing reward through long action chains
+   5. Optimizing reward distribution through long action chains
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -614,8 +614,8 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="experiment-1-straight-corridor">
 <h1>Experiment 1 - Straight Corridor<a class="headerlink" href="#experiment-1-straight-corridor" title="Permalink to this headline">¶</a></h1>
-<p>The following section describes the differences observed between using the ACS2 with standard discounted reward distribution and two proposed modifications. In all cases, the experiments were performed in an explore-exploit manner for the total number of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span>, where the mode was alternating in each trial. Additionally, for better reference and benchmarking purposes, basic implementations of Q-Learning and R-Learning algorithms were also introduced and used with the same parameter settings as ACS2 and AACS2.</p>
-<p>The most important thing was to distinguish whether the new reward distribution proposition still allows the agent to successfully update the classifier’s parameter to allow the exploitation of the environment. To illustrate this, figures presenting the number of steps to the final location, estimated average change during learning, and the reward payoff landscape across all possible state-action pairs were plotted for the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> of size <span class="math notranslate nohighlight">\(n=20\)</span>.</p>
+<p>The following section describes the differences observed between using the ACS2 with standard discounted reward distribution and two proposed modifications. In all cases, the experiments were performed in an explore-exploit manner for the total number of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials, where the mode was alternating in each trial. Additionally, for better reference and benchmarking purposes, basic implementations of Q-Learning and R-Learning algorithms were also introduced and used with the same parameter settings as ACS2 and AACS2.</p>
+<p>The most important thing was to distinguish whether the new reward distribution proposition still allows the agent to successfully update the classifier’s parameter to allow the exploitation of the environment. To illustrate this, figures presenting the number of steps to the final location, estimated average change during learning, and the reward payoff landscape across all possible state-action pairs were plotted for the <a class="reference internal" href="../2_selected_topics/26_envs.html#section-topics-environments-corridor"><span class="std std-ref">Corridor</span></a> of size <span class="math notranslate nohighlight">\(n=20\)</span> - Figure <a class="reference internal" href="#corridor-payoff-fig"><span class="std std-numref">5.2</span></a>.</p>
 <p>To assure that the modification worked as expected, the statistical inference of obtained result was performed on a scaled version of the problem. Each experiment is averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -786,10 +786,10 @@
 <div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <p><strong>Parameters</strong></p>
-<p><span class="math notranslate nohighlight">\(\beta=0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.2\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span></p>
+<p><span class="math notranslate nohighlight">\(\beta=0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.2\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span>.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="cf1f97fa-1ba3-4908-aaa6-f6e536cbd904" name="be76ebd9-3d5e-40d4-bb3f-940b936f0b09" type="radio">
-</input><label class="tabbed-label" for="cf1f97fa-1ba3-4908-aaa6-f6e536cbd904">
+<input checked="checked" id="2ddd7c24-e61d-4b34-b4c0-1867ede707dd" name="3cea603b-2b80-491d-a958-eef20a2c377d" type="radio">
+</input><label class="tabbed-label" for="2ddd7c24-e61d-4b34-b4c0-1867ede707dd">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-fig">
 <div class="cell_output docutils container">
@@ -798,14 +798,14 @@ Performance</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Performance in Corridor-20 environment. Plots averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> independent runs. Number of steps in exploit trials is averaged over 250 last data points.</span><a class="headerlink" href="#corridor-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="95861a66-615b-4653-a5cd-331b07c8a93d" name="be76ebd9-3d5e-40d4-bb3f-940b936f0b09" type="radio">
-</input><label class="tabbed-label" for="95861a66-615b-4653-a5cd-331b07c8a93d">
+<input id="3ac48d6d-7ac4-448c-b476-417083a9620b" name="3cea603b-2b80-491d-a958-eef20a2c377d" type="radio">
+</input><label class="tabbed-label" for="3ac48d6d-7ac4-448c-b476-417083a9620b">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="corridor-payoff-fig">
 <div class="cell_output docutils container">
 <img alt="../../_images/51_experiment_1_3_1.png" src="../../_images/51_experiment_1_3_1.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Payoff Landscape for Corridor  20 environment. Payoff values were obtained after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials. For the Q-Learning and R-Learning, the same learning parameters were applied. The ACS2 and Q-Learning generate exactly the same payoffs for each state-action pair.</span><a class="headerlink" href="#corridor-payoff-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Payoff Landscape for Corridor-20 environment. Payoff values were obtained after <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10000</span></code></span> trials. For the Q-Learning and R-Learning, the same learning parameters were applied. The ACS2 and Q-Learning generate exactly the same payoffs for each state-action pair.</span><a class="headerlink" href="#corridor-payoff-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -887,8 +887,8 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="6a21f054-9ca7-4235-8232-49d7f42ad67e" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
-</input><label class="tabbed-label" for="6a21f054-9ca7-4235-8232-49d7f42ad67e">
+<input checked="checked" id="09ec0f1a-f39d-4cd2-979a-a6361905a902" name="4d8c18e0-7f06-43f1-92fe-87ab9fdc2afc" type="radio">
+</input><label class="tabbed-label" for="09ec0f1a-f39d-4cd2-979a-a6361905a902">
 Corridor 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -900,8 +900,8 @@ Corridor 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="45c1e9da-1524-408a-9021-0309cde30d4b" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
-</input><label class="tabbed-label" for="45c1e9da-1524-408a-9021-0309cde30d4b">
+<input id="055acc4b-e33e-4085-a611-11ecec3d10cd" name="4d8c18e0-7f06-43f1-92fe-87ab9fdc2afc" type="radio">
+</input><label class="tabbed-label" for="055acc4b-e33e-4085-a611-11ecec3d10cd">
 Corridor 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -913,8 +913,8 @@ Corridor 40</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="16f09ba5-7332-43c0-8d73-5aee462e8588" name="a6ea4f48-7980-4646-98de-7264eb790e2f" type="radio">
-</input><label class="tabbed-label" for="16f09ba5-7332-43c0-8d73-5aee462e8588">
+<input id="df922bfa-6fa5-4b64-8b7c-e7560f284177" name="4d8c18e0-7f06-43f1-92fe-87ab9fdc2afc" type="radio">
+</input><label class="tabbed-label" for="df922bfa-6fa5-4b64-8b7c-e7560f284177">
 Corridor 100</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -937,7 +937,7 @@ Corridor 100</label><div class="tabbed-content docutils">
 <p>Scaled problem instances revealed interesting properties:</p>
 <ul class="simple">
 <li><p>the Q-Learning algorithm was not capable of executing the optimal number of steps in environments with <span class="math notranslate nohighlight">\(n=40\)</span>, <span class="math notranslate nohighlight">\(n=100\)</span>,</p></li>
-<li><p>for the most complex problem of <span class="math notranslate nohighlight">\(n=1000\)</span>, the AACS2 modification yield better performance than ACS2,</p></li>
+<li><p>for the most challenging problem of <span class="math notranslate nohighlight">\(n=1000\)</span>, the AACS2 modification yield better performance than ACS2,</p></li>
 <li><p>all algorithms with undiscounted reward critera managed to calculate the average reward <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
 </ul>
 </div>
