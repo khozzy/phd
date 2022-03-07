@@ -21,11 +21,17 @@ BBA
 BEST
   Bayesian estimation test
 
+CSR
+  Center Spread Representation
+
 E/E
   Explore/exploit phases
 
 EG
   Epsilon Greedy exploration technique
+
+FSW
+  Finite State World (problem)
 
 GA
   Genetic Algorithm
@@ -34,7 +40,22 @@ KA
   Knowledge Array exploration technique
 
 KPI
-  Key performance indicator
+  Key Performance Indicator
+
+LCS
+  Learning Classifier System
+
+MACS
+  Modular Anticipatory Classifier System
+
+MDP
+  Markov Decision Problem
+
+ML
+  Machine Learning
+
+MLP
+  Multi Layer Perceptron
 
 MPX
   Multiplexer environment
@@ -51,12 +72,18 @@ OBR
 OIQ
   Optimistic Initial Quality exploration technique
 
+RL
+  Reinforcement Learning
+
 XCS
   eXtended Classifier System
 
 UBR
   Unordered-bounded representation for real-valued numbers
 
+YACS
+  Yet Another Classifier System
+
 ZCS
-  Zeroth Level Classifier
+  Zeroth Level Classifier System
 ```
