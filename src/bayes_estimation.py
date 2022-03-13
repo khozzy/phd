@@ -2,7 +2,7 @@ import numpy as np
 import pymc3 as pm
 
 
-def bayes_estimate(data: np.ndarray, draws=3000):
+def bayes_estimate(data: np.ndarray, draws=100_000):
     # If all values are the same there is no point in calculating statistical model
     if np.all(data == data[0]):
         return {
