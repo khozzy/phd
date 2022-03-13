@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['def build_models(dfs: List[pd.DataFrame], field: str):', "    query_condition = f'trial == {TRIALS}'  # last trial", '    results = []', '    for df in dfs:', '        data_arr = df.query(query_condition)[field].to_numpy()']
+["agents = ['acs', 'acs2', 'acs2_ga', 'yacs', 'dynaq']", '', "print_row = lambda r: f'{round(r.mean(), 3)} ± {round(r.std(), 3)}'", '', '']
 ...
-["    ['reward from last 100 exploit runs'] + [f'{round(r, 2)}' for r in avg_rewards],", ']', '', 'table = tabulate(bayes_table_data, headers=[\'\', \'1 bit\', \'2 bit\', \'3 bit\', \'4 bit\', \'5 bit\'], tablefmt="html", stralign=\'right\')', 'display(HTML(table))']
+['', "glue('ch33_2_corridor_bayes_table', corridor_bayes_table, display=False)", "glue('ch33_2_grid_bayes_table', grid_bayes_table, display=False)", "glue('ch33_2_corridor_bayes_fig', plot_bayes_comparison(corridor_bayes_df, 'Corridor', agents, plot_filename=f'{plot_dir}/corridor_bayes.png'), display=False)", "glue('ch33_2_grid_bayes_fig', plot_bayes_comparison(grid_bayes_df, 'Grid', agents, plot_filename=f'{plot_dir}/grid_bayes.png'), display=False)"]
 -------------------
 

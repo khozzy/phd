@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 618, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 96, in ensure_async
+    result = await obj
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_client/channels.py", line 230, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
@@ -11,84 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
     await self.async_execute_cell(
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-def build_models(dfs: Dict[str, pd.DataFrame], field: str, query_condition: str):
-    results = {}
-
-    for name, df in dfs.items():
-        data_arr = df.query(query_condition)[field].to_numpy()
-        bayes_model = bayes_estimate(data_arr)
-        results[name] = (bayes_model['mu'], bayes_model['std'])
-
-    return results
-
-
-experiments_data = {
-    'corridor20_acs2': corridor20_acs2_metrics.query('agent == "ACS2"'),
-    'corridor20_aacs2v1': corridor20_acs2_metrics.query('agent == "AACS2_v1"'),
-    'corridor20_aacs2v2': corridor20_acs2_metrics.query('agent == "AACS2_v2"'),
-    'corridor20_qlearning': pd.DataFrame(q_learning_runs[0]),
-    'corridor20_rlearning': pd.DataFrame(r_learning_runs[0]),
-}
-
-@get_from_cache_or_run(cache_path=f'{cache_dir}/corridor/bayes/steps.dill')
-def build_steps_models(dfs: Dict[str, pd.DataFrame]):
-    return build_models(dfs, field='steps_in_trial', query_condition=f'trial == {trials - 1}')
-
-@get_from_cache_or_run(cache_path=f'{cache_dir}/corridor/bayes/rho.dill')
-def build_rho_models(dfs: Dict[str, pd.DataFrame]):
-    filtered_dfs = {}
-    for k, v in dfs.items():
-        if any(r_model for r_model in ['aacs2v1', 'aacs2v2', 'rlearning'] if k.endswith(r_model)):
-            filtered_dfs[k] = v
-
-    return build_models(filtered_dfs, field='rho', query_condition=f'trial == {trials - 1}')
-
-steps_models = build_steps_models(experiments_data)
-rho_models = build_rho_models(experiments_data)
-
-def print_bayes_table(name_prefix, steps_models, rho_models):
-    print_row = lambda r: f'{round(r[0].mean(), 2)} ± {round(r[0].std(), 2)}'
-    rho_data = [print_row(v) for name, v in rho_models.items() if name.startswith(name_prefix)]
-
-    bayes_table_data = [
-        ['steps in last trial'.ljust(15, '')] + [print_row(v) for name, v in steps_models.items() if name.startswith(name_prefix)],
-        ['average reward'.ljust(15, ''), '-', rho_data[0], rho_data[1], '-', rho_data[2]]
-    ]
-
-    table = tabulate(bayes_table_data,
-                     headers=['', ' ACS2 ', ' AACS2v1 ', ' AACS2v2 ', ' Q-Learning ', ' R-Learning '],
-                     tablefmt="html", stralign='center')
-    return HTML(table)
-
-# add glue outputs
-glue('51-corridor20-bayes', print_bayes_table('corridor20', steps_models, rho_models), display=False)
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mTypeError[0m                                 Traceback (most recent call last)
-Input [0;32mIn [5][0m, in [0;36m<module>[0;34m[0m
-[1;32m     48[0m     [38;5;28;01mreturn[39;00m HTML(table)
-[1;32m     50[0m [38;5;66;03m# add glue outputs[39;00m
-[0;32m---> 51[0m glue([38;5;124m'[39m[38;5;124m51-corridor20-bayes[39m[38;5;124m'[39m, [43mprint_bayes_table[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mcorridor20[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43msteps_models[49m[43m,[49m[43m [49m[43mrho_models[49m[43m)[49m, display[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
-
-Input [0;32mIn [5][0m, in [0;36mprint_bayes_table[0;34m(name_prefix, steps_models, rho_models)[0m
-[1;32m     37[0m print_row [38;5;241m=[39m [38;5;28;01mlambda[39;00m r: [38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00m[38;5;28mround[39m(r[[38;5;241m0[39m][38;5;241m.[39mmean(), [38;5;241m2[39m)[38;5;132;01m}[39;00m[38;5;124m ± [39m[38;5;132;01m{[39;00m[38;5;28mround[39m(r[[38;5;241m0[39m][38;5;241m.[39mstd(), [38;5;241m2[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m
-[1;32m     38[0m rho_data [38;5;241m=[39m [print_row(v) [38;5;28;01mfor[39;00m name, v [38;5;129;01min[39;00m rho_models[38;5;241m.[39mitems() [38;5;28;01mif[39;00m name[38;5;241m.[39mstartswith(name_prefix)]
-[1;32m     40[0m bayes_table_data [38;5;241m=[39m [
-[0;32m---> 41[0m     [[38;5;124;43m'[39;49m[38;5;124;43msteps in last trial[39;49m[38;5;124;43m'[39;49m[38;5;241;43m.[39;49m[43mljust[49m[43m([49m[38;5;241;43m15[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43m'[39;49m[43m)[49m] [38;5;241m+[39m [print_row(v) [38;5;28;01mfor[39;00m name, v [38;5;129;01min[39;00m steps_models[38;5;241m.[39mitems() [38;5;28;01mif[39;00m name[38;5;241m.[39mstartswith(name_prefix)],
-[1;32m     42[0m     [[38;5;124m'[39m[38;5;124maverage reward[39m[38;5;124m'[39m[38;5;241m.[39mljust([38;5;241m15[39m, [38;5;124m'[39m[38;5;124m'[39m), [38;5;124m'[39m[38;5;124m-[39m[38;5;124m'[39m, rho_data[[38;5;241m0[39m], rho_data[[38;5;241m1[39m], [38;5;124m'[39m[38;5;124m-[39m[38;5;124m'[39m, rho_data[[38;5;241m2[39m]]
-[1;32m     43[0m ]
-[1;32m     45[0m table [38;5;241m=[39m tabulate(bayes_table_data,
-[1;32m     46[0m                  headers[38;5;241m=[39m[[38;5;124m'[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m ACS2 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m AACS2v1 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m AACS2v2 [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m Q-Learning [39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m R-Learning [39m[38;5;124m'[39m],
-[1;32m     47[0m                  tablefmt[38;5;241m=[39m[38;5;124m"[39m[38;5;124mhtml[39m[38;5;124m"[39m, stralign[38;5;241m=[39m[38;5;124m'[39m[38;5;124mcenter[39m[38;5;124m'[39m)
-[1;32m     48[0m [38;5;28;01mreturn[39;00m HTML(table)
-
-[0;31mTypeError[0m: The fill character must be exactly one character long
-TypeError: The fill character must be exactly one character long
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 830, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 642, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 689, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['def build_models(dfs: Dict[str, pd.DataFrame], field: str, query_condition: str):', '    results = {}', '', '    for name, df in dfs.items():', '        data_arr = df.query(query_condition)[field].to_numpy()']
+...
+['', '# add glue outputs', "glue('51-corridor20-bayes', print_bayes_table('corridor20', steps_models, rho_models), display=False)", "glue('51-corridor40-bayes', print_bayes_table('corridor40', steps_models, rho_models), display=False)", "glue('51-corridor100-bayes', print_bayes_table('corridor100', steps_models, rho_models), display=False)"]
+-------------------
 

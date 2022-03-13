@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['def build_models(dfs: List[pd.DataFrame], field: str):', "    query_condition = f'trial == {TRIALS}'  # last trial", '    results = []', '    for df in dfs:', '        data_arr = df.query(query_condition)[field].to_numpy()']
+['def train_bayes_model(dfs, query_condition, field):', '    data_arr = pd.concat(dfs).query(query_condition)[field].to_numpy()', '    bayes_model = bayes_estimate(data_arr)', "    return bayes_model['mu'], bayes_model['std']", '']
 ...
-["    ['reward from last 100 exploit runs'] + [f'{round(r, 2)}' for r in avg_rewards],", ']', '', 'table = tabulate(bayes_table_data, headers=[\'\', \'1 bit\', \'2 bit\', \'3 bit\', \'4 bit\', \'5 bit\'], tablefmt="html", stralign=\'right\')', 'display(HTML(table))']
+['    reliable_table_data[bins] = list(map(print_row, models))', '', '# Add glue objects', "glue('rmpx_average_reward', print_bayes_table(average_rewards_data), display=False)", "glue('rmpx_bayes_reliable_classifies', print_bayes_table(reliable_table_data), display=False)"]
 -------------------
 

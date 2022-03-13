@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 618, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 96, in ensure_async
+    result = await obj
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_client/channels.py", line 230, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
@@ -11,85 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
     await self.async_execute_cell(
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-from src.visualization import discretized_algorithms_colors
-from src.bayes_plotting import _radar_factory
-
-
-def normalize(df: pd.DataFrame, norm_type: str = 'max'):
-    if norm_type == 'min-max':
-        return (df - df.min()) / (df.max() - df.min())
-    elif norm_type == 'mean':
-        return (df - df.mean()) / df.std()
-    elif norm_type == 'max':
-        assert all(v >= 0 for v in df.min())
-        return df / df.max()
-    else:
-        raise ValueError(f'Unknown normalization type: {norm_type}')
-
-
-def plot_bayes_comparison(df):
-    # algs = COLORS.keys()
-    COLORS = discretized_algorithms_colors()
-
-    fig, ax = plt.subplot(figsize=(22, 16), projection='radar')
-
-    attributes = df.columns.to_list()
-    theta = _radar_factory(len(attributes), frame='circle')
-
-    # ax = fig.add_subplot(2, 2, i+1, projection='radar')
-    ax.get_yaxis().set_ticklabels([])
-    ax.set_varlabels(attributes)
-    ax.set_title(df.attrs['name'], pad=50)
-
-    for i, alg in enumerate(agents):
-        v = df.loc[alg].to_list()
-        ax.plot(theta, v, color=COLORS[alg])
-        ax.fill(theta, v, facecolor=COLORS[alg], alpha=0.25)
-
-    # realign theta labels
-    for theta, label in zip(ax.get_xticks(), ax.get_xticklabels()):
-        theta = theta * ax.get_theta_direction() + ax.get_theta_offset()
-        theta = np.pi / 2 - theta
-        y, x = np.cos(theta), np.sin(theta)
-        if x >= 0.1:
-            label.set_horizontalalignment('left')
-        if x <= -0.1:
-            label.set_horizontalalignment('right')
-        if y >= 0.5:
-            label.set_verticalalignment('bottom')
-        if y <= -0.5:
-            label.set_verticalalignment('top')
-
-        fig.suptitle('Bayesian Estimation of metrics', fontsize=28)
-        fig.tight_layout()
-        fig.subplots_adjust(
-            top=0.85,
-            # left=0.0, right=0.75,
-            bottom=0.1,
-            wspace=-0.25,
-            hspace=0.35
-        )
-
-        # build legend
-        fig.legend([alg.upper() for alg in agents], loc='lower center', ncol=len(agents), labelspacing=0.5, prop={'size': 23})
-
-
-plot_bayes_comparison()
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mTypeError[0m                                 Traceback (most recent call last)
-Input [0;32mIn [9][0m, in [0;36m<module>[0;34m[0m
-[1;32m     60[0m         [38;5;66;03m# build legend[39;00m
-[1;32m     61[0m         fig[38;5;241m.[39mlegend([alg[38;5;241m.[39mupper() [38;5;28;01mfor[39;00m alg [38;5;129;01min[39;00m agents], loc[38;5;241m=[39m[38;5;124m'[39m[38;5;124mlower center[39m[38;5;124m'[39m, ncol[38;5;241m=[39m[38;5;28mlen[39m(agents), labelspacing[38;5;241m=[39m[38;5;241m0.5[39m, prop[38;5;241m=[39m{[38;5;124m'[39m[38;5;124msize[39m[38;5;124m'[39m: [38;5;241m23[39m})
-[0;32m---> 64[0m [43mplot_bayes_comparison[49m[43m([49m[43m)[49m
-
-[0;31mTypeError[0m: plot_bayes_comparison() missing 1 required positional argument: 'df'
-TypeError: plot_bayes_comparison() missing 1 required positional argument: 'df'
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 830, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 642, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 689, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+["agents = ['acs', 'acs2', 'acs2_ga', 'yacs', 'dynaq']", '', '', 'def build_models(df: pd.DataFrame, field: str):', '    results = {}']
+...
+["                       headers=['', 'Knowledge', 'Generalization', 'Population', 'Trial time'],", '                       tablefmt="html", stralign=\'right\')', '', "glue('ch33_1_bayes_table', HTML(bayes_table), display=False)", "glue('ch33_1_bayes_fig', plot_bayes_comparison(rmpx_bayes_df, 'rMPX', agents, plot_filename=f'{plot_dir}/rmpx_3bit_bayes.png'), display=False)"]
+-------------------
 

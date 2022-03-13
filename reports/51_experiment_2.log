@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 618, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/util.py", line 96, in ensure_async
+    result = await obj
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_client/channels.py", line 230, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 1085, in execute
@@ -11,54 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 551, in async_execute
     await self.async_execute_cell(
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 748, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-import pathlib
-from typing import List, Dict
-
-import gym
-import gym_fsw  # noqa: F401
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from lcs import Perception
-from myst_nb import glue
-
-from src.basic_rl import run_q_learning_alternating, run_r_learning_alternating, qlearning, rlearning
-from src.decorators import repeat, get_from_cache_or_run
-from src.diminishing_reward import common_metrics, plot_pop_and_rho, plot__corridor_pop_and_rho, plot_fsw_pop_and_rho
-from src.observation_wrappers import FSWObservationWrapper
-from src.payoff_landscape import get_all_state_action, plot_payoff_landscape
-from src.runner import run_experiments_alternating
-from src.utils import build_plots_dir_path, build_cache_dir_path
-
-plt.ioff()  # turn off interactive plotting
-plt.style.use('../../../src/phd.mplstyle')
-
-root_dir = pathlib.Path().cwd().parent.parent.parent
-cwd_dir = pathlib.Path().cwd()
-
-plot_dir = build_plots_dir_path(root_dir) / cwd_dir.name
-cache_dir = build_cache_dir_path(root_dir) / cwd_dir.name
-
-
-def average_experiment_runs(run_df: pd.DataFrame) -> pd.DataFrame:
-    return run_df.groupby(['agent', 'trial', 'phase']).mean().reset_index(level='phase')
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mImportError[0m                               Traceback (most recent call last)
-Input [0;32mIn [1][0m, in [0;36m<module>[0;34m[0m
-[1;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbasic_rl[39;00m [38;5;28;01mimport[39;00m run_q_learning_alternating, run_r_learning_alternating, qlearning, rlearning
-[1;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdecorators[39;00m [38;5;28;01mimport[39;00m repeat, get_from_cache_or_run
-[0;32m---> 14[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdiminishing_reward[39;00m [38;5;28;01mimport[39;00m common_metrics, plot_pop_and_rho, plot__corridor_pop_and_rho, plot_fsw_pop_and_rho
-[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mobservation_wrappers[39;00m [38;5;28;01mimport[39;00m FSWObservationWrapper
-[1;32m     16[0m [38;5;28;01mfrom[39;00m [38;5;21;01msrc[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpayoff_landscape[39;00m [38;5;28;01mimport[39;00m get_all_state_action, plot_payoff_landscape
-
-[0;31mImportError[0m: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
-ImportError: cannot import name 'plot_pop_and_rho' from 'src.diminishing_reward' (/home/arc/Projects/pwr/phd/src/diminishing_reward.py)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 830, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 642, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/home/arc/miniconda3/envs/real-valued-acs-system/lib/python3.9/site-packages/nbclient/client.py", line 689, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['def build_models(dfs: Dict[str, pd.DataFrame], field: str, query_condition: str):', '    results = {}', '', '    for name, df in dfs.items():', '        data_arr = df.query(query_condition)[field].to_numpy()']
+...
+['', '# add glue outputs', "glue('51-fsw10-bayes', print_bayes_table('fsw10', steps_models, rho_models), display=False)", "glue('51-fsw20-bayes', print_bayes_table('fsw20', steps_models, rho_models), display=False)", "glue('51-fsw40-bayes', print_bayes_table('fsw40', steps_models, rho_models), display=False)"]
+-------------------
 
