@@ -684,8 +684,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="c087be69-4019-4f60-af9a-d165961847f4" name="6eecbe17-da90-4509-8ff0-724e201c919a" type="radio">
-</input><label class="tabbed-label" for="c087be69-4019-4f60-af9a-d165961847f4">
+<input checked="checked" id="0392abc4-5558-496f-b018-3639e514eeb4" name="67001097-c889-4719-afd6-865353b49284" type="radio">
+</input><label class="tabbed-label" for="0392abc4-5558-496f-b018-3639e514eeb4">
 1 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc1bit-fig">
 <div class="cell_output docutils container">
@@ -694,8 +694,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Performance in 3bit rMPX UBR with 1bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc1bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="c2a8db25-b3c8-43a0-b4f6-5c1e76b9c141" name="6eecbe17-da90-4509-8ff0-724e201c919a" type="radio">
-</input><label class="tabbed-label" for="c2a8db25-b3c8-43a0-b4f6-5c1e76b9c141">
+<input id="1a78ac46-7a5e-446c-ba97-bfdfefc85499" name="67001097-c889-4719-afd6-865353b49284" type="radio">
+</input><label class="tabbed-label" for="1a78ac46-7a5e-446c-ba97-bfdfefc85499">
 2 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc2bit-fig">
 <div class="cell_output docutils container">
@@ -704,8 +704,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Performance in 3bit rMPX UBR with 2bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc2bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="9fb8d0c6-110e-4061-9522-9b7fc775f394" name="6eecbe17-da90-4509-8ff0-724e201c919a" type="radio">
-</input><label class="tabbed-label" for="9fb8d0c6-110e-4061-9522-9b7fc775f394">
+<input id="24d1ae13-870a-4714-88cf-64f41a5f505d" name="67001097-c889-4719-afd6-865353b49284" type="radio">
+</input><label class="tabbed-label" for="24d1ae13-870a-4714-88cf-64f41a5f505d">
 3 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc3bit-fig">
 <div class="cell_output docutils container">
@@ -714,8 +714,8 @@
 <p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Performance in 3bit rMPX UBR with 3bit. The reward is averaged across 50 last runs.</span><a class="headerlink" href="#rmpx3bit-enc3bit-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="538e7cd9-8f55-4098-afa3-4c229a0edc28" name="6eecbe17-da90-4509-8ff0-724e201c919a" type="radio">
-</input><label class="tabbed-label" for="538e7cd9-8f55-4098-afa3-4c229a0edc28">
+<input id="a53ca1f2-ae82-448a-bf6d-7c9e96a1732c" name="67001097-c889-4719-afd6-865353b49284" type="radio">
+</input><label class="tabbed-label" for="a53ca1f2-ae82-448a-bf6d-7c9e96a1732c">
 4 bit encoding</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="rmpx3bit-enc4bit-fig">
 <div class="cell_output docutils container">
@@ -728,7 +728,7 @@
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. The average value from the last 100 exploit trials is considered a representative state of algorithm performance for the obtained reward.</p>
+<p>To statistically assess the population size, the posterior data distribution was modelled using <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial and then sampled with 100,000 draws. The average value from the last 100 exploit trials is considered a representative state of algorithm performance for the obtained reward.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@get_from_cache_or_run</span><span class="p">(</span><span class="n">cache_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s1">/rmpx_3bit/bayes/population.dill&#39;</span><span class="p">)</span>

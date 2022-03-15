@@ -766,8 +766,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="cdc55b0d-1002-4b11-820f-1fe5e5987b91" name="8a4ba6c9-b93d-48b2-a1cb-d548617df91d" type="radio">
-</input><label class="tabbed-label" for="cdc55b0d-1002-4b11-820f-1fe5e5987b91">
+<input checked="checked" id="a0c80ee9-791f-4c72-b335-28ee530a2edf" name="8d47cfd2-fd33-42d3-89ec-28bed5307296" type="radio">
+</input><label class="tabbed-label" for="a0c80ee9-791f-4c72-b335-28ee530a2edf">
 Condition Interval regions</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-regions-fig">
 <div class="cell_output docutils container">
@@ -776,8 +776,8 @@ Condition Interval regions</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Evolution of condition interval regions in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-regions-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="bd522c3e-31ae-40fc-9155-3d1f065cc213" name="8a4ba6c9-b93d-48b2-a1cb-d548617df91d" type="radio">
-</input><label class="tabbed-label" for="bd522c3e-31ae-40fc-9155-3d1f065cc213">
+<input id="cdd68b40-d773-4611-af37-49ba35365e4d" name="8d47cfd2-fd33-42d3-89ec-28bed5307296" type="radio">
+</input><label class="tabbed-label" for="cdd68b40-d773-4611-af37-49ba35365e4d">
 Average reward</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-performance-fig">
 <div class="cell_output docutils container">
@@ -786,8 +786,8 @@ Average reward</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Average reward obtained in 3x3 Checkerboard environment encoded with 4 bits.</span><a class="headerlink" href="#checkerboard4bit-enc4bit-performance-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="3aefb28c-2da4-4f5b-8f26-af24c3560217" name="8a4ba6c9-b93d-48b2-a1cb-d548617df91d" type="radio">
-</input><label class="tabbed-label" for="3aefb28c-2da4-4f5b-8f26-af24c3560217">
+<input id="224a03eb-f5ed-4958-a77a-381b483b487a" name="8d47cfd2-fd33-42d3-89ec-28bed5307296" type="radio">
+</input><label class="tabbed-label" for="224a03eb-f5ed-4958-a77a-381b483b487a">
 Classifier numerosity</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="checkerboard4bit-enc4bit-population-fig">
 <div class="cell_output docutils container">
@@ -800,7 +800,7 @@ Classifier numerosity</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size and region ratios, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial. For the obtained reward, the mean value from the last 100 exploit trials is considered as a representative state of algorithm performance.</p>
+<p>To statistically assess the population size and region ratios, the posterior data distribution was modelled using <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial and then sampled with 100,000 draws. For the obtained reward, the mean value from the last 100 exploit trials is considered as a representative state of algorithm performance.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>

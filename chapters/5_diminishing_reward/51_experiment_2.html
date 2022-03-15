@@ -791,8 +791,8 @@
 <p><strong>Parameters</strong></p>
 <p><span class="math notranslate nohighlight">\(\beta=0.5\)</span>, <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>, <span class="math notranslate nohighlight">\(\epsilon=0.1\)</span>, <span class="math notranslate nohighlight">\(\theta_r = 0.9\)</span>, <span class="math notranslate nohighlight">\(\theta_i=0.1\)</span>, <span class="math notranslate nohighlight">\(m_u=0\)</span>, <span class="math notranslate nohighlight">\(\chi=0\)</span>, <span class="math notranslate nohighlight">\(\zeta=0.0001\)</span>.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="ace7f728-e5ff-4720-a05d-f69957dbaae1" name="5f9e825d-8c24-4456-bcc9-951ec3c6fbb4" type="radio">
-</input><label class="tabbed-label" for="ace7f728-e5ff-4720-a05d-f69957dbaae1">
+<input checked="checked" id="3dda7c68-47c7-4935-8d9f-c508e8ae544d" name="16ac24e7-7004-46c4-85c4-bd5102994751" type="radio">
+</input><label class="tabbed-label" for="3dda7c68-47c7-4935-8d9f-c508e8ae544d">
 Performance</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-fig">
 <div class="cell_output docutils container">
@@ -801,8 +801,8 @@ Performance</label><div class="tabbed-content docutils">
 <p class="caption"><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Performance in FSW-10 environment. Plots are averaged over <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> experiments. A moving average with window 25 was applied for the number of steps. Notice that the abscissa on both plots is scaled differently.</span><a class="headerlink" href="#fsw-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<input id="1579b86f-b939-4b16-afdb-b88b7ef2e753" name="5f9e825d-8c24-4456-bcc9-951ec3c6fbb4" type="radio">
-</input><label class="tabbed-label" for="1579b86f-b939-4b16-afdb-b88b7ef2e753">
+<input id="ac6da949-9c6c-43db-b688-e471c5992373" name="16ac24e7-7004-46c4-85c4-bd5102994751" type="radio">
+</input><label class="tabbed-label" for="ac6da949-9c6c-43db-b688-e471c5992373">
 Payoff Landscape</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="fsw-payoff-fig">
 <div class="cell_output docutils container">
@@ -815,7 +815,7 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 <div class="section" id="statistical-verification">
 <h2>Statistical verification<a class="headerlink" href="#statistical-verification" title="Permalink to this headline">¶</a></h2>
-<p>To statistically assess the population size, the posterior data distribution was generated using the BEST method with <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial.</p>
+<p>To statistically assess the population size, the posterior data distribution was modelled using <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> metric values collected in the last trial and then sampled with 100,000 draws.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_models</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_condition</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -890,8 +890,8 @@ Payoff Landscape</label><div class="tabbed-content docutils">
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="31e1da8a-f7d5-4835-aaac-5d821e67b8aa" name="1f6d2d45-bf1f-4ad6-a752-758c547b6238" type="radio">
-</input><label class="tabbed-label" for="31e1da8a-f7d5-4835-aaac-5d821e67b8aa">
+<input checked="checked" id="f0d6f766-18ad-4377-85df-b33729ede616" name="bf96cb5b-bb61-4352-bf1e-e747e273a43d" type="radio">
+</input><label class="tabbed-label" for="f0d6f766-18ad-4377-85df-b33729ede616">
 FSW 10</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -903,8 +903,8 @@ FSW 10</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="2f059abd-1f75-466e-8e4c-c011a9a5fafd" name="1f6d2d45-bf1f-4ad6-a752-758c547b6238" type="radio">
-</input><label class="tabbed-label" for="2f059abd-1f75-466e-8e4c-c011a9a5fafd">
+<input id="031b8651-18bf-427f-bc3a-571d5edba616" name="bf96cb5b-bb61-4352-bf1e-e747e273a43d" type="radio">
+</input><label class="tabbed-label" for="031b8651-18bf-427f-bc3a-571d5edba616">
 FSW 20</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -916,8 +916,8 @@ FSW 20</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="85b31475-f8cb-45a6-9000-13bcb7347de3" name="1f6d2d45-bf1f-4ad6-a752-758c547b6238" type="radio">
-</input><label class="tabbed-label" for="85b31475-f8cb-45a6-9000-13bcb7347de3">
+<input id="291bdcee-39f3-4c20-b2ed-f4076d7556e7" name="bf96cb5b-bb61-4352-bf1e-e747e273a43d" type="radio">
+</input><label class="tabbed-label" for="291bdcee-39f3-4c20-b2ed-f4076d7556e7">
 FSW 40</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
