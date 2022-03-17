@@ -1,7 +1,7 @@
 # Discretizing input signal
 The previous chapter proved that ALCS could operate in a real-valued realm using UBR interval representation. Due to the underlying foundations, certain limitations were revealed, requiring major rethinking to hold virtues like balancing compact population size while maintaining maximum accuracy and generalization.
 
-Nevertheless, ALCS are not limited to ternary alphabets - they can be arbitrarily extended to any discrete number of symbols. This provides an opportunity to split the range of perception value into $k$ fixed-sized intervals (_buckets_). Each consecutive symbol represents a successive interval by performing such [](section-topics-real-discretization). The most significant advantage is that no modifications to internal components are needed for any of the investigated systems - just an additional layer between the environment-agent interface. The interface is capable of executing any predefined signal transformation, like assigning each observation attribute using the same logic or having dedicated rules for each of them (in a case when a range of values varies significantly).
+Nevertheless, ALCS are not limited to ternary alphabets - they can be arbitrarily extended to any discrete number of symbols. This provides an opportunity to split the range of perception value into $k$ fixed-sized intervals (_buckets_). Each consecutive symbol represents a successive interval by performing such [](section-topics-real-discretization). The most significant advantage is that no modifications to internal components are needed for any of the investigated systems - just an additional layer between the environment-agent interface. The interface is capable of executing any predefined signal transformation, like assigning each observation attribute using the same logic or having dedicated rules for each of them (in a case when a range of values varies significantly). Each experiment uses an external _discretizer_, capable of transforming raw environmental signal $\sigma \rightarrow \Sigma$ using desired attribute resolution. All investigated ALCS algorithms share a similar behavioural act cycle; therefore, it is possible to use a shared implementation of an external discretizer in each of the investigated systems in a standardized approach.
 
 This chapter aims to contrast the latent learning capabilities of ACS, ACS2, YACS systems in both single- and multistep environments. Furthermore, they were compared to basic RL algorithm competent of building internal environmental model and lookahead planning - Dyna-Q {cite}`sutton2018reinforcement`.
 
@@ -22,7 +22,7 @@ The conducted research aims to answer the following questions about bucketing di
 1. Can popular ALCS systems build the internal model of the environment when discretizing the real-valued input signal into fixed-width buckets?
 2. Which system creates the most compact and general population of classifiers?
 3. What is the relative trial execution time for each evaluated system?
-4. How selected systems relates to the benchmark Dyna-Q algorithm?
+4. How selected systems relate to the benchmark Dyna-Q algorithm?
 
 ### Goals of the experiments
 ```{admonition} _Experiment 3 - Single-step environment performance_
