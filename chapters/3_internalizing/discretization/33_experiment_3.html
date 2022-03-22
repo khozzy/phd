@@ -144,7 +144,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../2_selected_topics/23_real_value_challenge.html">
-     2.2. Real-valued signal challenge
+     2.2. Real-valued input challenge
     </a>
    </li>
    <li class="toctree-l2">
@@ -544,8 +544,8 @@
 <span id="section-internalizing-experiment-3"></span><h1>Experiment 3 - Single-step environment performance<a class="headerlink" href="#experiment-3-single-step-environment-performance" title="Permalink to this headline">¶</a></h1>
 <p>The potential of evolving the internal model of the environment is explored by three ALCS implementations - ACS, ACS2 and YACS. Moreover, two additional enhancements are also explicitly investigated - ACS2 with enabled GA component and traditional Dyna-Q implementation. All the algorithms use similar rule structure and their behaviour can be compared using a set of common metrics of <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-population-size"><span class="std std-ref">Classifier population size</span></a>, <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-knowledge"><span class="std std-ref">Knowledge</span></a>, <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-generalization"><span class="std std-ref">Generalization</span></a> and <a class="reference internal" href="../../2_selected_topics/24_kpi.html#section-topics-kpi-time"><span class="std std-ref">Trial time</span></a>.</p>
 <p>The chosen environment is a single-step, 3-bit <a class="reference internal" href="../../2_selected_topics/26_envs.html#section-topics-environments-rmpx"><span class="std std-ref">Real Multiplexer</span></a>. The investigation was not carried out for greater perception vectors due to the increased computational complexity required for handling a greater amount of interacting classifiers and calculating the metrics, however with sufficient resources, similar results can also be obtained for larger problem instances.</p>
-<p>The agent perceives an observation vector of four real-valued attributes. Then, a <span class="math notranslate nohighlight">\(k\)</span> bins discretizer is used to convert them into integers, where the <span class="math notranslate nohighlight">\(k\)</span> value controls the accuracy of generated rules. Thus, the input space of the environment can be calculated as <span class="math notranslate nohighlight">\(2k^n\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> refers to the number of bins and <span class="math notranslate nohighlight">\(n\)</span> is the length of the multiplexer signal.</p>
-<p>Because the rMPX threshold was set to the value of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">0.5</span></code></span>, a setting of <span class="math notranslate nohighlight">\(k=2\)</span> bins should be sufficient to model the hyper-plane decision surface. The tests were, however, performed by discretizing each attribute into <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10</span></code></span> fixed-sized buckets. The following setting provides excessive-resolution and substantiates the capabilities of real-valued signal handling.</p>
+<p>The agent perceives an observation vector of four real-valued attributes. Then, a <span class="math notranslate nohighlight">\(k\)</span> bins discretizer is used to convert them into integers, where the <span class="math notranslate nohighlight">\(k\)</span> value controls the accuracy of generated rules. Thus, the input space of the environment can be calculated as <span class="math notranslate nohighlight">\(2k^n\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> refers to the number of bins and <span class="math notranslate nohighlight">\(n\)</span> is the length of the multiplexer output.</p>
+<p>Because the rMPX threshold was set to the value of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">0.5</span></code></span>, a setting of <span class="math notranslate nohighlight">\(k=2\)</span> bins should be sufficient to model the hyper-plane decision surface. The tests were, however, performed by discretizing each attribute into <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">10</span></code></span> fixed-sized buckets. The following setting provides excessive-resolution and substantiates the capabilities of real-valued input handling.</p>
 <p>In each trial of the experiment, the agent executes the exploration phase for the total of <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">15000</span></code></span> trials solely. Moreover, to present coherent results and draw statistical inferences, each experiment is repeated <span class="pasted-inline"><code class="output text_plain docutils literal notranslate"><span class="pre">50</span></code></span> times.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -916,8 +916,8 @@
 </div>
 </div>
 <div class="tabbed-set docutils">
-<input checked="checked" id="86a993e6-9d8a-4a90-b8a2-70c22d5efe1f" name="c13dc8f3-f292-4b07-9868-2e3b4cf5a242" type="radio">
-</input><label class="tabbed-label" for="86a993e6-9d8a-4a90-b8a2-70c22d5efe1f">
+<input checked="checked" id="4bec2b4e-b957-419e-857d-0328503b49c8" name="72fc7e04-a535-4598-b1ca-0b1c2ad1ec46" type="radio">
+</input><label class="tabbed-label" for="4bec2b4e-b957-419e-857d-0328503b49c8">
 Bayes Table</label><div class="tabbed-content docutils">
 <p><span class="pasted-inline"><span class="output text_html"><table>
 <thead>
@@ -932,8 +932,8 @@ Bayes Table</label><div class="tabbed-content docutils">
 </tbody>
 </table></span></span></p>
 </div>
-<input id="2d1bfcce-d013-44d8-8fe9-61b07e92f3d1" name="c13dc8f3-f292-4b07-9868-2e3b4cf5a242" type="radio">
-</input><label class="tabbed-label" for="2d1bfcce-d013-44d8-8fe9-61b07e92f3d1">
+<input id="0d93207c-1c76-4b17-8643-d154c9e7d630" name="72fc7e04-a535-4598-b1ca-0b1c2ad1ec46" type="radio">
+</input><label class="tabbed-label" for="0d93207c-1c76-4b17-8643-d154c9e7d630">
 Radar plot</label><div class="tabbed-content docutils">
 <div class="figure align-default" id="ch33-1-bayes-fig">
 <div class="cell_output docutils container">

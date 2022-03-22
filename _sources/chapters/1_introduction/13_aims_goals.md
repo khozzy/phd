@@ -4,7 +4,7 @@
 The research hypothesis is formulated as follows:
 
 ```{admonition} Research hypothesis
-_Anticipatory Classifiers Systems can build the correct internal model of the environment using the real-valued input signal_.
+_Anticipatory Classifiers Systems can build the correct internal model of the environment using the real-valued input._
 ```
 
 ## Aims and goals
