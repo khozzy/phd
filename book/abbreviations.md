@@ -72,6 +72,12 @@ OBR
 OIQ
   Optimistic Initial Quality exploration technique
 
+rACS
+  real Anticipatory Classifier System
+
+rvACS
+  real-valued Anticipatory Classifier System
+
 RL
   Reinforcement Learning
 

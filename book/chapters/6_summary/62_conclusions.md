@@ -1,22 +1,22 @@
 # Conclusions
-This thesis focused on integrating anticipatory classifier systems with problems described by real-valued output. While this area was researched extensively in other LCS families, no major contribution was still made for the ALCS. The stated hypothesis - _"Anticipatory Classifiers Systems are capable of building the correct internal model of the environment using the real-valued input signal"_ is considered as valid by achieving the following goals:
+This thesis focused on integrating anticipatory classifier systems with problems described by real-valued output. While this area was researched extensively in other LCS families, no major contribution was still made for the ALCS. The stated hypothesis - _"Anticipatory Classifiers Systems are capable of building the correct internal model of the environment using the real-valued input"_ is considered as valid by achieving the following goals:
 
 **1. Propose modifications towards ALCS system capable of handling real-valued input and optimizing overall performance**
 
 This intention was achieved and validated using two independent approaches:
 
 1. changing the rule's attribute representations to incorporate _interval predicates_, resulting in a proprietary system variation named rACS,
-2. perform signal discretization, keeping the most internal component interactions intact.
+2. perform input discretization, keeping the most internal component interactions intact.
 
 The first approach was based on the advancements made for the XCS systems. The rACS managed to show promising results. Nevertheless, because of the much richer rule complexity and the cooperation of components precisely forming the condition and effect parts, the obtained conclusion is that the nature of rACS is not aligned with the overall ALCS idea. The favoured implementation of ACS2, which is considered the most mature algorithm, is built upon the psychological theory of behavioural control, which was not investigated for this kind of problem. The algorithm performance, while being valid, is not elegant for the virtues of ALCS for creating the most general, compact and accurate rules.
 
-The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the agent-environment interface layer. Hopefully, the internal representation is not limited to the ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing signal discretization _before_ an agent processes it. While promising results and better transparency, this approach was considered superior to interval formation and was pursued in consecutive experiments.
+The second approach maintains the characteristics and original intentions of investigated algorithms by affecting only the agent-environment interface layer. Hopefully, the internal representation is not limited to the ternary alphabet (binary values and generalization symbol), so any nominal value can also be used. This enables the possibility of performing input discretization _before_ an agent processes it. While promising results and better transparency, this approach was considered superior to interval formation and was pursued in consecutive experiments.
 
 The proposition of the first approach was published in {cite}`kozlowski2019preliminary`, while the latent learning experiments in discretized environments article is awaiting peer review {cite}`kozlowski2022internalizing`.
 
 **2. Propose relevant benchmarking problems and metrics for evaluating ALCS performance**
 
-The nature of the performance was carefully reviewed in six problems using the continuous-valued signal as a description of an actual state. Most of them have been used as a toy-problems in LCS research, providing different problems of different natures, like:
+The nature of the performance was carefully reviewed in six problems using the continuous-valued output as a description of an actual state. Most of them have been used as a toy-problems in LCS research, providing different problems of different natures, like:
 
 - single and multiple steps,
 - extensive mutual feature interaction,
@@ -31,9 +31,9 @@ To highlight performance, five key metrics were selected that investigate the st
 
 This work's primary effort is to investigate the ALCS behaviour with either interval-based rule representation (rACS) or by the use of discretization. The rACS adaptation requires redefining certain internal processes and introducing new system parameters. Preliminary tests revealed two possible limitations of the system that were further studied.
 
-First, any form of continuous-valued representation increased the problem's search space, impeding the agent's learning speed. Four techniques probing for the most promising action selection were inspected, especially regarding knowledge acquisition rate. The novel approach, based on the promising approach of _Optimistic Initial Values_ in multi-armed bandits, named _Optimistic Initial Quality_ was proposed herein but did not provide substantial performance gains.
+First, any form of real-valued representation increased the problem's search space, impeding the agent's learning speed. Four techniques probing for the most promising action selection were inspected, especially regarding knowledge acquisition rate. The novel approach, based on the promising approach of _Optimistic Initial Values_ in multi-armed bandits, named _Optimistic Initial Quality_ was proposed herein but did not provide substantial performance gains.
 
-The other limitation relates to multistep problems, where certain signal discretization might demand the agent to perform a notably larger number of actions to receive the feedback signal. The default reward assignment component might distribute the signal incorrectly amongst participating classifiers when such long-action chains are experienced. An approach replacing the credit assignment with the undiscounted incentive distribution version resulted in a system named AACS2. The method showed performance improvements for specific problems.
+The other limitation relates to multistep problems, where certain input discretization might demand the agent to perform a notably larger number of actions to receive the feedback signal. The default reward assignment component might distribute the signal incorrectly amongst participating classifiers when such long-action chains are experienced. An approach replacing the credit assignment with the undiscounted incentive distribution version resulted in a system named AACS2. The method showed performance improvements for specific problems.
 
 The biased exploration research was published in {cite}`kozlowski2020investigating`, and the performance of long-action chaining in {cite}`kozlowski2021anticipatory`.
 
