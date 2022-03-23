@@ -10,11 +10,8 @@ The selected parts of the thesis have been already published in:
 
 - Norbert Kozłowski and Olgierd Unold. _[Anticipatory classifier system with average reward criterion in discretized multi-step environments](https://www.mdpi.com/2076-3417/11/3/1098)_. Applied Sciences, 11(3):1098, 2021 (**IF**: 02.679, **MNiSW**: 100).
 
+- Norbert Kozłowski, Olgierd Unold - _Internalizing Knowledge for Anticipatory Classifier Systems in Discretized  Real-Valued Environments_. IEEE Access (_In press_). 2022 (**IF**: 03.557, **MNiSW**: 100)
+
 During the work on the thesis I have also coauthored other research:
 
 - Olgierd Unold, Edyta Rogula, and Norbert Kozłowski. _Introducing action planning to the anticipatory classifier system ACS2_. In International Conference on Computer Recognition Systems, 264–275. Springer, 2019 (**CORE**: National, **MNiSW**: 20).
-
-Additionally, at the time of completing this thesis, the following article is undergoing the review process:
-
-- Norbert Kozłowski, Olgierd Unold - _Internalizing Knowledge for Anticipatory
-Classifier Systems in Discretized  Real-Valued Environments_. IEEE Access. 2022
