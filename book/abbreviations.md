@@ -81,6 +81,9 @@ rvACS
 RL
   Reinforcement Learning
 
+XAI
+    eXplainable Artificial Intelligence
+
 XCS
   eXtended Classifier System
 
